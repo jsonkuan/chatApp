@@ -1,0 +1,9 @@
+#chat-text-box-container {
+
+    text-align:center;
+    margin: 15px;
+    background: #505050;
+    height:270px;
+    border:1px solid black;
+    overflow:auto;
+}
