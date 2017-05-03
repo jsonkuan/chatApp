@@ -1,1 +1,17 @@
-<p>settings</p>
+<form name="settingsForm" novalidate>
+    <div>
+        <img src="assets/images/default.jpg" alt="Profile picture">
+        <md-input-container>
+        
+        </md-input-container>
+    </div>
+    <md-input-container>
+        <label>Change E-Mail</label>
+        <input type="email" ng-model="setting.email" required>
+    </md-input-container>
+    <md-input-container>
+        <label>Change Password</label>
+        <input type="password" ng-model="setting.password" required>
+    </md-input-container>
+    <button type="button">Save changes</button>
+</form>
