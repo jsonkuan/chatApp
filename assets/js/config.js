@@ -9,18 +9,17 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             url: '/login',
             controller : 'loginController',
             //use assets folder in the search path
-
             templateUrl: 'assets/partials/login.html'
             //add controller
         })
         .state('chat', {
-        url: '/chat',
-        //use assets folder in the search path
+            url: '/chat',
             controller: 'chatController',
             templateUrl: 'assets/partials/chat.html'
-
-
-        //add controller
+        })
+        .state('settings', {
+            url: '/settings',
+            controller: "settingsController",      
+            templateUrl: 'assets/partials/settings.html'       
     });
-
 });
