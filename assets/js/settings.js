@@ -7,7 +7,21 @@ $scope.saveSettings = function (userData) {
     //DBUserPassword = userData.password;
     //DBUserProfileImage = userData.image;
 
-    }
+    };
+$scope.profileImage = "assets/images/defaultProfile.png";
+
+    $scope.file_changed = function(element) {
+
+        $scope.$apply(function(scope) {
+            var photofile = element.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+
+
+            };
+            $scope.profileImage = reader.readAsDataURL(photofile);
+        });
+    };
 
 });
 
