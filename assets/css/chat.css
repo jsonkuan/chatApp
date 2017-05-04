@@ -1,0 +1,25 @@
+#chat-text-box-container {
+    margin: 15px 15px 0px 15px;
+    background: darkgrey;
+    overflow:auto;
+}
+
+p {
+    margin: 5px 5px 10px 10px;
+}
+
+#chat-channel-container {
+    background-color: purple;
+}
+
+#chat-input-container {
+    margin: 0px 15px 0px 15px;
+}
+
+#container {
+    height: 100%;
+}
+ 
+div.layout-column {
+    height: 100%;
+}
