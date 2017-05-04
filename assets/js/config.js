@@ -17,5 +17,5 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             url: '/settings',
             templateUrl: 'assets/partials/settings.html',
             controller: "settingsController"
-    })
+    });
 });
