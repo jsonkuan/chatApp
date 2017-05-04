@@ -16,10 +16,10 @@ $scope.profileImage = "assets/images/defaultProfile.png";
             var photofile = element.files[0];
             var reader = new FileReader();
             reader.onload = function(e) {
-
+                $scope.profileImage = e.target.result;
 
             };
-            $scope.profileImage = reader.readAsDataURL(photofile);
+            reader.readAsDataURL(photofile);
         });
     };
 
