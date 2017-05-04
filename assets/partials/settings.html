@@ -3,8 +3,8 @@
         <div layout="column" flex="60">
             <h2>Edit your profile</h2>
             <form name="settingsForm" layout="column" novalidate>
-                <div>
-                    <img src="assets/images/defaultProfile.png" alt="Profile picture">
+                <div layout="row">
+                    <img src="assets/images/defaultProfile.png" alt="Profile picture" flex="25">
                 </div>
                 <md-input-container>
                     <label>Change E-Mail</label>
@@ -15,8 +15,8 @@
                     <input type="password" ng-model="userData.password" required>
                 </md-input-container>
                 <div layout="row" layout-align="end">
-                    <button type="button" ng-click="saveSettings(userData)">Save changes</button>
-                    <button type="button">Cancel</button>
+                    <md-button>Cancel</md-button>
+                    <md-button class="md-accent" ng-click ="saveSettings(userData)">Save changes</md-button>
                 </div>
             </form>
         </div>
