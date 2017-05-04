@@ -10,7 +10,8 @@
     <body>
 
         <div id="container" layout="row" >
-            <aside flex="20">
+            
+            <aside id="chat-channel-container" flex="20">
                 <h1>LogoImage</h1>
                 <ul>
                     <ul>
@@ -28,14 +29,14 @@
                 </ul>
             </aside>
 
-            <main id="main" flex="80">
-
-                <div id="chat-text-box-container"> Chat messages here.... </div>
-                <div id="chat-input-container"> <input type="text" name="chatInput" id="chat-input" placeholder="Message &lt;Channel Name&gt;" /> </div>
-
+            <main id="chat-main" flex="80">
+                <div layout="column">
+                    <div  flex="80" id="chat-text-box-container"> 
+                        <p>Chat message here...</p>
+                    </div>
+                    <input id="chat-input-container" type="text" name="chatInput" placeholder="Message &lt;Channel Name&gt;" /> 
+                </div>
             </main>
-
-
         </div>
 
         <script src="../../bower_components/angular/angular.min.js"></script>
