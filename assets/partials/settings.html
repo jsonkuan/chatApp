@@ -1,0 +1,24 @@
+<md-content>
+    <div layout="row" layout-align="center">
+        <div layout="column" flex="60">
+            <h2>Edit your profile</h2>
+            <form name="settingsForm" layout="column" novalidate>
+                <div layout="row">
+                    <img src="assets/images/defaultProfile.png" alt="Profile picture" flex="25">
+                </div>
+                <md-input-container>
+                    <label>Change E-Mail</label>
+                    <input type="email" ng-model="userData.email" required>
+                </md-input-container>
+                <md-input-container>
+                    <label>Change Password</label>
+                    <input type="password" ng-model="userData.password" required>
+                </md-input-container>
+                <div layout="row" layout-align="end">
+                    <md-button>Cancel</md-button>
+                    <md-button class="md-accent" ng-click ="saveSettings(userData)">Save changes</md-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</md-content>

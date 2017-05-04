@@ -9,7 +9,13 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             url: '/login',
             controller : 'loginController',
             //use assets folder in the search path
-            templateUrl: 'assets/partials/login.html',
+            templateUrl: 'assets/partials/login.html'
             
-        });
+        })
+
+        .state('settings', {
+            url: '/settings',
+            templateUrl: 'assets/partials/settings.html',
+            controller: "settingsController"
+    });
 });
