@@ -5,9 +5,7 @@
 }
 
 p {
-    position: relative;
-    bottom: 0;
-    left: 0;
+    margin: 5px 5px 10px 10px;
 }
 
 #chat-channel-container {
