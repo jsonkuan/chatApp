@@ -1,3 +1,5 @@
+<p>{{test}}</p>
+
 <form name="settingsForm" novalidate>
     <div>
         <img src="assets/images/default.jpg" alt="Profile picture">
@@ -7,12 +9,12 @@
     </div>
     <md-input-container>
         <label>Change E-Mail</label>
-        <input type="email" ng-model="setting.email" required>
+        <input type="email" ng-model="userData.email" required>
     </md-input-container>
     <md-input-container>
         <label>Change Password</label>
-        <input type="password" ng-model="setting.password" required>
+        <input type="password" ng-model="userData.password" required>
     </md-input-container>
-    <button type="button">Save changes</button>
+    <button type="button" ng-click="saveSettings(userData)">Save changes</button>
     <button type="button">Cancel</button>
 </form>

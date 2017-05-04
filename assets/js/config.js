@@ -7,7 +7,13 @@ app.config(function($stateProvider, $qProvider, $urlRouterProvider) {
         .state('login', {
             url: '/login',
             //use assets folder in the search path
-            templateUrl: 'assets/partials/login.html',
+            templateUrl: 'assets/partials/login.html'
             //add controller
+        })
+
+        .state('settings', {
+            url: '/settings',
+            templateUrl: 'assets/partials/settings.html',
+            controller: "settingsController"
         });
 });
