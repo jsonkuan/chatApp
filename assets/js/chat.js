@@ -2,11 +2,11 @@
 
 angular.module('app').controller('chatController', function($scope) {
 
-    $scope.channels = "Hej";
+    $scope.channels = ['General', 'Work', 'Afterwork', 'Crazy cat videos', 'pr0n'];
 
-    /*['General', 'Work', 'Afterwork', 'Crazy cat videos', 'pr0n'];*/
+    $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super-Jakob', 'Nerd-Dervish', 'Killer-Christian'];
 
-    var contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super-Jakob', 'Nerd-Dervish'];
+    //Test
 
 });
 

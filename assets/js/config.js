@@ -16,8 +16,9 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
         .state('chat', {
         url: '/chat',
         //use assets folder in the search path
-        templateUrl: 'assets/partials/chat.html',
-        controller: 'chatController'
+            controller: 'chatController',
+            templateUrl: 'assets/partials/chat.html'
+
 
         //add controller
     });
