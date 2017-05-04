@@ -1,2 +1,40 @@
-<h1>Login</h1>
 
+<div class="loginCard">
+  <md-content class="md-padding" layout-xs="column" layout="row" layout-align="center center">
+    <div flex-xs flex-gt-xs="35" layout="column">
+      <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">#SNAKK <br>  Login</span>
+            <span class="md-subhead"></span>
+        <form name="loginForm">
+            <md-input-container>
+            <label>E-mail</label>
+            <input type="email" name="email" ng-model="email" required>
+            <div ng-messages="loginForm.email.$error">
+            <div ng-message="required">E-mail is required</div>
+            </div>
+            </md-input-container>
+
+             <md-input-container>
+            <label>Password</label>
+            <input type="password" name="password" ng-model="password" required>
+            <div ng-messages="loginForm.password.$error">
+            <div ng-message="required">Password is required</div>
+            </div>
+            </md-input-container>
+        </form>
+          </md-card-title-text>
+        
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="center">
+          <md-button ng-click="loginClicked()">Login</md-button>
+          <md-button ng-click="registerClicked()">Register</md-button>
+        </md-card-actions>
+      </md-card>
+    </div>
+  </md-content>
+</div>
+  
+
+          
