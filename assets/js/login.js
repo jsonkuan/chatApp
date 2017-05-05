@@ -30,6 +30,7 @@ angular.module('app').factory('LoginAuthentication', function() {
             } else {
                 isAuthenticated = false;
             }
+            
             return isAuthenticated;
         }
         /*isAuthenticated : function() {
