@@ -4,14 +4,14 @@
       <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">#SNAKK <br>  Login</span>
-            <span class="md-subhead"></span>
+            <span class="md-headline">#SNAKK</span>
+            <span class="md-subhead">Login</span>
         <form name="loginForm">
             <md-input-container>
             <label>E-mail</label>
             <input type="email" name="email" ng-model="email" required>
             <div ng-messages="loginForm.email.$error">
-            <div ng-message="required">E-mail is required</div>
+            <div ng-message="required" ng-show="emailError">E-mail is required</div>
             </div>
             </md-input-container>
 

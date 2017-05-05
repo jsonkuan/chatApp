@@ -2,31 +2,34 @@
  * Created by niklasbolwede on 2017-05-03.
  */
 
-angular.module('app').controller('loginController', function($scope, $rootScope) {
-    var email= "a@a.com";
-    var password = "1234";
+angular.module('app').controller('loginController', function($scope, LoginAuthentication, $state) {
+    
 
-    function loginClicked() {
-        if(LoginAuthentication.login($scope.loginForm.email, $scope.loginForm.password)) {
-            $scope.error = '';
-            $scope.username = '';
-            $scope.password = '';
+    $scope.loginClicked = function() {
+        console.log($scope.email);
+        if(LoginAuthentication.login($scope.email, $scope.password)) {
+            
             $state.transitionTo('chat');
         } else {
+            $scope.error = '';
+            $scope.email = '';
+            $scope.password = '';
             alert("Incorrect!")
         }
     }
 });
 
 angular.module('app').factory('LoginAuthentication', function() {
-    var email = 'a@a.com';
-    var password = '1234';
     var isAuthenticated = false;
-
+    var email= "a@a.com";
+    var password = "1234";
     return {
         login : function(inputEmail, inputPassword) {
-            if (email === inputEmail && password === inputPassword){
+            console.log(inputEmail);
+            if (inputEmail === email && inputPassword === password){
                 isAuthenticated = true;
+            } else {
+                isAuthenticated = false;
             }
             return isAuthenticated;
         }
