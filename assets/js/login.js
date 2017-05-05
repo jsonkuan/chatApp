@@ -7,14 +7,15 @@ angular.module('app').run(function($rootScope){
     $rootScope.showPasswordConfirm = false;
     $rootScope.showLoginButton = true;
     $rootScope.showRegButton = false;
+    $rootScope.users = [];
 });
 
-angular.module('app').controller('loginController', function($scope, $rootScope, LoginAuthentication, $state) {
+angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state) {
     
     
-    $scope.loginClicked = function() {
+    $scope.loginButtonClicked = function() {
         console.log($scope.email);
-        if(LoginAuthentication.login($scope.email, $scope.password)) {
+        if(Authentication.login($scope.email, $scope.password)) {
             $state.transitionTo('chat');
         } else {
             $scope.error = '';
@@ -22,31 +23,67 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
             $scope.password = '';
             alert("Incorrect!")
         }
-    }
+    };
+
+    $scope.registerButtonClicked = function() {
+        console.log($scope.email);
+        if(Authentication.register($scope.email, $scope.password, $scope.passwordConfirm)) {
+            var user = {email: $scope.email, password: $scope.password};
+            $rootScope.users.push(user);
+            shownElements();
+
+        } else {
+            alert("Incorrect!")
+        }
+    };
 
     $scope.registerClicked = function() {
-        $rootScope.showReg = false;
-        $rootScope.showLoginButton = false;
-        $rootScope.showRegButton = true;
-        $rootScope.showPasswordConfirm = true;
+        shownElements();
+    };
+
+    var shownElements = function() {
+        $rootScope.showReg = !$rootScope.showReg;
+        $rootScope.showLoginButton = !$rootScope.showLoginButton;
+        $rootScope.showRegButton = !$rootScope.showRegButton;
+        $rootScope.showPasswordConfirm = !$rootScope.showPasswordConfirm;
     }
+
 });
 
 
 
-angular.module('app').factory('LoginAuthentication', function() {
+angular.module('app').factory('Authentication', function($rootScope) {
     var isAuthenticated = false;
     var email= "a@a.com";
     var password = "1234";
     return {
         login : function(inputEmail, inputPassword) {
-            console.log(inputEmail);
             if (inputEmail === email && inputPassword === password){
                 isAuthenticated = true;
             } else {
                 isAuthenticated = false;
             }
             
+            return isAuthenticated;
+        },
+        register : function(inputEmail, inputPassword, passwordConfirm) {
+            if (inputPassword === passwordConfirm){
+                if($rootScope.users.length > 0){
+                    for (var i = 0; i < $rootScope.users.length; i++){
+                        if(inputEmail === $rootScope.users[i].email){
+                            isAuthenticated = false;
+                        } else {
+                            isAuthenticated = true;
+                        }
+                    }
+                } else {
+                    isAuthenticated = true;
+                }
+
+            } else {
+                isAuthenticated = false;
+            }
+
             return isAuthenticated;
         }
         /*isAuthenticated : function() {
