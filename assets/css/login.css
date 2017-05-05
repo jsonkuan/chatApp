@@ -1,6 +1,9 @@
 .md-headline{
     font-size: 2em;
 }
+.md-subhead {
+    font-size: 1.5em !important;
+}
 
 /*  #a3e9a4
     #72d572
