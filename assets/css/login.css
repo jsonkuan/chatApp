@@ -4,6 +4,15 @@
 .md-subhead {
     font-size: 1.5em !important;
 }
+.textHover {
+    font-size: 0.8em !important;
+}
+.textHover:hover {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+    
+}
 
 /*  #a3e9a4
     #72d572
