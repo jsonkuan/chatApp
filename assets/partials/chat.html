@@ -1,31 +1,18 @@
-
 <div id="container" layout="row" >
-
     <aside id="chat-channel-container" flex="20">
         <h1>LogoImage</h1>
         <ul>
             <ul>
                 <h3>Channels</h3>
-                <li>{{channels[0]}}</li>
-                <li>{{channels[1]}}</li>
-                <li>{{channels[2]}}</li>
-                <li>{{channels[3]}}</li>
-                <li>{{channels[4]}}</li>
+                <li ng-repeat="channel in channels">{{channel}}</li>
             </ul>
             <ul>
                 <h3>Direct Messages</h3>
-                <li>{{contacts[0]}}</li>
-                <li>{{contacts[1]}}</li>
-                <li>{{contacts[2]}}</li>
-                <li>{{contacts[3]}}</li>
-                <li>{{contacts[4]}}</li>
-                <li>{{contacts[5]}}</li>
+                <li ng-repeat="contact in contacts">{{contact}}</li>
             </ul>
         </ul>
     </aside>
-
     <main id="chat-main" flex="80">
-
         <div layout="column">
             <div flex="90" id="chat-text-box-container">
                 <div id="chat-text-box-header">
