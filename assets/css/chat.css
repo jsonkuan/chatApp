@@ -2,7 +2,6 @@
     margin: 15px 15px 0px 15px;
     background: darkgrey;
     overflow:auto;
-
 }
 
 p {
@@ -28,4 +27,3 @@ h1 {
 div.layout-column {
     height: 100%;
 }
-
