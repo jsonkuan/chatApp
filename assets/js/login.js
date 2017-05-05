@@ -2,9 +2,16 @@
  * Created by niklasbolwede on 2017-05-03.
  */
 
-angular.module('app').controller('loginController', function($scope, LoginAuthentication, $state) {
-    
+angular.module('app').run(function($rootScope){
+    $rootScope.showReg = true;
+    $rootScope.showPasswordConfirm = false;
+    $rootScope.showLoginButton = true;
+    $rootScope.showRegButton = false;
+});
 
+angular.module('app').controller('loginController', function($scope, $rootScope, LoginAuthentication, $state) {
+    
+    
     $scope.loginClicked = function() {
         console.log($scope.email);
         if(LoginAuthentication.login($scope.email, $scope.password)) {
@@ -16,7 +23,16 @@ angular.module('app').controller('loginController', function($scope, LoginAuthen
             alert("Incorrect!")
         }
     }
+
+    $scope.registerClicked = function() {
+        $rootScope.showReg = false;
+        $rootScope.showLoginButton = false;
+        $rootScope.showRegButton = true;
+        $rootScope.showPasswordConfirm = true;
+    }
 });
+
+
 
 angular.module('app').factory('LoginAuthentication', function() {
     var isAuthenticated = false;
