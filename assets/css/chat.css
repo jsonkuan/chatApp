@@ -27,3 +27,10 @@ h1 {
 div.layout-column {
     height: 100%;
 }
+
+.chat-text-box-header {
+    margin: 0px;
+    border: solid 2px;
+    border: black;
+
+}
