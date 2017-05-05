@@ -1,15 +1,17 @@
 angular.module('app').controller("settingsController", function ($scope) {
 
-$scope.saveSettings = function (userData) {
-    //Import userDBData
+    $scope.profileImage = "assets/images/defaultProfile.png";
 
-    //DBUserEmail = userData.email;
-    //DBUserPassword = userData.password;
-    //DBUserProfileImage = userData.image;
+    $scope.saveSettings = function (userData) {
 
-    };
-$scope.profileImage = "assets/images/defaultProfile.png";
+        //var db = "get connection to db";
+    db.collection('users').update({_id: "1"}, {
+        email: userData.email,
+        password: userData.password,
+        image: userData.image
+    });
 
+};
     $scope.file_changed = function(element) {
 
         $scope.$apply(function(scope) {
