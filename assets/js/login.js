@@ -8,7 +8,6 @@ angular.module('app').controller('loginController', function($scope, LoginAuthen
     $scope.loginClicked = function() {
         console.log($scope.email);
         if(LoginAuthentication.login($scope.email, $scope.password)) {
-            
             $state.transitionTo('chat');
         } else {
             $scope.error = '';
