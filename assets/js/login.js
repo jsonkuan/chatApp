@@ -53,20 +53,21 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
 
 
 angular.module('app').factory('Authentication', function($rootScope) {
-    var isAuthenticated = false;
-    var email= "a@a.com";
-    var password = "1234";
     return {
         login : function(inputEmail, inputPassword) {
-            if (inputEmail === email && inputPassword === password){
-                isAuthenticated = true;
-            } else {
-                isAuthenticated = false;
+            var isAuthenticated = false;
+            console.log("Input: "+inputEmail +" "+ inputPassword);
+            for (var i = 0; i < $rootScope.users.length; i++){
+                if(inputEmail === $rootScope.users[i].email && inputPassword === $rootScope.users[i].password){
+
+                    isAuthenticated = true;
+                    console.log("UsersChecked: "+$rootScope.users[i].email +" "+ $rootScope.users[i].password + " valid: "+ isAuthenticated);
+                }
             }
-            
             return isAuthenticated;
         },
         register : function(inputEmail, inputPassword, passwordConfirm) {
+            var isAuthenticated = false;
             if (inputPassword === passwordConfirm){
                 if($rootScope.users.length > 0){
                     for (var i = 0; i < $rootScope.users.length; i++){
@@ -83,12 +84,8 @@ angular.module('app').factory('Authentication', function($rootScope) {
             } else {
                 isAuthenticated = false;
             }
-
             return isAuthenticated;
         }
-        /*isAuthenticated : function() {
-         return isAuthenticated;
-         }*/
     };
 
 });
