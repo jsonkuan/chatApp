@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div layout="column" layout-align="end start">
-                    <p id="channelContent"></p>
+                    <p ng-repeat="message in messageDB[channelId]" id="channelContent">{{message.text}}</p>
                 </div>
             </div>
             <input id="chat-input-container" type="text" name="chatInput" placeholder="Message &lt;Channel Name&gt;" />
