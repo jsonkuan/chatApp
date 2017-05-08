@@ -4,11 +4,11 @@
         <ul>
             <ul>
                 <h3>Channels</h3>
-                <li ng-repeat="channel in channels" ui-sref="chat({channelId: channel})">{{channel}}</li>
+                <li class="channelMsgLists" ng-repeat="channel in channels" ui-sref="chat({channelId: channel})">{{channel}}</li>
             </ul>
             <ul>
                 <h3>Direct Messages</h3>
-                <li ng-repeat="contact in contacts">{{contact}}</li>
+                <li class="channelMsgLists" ng-repeat="contact in contacts" ui-sref="chat({channelId: contact})">{{contact}}</li>
             </ul>
         </ul>
     </aside>
@@ -32,7 +32,7 @@
                 </md-content>       
             </div>
             <md-content layout="row">
-                <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message &lt;Channel Name&gt;" flex="80"/>
+                <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @{{channelId}}" flex="80"/>
                 <md-button class="md-accent md-raised" ng-disabled="!chatInput || chatInput.length == 0" ng-click="sendMessage()">Send</md-button>
             </md-content>
         </div>

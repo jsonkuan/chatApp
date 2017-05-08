@@ -13,6 +13,12 @@ h1 {
     margin: 15px;
 }
 
+.channelMsgLists:hover {
+    text-decoration: underline;
+    color: lightblue;
+    cursor: pointer;
+}
+
 #chat-channel-container {
     background-color: purple;
     border-radius: 3px;
