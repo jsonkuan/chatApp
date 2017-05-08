@@ -13,7 +13,6 @@ angular.module('app').run(function($rootScope){
 
 angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter) {
 
-
     $scope.loginButtonClicked = function() {
         console.log($scope.email);
         if(Authentication.login($scope.email, $scope.password)) {
@@ -24,6 +23,7 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
             $scope.password = '';
             alert("Incorrect!")
         }
+
     };
 
     $scope.registerButtonClicked = function() {
