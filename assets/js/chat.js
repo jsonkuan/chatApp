@@ -2,7 +2,6 @@ angular.module('app').run(function($rootScope){
     $rootScope.allMessages = [];
 });
 
-
 angular.module('app').controller('chatController', function($scope, $state, $rootScope) {
     $scope.channels = ['General', 'Work', 'Afterwork', 'Crazy cat videos', 'pr0n'];
     $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super-Jakob', 'Nerd-Dervish', 'Killer-Christian'];
@@ -33,10 +32,5 @@ angular.module('app').controller('chatController', function($scope, $state, $roo
         var minutes = ("0" + d1.getMinutes()).slice(-2);
 
         return (year + today + " - " + hour + ":" + minutes);
-
     }
-
 });
-
-
-
