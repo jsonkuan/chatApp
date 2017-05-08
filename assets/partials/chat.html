@@ -4,7 +4,7 @@
         <ul>
             <ul>
                 <h3>Channels</h3>
-                <li ng-repeat="channel in channels" ui-sref="chat/{{channel}}">{{channel}}</li>
+                <li ng-repeat="channel in channels" ui-sref="chat({channelId: channel})">{{channel}}</li>
             </ul>
             <ul>
                 <h3>Direct Messages</h3>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div layout="column" layout-align="end start">
-                    <p>Chat message here...</p>
+                    <p>{{'channelId is' + channelId}} Chat message here...</p>
                 </div>
             </div>
             <input id="chat-input-container" type="text" name="chatInput" placeholder="Message &lt;Channel Name&gt;" />
