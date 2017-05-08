@@ -1,34 +1,66 @@
-angular.module('app').run(function($rootScope){
-    $rootScope.allMessages = [];
-});
+angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams) {
+    $scope.channelId = $stateParams.channelId;
 
-
-angular.module('app').controller('chatController', function($scope, $state, $rootScope) {
     $scope.channels = ['General', 'Work', 'Afterwork', 'Crazy cat videos', 'pr0n'];
-    $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super-Jakob', 'Nerd-Dervish', 'Killer-Christian'];
+    $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super Jakob?', 'Nerd-Dervish', 'Killer-Christian'];
 
     $scope.sendToSettings = function(){
         $state.transitionTo('settings');
     };
 
-    $scope.sendMessage = function(){
-        var message = {user: "anv1", date: formatDate(), message: $scope.chatInput};
-        $rootScope.allMessages.push(message);
-        console.log($scope.allMessages.length);
+    $scope.changeChannel = function(channel) {
+        var text = document.getElementById('channelContent');
+        text.innerHTML = $scope.message.text //TODO: Get from in MongoDB
     };
 
-    function formatDate() {
-        var d1 = new Date();
-        var day = ("0" + d1.getDate()).slice(-2);
-        var month = ("0" + (d1.getMonth() + 1)).slice(-2);
-        var year = d1.getFullYear();
-        var today = (month) + '' + (day);
+    $scope.sendMessage = function(){
+        var message = {user: "anv1", date: formatDate(), text: $scope.chatInput};
+        $rootScope.messageDB[$scope.channelId].push(message);
+    };
 
-        var hour = d1.getHours();
-        var minutes = d1.getMinutes();
+    // Temp message generator
+    $scope.generateMessage = function() {
+        var words = ['hello', 'i', 'me', 'you', 'we', 'they', 'want', 'pr0n', 'cat', 'like', 'aaarg!', 'wtf'];
+        var message = '';
+        var count = 2 + rnd(6);
+        for (var i = 0; i < count; i ++) {
+            message += (words[rnd(words.length) -1] + ' ');
+        }
+        return message;
+    };
 
-        return (year + today + " - " + hour + ":" + minutes);
+    if (! $rootScope.messageDB) {
+        $rootScope.messageDB = {};
+    }
 
+    // Generate channel message history
+    if (! $rootScope.messageDB.hasOwnProperty($scope.channelId)) {
+        $rootScope.messageDB[$scope.channelId] = [];
+        for (var i = 0; i < rnd(20); i ++) {
+            $rootScope.messageDB[$scope.channelId].push( {
+                text: $scope.generateMessage(),
+                user: $scope.contacts[rnd($scope.contacts.length) -1],
+                date: formatDate()
+            });
+        }
     }
 
 });
+
+// Temp randomizing function
+function rnd(number) {
+    return Math.floor((Math.random() * number) + 1);
+}
+
+function formatDate() {
+    var d1 = new Date();
+    var day = ("0" + d1.getDate()).slice(-2);
+    var month = ("0" + (d1.getMonth() + 1)).slice(-2);
+    var year = d1.getFullYear();
+    var today = (month) + '' + (day);
+
+    var hour = d1.getHours();
+    var minutes = d1.getMinutes();
+
+    return (year + today + " - " + hour + ":" + minutes);
+}
