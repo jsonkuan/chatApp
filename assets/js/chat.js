@@ -10,6 +10,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     $scope.sendMessage = function() {
         var message = {user: $rootScope.activeUser.email, date: formatDate(), text: $scope.chatInput};
         $rootScope.messageDB[$scope.channelId].push(message);
+        $scope.chatInput = '';
 
         $scope.$watch('messageDB', function f() {
             var chatContent = document.getElementById('chat-text-box-container');
