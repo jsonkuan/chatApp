@@ -4,7 +4,12 @@
             <h2>Edit your profile</h2>
             <form name="settingsForm" layout="column" novalidate>
                 <div layout="row">
-                    <img src="assets/images/defaultProfile.png" alt="Profile picture" flex="25">
+                    <img src="{{profileImage}}" alt="Profile picture" flex="25">
+                </div>
+                <div layout="row">
+                    <input ng-model="photo"
+                           onchange="angular.element(this).scope().file_changed(this)"
+                           type="file" accept="image/*" />
                 </div>
                 <md-input-container>
                     <label>Change E-Mail</label>
@@ -15,7 +20,7 @@
                     <input type="password" ng-model="userData.password" required>
                 </md-input-container>
                 <div layout="row" layout-align="end">
-                    <md-button>Cancel</md-button>
+                    <md-button ui-sref="chat" >Cancel</md-button>
                     <md-button class="md-accent" ng-click ="saveSettings(userData)">Save changes</md-button>
                 </div>
             </form>
