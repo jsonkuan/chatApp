@@ -4,7 +4,7 @@
         <ul>
             <ul>
                 <h3>Channels</h3>
-                <li ng-repeat="channel in channels">{{channel}}</li>
+                <li ng-repeat="channel in channels" ui-sref="chat/{{channel}}">{{channel}}</li>
             </ul>
             <ul>
                 <h3>Direct Messages</h3>
