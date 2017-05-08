@@ -13,6 +13,11 @@ h1 {
     margin: 15px;
 }
 
+#app_logo {
+    display: flex; 
+    flex: 20;
+}
+
 #chat-channel-container {
     background-color: purple;
     border-radius: 3px;
