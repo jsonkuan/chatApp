@@ -13,13 +13,13 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             //add controller
         })
         .state('chat', {
-            url: '/chat',
+            url:'/chat/:channelId',
             controller: 'chatController',
             templateUrl: 'assets/partials/chat.html'
         })
         .state('settings', {
             url: '/settings',
-            controller: "settingsController",      
-            templateUrl: 'assets/partials/settings.html'       
+            controller: "settingsController",
+            templateUrl: 'assets/partials/settings.html'
     });
 });
