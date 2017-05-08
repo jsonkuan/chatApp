@@ -13,12 +13,14 @@
         </ul>
     </aside>
     <main id="chat-main" flex="80">
+        <header id="chat-header">
+            <div layout="column"layout-align="start end">
+                <md-button class="md-accent md-raised" ng-click="sendToSettings()"> Settings </md-button>
+            </div>
+        </header>
         <div layout="column">
             <div flex="90" id="chat-text-box-container">
                 <div id="chat-text-box-header">
-                    <div layout="column" layout-align="start end">
-                    <md-button class="md-accent md-raised" ng-click="sendToSettings()"> Settings </md-button>
-                    </div>
                 </div>
                 <div layout="column" layout-align="end start">
                     <p>Chat message here...</p>
