@@ -10,7 +10,7 @@ angular.module('app').run(function($rootScope){
     $rootScope.users = [];
 });
 
-angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state) {
+angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter) {
     
     
     $scope.loginButtonClicked = function() {
@@ -28,7 +28,8 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
     $scope.registerButtonClicked = function() {
         console.log($scope.email);
         if(Authentication.register($scope.email, $scope.password, $scope.passwordConfirm)) {
-            var user = {email: $scope.email, password: $scope.password};
+            var user = {email: $filter('lowercase')($scope.email), password: $scope.password};
+            console.log($scope.email);
             $rootScope.users.push(user);
             shownElements();
 
@@ -52,13 +53,13 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
 
 
 
-angular.module('app').factory('Authentication', function($rootScope) {
+angular.module('app').factory('Authentication', function($rootScope, $filter) {
     return {
         login : function(inputEmail, inputPassword) {
             var isAuthenticated = false;
             console.log("Input: "+inputEmail +" "+ inputPassword);
             for (var i = 0; i < $rootScope.users.length; i++){
-                if(inputEmail === $rootScope.users[i].email && inputPassword === $rootScope.users[i].password){
+                if($filter('lowercase')(inputEmail) === $rootScope.users[i].email && inputPassword === $rootScope.users[i].password){
 
                     isAuthenticated = true;
                     console.log("UsersChecked: "+$rootScope.users[i].email +" "+ $rootScope.users[i].password + " valid: "+ isAuthenticated);
