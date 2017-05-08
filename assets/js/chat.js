@@ -7,21 +7,22 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         $state.transitionTo('settings');
     };
 
-    $scope.sendMessage = function(){
-        var message = {user: $rootScope.activeUser.email, date: formatDate(), message: $scope.chatInput};
+    $scope.sendMessage = function() {
+        var message = {user: $rootScope.activeUser.email, date: formatDate(), text: $scope.chatInput};
         $rootScope.messageDB[$scope.channelId].push(message);
 
         $scope.$watch('messageDB', function f() {
             var chatContent = document.getElementById('chat-text-box-container');
             chatContent.scrollTop = chatContent.scrollHeight;
         }, true);
+    };
 
     // Temp message generator
     $scope.generateMessage = function() {
         var words = ['hello', 'i', 'me', 'you', 'we', 'they', 'want', 'pr0n', 'cat', 'like', 'aaarg!', 'wtf'];
         var message = '';
         var count = 2 + rnd(6);
-        for (var i = 0; i < count; i ++) {
+        for (var i = 0; i < count; i++) {
             message += (words[rnd(words.length) -1] + ' ');
         }
         return message;
@@ -59,5 +60,4 @@ function formatDate() {
     var minutes = ("0" + d1.getMinutes()).slice(-2);
 
     return (year + today + " - " + hour + ":" + minutes);
-    }
-}); 
+}
