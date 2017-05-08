@@ -2,7 +2,7 @@ angular.module('app').controller("settingsController", function ($scope, $state,
 
     $scope.profileImage = "assets/images/defaultProfile.png";
 
-    $scope.userData = {email: "", password: "", userData: ""};
+    $scope.userData = {email: "", password: "", username: ""};
     $scope.userData.email = $rootScope.activeUser.email;
     $scope.userData.password = $rootScope.activeUser.password;
 
