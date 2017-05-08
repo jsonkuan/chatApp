@@ -1,28 +1,8 @@
 angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams) {
     $scope.channelId = $stateParams.channelId;
 
-    angular.module('app').run(function($rootScope){
-        $rootScope.allMessages = [];
-    });
-
     $scope.channels = ['General', 'Work', 'Afterwork', 'Crazy cat videos', 'pr0n'];
     $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super-Jakob', 'Nerd-Dervish', 'Killer-Christian'];
-    $scope.message = {text: "Temp converation!"}; //TODO: MongoDB
-
-    if (! $rootScope.messageDB) {
-        $rootScope.messageDB = {};
-    }
-    if (! $rootScope.messageDB.hasOwnProperty($scope.channelId)) {
-        $rootScope.messageDB[$scope.channelId] = [];
-        for (var i = 0; i < rnd(20); i ++) {
-            $rootScope.messageDB[$scope.channelId].push( {
-                text: 'Meddelande ' + i,
-                user: 'Jason',
-                date: new Date()
-            });
-        }
-    }
-    console.log('Content for "' + $scope.channelId + '"', $rootScope.messageDB[$scope.channelId]);
 
     $scope.sendToSettings = function(){
         $state.transitionTo('settings');
@@ -31,23 +11,46 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     $scope.changeChannel = function(channel) {
         var text = document.getElementById('channelContent');
         text.innerHTML = $scope.message.text //TODO: Get from in MongoDB
-            console.log(text.innerHTML);
     };
 
     $scope.sendMessage = function(){
-        var message = {user: "anv1", date: formatDate(), message: $scope.chatInput};
-        $rootScope.allMessages.push(message);
-        console.log($scope.allMessages.length);
+        var message = {user: "anv1", date: formatDate(), text: $scope.chatInput};
+        $rootScope.messageDB[$scope.channelId].push(message);
     };
-    //$scope.changeChannel($scope.channelId);
+
+    // Temp message generator
+    $scope.generateMessage = function() {
+        var words = ['hello', 'i', 'me', 'you', 'we', 'they', 'want', 'pr0n', 'cat', 'like', 'aaarg!', 'wtf'];
+        var message = '';
+        var count = 2 + rnd(6);
+        for (var i = 0; i < count; i ++) {
+            message += (words[rnd(words.length) -1] + ' ');
+        }
+        return message;
+    };
+
+    if (! $rootScope.messageDB) {
+        $rootScope.messageDB = {};
+    }
+
+    // Generate channel message history
+    if (! $rootScope.messageDB.hasOwnProperty($scope.channelId)) {
+        $rootScope.messageDB[$scope.channelId] = [];
+        for (var i = 0; i < rnd(20); i ++) {
+            $rootScope.messageDB[$scope.channelId].push( {
+                text: $scope.generateMessage(),
+                user: $scope.contacts[rnd($scope.contacts.length) -1],
+                date: formatDate()
+            });
+        }
+    }
+
 });
 
 // Temp randomizing function
 function rnd(number) {
-    var tmp = Math.floor((Math.random() * number) + 1);
-    console.log('rnd', tmp);
-    return tmp;
-};
+    return Math.floor((Math.random() * number) + 1);
+}
 
 function formatDate() {
     var d1 = new Date();
@@ -60,4 +63,4 @@ function formatDate() {
     var minutes = d1.getMinutes();
 
     return (year + today + " - " + hour + ":" + minutes);
-};
+}
