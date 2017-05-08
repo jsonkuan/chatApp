@@ -10,7 +10,7 @@ angular.module('app').run(function($rootScope){
     $rootScope.users = [];
 });
 
-angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state) {
+angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter) {
     
     
     $scope.loginButtonClicked = function() {
@@ -28,7 +28,8 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
     $scope.registerButtonClicked = function() {
         console.log($scope.email);
         if(Authentication.register($scope.email, $scope.password, $scope.passwordConfirm)) {
-            var user = {email: $scope.email, password: $scope.password};
+            var user = {email: $filter('lowercase')($scope.email), password: $scope.password};
+            console.log($scope.email);
             $rootScope.users.push(user);
             shownElements();
 
