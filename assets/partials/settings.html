@@ -8,9 +8,8 @@
                     <img src="{{profileImage}}" alt="Profile picture" flex="25">
                 </div>
                 <div layout="row">
-                    <input ng-model="photo"
-                           onchange="angular.element(this).scope().file_changed(this)"
-                           type="file" accept="image/*" />
+                    <input class="ng-hide" type="file" id="input-file-id" onchange="changeImage()"><br>
+                    <label for="input-file-id" class="md-button md-raised md-primary">Choose image</label>
                 </div>
                 <md-input-container>
                     <label>Change E-Mail</label>
