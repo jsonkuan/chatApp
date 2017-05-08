@@ -4,15 +4,12 @@
     overflow:auto;
     border: solid 2px black;
 }
-
 p {
     margin: 5px 5px 10px 10px;
 }
-
 h1 {
     margin: 15px;
 }
-
 #chat-channel-container {
     background-color: purple;
     border-radius: 3px;
