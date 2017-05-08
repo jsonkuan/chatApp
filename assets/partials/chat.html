@@ -23,10 +23,19 @@
                 <div id="chat-text-box-header">
                 </div>
                 <div layout="column" layout-align="end start">
-                    <p>Chat message here...</p>
+
+                    <h3 ng-repeat="message in allMessages track by $index">
+                        {{message.user}} {{message.date}}<br>
+                        {{message.message}}
+                    </h3>
+
                 </div>
             </div>
-            <input id="chat-input-container" type="text" name="chatInput" placeholder="Message &lt;Channel Name&gt;" />
+            <md-content layout="row">
+            <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message &lt;Channel Name&gt;" />
+            <md-button class="md-accent md-raised" ng-click="sendMessage()">Send</md-button>
+            </md-content>
+
         </div>
     </main>
 </div>
