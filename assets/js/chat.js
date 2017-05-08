@@ -13,7 +13,6 @@ angular.module('app').controller('chatController', function($scope, $state, $roo
     $scope.sendMessage = function(){
         var message = {user: "anv1", date: formatDate(), message: $scope.chatInput};
         $rootScope.allMessages.push(message);
-        console.log($scope.allMessages.length);
 
         $scope.$watch('allMessages', function f() {
             var chatContent = document.getElementById('chat-text-box-container');
