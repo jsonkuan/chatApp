@@ -32,3 +32,21 @@ angular.module('app').controller('chatController', function($scope, $state, $roo
     }
 
 });
+
+
+angular.module('app').directive('scrollBottom', function(){
+    return {
+        restrict: 'A',
+        scope: {scrollToBottom: "<"
+        },
+        link: function($scope, element){
+            $scope.$watchCollection('scrollToButton', function(newValue){
+                if (newValue){
+                    element.scrollToBottom = element.scrollHeight;
+
+                }
+            });
+        }
+    }
+
+});

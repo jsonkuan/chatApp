@@ -22,14 +22,14 @@
             <div flex="90" id="chat-text-box-container">
                 <div id="chat-text-box-header">
                 </div>
-                <div layout="column" layout-align="end start">
+                <md-content layout="column" flex scroll-bottom="allMessages">
 
                     <h3 ng-repeat="message in allMessages track by $index">
                         {{message.user}} {{message.date}}<br>
                         {{message.message}}
                     </h3>
 
-                </div>
+                </md-content>
             </div>
             <md-content layout="row">
             <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message &lt;Channel Name&gt;" />
