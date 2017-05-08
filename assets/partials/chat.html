@@ -19,18 +19,19 @@
             </div>
         </header>
         <div layout="column">
-            <div flex="90" id="chat-text-box-container">
+            <div flex="80" id="chat-text-box-container">
                 <div id="chat-text-box-header">
                 </div>
                 <md-content layout="column">
-                    <h3 ng-repeat="message in allMessages track by $index">
-                        {{message.user}} {{message.date}}<br>
-                        {{message.message}}
-                    </h3>
+                    <div id="chat-box" ng-repeat="message in allMessages track by $index">
+                        <p id="username">{{message.user}}</p>
+                        <p id="date">{{message.date}}</p>
+                        <p id="messagetext">{{message.message}}</p>
+                    </div>
                 </md-content>
             </div>
             <md-content layout="row">
-            <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message &lt;Channel Name&gt;" />
+            <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message &lt;Channel Name&gt;" flex="80"/>
             <md-button class="md-accent md-raised" ng-click="sendMessage()">Send</md-button>
             </md-content>
 
