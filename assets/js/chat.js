@@ -1,6 +1,5 @@
 angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams) {
     $scope.channelId = $stateParams.channelId;
-
     $scope.channels = ['General', 'Work', 'Afterwork', 'Crazy cat videos', 'pr0n'];
     $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super Jakob?', 'Nerd-Dervish', 'Killer-Christian'];
 
@@ -8,15 +7,14 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         $state.transitionTo('settings');
     };
 
-    $scope.changeChannel = function(channel) {
-        var text = document.getElementById('channelContent');
-        text.innerHTML = $scope.message.text //TODO: Get from in MongoDB
-    };
-
     $scope.sendMessage = function(){
-        var message = {user: "anv1", date: formatDate(), text: $scope.chatInput};
+        var message = {user: $rootScope.activeUser.email, date: formatDate(), message: $scope.chatInput};
         $rootScope.messageDB[$scope.channelId].push(message);
-    };
+
+        $scope.$watch('messageDB', function f() {
+            var chatContent = document.getElementById('chat-text-box-container');
+            chatContent.scrollTop = chatContent.scrollHeight;
+        }, true);
 
     // Temp message generator
     $scope.generateMessage = function() {
@@ -44,7 +42,6 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             });
         }
     }
-
 });
 
 // Temp randomizing function
@@ -57,10 +54,10 @@ function formatDate() {
     var day = ("0" + d1.getDate()).slice(-2);
     var month = ("0" + (d1.getMonth() + 1)).slice(-2);
     var year = d1.getFullYear();
-    var today = (month) + '' + (day);
-
-    var hour = d1.getHours();
-    var minutes = d1.getMinutes();
+    var today = (month) + '' + (day);     
+    var hour = ("0" + d1.getHours()).slice(-2);
+    var minutes = ("0" + d1.getMinutes()).slice(-2);
 
     return (year + today + " - " + hour + ":" + minutes);
-}
+    }
+}); 
