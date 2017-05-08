@@ -22,8 +22,9 @@
                 </div>
                 <div layout="column" layout-align="end start">
 
-                    <h3 ng-repeat="message in allMessages">
-                        {{message}}
+                    <h3 ng-repeat="message in allMessages track by $index">
+                        {{message.user}} {{message.date}}<br>
+                        {{message.message}}
                     </h3>
 
                 </div>
