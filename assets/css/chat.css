@@ -1,7 +1,8 @@
 #chat-text-box-container {
-    margin: 15px 15px 0px 15px;
+    margin: 0px 15px 0px 0px;
     background: darkgrey;
     overflow:auto;
+    border: solid 2px black;
 }
 
 p {
@@ -14,16 +15,25 @@ h1 {
 
 #chat-channel-container {
     background-color: purple;
+    border-radius: 3px;
+    border-left: solid 2px black;
+    border-top: solid 2px black;
+    border-bottom: solid 2px black;
 }
-
 #chat-input-container {
-    margin: 0px 15px 0px 15px;
+    margin: 5px 15px 5px 0px;
+    border-radius: 3px;
 }
-
 #container {
     height: 100%;
 }
- 
 div.layout-column {
     height: 100%;
+}
+#chat-header {
+    background:darkgrey;
+    margin: 0px 15px 0px 0px;
+    border-left: solid 2px black;
+    border-top: solid 2px black;
+    border-right: solid 2px black;
 }
