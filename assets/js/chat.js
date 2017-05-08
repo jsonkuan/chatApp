@@ -3,11 +3,9 @@ angular.module('app').run(function($rootScope){
 });
 
 
-angular.module('app').controller('chatController', function($scope, $state, $rootScope, $timeout) {
+angular.module('app').controller('chatController', function($scope, $state, $rootScope) {
     $scope.channels = ['General', 'Work', 'Afterwork', 'Crazy cat videos', 'pr0n'];
     $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super-Jakob', 'Nerd-Dervish', 'Killer-Christian'];
-
-
 
     $scope.sendToSettings = function(){
         $state.transitionTo('settings');
@@ -17,12 +15,12 @@ angular.module('app').controller('chatController', function($scope, $state, $roo
         var message = {user: "anv1", date: formatDate(), message: $scope.chatInput};
         $rootScope.allMessages.push(message);
         console.log($scope.allMessages.length);
-    };
 
-    window.setInterval(function() {
-        var elem = document.getElementById('chat-text-box-container');
-        elem.scrollTop = elem.scrollHeight;
-    }, 1000);
+        $scope.$watch('allMessages', function f() {
+            var chatContent = document.getElementById('chat-text-box-container');
+            chatContent.scrollTop = chatContent.scrollHeight;
+        }, true);
+    };
 
     function formatDate() {
         var d1 = new Date();
@@ -31,18 +29,12 @@ angular.module('app').controller('chatController', function($scope, $state, $roo
         var year = d1.getFullYear();
         var today = (month) + '' + (day);
 
-        var hour = d1.getHours();
-        var minutes = d1.getMinutes();
+        var hour = ("0" + d1.getHours()).slice(-2);
+        var minutes = ("0" + d1.getMinutes()).slice(-2);
 
         return (year + today + " - " + hour + ":" + minutes);
 
     }
-
-
-
-
-
-
 
 });
 
