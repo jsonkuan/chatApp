@@ -32,7 +32,7 @@
                 </md-content>       
             </div>
             <md-content layout="row">
-            <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message &lt;Channel Name&gt;" flex="80"/>
+                <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @{{channelId}}" flex="80"/>
             <md-button class="md-accent md-raised" ng-click="sendMessage()">Send</md-button>
             </md-content>
         </div>
