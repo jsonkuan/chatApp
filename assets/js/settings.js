@@ -1,24 +1,13 @@
 angular.module('app').controller("settingsController", function ($scope, $state, $rootScope) {
 
     $scope.profileImage = "assets/images/defaultProfile.png";
-    //userData.password = $rootScope.activeUser.password;
+    $scope.userData = {email: "", password: "", username: ""};
+    $scope.userData.username = $rootScope.activeUser.username;
 
     $scope.saveSettings = function (userData) {
 
-        if(userData.password !== "") {
-
-            console.log($rootScope.activeUser.password);
-
-            for(var i = 0; i < $rootScope.users.length; i++){
-                if($rootScope.activeUser.email === $rootScope.users[i].email){
-
-                    $rootScope.activeUser.password = userData.password;
-                    $rootScope.users[i].password = userData.password;
-
-                    console.log("Users: " + $rootScope.users[i].password);
-                    console.log("ActiveUser: " + $rootScope.activeUser.password);
-                }
-            }
+        if(userData.username){
+            $rootScope.activeUser.username = userData.username;
         }
         $state.go("chat");
     };
