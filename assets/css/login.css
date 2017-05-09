@@ -1,3 +1,30 @@
+#fucking-card {
+    margin-top:10%;
+}
+
+#login-form-content{
+    background-image: url("../images/communicating_background_blur.png");
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#card-title {
+    background: lightcyan;
+    border: solid;
+    border-bottom: none;
+    border-width: 10px; 
+    border-color: teal;
+}
+
+#card-footer {
+    background: lightcyan;
+    border: solid;
+    border-top: none;
+    border-width: 10px; 
+    border-color: teal;
+}
+
 .md-headline{
     font-size: 2em;
 }
@@ -9,9 +36,8 @@
 }
 .textHover:hover {
     cursor: pointer;
-    color: blue;
-    text-decoration: underline;
-    
+    color: darkblue;
+    text-decoration: none;
 }
 
 /*  #a3e9a4
@@ -23,3 +49,6 @@ md-card {
     background-color: #d0f8ce !important;
 }
 
+img#app_logo_login { 
+    width: 80%;
+}

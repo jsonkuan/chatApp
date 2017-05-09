@@ -1,45 +1,39 @@
 <div class="loginCard">
-  <md-content class="md-padding" layout-xs="column" layout="row" layout-align="center center">
-    <div flex-xs flex-gt-xs="35" layout="column">
-      <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-        <md-card-title>
+  <md-content id="login-form-content" class="md-padding" layout-xs="column" layout="row" layout-align="center center">
+    <div id="login_card" flex-xs flex-gt-xs="35" layout="column">
+      <md-card id="fucking-card" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+        <md-card-title id="card-title">
           <md-card-title-text>
-            <span class="md-headline">#SNAKK</span>
-            <span class="md-subhead">Login</span>
+            <img id="app_logo_login" src="assets/images/snakk_Logo.png" alt="sNakk" />
+            
             <form name="loginForm">
+              <md-input-container ng-show="showUserName" layout="row">
+                <label>Username</label>
+                <input type="text" name="username" ng-model="username" required>
+              </md-input-container>
+              
               <md-input-container layout="row">
                 <label>E-mail</label>
                 <input type="email" name="email" ng-model="email" required>
-                <div ng-messages="loginForm.email.$error">
-
-                </div>
-              </md-input-container>
-
-              <md-input-container layout="row">
-                <label>Username</label>
-                <input type="text" name="username" ng-model="username" required>
-                
+                <div ng-messages="loginForm.email.$error"></div>
               </md-input-container>
 
               <md-input-container layout="row">
                 <label>Password</label>
                 <input type="password" name="password" ng-model="password" required>
-                <div ng-messages="loginForm.password.$error">
-
-                </div>
+                <div ng-messages="loginForm.password.$error"></div>
               </md-input-container>
+              
               <md-input-container ng-show="showPasswordConfirm" layout="row">
                 <label>Retype password</label>
                 <input type="password" name="passwordConfirm" ng-model="passwordConfirm" required>
-                <div ng-messages="loginForm.password.$error">
-
-                </div>
+                <div ng-messages="loginForm.password.$error"></div>
               </md-input-container>
             </form>
           </md-card-title-text>
 
         </md-card-title>
-        <md-card-footer layout="row" layout-align="center">
+        <md-card-footer id="card-footer" layout="row" layout-align="center">
           <md-card-actions layout="column" layout-align="center">
             <md-button ng-click="loginButtonClicked()" ng-show="showLoginButton">Login</md-button>
             <md-label class="textHover" ng-click="registerClicked()" style="text-align:center" ng-show="showReg">Register</md-label>
