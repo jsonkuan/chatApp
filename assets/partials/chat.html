@@ -33,9 +33,11 @@
                     </div>
                 </md-content>       
             </div>
-            <md-content layout="row">
-                <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @{{channelId}}" flex="80"/>
-                <md-button class="md-accent md-raised" ng-click="sendMessage()">Send</md-button>
+            <md-content id="chat-input-area" layout="row">
+                <form layout="row" flex="100">
+                    <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @{{channelId}}" flex="100"/>
+                    <md-button class="md-accent md-raised" type="submit" ng-disabled="!chatInput || chatInput.length == 0" ng-click="sendMessage(chatInput)">Send</md-button>
+                </form>
             </md-content>
         </div>
     </main>

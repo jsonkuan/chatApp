@@ -7,10 +7,12 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         $state.transitionTo('settings');
     };
 
-    $scope.sendMessage = function() {
-        var message = {user: $rootScope.activeUser.username, date: formatDate(), text: $scope.chatInput};
+    $scope.sendMessage = function(input) {
+        var message = {user: $rootScope.activeUser.username, date: formatDate(), text: input};
         $rootScope.messageDB[$scope.channelId].push(message);
-        console.log($rootScope.activeUser.username);
+        $scope.chatInput = '';
+        var button = angular.element(document.getElementById("chat-input-container"));
+        button.focus();
 
         $scope.$watch('messageDB', function f() {
             var chatContent = document.getElementById('chat-text-box-container');
