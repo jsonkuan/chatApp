@@ -1,5 +1,6 @@
 #wonderful-card {
     margin-top:10%;
+    border-radius: 10px;
 }
 
 #login-form-content{
@@ -15,6 +16,7 @@
     border-bottom: none;
     border-width: 10px; 
     border-color: teal;
+    border-radius: 10px 10px 0 0;
 }
 
 #card-footer {
@@ -22,7 +24,8 @@
     border: solid;
     border-top: none;
     border-width: 10px; 
-    border-color: teal;
+    border-color: darkslategrey;
+    border-radius: 0 0 10px 10px;
 }
 
 .md-headline{
