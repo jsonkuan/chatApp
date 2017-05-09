@@ -16,6 +16,7 @@ h1 {
 #app_logo {
     display: flex; 
     flex: 20;
+}
 
 .channelMsgLists:hover {
     text-decoration: underline;
