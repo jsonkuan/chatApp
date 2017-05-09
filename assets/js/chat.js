@@ -13,7 +13,6 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
-        console.log($rootScope.activeUser.username);
 
         $scope.$watch('messageDB', function f() {
             var chatContent = document.getElementById('chat-text-box-container');
