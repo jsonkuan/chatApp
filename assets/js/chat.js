@@ -7,8 +7,8 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         $state.transitionTo('settings');
     };
 
-    $scope.sendMessage = function() {
-        var message = {user: $rootScope.activeUser.username, date: formatDate(), text: $scope.chatInput};
+    $scope.sendMessage = function(input) {
+        var message = {user: $rootScope.activeUser.username, date: formatDate(), text: input};
         $rootScope.messageDB[$scope.channelId].push(message);
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
