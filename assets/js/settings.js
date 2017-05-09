@@ -4,6 +4,7 @@ angular.module('app').controller("settingsController", function ($scope, $state,
     $scope.userData = {email: "", password: "", username: ""};
     $scope.userData.email = $rootScope.activeUser.email;
     $scope.userData.password = $rootScope.activeUser.password;
+    $scope.userData.username = $rootScope.activeUser.username;
 
     $scope.saveSettings = function (userData) {
         if (userData.password) {
