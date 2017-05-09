@@ -16,6 +16,12 @@
               </md-input-container>
 
               <md-input-container layout="row">
+                <label>Username</label>
+                <input type="text" name="username" ng-model="username" required>
+                
+              </md-input-container>
+
+              <md-input-container layout="row">
                 <label>Password</label>
                 <input type="password" name="password" ng-model="password" required>
                 <div ng-messages="loginForm.password.$error">

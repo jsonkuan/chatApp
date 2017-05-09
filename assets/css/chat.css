@@ -13,6 +13,11 @@ h1 {
     margin: 15px;
 }
 
+#app_logo {
+    display: flex; 
+    flex: 20;
+}
+
 .channelMsgLists:hover {
     text-decoration: underline;
     color: lightblue;
