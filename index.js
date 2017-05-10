@@ -15,6 +15,14 @@ MongoClient.connect('mongodb://localhost:27017/test', function(error, database_)
         database = database_;
     }
 });
+
+app.get('/', function(request, response){
+
+    database.collection('user').findOne().then(function (result) {
+        response.send(result);
+    });
+});
+
 app.listen(3000, function() {
     console.log("Starting new server");
 });
