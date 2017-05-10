@@ -10,7 +10,9 @@
 
 # dependencies
 /node_modules
+/public/bower_components
 /bower_components
+
 
 # IDEs and editors
 /.idea
