@@ -1,0 +1,26 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "Chatt app",
+  "main": "index.js",
+  "dependencies": {
+    "bower": "^1.8.0",
+    "express": "^4.15.2",
+    "gulp": "^3.9.1",
+    "mongodb": "^2.2.26"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsonkuan/chatApp.git"
+  },
+  "author": "Grupp 2",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsonkuan/chatApp/issues"
+  },
+  "homepage": "https://github.com/jsonkuan/chatApp#readme"
+}
