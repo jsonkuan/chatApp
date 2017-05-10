@@ -29,6 +29,9 @@ app.factory("httpService", ["$http", function ($http){
         post: function (user){
             $http.post("/", user)
                 .then(function(response){
+
+                    console.log(response.data);
+                    console.log(user);
                 });
         },
         getUsers: function(){
@@ -36,6 +39,8 @@ app.factory("httpService", ["$http", function ($http){
                 method: 'GET',
                 url: 'http://localhost:3000'
             }).then(function(response){
+
+
             });
         }
     }

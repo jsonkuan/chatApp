@@ -22,12 +22,15 @@ MongoClient.connect('mongodb://localhost:27017/test', function(error, database_)
 app.get('/', function(request, response){
 
     database.collection('user').find().toArray(function(err, result) {
+
+        console.log(result);
         response.send(result);
     });
 });
 
 app.post('/', function(request, response) {
     database.collection('user').insert({"username" : request.body.username});
+    console.log("Hepp!");
     response.send("Hejsan");
 });
 

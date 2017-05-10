@@ -31,6 +31,7 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
             $rootScope.users.push(user);
             shownElements();
             httpService.post(user);
+
         } else {
             alert("Incorrect!")
         }
