@@ -12,7 +12,7 @@ angular.module('app').run(function($rootScope){
     $rootScope.activeUser = {};
 });
 
-angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter) {
+angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter, httpService) {
 
     $scope.loginButtonClicked = function() {
         if(Authentication.login($scope.email, $scope.password)) {
@@ -27,9 +27,10 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
 
     $scope.registerButtonClicked = function() {
         if(Authentication.register($scope.email, $scope.password, $scope.passwordConfirm)) {
-            var user = {email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password};
+            var user = {email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar:"", public: [], private: []};
             $rootScope.users.push(user);
             shownElements();
+            httpService.post(user);
         } else {
             alert("Incorrect!")
         }

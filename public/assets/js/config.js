@@ -23,3 +23,20 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             templateUrl: 'assets/partials/settings.html'
     });
 });
+
+app.factory("httpService", ["$http", function ($http){
+    return{
+        post: function (user){
+            $http.post("/", user)
+                .then(function(response){
+                });
+        },
+        getUsers: function(){
+            return $http({
+                method: 'GET',
+                url: 'http://localhost:3000'
+            }).then(function(response){
+            });
+        }
+    }
+}]);
