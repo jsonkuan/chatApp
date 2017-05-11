@@ -9,7 +9,7 @@ app.use(body.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-MongoClient.connect('mongodb://localhost:27017/test', function(error, database_){
+MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
     if(error) {
         console.error('Failed to connect to server!"');
         console.log(error);
@@ -19,21 +19,29 @@ MongoClient.connect('mongodb://localhost:27017/test', function(error, database_)
     }
 });
 
-app.get('/', function(request, response){
+app.get('/users', function (req, res) {
+    database.collection('user').find().toArray(function (err, results) {
 
-    database.collection('user').find().toArray(function(err, result) {
-
-        console.log(result);
-        response.send(result);
-    });
+        res.send(results);
+    })
 });
 
-app.post('/', function(request, response) {
-    database.collection('user').insert({"username" : request.body.username});
+app.post('/users', function(request, response) {
+    var user = request.body;
+    database.collection('user').insert({"username" : user.username, "email" : user.email,
+        "password" : user.password, "avatar" : user.avatar});
+
+    response.send();
     console.log("Hepp!");
-    response.send("Hejsan");
 });
 
-app.listen(3000, function() {
+
+app.put('/users', function(request, response) {
+    var user = request.body;
+    console.log(user);
+
+});
+
+app.listen(3200, function() {
     console.log("Starting new server");
 });

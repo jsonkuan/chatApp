@@ -21,25 +21,29 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             url: '/settings',
             controller: "settingsController",
             templateUrl: 'assets/partials/settings.html'
-    });
+        });
 });
 
 app.factory("httpService", ["$http", function ($http){
     return{
         post: function (user){
-            $http.post("/", user)
+            $http.post("/users", user)
                 .then(function(response){
-
-                    console.log(response.data);
-                    console.log(user);
                 });
         },
-        getUsers: function(){
+        getUsers: function(user){
             return $http({
-                method: 'GET',
-                url: 'http://localhost:3000'
-            }).then(function(response){
+                url: "/users",
+                method: "GET",
+                params: {_id: user._id}
+            })
+        },
 
+        updateUser: function(user){
+            $http({
+                url: "/users",
+                method: "PUT",
+                params: {_id: user._id}
 
             });
         }

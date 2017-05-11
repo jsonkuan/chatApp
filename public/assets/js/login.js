@@ -1,7 +1,3 @@
-/**
- * Created by niklasbolwede on 2017-05-03.
- */
-
 angular.module('app').run(function($rootScope){
     $rootScope.showReg = true;
     $rootScope.showUserName = false;
@@ -27,10 +23,14 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
 
     $scope.registerButtonClicked = function() {
         if(Authentication.register($scope.email, $scope.password, $scope.passwordConfirm)) {
-            var user = {email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "", channels: []};
+            var user = {email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar:""};
             $rootScope.users.push(user);
             shownElements();
             httpService.post(user);
+            var x = httpService.getUsers(user);
+            x.then(function(data) {
+                console.log(data.data[0]);
+            });
 
         } else {
             alert("Incorrect!")
@@ -58,7 +58,7 @@ angular.module('app').factory('Authentication', function($rootScope) {
                 if(inputEmail === $rootScope.users[i].email && inputPassword === $rootScope.users[i].password){
                     isAuthenticated = true;
                     console.log("UsersChecked: "+$rootScope.users[i].email +" "+ $rootScope.users[i].password + " valid: "+ isAuthenticated);
-                    $rootScope.activeUser = {email: $rootScope.users[i].email, username: $rootScope.users[i].username, password: $rootScope.users[i].password};
+                    $rootScope.activeUser = $rootScope.users[i];
                 }
             }
             return isAuthenticated;
