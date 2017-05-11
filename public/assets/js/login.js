@@ -2,7 +2,7 @@
  * Created by niklasbolwede on 2017-05-03.
  */
 
-angular.module('app').run(function($rootScope){
+angular.module('app').run(function($rootScope, channelService){
     $rootScope.showReg = true;
     $rootScope.showUserName = false;
     $rootScope.showPasswordConfirm = false;
@@ -11,6 +11,56 @@ angular.module('app').run(function($rootScope){
     $rootScope.users = [];
     $rootScope.activeUser = {};
     $rootScope.channels = [];
+
+    $rootScope.checkChannels = function() {
+
+        var promise = Promise.resolve(channelService.get());
+        promise.then(function (response) {
+
+            if (response.data.length == 0) {
+
+                console.log("No data found");
+                $rootScope.generateChannels();
+            } else {
+                $rootScope.channels = response.data;
+                console.log(response.data, "Channels already exists");
+                console.log("Length of channels: ", $rootScope.channels.length);
+            }
+        });
+    };
+
+    $rootScope.generateChannels = function() {
+
+        var channels = [{
+            name: "General",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "Work",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "Afterwork",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "Crazy Cat Videos",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "pr0n",
+            private: false,
+            user: [],
+            message: []
+        }];
+        channelService.post(channels);
+        console.log(channelService.get());
+    };
+    $rootScope.checkChannels();
 });
 
 angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter, httpService) {

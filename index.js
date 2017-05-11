@@ -20,19 +20,21 @@ MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, databas
 });
 
 app.get('/', function(request, response){
-
     database.collection('user').find().toArray(function(err, result) {
-
         console.log(result);
         response.send(result);
     });
 });
 
+app.post('/', function(request, response) {
+    database.collection('user').insert({"username" : request.body.username});
+    console.log("Hepp!");
+    response.send("It works");
+});
+
 app.get('/channel', function(request, response){
-
     database.collection('channels').find().toArray(function(err, result) {
-
-        console.log(result);
+        console.log(result, "channel get");
         response.send(result);
     });
 });
@@ -43,11 +45,6 @@ app.post('/channel', function(request, response) {
     response.send("Channel post works" + request.body);
 });
 
-app.post('/', function(request, response) {
-    database.collection('user').insert({"username" : request.body.username});
-    console.log("Hepp!");
-    response.send("It works");
-});
 
 app.listen(3000, function() {
     console.log("Starting new server");
