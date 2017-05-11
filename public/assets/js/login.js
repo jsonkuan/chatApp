@@ -27,7 +27,7 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
 
     $scope.registerButtonClicked = function() {
         if(Authentication.register($scope.email, $scope.password, $scope.passwordConfirm)) {
-            var user = {email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar:"", public: [], private: []};
+            var user = {email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "", channels: []};
             $rootScope.users.push(user);
             shownElements();
             httpService.post(user);
