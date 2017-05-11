@@ -45,3 +45,16 @@ app.factory("httpService", ["$http", function ($http){
         }
     }
 }]);
+
+angular.module('app').factory('channelService', function($http) {
+    return {
+        post: function(channel) {
+            $http.post('/channel', channel).then(function(response) {
+                console.log('Post successful', response.data);
+            });
+        },
+        get: function() {
+            return $http.get('/channel');
+        }
+    };
+} );
