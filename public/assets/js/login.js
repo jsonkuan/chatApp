@@ -27,10 +27,6 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
             $rootScope.users.push(user);
             shownElements();
             httpService.post(user);
-            var x = httpService.getUsers(user);
-            x.then(function(data) {
-                console.log(data.data[0]);
-            });
 
         } else {
             alert("Incorrect!")
@@ -50,18 +46,30 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
     }
 });
 
-angular.module('app').factory('Authentication', function($rootScope) {
+angular.module('app').factory('Authentication', function($rootScope, httpService) {
     return {
         login : function(inputEmail, inputPassword) {
             var isAuthenticated = false;
-            for (var i = 0; i < $rootScope.users.length; i++){
-                if(inputEmail === $rootScope.users[i].email && inputPassword === $rootScope.users[i].password){
+            var user;
+            var allUsers = httpService.getUsers();
+            allUsers.then(function(data) {
+                user = data.data;
+
+            for (var i = 0; i < user.length; i++){
+                if(inputEmail === user[i].email && inputPassword === user[i].password){
+                    var em = user[i].email;
+                    var pw = user[i].password;
+                    console.log(em + " " + pw);
                     isAuthenticated = true;
-                    console.log("UsersChecked: "+$rootScope.users[i].email +" "+ $rootScope.users[i].password + " valid: "+ isAuthenticated);
-                    $rootScope.activeUser = $rootScope.users[i];
+                    $rootScope.activeUser = user[i];
+                    console.log("input email and password  " + inputEmail +" "+ "  " + inputPassword + ":::  database data  " +
+                        user[i].email + "  " + user[i].password);
                 }
+
             }
+            });
             return isAuthenticated;
+
         },
         register : function(inputEmail, inputPassword, passwordConfirm) {
             var isAuthenticated = false;
