@@ -43,7 +43,7 @@ app.factory("httpService", ["$http", function ($http){
 
             });
         }
-    }
+    };
 }]);
 
 angular.module('app').factory('channelService', function($http) {
@@ -58,3 +58,57 @@ angular.module('app').factory('channelService', function($http) {
         }
     };
 } );
+
+app.run(function($rootScope, channelService) {
+    $rootScope.channels = [];
+
+    $rootScope.checkChannels = function() {
+
+        var promise = Promise.resolve(channelService.get());
+        promise.then(function (response) {
+
+            if (response.data.length === 0) {
+
+                console.log("No data found");
+                $rootScope.generateChannels();
+            } else {
+                $rootScope.channels = response.data;
+                console.log(response.data, "Channels already exists");
+                console.log("Length of channels: ", $rootScope.channels.length);
+            }
+        });
+    };
+
+    $rootScope.generateChannels = function() {
+
+        var channels = [{
+            name: "General",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "Work",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "Afterwork",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "Crazy Cat Videos",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "pr0n",
+            private: false,
+            user: [],
+            message: []
+        }];
+        channelService.post(channels);
+        console.log(channelService.get());
+    };
+    $rootScope.checkChannels();
+});
