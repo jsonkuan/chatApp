@@ -10,6 +10,7 @@ angular.module('app').run(function($rootScope){
     $rootScope.showRegButton = false;
     $rootScope.users = [];
     $rootScope.activeUser = {};
+    $rootScope.channels = [];
 });
 
 angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter, httpService) {

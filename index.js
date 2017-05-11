@@ -9,7 +9,7 @@ app.use(body.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-MongoClient.connect('mongodb://localhost:27017/test', function(error, database_){
+MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
     if(error) {
         console.error('Failed to connect to server!"');
         console.log(error);
@@ -28,10 +28,25 @@ app.get('/', function(request, response){
     });
 });
 
+app.get('/channel', function(request, response){
+
+    database.collection('channels').find().toArray(function(err, result) {
+
+        console.log(result);
+        response.send(result);
+    });
+});
+
+app.post('/channel', function(request, response) {
+    database.collection('channels').insert(request.body);
+    console.log("Channel post works" + request.body);
+    response.send("Channel post works" + request.body);
+});
+
 app.post('/', function(request, response) {
     database.collection('user').insert({"username" : request.body.username});
     console.log("Hepp!");
-    response.send("Hejsan");
+    response.send("It works");
 });
 
 app.listen(3000, function() {
