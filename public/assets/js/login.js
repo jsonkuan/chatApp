@@ -35,6 +35,11 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
             shownElements();
             httpService.post(user);
 
+            var allUsers = httpService.getUsers();
+            allUsers.then(function(data) {
+                $rootScope.user = data.data;
+            });
+
         } else {
             alert("Incorrect!")
         }
@@ -53,7 +58,7 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
     }
 });
 
-angular.module('app').factory('Authentication', function($rootScope, httpService) {
+angular.module('app').factory('Authentication', function($rootScope) {
     return {
         login : function(inputEmail, inputPassword) {
             var isAuthenticated = false;
