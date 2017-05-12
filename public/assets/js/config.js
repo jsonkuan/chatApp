@@ -49,7 +49,7 @@ app.factory("httpService", ["$http", function ($http){
 angular.module('app').factory('channelService', function($http) {
     return {
         post: function(channel) {
-            $http.post('/channel', channel).then(function(response) {
+            return $http.post('/channel', channel).then(function(response) {
                 console.log('Post successful', response.data);
             });
         },
@@ -64,6 +64,7 @@ app.run(function($rootScope, channelService) {
 
     $rootScope.checkChannels = function() {
 
+        console.log("Checking channels");
         var promise = Promise.resolve(channelService.get());
         promise.then(function (response) {
 
@@ -97,7 +98,7 @@ app.run(function($rootScope, channelService) {
             user: [],
             message: []
         }, {
-            name: "Crazy Cat Videos",
+            name: "Crazy cat-lady Videos",
             private: false,
             user: [],
             message: []
@@ -107,8 +108,12 @@ app.run(function($rootScope, channelService) {
             user: [],
             message: []
         }];
-        channelService.post(channels);
+        channelService.post(channels).then(function(response){
+            console.log("Post .then tjohej. Response: ", response);
+            $rootScope.checkChannels();
+        });
         console.log(channelService.get());
+
     };
     $rootScope.checkChannels();
 });
