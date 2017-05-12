@@ -38,10 +38,12 @@ app.post('/users', function(request, response) {
 
 app.put('/users', function(request, response) {
     var user = request.body;
+    console.log("index");
     console.log(user);
+    response.send(user);
 
 });
 
-app.listen(3200, function() {
+app.listen(3000, function() {
     console.log("Starting new server");
 });

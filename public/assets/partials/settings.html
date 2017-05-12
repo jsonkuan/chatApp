@@ -13,19 +13,19 @@
                 </div>
                 <md-input-container>
                     <label>Change E-Mail</label>
-                    <input type="email" ng-model="userData.email" required>
+                    <input type="email" ng-model="email" required>
                 </md-input-container>
                 <md-input-container>
                     <label>Change username</label>
-                    <input type="text" ng-model="userData.username" required>
+                    <input type="text" ng-model="username" required>
                 </md-input-container>
                 <md-input-container>
                     <label>Change Password</label>
-                    <input type="password" ng-model="userData.password" required>
+                    <input type="password" ng-model="password" required>
                 </md-input-container>
                 <div layout="row" layout-align="end">
                     <md-button ui-sref="chat" >Cancel</md-button>
-                    <md-button class="md-accent" ng-click ="saveSettings(userData)">Save changes</md-button>
+                    <md-button class="md-accent" ng-click ="saveSettings()">Save changes</md-button>
                 </div>
             </form>
         </div>

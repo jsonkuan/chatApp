@@ -31,20 +31,21 @@ app.factory("httpService", ["$http", function ($http){
                 .then(function(response){
                 });
         },
+
+        updateUser: function(user){
+            console.log("Config");
+            console.log(user);
+            $http({
+                url: "/users",
+                method: "PUT",
+                params: {user: user}
+            });
+        },
         getUsers: function(){
             return $http({
                 url: "/users",
                 method: "GET"
             })
-        },
-
-        updateUser: function(user){
-            $http({
-                url: "/users",
-                method: "PUT",
-                params: {_id: user._id}
-
-            });
         }
     }
 }]);
