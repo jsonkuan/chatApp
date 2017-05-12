@@ -1,6 +1,7 @@
 var express = require('express');
 var body = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
 var database;
 var path = require('path');
 
@@ -37,13 +38,9 @@ app.post('/users', function(request, response) {
 
 
 app.put('/users', function(request, response) {
-    var user = request;
-    database.collection('user').updateOne({"_id" : user.ObjectId}, {"username" : user.username, "email" : user.email,
+    var user = request.body;
+    database.collection('user').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar});
-    console.log("index");
-    console.log(user);
-    response.send(user);
-
 });
 
 app.listen(3000, function() {
