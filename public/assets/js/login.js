@@ -5,10 +5,17 @@ angular.module('app').run(function($rootScope){
     $rootScope.showLoginButton = true;
     $rootScope.showRegButton = false;
     $rootScope.users = [];
+    $rootScope.user = {};
     $rootScope.activeUser = {};
 });
 
 angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter, httpService) {
+    var allUsers = httpService.getUsers();
+    allUsers.then(function(data) {
+        $rootScope.user = data.data;
+    });
+
+
 
     $scope.loginButtonClicked = function() {
         if(Authentication.login($scope.email, $scope.password)) {
@@ -50,26 +57,21 @@ angular.module('app').factory('Authentication', function($rootScope, httpService
     return {
         login : function(inputEmail, inputPassword) {
             var isAuthenticated = false;
-            var user;
-            var allUsers = httpService.getUsers();
-            allUsers.then(function(data) {
-                user = data.data;
 
-            for (var i = 0; i < user.length; i++){
-                if(inputEmail === user[i].email && inputPassword === user[i].password){
-                    var em = user[i].email;
-                    var pw = user[i].password;
+            for (var i = 0; i < $rootScope.user.length; i++){
+                if(inputEmail == $rootScope.user[i].email && inputPassword == $rootScope.user[i].password){
+                    var em = $rootScope.user[i].email;
+                    var pw = $rootScope.user[i].password;
                     console.log(em + " " + pw);
                     isAuthenticated = true;
-                    $rootScope.activeUser = user[i];
+
+                    $rootScope.activeUser = $rootScope.user[i];
                     console.log("input email and password  " + inputEmail +" "+ "  " + inputPassword + ":::  database data  " +
-                        user[i].email + "  " + user[i].password);
+                        $rootScope.user[i].email + "  " + $rootScope.user[i].password);
                 }
-
             }
-            });
-            return isAuthenticated;
 
+            return isAuthenticated;
         },
         register : function(inputEmail, inputPassword, passwordConfirm) {
             var isAuthenticated = false;

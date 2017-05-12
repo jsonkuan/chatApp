@@ -31,11 +31,10 @@ app.factory("httpService", ["$http", function ($http){
                 .then(function(response){
                 });
         },
-        getUsers: function(user){
+        getUsers: function(){
             return $http({
                 url: "/users",
-                method: "GET",
-                params: {_id: user._id}
+                method: "GET"
             })
         },
 
