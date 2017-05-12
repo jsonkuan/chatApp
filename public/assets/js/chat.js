@@ -1,4 +1,4 @@
-angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams) {
+angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService) {
     $scope.channelId = $stateParams.channelId;
     $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super Jakob?', 'Nerd-Dervish', 'Killer-Christian'];
     $scope.sendToSettings = function(){
@@ -11,6 +11,11 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
+
+        messageService.post({
+            name: 'General',
+            message: message
+        });
 
         $scope.$watch('messageDB', function f() {
             var chatContent = document.getElementById('chat-text-box-container');

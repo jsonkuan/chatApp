@@ -32,6 +32,13 @@ app.post('/', function(request, response) {
     response.send("It works");
 });
 
+app.post('/messages', function(request, response) {
+    database.collection('channels').updateOne({"name": request.body.name},
+                                            { $push : {"messages": request.body.message}});
+    console.log("Hepp!");
+    response.send("It works");
+});
+
 app.get('/channel', function(request, response){
     database.collection('channels').find().toArray(function(err, result) {
         console.log(result, "channel get");

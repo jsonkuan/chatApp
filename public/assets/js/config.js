@@ -46,6 +46,27 @@ app.factory("httpService", ["$http", function ($http){
     };
 }]);
 
+app.factory("messageService", ["$http", function ($http){
+    return{
+        post: function (message){
+            return $http.post("/messages", message)
+                .then(function(response){
+                    console.log(response.data);
+                    console.log(message);
+                });
+        },
+        get: function(){
+            return $http({
+                method: 'GET',
+                url: 'http://localhost:3000'
+            }).then(function(response){
+
+
+            });
+        }
+    };
+}]);
+
 angular.module('app').factory('channelService', function($http) {
     return {
         post: function(channel) {
