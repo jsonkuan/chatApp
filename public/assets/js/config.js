@@ -33,10 +33,7 @@ app.factory("httpService", ["$http", function ($http){
         },
 
         updateUser: function (user){
-                $http.post("/users", user)
-                    .then(function(response){
-                    });
-
+                $http.put("/users", user);
         },
         getUsers: function(){
             return $http({
