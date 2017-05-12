@@ -22,7 +22,7 @@ angular.module('app').controller("settingsController", function ($scope, $state,
         console.log("Settings");
         console.log($rootScope.activeUser);
         httpService.updateUser($rootScope.activeUser);
-        //$state.go("chat");
+        $state.go("chat");
 
     };
 });
