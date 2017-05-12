@@ -32,14 +32,11 @@ app.factory("httpService", ["$http", function ($http){
                 });
         },
 
-        updateUser: function(user){
-            console.log("Config");
-            console.log(user);
-            $http({
-                url: "/users",
-                method: "PUT",
-                params: {user: user}
-            });
+        updateUser: function (user){
+                $http.post("/users", user)
+                    .then(function(response){
+                    });
+
         },
         getUsers: function(){
             return $http({

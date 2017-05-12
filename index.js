@@ -37,7 +37,9 @@ app.post('/users', function(request, response) {
 
 
 app.put('/users', function(request, response) {
-    var user = request.body;
+    var user = request;
+    database.collection('user').updateOne({"_id" : user.ObjectId}, {"username" : user.username, "email" : user.email,
+        "password" : user.password, "avatar" : user.avatar});
     console.log("index");
     console.log(user);
     response.send(user);
