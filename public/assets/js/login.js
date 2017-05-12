@@ -4,7 +4,7 @@ angular.module('app').run(function($rootScope){
     $rootScope.showPasswordConfirm = false;
     $rootScope.showLoginButton = true;
     $rootScope.showRegButton = false;
-    $rootScope.users = [];
+    //$rootScope.users = [];
     $rootScope.user = {};
     $rootScope.activeUser = {};
 });
@@ -31,7 +31,7 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
     $scope.registerButtonClicked = function() {
         if(Authentication.register($scope.email, $scope.password, $scope.passwordConfirm)) {
             var user = {email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar:""};
-            $rootScope.users.push(user);
+            //$rootScope.users.push(user);
             shownElements();
             httpService.post(user);
 
@@ -64,7 +64,7 @@ angular.module('app').factory('Authentication', function($rootScope) {
             var isAuthenticated = false;
 
             for (var i = 0; i < $rootScope.user.length; i++){
-                if(inputEmail == $rootScope.user[i].email && inputPassword == $rootScope.user[i].password){
+                if(inputEmail === $rootScope.user[i].email && inputPassword === $rootScope.user[i].password){
                     var em = $rootScope.user[i].email;
                     var pw = $rootScope.user[i].password;
                     console.log(em + " " + pw);

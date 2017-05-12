@@ -21,18 +21,17 @@ MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, databas
 
 app.get('/users', function (req, res) {
     database.collection('user').find().toArray(function (err, results) {
-
         res.send(results);
     })
 });
 
+//TODO need to add avatar and channels
 app.post('/users', function(request, response) {
     var user = request.body;
     database.collection('user').insert({"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar});
-
     response.send();
-    console.log("Hepp!");
+    console.log("User created");
 });
 
 
