@@ -6,6 +6,7 @@ angular.module('app').run(function($rootScope) {
     $rootScope.showRegButton = false;
     $rootScope.user = {};
     $rootScope.activeUser = {};
+    $rootScope.activeChannel = 'Afterwork';
 });
 
 angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter, httpService) {
