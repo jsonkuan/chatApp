@@ -12,8 +12,9 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
 
+        console.log('$scope.chanelId:', $scope.channelId);
         messageService.post({
-            name: 'General',
+            name: $scope.channelId,
             message: message
         });
 
