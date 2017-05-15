@@ -29,11 +29,12 @@ app.post('/messages', function(request, response) {
 });
 
 // Gets all channels from DB
-app.get('/channel', function(request, response){
-    database.collection('channels').find().toArray(function(err, result) {
+app.get('/channel', function(request, response) {
+    database.collection('channels').find().toArray(function (err, result) {
         console.log(result, "channel get");
         response.send(result);
     });
+});
   
 // Gets all users from DB  
 app.get('/users', function (req, res) {
