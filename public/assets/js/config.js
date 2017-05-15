@@ -50,40 +50,26 @@ app.factory('REST', ['$http', '$q', function($http, $q) {
     };
 }]);
 
-app.factory("httpService", ["$http", function ($http) {
+app.factory("userService", ["REST", function(REST) {
+    var url = '/users';
     return{
         post: function (user){
-            $http.post("/users", user)
-                .then(function(response){
-                });
+            return REST.post(url, user);
         },
         updateUser: function (user){
-                $http.put("/users", user);
+            return REST.put(url, user);
         },
         getUsers: function(){
-            return $http({
-                url: "/users",
-                method: "GET"
-            })
+            return REST.get(url);
         }
     };
 }]);
 
-app.factory("messageService", ["$http", function ($http) {
+app.factory("messageService", ["REST", function (REST) {
+    var url = '/messages';
     return {
-        post: function (message) {
-            return $http.post("/messages", message)
-                .then(function(response) {
-                    console.log(response.data);
-                    console.log(message);
-                });
-        },
-        get: function(){
-            return $http({
-                method: 'GET',
-                url: 'http://localhost:3000'
-            }).then(function(response){
-            });
+        post: function(message) {
+            return REST.post(url, message);
         }
     };
 }]);
@@ -104,7 +90,7 @@ app.run(function($rootScope, channelService) {
     $rootScope.channels = [];
 
     $rootScope.checkChannels = function() {
-        channelService.get().then(function (response) {
+        channelService.get().then(function(response) {
             if (response.length === 0) {
                 $rootScope.generateChannels();
             } else {
