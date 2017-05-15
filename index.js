@@ -4,11 +4,41 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var database;
 var path = require('path');
+var busboy = require('connect-busboy');
+var fs = require('fs-extra');
+
 
 var app = express();
 app.use(body.json());
 
+app.use(busboy());
+
+
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.get('/upload', function (req, res) {
+    res.sendFile( __dirname + "/public/" + "index.html");
+});
+
+app.route('/file_upload')
+    .post(function (req, res, next) {
+
+        var fstream;
+        req.pipe(req.busboy);
+        req.busboy.on('file', function (fieldname, file, filename) {
+            console.log("Uploading: " + filename);
+
+            //Path where image will be uploaded
+            fstream = fs.createWriteStream(__dirname + '/public/assets/images/' + filename);
+            file.pipe(fstream);
+            fstream.on('close', function () {
+                console.log("Upload Finished of " + filename);
+            });
+        });
+    });
+
+
 
 MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
     if(error) {
