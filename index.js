@@ -1,6 +1,7 @@
 var express = require('express');
 var body = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
 var database;
 var path = require('path');
 
@@ -9,7 +10,7 @@ app.use(body.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-MongoClient.connect('mongodb://localhost:27017/test', function(error, database_){
+MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
     if(error) {
         console.error('Failed to connect to server!"');
         console.log(error);
@@ -19,19 +20,26 @@ MongoClient.connect('mongodb://localhost:27017/test', function(error, database_)
     }
 });
 
-app.get('/', function(request, response){
-
-    database.collection('user').find().toArray(function(err, result) {
-
-        console.log(result);
-        response.send(result);
-    });
+app.get('/users', function (req, res) {
+    database.collection('user').find().toArray(function (err, results) {
+        res.send(results);
+    })
 });
 
-app.post('/', function(request, response) {
-    database.collection('user').insert({"username" : request.body.username});
-    console.log("Hepp!");
-    response.send("Hejsan");
+//TODO need to add avatar and channels
+app.post('/users', function(request, response) {
+    var user = request.body;
+    database.collection('user').insert({"username" : user.username, "email" : user.email,
+        "password" : user.password, "avatar" : user.avatar});
+    response.send();
+    console.log("User created");
+});
+
+
+app.put('/users', function(request, response) {
+    var user = request.body;
+    database.collection('user').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
+        "password" : user.password, "avatar" : user.avatar});
 });
 
 app.listen(3000, function() {
