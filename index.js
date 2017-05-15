@@ -4,40 +4,13 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var database;
 var path = require('path');
-var busboy = require('connect-busboy');
 var fs = require('fs-extra');
-
-
 var app = express();
+var multer  = require('multer');
+var upload = multer({ dest: 'public/assets/images' });
+
 app.use(body.json());
-
-app.use(busboy());
-
-
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-app.get('/upload', function (req, res) {
-    res.sendFile( __dirname + "/public/" + "index.html");
-});
-
-app.route('/file_upload')
-    .post(function (req, res, next) {
-
-        var fstream;
-        req.pipe(req.busboy);
-        req.busboy.on('file', function (fieldname, file, filename) {
-            console.log("Uploading: " + filename);
-
-            //Path where image will be uploaded
-            fstream = fs.createWriteStream(__dirname + '/public/assets/images/' + filename);
-            file.pipe(fstream);
-            fstream.on('close', function () {
-                console.log("Upload Finished of " + filename);
-            });
-        });
-    });
-
 
 
 MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
@@ -82,7 +55,7 @@ app.get('/users', function (req, res) {
 
 // Adds users to DB
   //TODO need to add avatar and channels
-app.post('/users', function(request, response) {
+app.post('/users', upload.single('avatar'), function(request, response) {
     var user = request.body;
     database.collection('users').insert({"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar});
@@ -93,9 +66,16 @@ app.post('/users', function(request, response) {
 // Updates the users info in DB
 app.put('/users', function(request, response) {
     var user = request.body;
-    database.collection('user').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
+    console.log(request.body.avatar);
+    database.collection('users').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar});
 });
+
+app.post('/public/assets/images', upload.single('avatar'), function(request2, response, $rootScope) {
+console.log("1");
+        database.collection('users').update({"_id": ObjectId(user._id)}, {"avatar" : request2.file.path});
+});
+
 
 app.listen(3000, function() {
     console.log("Starting new server");
