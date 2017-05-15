@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial']);
+var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload']);
 
 app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterProvider) {
     $qProvider.errorOnUnhandledRejections(false);
@@ -21,36 +21,33 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             url: '/settings',
             controller: "settingsController",
             templateUrl: 'assets/partials/settings.html'
-    });
+        });
 });
 
-app.factory("httpService", ["$http", function ($http){
+app.factory("httpService", ["$http", function ($http) {
     return{
         post: function (user){
-            $http.post("/", user)
+            $http.post("/users", user)
                 .then(function(response){
-
-                    console.log(response.data);
-                    console.log(user);
                 });
+        },
+        updateUser: function (user){
+                $http.put("/users", user);
         },
         getUsers: function(){
             return $http({
-                method: 'GET',
-                url: 'http://localhost:3000'
-            }).then(function(response){
-
-
-            });
+                url: "/users",
+                method: "GET"
+            })
         }
     };
 }]);
 
-app.factory("messageService", ["$http", function ($http){
-    return{
-        post: function (message){
+app.factory("messageService", ["$http", function ($http) {
+    return {
+        post: function (message) {
             return $http.post("/messages", message)
-                .then(function(response){
+                .then(function(response) {
                     console.log(response.data);
                     console.log(message);
                 });
@@ -60,8 +57,6 @@ app.factory("messageService", ["$http", function ($http){
                 method: 'GET',
                 url: 'http://localhost:3000'
             }).then(function(response){
-
-
             });
         }
     };
@@ -78,19 +73,17 @@ angular.module('app').factory('channelService', function($http) {
             return $http.get('/channel');
         }
     };
-} );
+});
 
 app.run(function($rootScope, channelService) {
     $rootScope.channels = [];
 
     $rootScope.checkChannels = function() {
-
         console.log("Checking channels");
         var promise = Promise.resolve(channelService.get());
         promise.then(function (response) {
 
             if (response.data.length === 0) {
-
                 console.log("No data found");
                 $rootScope.generateChannels();
             } else {
@@ -134,7 +127,6 @@ app.run(function($rootScope, channelService) {
             $rootScope.checkChannels();
         });
         console.log(channelService.get());
-
     };
     $rootScope.checkChannels();
 });

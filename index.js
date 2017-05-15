@@ -1,6 +1,7 @@
 var express = require('express');
 var body = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
 var database;
 var path = require('path');
 
@@ -19,19 +20,7 @@ MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, databas
     }
 });
 
-app.get('/', function(request, response){
-    database.collection('user').find().toArray(function(err, result) {
-        console.log(result);
-        response.send(result);
-    });
-});
-
-app.post('/', function(request, response) {
-    database.collection('user').insert({"username" : request.body.username});
-    console.log("Hepp!");
-    response.send("It works");
-});
-
+// Adds message to channel in DB
 app.post('/messages', function(request, response) {
     database.collection('channels').updateOne({"name": request.body.name},
                                             { $push : {"messages": request.body.message}});
@@ -39,19 +28,43 @@ app.post('/messages', function(request, response) {
     response.send("It works");
 });
 
+// Gets all channels from DB
 app.get('/channel', function(request, response){
     database.collection('channels').find().toArray(function(err, result) {
         console.log(result, "channel get");
         response.send(result);
     });
+  
+// Gets all users from DB  
+app.get('/users', function (req, res) {
+    database.collection('user').find().toArray(function (err, results) {
+        res.send(results);
+    })
 });
 
+// Adds users to DB
+  //TODO need to add avatar and channels
+app.post('/users', function(request, response) {
+    var user = request.body;
+    database.collection('user').insert({"username" : user.username, "email" : user.email,
+        "password" : user.password, "avatar" : user.avatar});
+    response.send();
+    console.log("User created");
+});
+
+// Updates the users info in DB
+app.put('/users', function(request, response) {
+    var user = request.body;
+    database.collection('user').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
+        "password" : user.password, "avatar" : user.avatar});
+});
+
+// Adds channels to DB
 app.post('/channel', function(request, response) {
     database.collection('channels').insert(request.body);
     console.log("Channel post works" + request.body);
     response.send("Channel post works" + request.body);
 });
-
 
 app.listen(3000, function() {
     console.log("Starting new server");

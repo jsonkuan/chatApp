@@ -1,33 +1,35 @@
 <md-content>
-    <div layout="row" layout-align="center">
-        <div layout="column" flex="60">
+    <div layout = "row" layout-align="center">
+        <div layout = "column" flex="60">
             <h2>Edit your profile</h2>
             <h3>{{activeUser.email}}</h3>
-            <form name="settingsForm" layout="column" novalidate>
-                <div layout="row">
-                    <img src="{{profileImage}}" alt="Profile picture" flex="25">
+            <form name = "settingsForm" layout="column" novalidate>
+                <div layout = "row">
+                    <img ng-model=activeUser.avatar ngf-thumbnail="picFile" class="thumb" alt="Profile picture"
+                         style='height: 100px; width: 80px; object-fit: contain'>
                 </div>
-                <div layout="row">
-                    <input class="ng-hide" type="file" id="input-file-id" onchange="changeImage()"><br>
+                <div layout = "row">
+                    <input class="ng-hide" id="input-file-id" type="file" ngf-select ng-model="picFile" name="file"
+                    accept="image/*">
                     <label for="input-file-id" class="md-button md-raised md-primary">Choose image</label>
                 </div>
                 <md-input-container>
                     <label>Change E-Mail</label>
-                    <input type="email" ng-model="userData.email" required>
+                    <input type = "email" ng-model=activeUser.email required>
                 </md-input-container>
                 <md-input-container>
                     <label>Change username</label>
-                    <input type="text" ng-model="userData.username" required>
+                    <input type = "text" ng-model=activeUser.username required>
                 </md-input-container>
                 <md-input-container>
                     <label>Change Password</label>
-                    <input type="password" ng-model="userData.password" required>
+                    <input type = "password" ng-model=activeUser.password required>
                 </md-input-container>
-                <div layout="row" layout-align="end">
-                    <md-button ui-sref="chat" >Cancel</md-button>
-                    <md-button class="md-accent" ng-click ="saveSettings(userData)">Save changes</md-button>
-                </div>
-            </form>
+                <div layout = "row" layout-align= "end" >
+                    <md-button ui-sref= "chat" > Cancel </md-button >
+                <md-button class="md-accent" ng-click ="saveSettings(activeUser)">Save changes</md-button>
         </div>
+        </form>
+    </div>
     </div>
 </md-content>
