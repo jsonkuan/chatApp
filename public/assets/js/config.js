@@ -24,53 +24,64 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
         });
 });
 
-app.factory("httpService", ["$http", function ($http) {
+app.factory('REST', ['$http', '$q', function($http, $q) {
+    return {
+        get: function get(url) {
+            return $q(function(resolve) {
+                $http.get(url).then(function(response) {
+                    resolve(response.data);
+                });
+            });
+        },
+        post: function post(url, body) {
+            return $q(function(resolve) {
+                $http.post(url, body).then(function(response) {
+                    resolve(response);
+                });
+            });
+        },
+        put: function put(url, body) {
+            return $q(function(resolve) {
+                $http.put(url, body).then(function(response) {
+                    resolve(response);
+                });
+            });
+        }
+    };
+}]);
+
+app.factory("userService", ["REST", function(REST) {
+    var url = '/users';
     return{
         post: function (user){
-            $http.post("/users", user)
-                .then(function(response){
-                });
+            return REST.post(url, user);
         },
         updateUser: function (user){
-                $http.put("/users", user);
+            return REST.put(url, user);
         },
         getUsers: function(){
-            return $http({
-                url: "/users",
-                method: "GET"
-            })
+            return REST.get(url);
         }
     };
 }]);
 
-app.factory("messageService", ["$http", function ($http) {
+app.factory("messageService", ["REST", function (REST) {
+    var url = '/messages';
     return {
-        post: function (message) {
-            return $http.post("/messages", message)
-                .then(function(response) {
-                    console.log(response.data);
-                    console.log(message);
-                });
-        },
-        get: function(){
-            return $http({
-                method: 'GET',
-                url: 'http://localhost:3000'
-            }).then(function(response){
-            });
+        post: function(message) {
+            return REST.post(url, message);
         }
     };
 }]);
 
-angular.module('app').factory('channelService', function($http) {
+angular.module('app').factory('channelService', function(REST) {
+    var url = '/channel';
     return {
         post: function(channel) {
-            return $http.post('/channel', channel).then(function(response) {
-                console.log('Post successful', response.data);
-            });
+            return REST.post(url, channel);
         },
         get: function() {
-            return $http.get('/channel');
+            return REST.get(url);
         }
     };
 });
@@ -79,23 +90,16 @@ app.run(function($rootScope, channelService) {
     $rootScope.channels = [];
 
     $rootScope.checkChannels = function() {
-        console.log("Checking channels");
-        var promise = Promise.resolve(channelService.get());
-        promise.then(function (response) {
-
-            if (response.data.length === 0) {
-                console.log("No data found");
+        channelService.get().then(function(response) {
+            if (response.length === 0) {
                 $rootScope.generateChannels();
             } else {
-                $rootScope.channels = response.data;
-                console.log(response.data, "Channels already exists");
-                console.log("Length of channels: ", $rootScope.channels.length);
+                $rootScope.channels = response;
             }
         });
     };
 
     $rootScope.generateChannels = function() {
-
         var channels = [{
             name: "General",
             private: false,
@@ -123,10 +127,10 @@ app.run(function($rootScope, channelService) {
             message: []
         }];
         channelService.post(channels).then(function(response){
-            console.log("Post .then tjohej. Response: ", response);
+            console.log("Generating new channels.", response);
             $rootScope.checkChannels();
         });
-        console.log(channelService.get());
     };
+
     $rootScope.checkChannels();
 });

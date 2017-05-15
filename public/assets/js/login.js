@@ -9,20 +9,21 @@ angular.module('app').run(function($rootScope) {
     $rootScope.activeChannel = 'Afterwork';
 });
 
-angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter, httpService) {
-    var allUsers = httpService.getUsers();
-    allUsers.then(function(data) {
-        $rootScope.user = data.data;
+angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter, userService) {
+    var allUsers = userService.getUsers();
+    allUsers.then(function(response) {
+        console.log('allUsers', response);
+        $rootScope.user = response;
     });
 
     $scope.loginButtonClicked = function() {
         if (Authentication.login($scope.email, $scope.password)) {
             $state.transitionTo('chat');
         } else {
-            $scope.error = '';
+            /*$scope.error = '';
             $scope.email = '';
-            $scope.password = '';
-            alert("Incorrect!")
+            $scope.password = '';*/
+            alert("Incorrect!");
         }
     };
 
@@ -30,14 +31,16 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
         if (Authentication.register($scope.email, $scope.password, $scope.passwordConfirm)){
             var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: ""};
             shownElements();
-            httpService.post(user);
-
-            var allUsers = httpService.getUsers();
-            allUsers.then(function(data) {
-                $rootScope.user = data.data;
+            userService.post(user).then(function(response) {
+                console.log('new user added');
+                var allUsers = userService.getUsers();
+                allUsers.then(function(response) {
+                    $rootScope.user = response;
+                });                
             });
+
         } else {
-            alert("Incorrect!")
+            alert("Incorrect!");
         }
     };
 
@@ -51,7 +54,7 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
         $rootScope.showRegButton = !$rootScope.showRegButton;
         $rootScope.showPasswordConfirm = !$rootScope.showPasswordConfirm;
         $rootScope.showUserName = !$rootScope.showUserName;
-    }
+    };
 });
 
 angular.module('app').factory('Authentication', function($rootScope) {

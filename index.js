@@ -36,18 +36,25 @@ app.get('/channel', function(request, response) {
     });
 });
   
+// Adds channels to DB
+app.post('/channel', function(request, response) {
+    database.collection('channels').insert(request.body);
+    console.log("Channel post works" + request.body);
+    response.send("Channel post works" + request.body);
+});
+
 // Gets all users from DB  
 app.get('/users', function (req, res) {
-    database.collection('user').find().toArray(function (err, results) {
+    database.collection('users').find().toArray(function (err, results) {
         res.send(results);
-    })
+    });
 });
 
 // Adds users to DB
   //TODO need to add avatar and channels
 app.post('/users', function(request, response) {
     var user = request.body;
-    database.collection('user').insert({"username" : user.username, "email" : user.email,
+    database.collection('users').insert({"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar});
     response.send();
     console.log("User created");
@@ -58,13 +65,6 @@ app.put('/users', function(request, response) {
     var user = request.body;
     database.collection('user').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar});
-});
-
-// Adds channels to DB
-app.post('/channel', function(request, response) {
-    database.collection('channels').insert(request.body);
-    console.log("Channel post works" + request.body);
-    response.send("Channel post works" + request.body);
 });
 
 app.listen(3000, function() {
