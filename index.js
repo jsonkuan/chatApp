@@ -63,7 +63,7 @@ app.post('/users', function(request, response) {
 // Updates the users info in DB
 app.put('/users', function(request, response) {
     var user = request.body;
-    database.collection('user').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
+    database.collection('users').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar});
 });
 
