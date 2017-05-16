@@ -19,9 +19,14 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
         })
         .state('settings', {
             url: '/settings',
-            controller: "settingsController",
+            controller: 'settingsController',
             templateUrl: 'assets/partials/settings.html'
-        });
+        })
+        .state('addChannel', {
+            url: '/addChannel',
+            controller: 'channelController',
+            templateUrl: 'assets/partials/addChannel.html'
+        })
 });
 
 app.factory("httpService", ["$http", function ($http) {
