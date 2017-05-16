@@ -1,8 +1,5 @@
-angular.module('app').controller("settingsController", function ($scope, $state, $rootScope, Upload, userService)
-{
-
+angular.module('app').controller("settingsController", function ($scope, $state, $rootScope, Upload, userService) {
         //$scope.userData.channels = $rootScope.activeUser.channels;
-
         $scope.saveSettings = function (activeUser) {
             $rootScope.activeUser.password = activeUser.password;
             $rootScope.activeUser.email = activeUser.email;

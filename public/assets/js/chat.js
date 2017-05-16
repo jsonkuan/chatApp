@@ -1,9 +1,15 @@
 angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService, channelService) {
     $scope.channelName = $stateParams.channelName;
     $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super Jakob?', 'Nerd-Dervish', 'Killer-Christian'];
+
     $scope.sendToSettings = function(){
         $state.transitionTo('settings');
     };
+  
+    $scope.sendToCreateChannel = function() {
+        $state.transitionTo('addChannel');
+    };
+
     console.log("ChannelService.get anropas med ", $scope.channelName);
     if(!$scope.channelName) {
         $scope.channelName = "General";
@@ -11,6 +17,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     channelService.get('?channelName=' + $scope.channelName).then(function(response){
         console.log("Hepp, channelService.get: ",response);
     });
+
     $scope.sendMessage = function(input) {
         var message = {user: $rootScope.activeUser.username, date: formatDate(), text: input};
         $rootScope.messageDB[$scope.channelName].push(message);
@@ -68,7 +75,7 @@ function formatDate() {
     var day = ("0" + d1.getDate()).slice(-2);
     var month = ("0" + (d1.getMonth() + 1)).slice(-2);
     var year = d1.getFullYear();
-    var today = (month) + '' + (day);     
+    var today = (month) + '' + (day);
     var hour = ("0" + d1.getHours()).slice(-2);
     var minutes = ("0" + d1.getMinutes()).slice(-2);
 

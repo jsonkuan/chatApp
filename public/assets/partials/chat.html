@@ -5,8 +5,11 @@
         </div>
         <ul>
             <ul>
-                <h3>Channels</h3>
-                <li class="channelMsgLists" ng-repeat="channel in channels" ui-sref="chat({channelId: channel.name})">{{channel.name}}</li>
+                <h3>Channels</h3> 
+                <md-button name="addChannel" ng-click="sendToCreateChannel()">
+                      <md-icon md-svg-src="assets/images/ic_add_circle_outline_black_24px.svg"></md-icon>
+                </md-button>
+                                               <li class="channelMsgLists" ng-repeat="channel in channels" ui-sref="chat({channelId: channel.name})">{{channel.name}}</li>
             </ul>
             <ul>
                 <h3>Direct Messages</h3>
