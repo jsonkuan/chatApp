@@ -1,24 +1,33 @@
-angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService) {
-    $scope.channelId = $stateParams.channelId;
+angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService, channelService) {
+    $scope.channelName = $stateParams.channelName;
     $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super Jakob?', 'Nerd-Dervish', 'Killer-Christian'];
 
     $scope.sendToSettings = function(){
         $state.transitionTo('settings');
     };
-
+  
     $scope.sendToCreateChannel = function() {
         $state.transitionTo('addChannel');
     };
 
+    console.log("ChannelService.get anropas med ", $scope.channelName);
+    if(!$scope.channelName) {
+        $scope.channelName = "General";
+    }
+    channelService.get('?channelName=' + $scope.channelName).then(function(response){
+        console.log("Hepp, channelService.get: ",response);
+    });
+
     $scope.sendMessage = function(input) {
         var message = {user: $rootScope.activeUser.username, date: formatDate(), text: input};
-        $rootScope.messageDB[$scope.channelId].push(message);
+        $rootScope.messageDB[$scope.channelName].push(message);
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
 
+        console.log('$scope.chanelId:', $scope.channelName);
         messageService.post({
-            name: 'General',
+            name: $scope.channelName,
             message: message
         });
 
@@ -44,10 +53,10 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     }
 
     // Generate channel message history
-    if (! $rootScope.messageDB.hasOwnProperty($scope.channelId)) {
-        $rootScope.messageDB[$scope.channelId] = [];
+    if (! $rootScope.messageDB.hasOwnProperty($scope.channelName)) {
+        $rootScope.messageDB[$scope.channelName] = [];
         for (var i = 0; i < rnd(20); i ++) {
-            $rootScope.messageDB[$scope.channelId].push( {
+            $rootScope.messageDB[$scope.channelName].push( {
                 text: $scope.generateMessage(),
                 user: $scope.contacts[rnd($scope.contacts.length) -1],
                 date: formatDate()
