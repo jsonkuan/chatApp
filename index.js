@@ -29,11 +29,19 @@ app.post('/messages', function(request, response) {
 });
 
 // Gets all channels from DB
-app.get('/channel', function(request, response) {
+app.get('/channels', function(request, response) {
     database.collection('channels').find().toArray(function (err, result) {
-        console.log(result, "channel get");
         response.send(result);
     });
+});
+
+app.get('/channel', function(request, response){
+    console.log("request.query: ", request.query);
+    database.collection('channels').findOne({'name' : request.query.channelName}, function(err, result){
+
+        response.send(result);
+    });
+
 });
   
 // Adds channels to DB

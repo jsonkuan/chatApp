@@ -13,7 +13,7 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             //add controller
         })
         .state('chat', {
-            url:'/chat/:channelId',
+            url:'/chat/:channelName',
             controller: 'chatController',
             templateUrl: 'assets/partials/chat.html'
         })
@@ -80,8 +80,12 @@ angular.module('app').factory('channelService', function(REST) {
         post: function(channel) {
             return REST.post(url, channel);
         },
-        get: function() {
-            return REST.get(url);
+        get: function(query) {
+            console.log("Url + query", url + query);
+            return REST.get(url + query);
+        },
+        getAll: function() {
+            return REST.get('/channels');
         }
     };
 });
@@ -90,7 +94,7 @@ app.run(function($rootScope, channelService) {
     $rootScope.channels = [];
 
     $rootScope.checkChannels = function() {
-        channelService.get().then(function(response) {
+        channelService.getAll().then(function(response) {
             if (response.length === 0) {
                 $rootScope.generateChannels();
             } else {
