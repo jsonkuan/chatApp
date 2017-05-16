@@ -26,6 +26,13 @@ app.post('/messages', function(request, response) {
     console.log("Message saved: " , request.body);
     response.send(request.body);
 });
+app.get('/messages', function(request, response) {
+    database.collection('messages').find({channel: request.body}).toArray(function (err, result) {
+        response.send(result);
+        console.log("Request.body", request.body);
+        console.log("Get all messages from channel ", request.body, ": ", result);
+    });
+});
 
 // Gets all channels from DB
 app.get('/channels', function(request, response) {

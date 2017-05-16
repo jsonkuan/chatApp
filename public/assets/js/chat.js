@@ -17,6 +17,9 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     channelService.get('?channelName=' + $scope.channelName).then(function(response){
         console.log("Hepp, channelService.get: ",response);
     });
+    var messagesFromDb = messageService.getAllMessages($scope.channelName);
+
+    console.log("fetched message-object : ", messagesFromDb);
 
     $scope.sendMessage = function(input) {
         var message = {
@@ -31,7 +34,6 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
 
-        console.log('$scope.chanelId:', $scope.channelName);
         messageService.post(message);
 
         $scope.$watch('messageDB', function f() {
@@ -50,6 +52,8 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         }
         return message;
     };
+
+
 
     if (! $rootScope.messageDB) {
         $rootScope.messageDB = {};

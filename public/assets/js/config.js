@@ -75,7 +75,12 @@ app.factory("messageService", ["REST", function (REST) {
     return {
         post: function(message) {
             return REST.post(url, message);
+        },
+        getAllMessages: function(channel) {
+            console.log("Channel in getAllMessages: ",channel);
+            return REST.get(url, channel);
         }
+
     };
 }]);
 
