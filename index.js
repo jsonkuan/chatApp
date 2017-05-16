@@ -22,10 +22,9 @@ MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, databas
 
 // Adds message to channel in DB
 app.post('/messages', function(request, response) {
-    database.collection('channels').updateOne({"name": request.body.name},
-                                            { $push : {"messages": request.body.message}});
-    console.log("Hepp!");
-    response.send("It works");
+    database.collection('messages').insert(request.body);
+    console.log("Message saved: " , request.body);
+    response.send(request.body);
 });
 
 // Gets all channels from DB
