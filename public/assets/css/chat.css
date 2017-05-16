@@ -32,11 +32,6 @@ h1 {
     border-bottom: solid 2px black;
 }
 
-#chat-input-container {
-    margin: 5px 0px;
-    border-radius: 3px;
-}
-
 #chat-input-area {
     margin: 0px 15px 0px 5px;
 }
@@ -75,4 +70,30 @@ div.layout-column {
     font-style: italic;
     font-size: small;
     display: inline-block;
+}
+
+.input-group-addon {
+    border: solid 2px grey;
+    background-color: transparent;
+    margin: 10px 0 100px 10px;
+    height: 40px;
+    border-radius: 3px;
+}
+
+.add-attachment {
+    border: solid 2px grey;
+    background-color: transparent;
+    margin: 10px 0 100px 0;
+    height: 40px;
+    border-radius: 3px;
+}
+
+#chat-input-container {
+    border: solid 2px grey;
+    background-color: transparent;
+    margin: 10px -2px 100px -2px;
+}
+
+#chat-button {
+    margin: 10px 0 100px 10px;
 }

@@ -21,7 +21,7 @@
             </div>
         </header>
         <div layout="column">
-            <div flex="80" id="chat-text-box-container">
+            <div flex="60" id="chat-text-box-container">
                 <div id="chat-text-box-header">
                 </div>
 
@@ -41,10 +41,9 @@
                             smilies-placement="right">
                         </button>
                     </div>
-
-
                     <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @{{channelId}}" flex="100"/>
-                    <md-button class="md-accent md-raised" type="submit" ng-disabled="!chatInput || chatInput.length == 0" ng-click="sendMessage(chatInput)">Send</md-button>
+                    <button class="add-attachment">+</button>
+                    <md-button id="chat-button" class="md-accent md-raised" type="submit" ng-disabled="!chatInput || chatInput.length == 0" ng-click="sendMessage(chatInput)">Send</md-button>
                 </form>
             </md-content>
         </div>
