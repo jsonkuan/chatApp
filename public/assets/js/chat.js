@@ -12,17 +12,20 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         console.log("Hepp, channelService.get: ",response);
     });
     $scope.sendMessage = function(input) {
-        var message = {user: $rootScope.activeUser.username, date: formatDate(), text: input};
+        var message = {
+            user: $rootScope.activeUser.username, 
+            date: formatDate(), 
+            text: input, channel: 
+            $scope.channelName
+        };
+
         $rootScope.messageDB[$scope.channelName].push(message);
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
 
         console.log('$scope.chanelId:', $scope.channelName);
-        messageService.post({
-            name: $scope.channelName,
-            message: message
-        });
+        messageService.post(message);
 
         $scope.$watch('messageDB', function f() {
             var chatContent = document.getElementById('chat-text-box-container');
