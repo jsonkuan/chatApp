@@ -13,7 +13,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     });
     $scope.sendMessage = function(input) {
         var message = {
-            user: $rootScope.activeUser.username, 
+            user: $rootScope.activeUser._id, 
             date: formatDate(), 
             text: input, channel: 
             $scope.channelName
