@@ -16,11 +16,11 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     channelService.get('?channelName=' + $scope.channelName).then(function(response){
         console.log("Hepp! channelService.get: ",response);
     });
-
     $scope.sendMessage = function(input) {
         console.log("Activeuser: ",$rootScope.activeUser);
         var message = {
-            user: $rootScope.activeUser._id, 
+            username: $rootScope.activeUser.username,
+            userId: $rootScope.activeUser._id, 
             date: formatDate(), 
             text: input, channel: 
             $scope.channelName
