@@ -1,23 +1,23 @@
-angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService, channelService) {
+angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService, channelService, userService) {
     $scope.channelName = $stateParams.channelName;
     $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super Jakob?', 'Nerd-Dervish', 'Killer-Christian'];
+    $scope.messageDb = [];
+    $scope.usersDb = [];
 
     $scope.sendToSettings = function(){
         $state.transitionTo('settings');
     };
-  
     $scope.sendToCreateChannel = function() {
         $state.transitionTo('addChannel');
     };
-
-    console.log("ChannelService.get anropas med ", $scope.channelName);
     if(!$scope.channelName) {
         $scope.channelName = "General";
     }
     channelService.get('?channelName=' + $scope.channelName).then(function(response){
-        console.log("Hepp, channelService.get: ",response);
+        console.log("Hepp! channelService.get: ",response);
     });
     $scope.sendMessage = function(input) {
+        console.log("Activeuser: ",$rootScope.activeUser);
         var message = {
             username: $rootScope.activeUser.username,
             userId: $rootScope.activeUser._id, 
@@ -25,47 +25,46 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             text: input, channel: 
             $scope.channelName
         };
-
-        $rootScope.messageDB[$scope.channelName].push(message);
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
 
-        console.log('$scope.chanelId:', $scope.channelName);
         messageService.post(message);
+        $scope.getMessages();
 
-        $scope.$watch('messageDB', function f() {
+        $scope.$watch('messageDb', function f() {
             var chatContent = document.getElementById('chat-text-box-container');
             chatContent.scrollTop = chatContent.scrollHeight;
         }, true);
     };
-
-    // Temp message generator
-    $scope.generateMessage = function() {
-        var words = ['hello', 'i', 'me', 'you', 'we', 'they', 'want', 'pr0n', 'cat', 'like', 'aaarg!', 'wtf'];
-        var message = '';
-        var count = 2 + rnd(6);
-        for (var i = 0; i < count; i++) {
-            message += (words[rnd(words.length) -1] + ' ');
-        }
-        return message;
+    $scope.getUsers = function() {
+        userService.getUsers().then(function(response){
+        $scope.usersDb = response;
+        });
     };
+    $scope.getUsers();
 
-    if (! $rootScope.messageDB) {
-        $rootScope.messageDB = {};
-    }
+    $scope.getMessages = function() {
+        $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.channelName).then(function(response){
+            console.log("Hepp! messageService.getAllMessages: ", response);
+            $scope.messageDb = response;
+            $scope.addUserToMsg($scope.usersDb, $scope.messageDb);
+        });
+    };
+    $scope.getMessages();
 
-    // Generate channel message history
-    if (! $rootScope.messageDB.hasOwnProperty($scope.channelName)) {
-        $rootScope.messageDB[$scope.channelName] = [];
-        for (var i = 0; i < rnd(20); i ++) {
-            $rootScope.messageDB[$scope.channelName].push( {
-                text: $scope.generateMessage(),
-                user: $scope.contacts[rnd($scope.contacts.length) -1],
-                date: formatDate()
-            });
+    $scope.addUserToMsg = function(users, messages) {
+
+        for(var i = 0; i < messages.length; i++) {
+            for(var e = 0; e < users.length; e++){
+
+                if(messages[i].user === users[e]._id) {
+                    messages[i].username = users[e].username;
+                }
+            }
         }
-    }
+
+    };
 
     $scope.startDirectChat = function(userA, userB) {
         channelService.get('/direct?sender=' + userA + '&recipient=' + userB).then(function(response) {

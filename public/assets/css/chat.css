@@ -18,6 +18,10 @@ h1 {
     flex: 20;
 }
 
+h3.channel-header {
+    text-align: center;
+}
+
 .channelMsgLists:hover {
     text-decoration: underline;
     color: lightblue;
