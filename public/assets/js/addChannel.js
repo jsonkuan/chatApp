@@ -1,9 +1,8 @@
 angular.module('app').controller("channelController", function ($scope, $state, $rootScope, channelService) {
     $scope.createChannel = function(newChannel) {
-
         var channels = {
             name: newChannel.channelName,
-            private: false,
+            accessability: $scope.publicOrPrivate,
             user: [],
             timestamp: ""
         };
@@ -13,5 +12,8 @@ angular.module('app').controller("channelController", function ($scope, $state, 
             $state.go("chat");
         });
     }
+    $scope.publicOrPrivate = "Public";
+    $scope.onChange = function(state) {
+        return state ? ($scope.publicOrPrivate = "Private") : ($scope.publicOrPrivate = "Public");
+    }
 });
-

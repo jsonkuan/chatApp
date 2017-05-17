@@ -4,7 +4,7 @@
             <h1>Create a channel</h1>
             <p>Channels are where your team communicates. They're best when organized around a topic - #pr0n for example.</p>
             <md-input-container>
-                <label>{Public}</label> <md-switch name="publicSwitch" ng-model="isPublic" aria-label="Public"> Public? <!--Public or private? --> </md-switch>
+                <md-switch ng-model="publicOrPrivateSwitch" aria-label="public or private switch" ng-change="onChange(publicOrPrivateSwitch)">{{publicOrPrivate}}</md-switch>
             </md-input-container>
             <form name = "addChannelForm" layout="column" novalidate>
                 <md-input-container>
