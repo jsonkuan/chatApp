@@ -1,0 +1,29 @@
+<md-content>
+    <div layout = "row" layout-align="center">
+        <div layout = "column" flex="60">
+            <h1>Create a channel</h1>
+            <p>Channels are where your team communicates. They're best when organized around a topic - #pr0n for example.</p>
+            <md-input-container>
+                <label>{Public}</label> <md-switch name="publicSwitch" ng-model="isPublic" aria-label="Public"> Public? <!--Public or private? --> </md-switch>
+            </md-input-container>
+            <form name = "addChannelForm" layout="column" novalidate>
+                <md-input-container>
+                    <label>Name</label>
+                    <input type ="channel" ng-model=activeUser.channel required>
+                </md-input-container>
+                <md-input-container>
+                    <label>Purpose (optional)</label>
+                    <input type = "text" ng-model=activeUser.channelPurpose>
+                </md-input-container>
+                <md-input-container>
+                    <label>Send Invites to: (optional)</label>
+                    <input type = "password" ng-model=activeUser.channelPassword>
+                </md-input-container>
+                <div layout = "row" layout-align= "end" >
+                    <md-button ui-sref= "chat" >Cancel</md-button >
+                    <md-button class="md-accent" ng-click ="createChannel(activeUser)">Create Channel</md-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</md-content>

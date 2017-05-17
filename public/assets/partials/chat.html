@@ -5,8 +5,11 @@
         </div>
         <ul>
             <ul>
-                <h3>Channels</h3>
-                <li class="channelMsgLists" ng-repeat="channel in channels" ui-sref="chat({channelId: channel})">{{channel}}</li>
+                <h3>Channels</h3> 
+                <md-button name="addChannel" ng-click="sendToCreateChannel()">
+                      <md-icon md-svg-src="assets/images/ic_add_circle_outline_black_24px.svg"></md-icon>
+                </md-button>
+                                               <li class="channelMsgLists" ng-repeat="channel in channels" ui-sref="chat({channelId: channel.name})">{{channel.name}}</li>
             </ul>
             <ul>
                 <h3>Direct Messages</h3>
@@ -26,8 +29,10 @@
                 </div>
 
                 <md-content layout="column">
-                    <div id="chat-box" smilies="message.text" ng-repeat="message in messageDB[channelId] track by $index">
-                        <p id="username">{{message.user}}</p>
+
+                    <div id="chat-box" smilies="message.text" ng-repeat="message in messageDB[channelName] track by $index">
+                        <p id="username">{{message.username}}</p>
+                  
                         <p id="date">{{message.date}}</p>
                         <p id="messagetext">{{message.text}}</p>
                     </div>
@@ -41,9 +46,10 @@
                             smilies-placement="right">
                         </button>
                     </div>
-                    <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @{{channelId}}" flex="100"/>
+                    <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @{{channelName}}" flex="100"/>
                     <button class="add-attachment">+</button>
                     <md-button id="chat-button" class="md-accent md-raised" type="submit" ng-disabled="!chatInput || chatInput.length == 0" ng-click="sendMessage(chatInput)">Send</md-button>
+
                 </form>
             </md-content>
         </div>

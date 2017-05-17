@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial', 'ngSanitize', 'ui.bootstrap', 'angular-smilies']);
+var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload', 'ngSanitize', 'ui.bootstrap', 'angular-smilies']);
 
 app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterProvider) {
     $qProvider.errorOnUnhandledRejections(false);
@@ -13,35 +13,133 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             //add controller
         })
         .state('chat', {
-            url:'/chat/:channelId',
+            url:'/chat/:channelName',
             controller: 'chatController',
             templateUrl: 'assets/partials/chat.html'
         })
         .state('settings', {
             url: '/settings',
-            controller: "settingsController",
+            controller: 'settingsController',
             templateUrl: 'assets/partials/settings.html'
-    });
+        })
+        .state('addChannel', {
+            url: '/addChannel',
+            controller: 'channelController',
+            templateUrl: 'assets/partials/addChannel.html'
+        })
 });
 
-app.factory("httpService", ["$http", function ($http){
-    return{
-        post: function (user){
-            $http.post("/", user)
-                .then(function(response){
-
-                    console.log(response.data);
-                    console.log(user);
+app.factory('REST', ['$http', '$q', function($http, $q) {
+    return {
+        get: function get(url) {
+            return $q(function(resolve) {
+                $http.get(url).then(function(response) {
+                    resolve(response.data);
                 });
+            });
         },
-        getUsers: function(){
-            return $http({
-                method: 'GET',
-                url: 'http://localhost:3000'
-            }).then(function(response){
-
-
+        post: function post(url, body) {
+            return $q(function(resolve) {
+                $http.post(url, body).then(function(response) {
+                    resolve(response);
+                });
+            });
+        },
+        put: function put(url, body) {
+            return $q(function(resolve) {
+                $http.put(url, body).then(function(response) {
+                    resolve(response);
+                });
             });
         }
-    }
+    };
 }]);
+
+app.factory("userService", ["REST", function(REST) {
+    var url = '/users';
+    return{
+        post: function (user){
+            return REST.post(url, user);
+        },
+        updateUser: function (user){
+            return REST.put(url, user);
+        },
+        getUsers: function(){
+            return REST.get(url);
+        }
+    };
+}]);
+
+app.factory("messageService", ["REST", function (REST) {
+    var url = '/messages';
+    return {
+        post: function(message) {
+            return REST.post(url, message);
+        }
+    };
+}]);
+
+angular.module('app').factory('channelService', function(REST) {
+    var url = '/channel';
+    return {
+        post: function(channel) {
+            return REST.post(url, channel);
+        },
+        get: function(query) {
+            console.log("Url + query", url + query);
+            return REST.get(url + query);
+        },
+        getAll: function() {
+            return REST.get('/channels');
+        }
+    };
+});
+
+app.run(function($rootScope, channelService) {
+    $rootScope.channels = [];
+
+    $rootScope.checkChannels = function() {
+        channelService.getAll().then(function(response) {
+            if (response.length === 0) {
+                $rootScope.generateChannels();
+            } else {
+                $rootScope.channels = response;
+            }
+        });
+    };
+
+    $rootScope.generateChannels = function() {
+        var channels = [{
+            name: "General",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "Work",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "Afterwork",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "Crazy cat-lady Videos",
+            private: false,
+            user: [],
+            message: []
+        }, {
+            name: "pr0n",
+            private: false,
+            user: [],
+            message: []
+        }];
+        channelService.post(channels).then(function(response){
+            console.log("Generating new channels.", response);
+            $rootScope.checkChannels();
+        });
+    };
+
+    $rootScope.checkChannels();
+});
