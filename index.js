@@ -74,9 +74,10 @@ app.put('/users', function(request, response) {
 });
 
 // adds avatar image to localhost
-app.post('/public/assets/images', upload.single('avatar'), function(req, res) {
-    console.log("in Server");
-    console.log(req);
+app.post('/upload',upload.single('avatar'), function(req, res) {
+
+    res.send({ test: req.file, test2: req.files });
+
 });
 
 // used port
