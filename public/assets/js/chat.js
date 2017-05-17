@@ -1,25 +1,20 @@
 angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService, channelService) {
     $scope.channelName = $stateParams.channelName;
     $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super Jakob?', 'Nerd-Dervish', 'Killer-Christian'];
+    $scope.messageDb = [];
 
     $scope.sendToSettings = function(){
         $state.transitionTo('settings');
     };
-  
     $scope.sendToCreateChannel = function() {
         $state.transitionTo('addChannel');
     };
-
     if(!$scope.channelName) {
         $scope.channelName = "General";
     }
     channelService.get('?channelName=' + $scope.channelName).then(function(response){
         console.log("Hepp! channelService.get: ",response);
     });
-    var messagesFromDb = messageService.getAllMessages('?channel=' + $scope.channelName).then(function(response){
-        console.log("Hepp! messageService.getAllMessages: ", response);
-    });
-    console.log("fetched message-object : ", messagesFromDb);
 
     $scope.sendMessage = function(input) {
         var message = {
@@ -28,22 +23,30 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             text: input, channel: 
             $scope.channelName
         };
-
-        $rootScope.messageDB[$scope.channelName].push(message);
+        //$rootScope.messageDB[$scope.channelName].push(message);
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
 
         messageService.post(message);
+        $scope.getMessages();
 
-        $scope.$watch('messageDB', function f() {
+        $scope.$watch('messageDb', function f() {
             var chatContent = document.getElementById('chat-text-box-container');
             chatContent.scrollTop = chatContent.scrollHeight;
         }, true);
     };
 
+    $scope.getMessages = function() {
+        $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.channelName).then(function(response){
+            console.log("Hepp! messageService.getAllMessages: ", response);
+            $scope.messageDb = response;
+        });
+    };
+    $scope.getMessages();
+
     // Temp message generator
-    $scope.generateMessage = function() {
+    /*$scope.generateMessage = function() {
         var words = ['hello', 'i', 'me', 'you', 'we', 'they', 'want', 'pr0n', 'cat', 'like', 'aaarg!', 'wtf'];
         var message = '';
         var count = 2 + rnd(6);
@@ -52,13 +55,9 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         }
         return message;
     };
-
-
-
     if (! $rootScope.messageDB) {
         $rootScope.messageDB = {};
     }
-
     // Generate channel message history
     if (! $rootScope.messageDB.hasOwnProperty($scope.channelName)) {
         $rootScope.messageDB[$scope.channelName] = [];
@@ -69,7 +68,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
                 date: formatDate()
             });
         }
-    }
+    }*/
 });
 
 // Temp randomizing function

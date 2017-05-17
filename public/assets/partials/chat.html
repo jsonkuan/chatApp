@@ -29,7 +29,7 @@
                 </div>
 
                 <md-content layout="column">
-                    <div id="chat-box" ng-repeat="message in messageDB[channelName] track by $index">
+                    <div id="chat-box" ng-repeat="message in messageDb track by $index">
                         <p id="username">{{message.user}}</p>
                         <p id="date">{{message.date}}</p>
                         <p id="messagetext">{{message.text}}</p>
