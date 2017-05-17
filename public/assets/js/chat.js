@@ -56,7 +56,6 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     $scope.addUserToMsg = function(users, messages) {
 
         for(var i = 0; i < messages.length; i++) {
-
             for(var e = 0; e < users.length; e++){
 
                 if(messages[i].user === users[e]._id) {
