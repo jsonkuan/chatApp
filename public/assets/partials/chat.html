@@ -24,13 +24,15 @@
             </div>
         </header>
         <div layout="column">
-            <div flex="80" id="chat-text-box-container">
+            <div flex="75" id="chat-text-box-container">
                 <div id="chat-text-box-header">
                 </div>
 
                 <md-content layout="column">
-                    <div id="chat-box" ng-repeat="message in messageDB[channelName] track by $index">
+
+                    <div id="chat-box" smilies="message.text" ng-repeat="message in messageDB[channelName] track by $index">
                         <p id="username">{{message.username}}</p>
+                  
                         <p id="date">{{message.date}}</p>
                         <p id="messagetext">{{message.text}}</p>
                     </div>
@@ -38,8 +40,16 @@
             </div>
             <md-content id="chat-input-area" layout="row">
                 <form layout="row" flex="100">
+                    <div class="input-group">
+                        <button class="input-group-addon"
+                            smilies-selector="chatInput"
+                            smilies-placement="right">
+                        </button>
+                    </div>
                     <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @{{channelName}}" flex="100"/>
-                    <md-button class="md-accent md-raised" type="submit" ng-disabled="!chatInput || chatInput.length == 0" ng-click="sendMessage(chatInput)">Send</md-button>
+                    <button class="add-attachment">+</button>
+                    <md-button id="chat-button" class="md-accent md-raised" type="submit" ng-disabled="!chatInput || chatInput.length == 0" ng-click="sendMessage(chatInput)">Send</md-button>
+
                 </form>
             </md-content>
         </div>
