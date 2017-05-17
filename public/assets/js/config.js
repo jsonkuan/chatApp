@@ -75,6 +75,10 @@ app.factory("messageService", ["REST", function (REST) {
     return {
         post: function(message) {
             return REST.post(url, message);
+        },
+        getAllMessages: function(query) {
+            console.log("messageService.get query: ",query);
+            return REST.get(url + query);
         }
     };
 }]);
@@ -86,7 +90,7 @@ angular.module('app').factory('channelService', function(REST) {
             return REST.post(url, channel);
         },
         get: function(query) {
-            console.log("Url + query", url + query);
+            console.log("channelService.get Url + query", url + query);
             return REST.get(url + query);
         },
         getAll: function() {
