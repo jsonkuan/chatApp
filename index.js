@@ -73,12 +73,13 @@ app.put('/users', function(request, response) {
         "password" : user.password, "avatar" : user.avatar});
 });
 
+// adds avatar image to localhost
 app.post('/public/assets/images', upload.single('avatar'), function(req, res) {
     console.log("in Server");
     console.log(req);
 });
 
-
+// used port
 app.listen(3000, function() {
     console.log("Starting new server");
 });
