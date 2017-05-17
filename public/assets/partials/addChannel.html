@@ -9,19 +9,19 @@
             <form name = "addChannelForm" layout="column" novalidate>
                 <md-input-container>
                     <label>Name</label>
-                    <input type ="channel" ng-model=activeUser.channel required>
+                    <input type ="channel" ng-model='newChannel.channelName' required>
                 </md-input-container>
                 <md-input-container>
                     <label>Purpose (optional)</label>
-                    <input type = "text" ng-model=activeUser.channelPurpose>
+                    <input type = "text" ng-model='newChannel.channelPurpose'>
                 </md-input-container>
                 <md-input-container>
                     <label>Send Invites to: (optional)</label>
-                    <input type = "password" ng-model=activeUser.channelPassword>
+                    <input type = "password" ng-model='newChannel.channelPassword'>
                 </md-input-container>
                 <div layout = "row" layout-align= "end" >
-                    <md-button ui-sref= "chat" >Cancel</md-button >
-                    <md-button class="md-accent" ng-click ="createChannel(activeUser)">Create Channel</md-button>
+                    <md-button ui-sref= "chat"  aria-label="CancelButton" >Cancel</md-button >
+                    <md-button class="md-accent" ng-click ="createChannel(newChannel)" aria-label="AddButton">Create Channel</md-button>
                 </div>
             </form>
         </div>
