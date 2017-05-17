@@ -55,12 +55,12 @@ app.factory("userService", ["REST", function(REST) {
     var avatarUrl = '/public/assets/images';
     return{
         post: function (user){
-            return REST.post(url, user);
+            return REST.post(url, user)
         },
         postAvatar: function(avatar){
-            console.log("post avatar");
+            console.log("Controller");
             console.log(avatar);
-            return REST.post(avatarUrl, avatar);
+            return REST.post(avatarUrl, avatar)
         },
         updateUser: function (user){
             return REST.put(url, user);

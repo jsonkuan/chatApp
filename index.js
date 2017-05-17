@@ -7,10 +7,11 @@ var path = require('path');
 var fs = require('fs-extra');
 var app = express();
 var multer  = require('multer');
-var upload = multer({ dest: 'public/assets/images/' });
+var upload = multer({ dest: 'public/assets/images/'});
 
 app.use(body.json());
-app.use(body.json({limit: '50mb'}));
+app.use(body.json({limit: '10000mb'}));
+app.use(body.urlencoded({limit: '5mb', extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -73,7 +74,8 @@ app.put('/users', function(request, response) {
 });
 
 app.post('/public/assets/images', upload.single('avatar'), function(req, res) {
-
+    console.log("in Server");
+    console.log(req);
 });
 
 

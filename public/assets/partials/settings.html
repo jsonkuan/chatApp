@@ -7,7 +7,7 @@
                 <img src="{{profileImage}}" class="thumb" ngf-thumbnail="activeUser.avatar" alt="Profile picture" flex="25"
                      style='height: 100px; width: 80px; object-fit: contain'>
             </div>
-            <form action="http://localhost:3000/public/assets/images" method="post" enctype="multipart/form-data" ng-submit="uploadAvatar(activeUser.avatar)">
+            <form enctype="multipart/form-data" ng-submit="uploadAvatar(activeUser.avatar)">
                 <input class="ng-hide" id="selected" type="file" ngf-select ng-model="activeUser.avatar" name="avatar"><br>
                 <input class="ng-hide" type = "submit" id="submit" value="Upload">
                 <label for="selected" class="md-button md-raised md-primary">Select image</label>

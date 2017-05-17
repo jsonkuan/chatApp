@@ -4,7 +4,10 @@ angular.module('app').controller("settingsController", function ($scope, $state,
     $scope.profileImage = "assets/images/defaultProfile.png";
 
     $scope.uploadAvatar = function (avatar) {
-      console.log(avatar.file.path);
+      console.log(avatar);
+
+
+      userService.postAvatar(avatar);
     };
 
 
