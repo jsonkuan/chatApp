@@ -1,41 +1,34 @@
-<form action="http://localhost:3000/public/assets/images" enctype="multipart/form-data" method="post">
-    <input type="text" name="title"><br>
-    <input type="file" name="avatar" multiple="multiple"><br>
-    <input type="submit" ng-model="activeUser.avatar" value="Upload">
-    </form>
-
-
-
 <md-content>
     <div layout = "row" layout-align="center">
         <div layout = "column" flex="60">
             <h2>Edit your profile</h2>
             <h3>{{activeUser.email}}</h3>
+            <div layout = "row" >
+                <img src="{{profileImage}}" class="thumb" ngf-thumbnail="activeUser.avatar" alt="Profile picture" flex="25"
+                     style='height: 100px; width: 80px; object-fit: contain'>
+            </div>
+            <form action="http://localhost:3000/public/assets/images" method="post" enctype="multipart/form-data" ng-submit="uploadAvatar(activeUser.avatar)">
+                <input class="ng-hide" id="selected" type="file" ngf-select ng-model="activeUser.avatar" name="avatar"><br>
+                <input class="ng-hide" type = "submit" id="submit" value="Upload">
+                <label for="selected" class="md-button md-raised md-primary">Select image</label>
+                <label for="submit" class="md-button md-raised md-primary">Use this</label>
+            </form>
             <form name = "settingsForm" layout="column" novalidate>
-                <div layout = "row">
-                    <img ngf-thumbnail="picFile" class="thumb" alt="Profile picture"
-                         style='height: 100px; width: 80px; object-fit: contain'>
-                </div>
-                <div layout = "row">
-                    <input class="ng-hide" id="input-file-id" type="file" ngf-select name="file"
-                    accept="image/*">
-                    <label for="input-file-id" class="md-button md-raised md-primary">Choose image</label>
-                </div>
                 <md-input-container>
                     <label>Change E-Mail</label>
-                    <input type = "email" ng-model=activeUser.email required>
+                    <input type = "email" ng-model= activeUser.email required>
                 </md-input-container>
                 <md-input-container>
                     <label>Change username</label>
-                    <input type = "text" ng-model=activeUser.username required>
+                    <input type = "text" ng-model= activeUser.username required>
                 </md-input-container>
                 <md-input-container>
                     <label>Change Password</label>
-                    <input type = "password" ng-model=activeUser.password required>
+                    <input type = "password" ng-model= activeUser.password required>
                 </md-input-container>
                 <div layout = "row" layout-align= "end" >
-                    <md-button ui-sref= "chat" > Cancel </md-button >
-                <md-button class="md-accent" ng-click ="saveSettings(activeUser)">Save changes</md-button>
+                    <md-button ui-sref= "chat"> Cancel </md-button >
+                <md-button class="md-accent" ng-click="saveSettings(activeUser)">Save changes</md-button>
         </div>
         </form>
     </div>

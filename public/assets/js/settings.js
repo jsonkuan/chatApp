@@ -1,6 +1,12 @@
-angular.module('app').controller("settingsController", function ($scope, $state, $rootScope, Upload, userService) {
+angular.module('app').controller("settingsController", function ($scope, $state, $rootScope, userService) {
 
     //$scope.userData.channels = $rootScope.activeUser.channels;
+    $scope.profileImage = "assets/images/defaultProfile.png";
+
+    $scope.uploadAvatar = function (avatar) {
+      console.log(avatar.file.path);
+    };
+
 
     $scope.saveSettings = function (activeUser) {
         $rootScope.activeUser.password = activeUser.password;
