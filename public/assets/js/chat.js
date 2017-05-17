@@ -66,6 +66,31 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             });
         }
     }
+
+    $scope.startDirectChat = function(userA, userB) {
+        channelService.get('/direct?sender=' + userA + '&recipient=' + userB).then(function(response) {
+            if (!response) {
+                $scope.createDirectChat(userA, userB);
+            } else {
+                //TODO open chat with response._id
+            }
+        });
+    };
+
+    $scope.createDirectChat = function(userA, userB) {
+        channelService.post({
+            name: userA + userB,
+            purpose: '',
+            accessability: 'direct',
+            users: [userA, userB],
+            timestamp: ''
+        }).then(function(response) {
+            var users = response.data[0].users;
+            $scope.startDirectChat(users[0], users[1]); 
+        });
+    };
+
+    //Example: $scope.startDirectChat($rootScope.activeUser._id, otherPerson._id);
 });
 
 // Temp randomizing function
