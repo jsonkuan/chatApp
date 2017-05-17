@@ -29,8 +29,8 @@
                 </div>
 
                 <md-content layout="column">
-                    <div id="chat-box" ng-repeat="message in messageDb track by $index">
-                        <p id="username">{{message.user}}</p>
+                    <div id="chat-box" ng-repeat="message in messageDb  | orderBy: 'date' track by $index">
+                        <p id="username">{{message.username}}</p>
                         <p id="date">{{message.date}}</p>
                         <p id="messagetext">{{message.text}}</p>
                     </div>

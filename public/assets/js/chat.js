@@ -1,7 +1,8 @@
-angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService, channelService) {
+angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService, channelService, userService) {
     $scope.channelName = $stateParams.channelName;
     $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super Jakob?', 'Nerd-Dervish', 'Killer-Christian'];
     $scope.messageDb = [];
+    $scope.usersDb = [];
 
     $scope.sendToSettings = function(){
         $state.transitionTo('settings');
@@ -17,13 +18,13 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     });
 
     $scope.sendMessage = function(input) {
+        console.log("Activeuser: ",$rootScope.activeUser);
         var message = {
             user: $rootScope.activeUser._id, 
             date: formatDate(), 
             text: input, channel: 
             $scope.channelName
         };
-        //$rootScope.messageDB[$scope.channelName].push(message);
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
@@ -36,39 +37,34 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             chatContent.scrollTop = chatContent.scrollHeight;
         }, true);
     };
+    $scope.getUsers = function() {
+        userService.getUsers().then(function(response){
+        $scope.usersDb = response;
+        });
+    };
+    $scope.getUsers();
 
     $scope.getMessages = function() {
         $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.channelName).then(function(response){
             console.log("Hepp! messageService.getAllMessages: ", response);
             $scope.messageDb = response;
+            $scope.addUserToMsg($scope.usersDb, $scope.messageDb);
         });
     };
     $scope.getMessages();
 
-    // Temp message generator
-    /*$scope.generateMessage = function() {
-        var words = ['hello', 'i', 'me', 'you', 'we', 'they', 'want', 'pr0n', 'cat', 'like', 'aaarg!', 'wtf'];
-        var message = '';
-        var count = 2 + rnd(6);
-        for (var i = 0; i < count; i++) {
-            message += (words[rnd(words.length) -1] + ' ');
+    $scope.addUserToMsg = function(users, messages) {
+
+        for(var i = 0; i < messages.length; i++) {
+
+            for(var e = 0; e < users.length; e++){
+
+                if(messages[i].user === users[e]._id) {
+                    messages[i].username = users[e].username;
+                }
+            }
         }
-        return message;
     };
-    if (! $rootScope.messageDB) {
-        $rootScope.messageDB = {};
-    }
-    // Generate channel message history
-    if (! $rootScope.messageDB.hasOwnProperty($scope.channelName)) {
-        $rootScope.messageDB[$scope.channelName] = [];
-        for (var i = 0; i < rnd(20); i ++) {
-            $rootScope.messageDB[$scope.channelName].push( {
-                text: $scope.generateMessage(),
-                user: $scope.contacts[rnd($scope.contacts.length) -1],
-                date: formatDate()
-            });
-        }
-    }*/
 });
 
 // Temp randomizing function

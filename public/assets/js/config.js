@@ -80,7 +80,6 @@ app.factory("messageService", ["REST", function (REST) {
             console.log("messageService.get query: ",query);
             return REST.get(url + query);
         }
-
     };
 }]);
 

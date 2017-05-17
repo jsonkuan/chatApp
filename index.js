@@ -51,7 +51,6 @@ app.get('/channel', function(request, response){
 // Adds channels to DB
 app.post('/channel', function(request, response) {
     database.collection('channels').insert(request.body);
-    console.log("Channel post works" + request.body);
     response.send("Channel post works" + request.body);
 });
 
