@@ -10,15 +10,14 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         $state.transitionTo('addChannel');
     };
 
-    console.log("ChannelService.get anropas med ", $scope.channelName);
     if(!$scope.channelName) {
         $scope.channelName = "General";
     }
     channelService.get('?channelName=' + $scope.channelName).then(function(response){
-        console.log("Hepp, channelService.get: ",response);
+        console.log("Hepp! channelService.get: ",response);
     });
     var messagesFromDb = messageService.getAllMessages('?channel=' + $scope.channelName).then(function(response){
-        console.log("Hepp, messageService.getAllMessages: ", response);
+        console.log("Hepp! messageService.getAllMessages: ", response);
     });
     console.log("fetched message-object : ", messagesFromDb);
 

@@ -26,25 +26,23 @@ app.post('/messages', function(request, response) {
     console.log("Message saved: " , request.body);
     response.send(request.body);
 });
+// fetches message from Db
 app.get('/messages', function(request, response) {
     database.collection('messages').find({'channel': request.query.channel}).toArray(function (err, result) {
         response.send(result);
-        console.log("Request.query: ", request.query);
-        console.log("Get all messages from channel ", request.query, ": ", result);
+        console.log("Messages from ", request.query.channel, ": ", result);
     });
 });
 
-// Gets all channels from DB
+// gets all channels from DB
 app.get('/channels', function(request, response) {
     database.collection('channels').find().toArray(function (err, result) {
         response.send(result);
     });
 });
-
+// gets specific channel from Db
 app.get('/channel', function(request, response){
-    console.log("request.query: ", request.query);
     database.collection('channels').findOne({'name' : request.query.channelName}, function(err, result){
-
         response.send(result);
     });
 
