@@ -17,8 +17,9 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     channelService.get('?channelName=' + $scope.channelName).then(function(response){
         console.log("Hepp, channelService.get: ",response);
     });
-    var messagesFromDb = messageService.getAllMessages($scope.channelName);
-
+    var messagesFromDb = messageService.getAllMessages('?channel=' + $scope.channelName).then(function(response){
+        console.log("Hepp, messageService.getAllMessages: ", response);
+    });
     console.log("fetched message-object : ", messagesFromDb);
 
     $scope.sendMessage = function(input) {

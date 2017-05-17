@@ -27,10 +27,10 @@ app.post('/messages', function(request, response) {
     response.send(request.body);
 });
 app.get('/messages', function(request, response) {
-    database.collection('messages').find({channel: request.body}).toArray(function (err, result) {
+    database.collection('messages').find({'channel': request.query.channel}).toArray(function (err, result) {
         response.send(result);
-        console.log("Request.body", request.body);
-        console.log("Get all messages from channel ", request.body, ": ", result);
+        console.log("Request.query: ", request.query);
+        console.log("Get all messages from channel ", request.query, ": ", result);
     });
 });
 
