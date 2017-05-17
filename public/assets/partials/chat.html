@@ -3,18 +3,20 @@
         <div id="app_logo">
             <img src="assets/images/snakk_logo.png" alt="sNakk" />
         </div>
+        <div layout="row" layout-align="center">
+            <h3 class="channel-header" flex="100">Channels</h3> 
+            <md-button id="add-channel-button" name="addChannel" ng-click="sendToCreateChannel()"  aria-label="AddChannelButton">
+            <md-icon md-svg-src="assets/images/ic_add_circle_outline_black_24px.svg"></md-icon>
+            </md-button>
+        </div>
         <ul>
-            <ul>
-                <h3>Channels</h3> 
-                <md-button name="addChannel" ng-click="sendToCreateChannel()"  aria-label="AddChannelButton">
-                      <md-icon md-svg-src="assets/images/ic_add_circle_outline_black_24px.svg"></md-icon>
-                </md-button>
-                <li class="channelMsgLists" ng-repeat="channel in channels" ui-sref="chat({channelId: channel.name})">{{channel.name}}</li>
-            </ul>
-            <ul>
-                <h3>Direct Messages</h3>
-                <li class="channelMsgLists" ng-repeat="contact in contacts" ui-sref="chat({channelId: contact})">{{contact}}</li>
-            </ul>
+           <li class="channelMsgLists" ng-repeat="channel in channels" ui-sref="chat({channelId: channel.name})">{{channel.name}}</li>
+        </ul>           
+        <div layout="row" layout-align="center">
+             <h3 class="channel-header" flex="100">Direct Messages</h3>
+        </div>
+        <ul>
+            <li class="channelMsgLists" ng-repeat="contact in contacts" ui-sref="chat({channelId: contact})">{{contact}}</li>
         </ul>
     </aside>
     <main id="chat-main" flex="80">
@@ -27,9 +29,7 @@
             <div flex="75" id="chat-text-box-container">
                 <div id="chat-text-box-header">
                 </div>
-
                 <md-content layout="column">
-
                     <div id="chat-box" smilies="message.text" ng-repeat="message in messageDB[channelName] track by $index">
                         <p id="username">{{message.username}}</p>
                   
