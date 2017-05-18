@@ -1,8 +1,15 @@
-angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService, channelService, userService) {
+angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService, channelService, userService, userChannels, currentChannel) {
+    console.log('channel', userChannels);
+    $scope.channels = userChannels;
+    $scope.currentChannel = currentChannel;
     $scope.channelName = $stateParams.channelName;
     $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super Jakob?', 'Nerd-Dervish', 'Killer-Christian'];
     $scope.messageDb = [];
     $scope.usersDb = [];
+
+    $scope.openChat = function(chat) {
+
+    };
 
     $scope.sendToSettings = function(){
         $state.transitionTo('settings');

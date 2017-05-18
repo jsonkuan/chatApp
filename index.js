@@ -41,16 +41,33 @@ app.post('/messages', function(request, response) {
 app.get('/messages', function(request, response) {
     database.collection('messages').find({'channel': request.query.channel}).toArray(function (err, result) {
         response.send(result);
-        console.log("Messages from ", request.query.channel, ": ", result);
+        //console.log("Messages from ", request.query.channel, ": ", result);
     });
 });
 
-// gets all channels from DB
+// gets all channels for user from DB
 app.get('/channels', function(request, response) {
-    database.collection('channels').find().toArray(function (err, result) {
-        response.send(result);
-    });
+    if (request.query.user) {
+        var user = request.query.user;
+        database.collection('channels').find(
+            { $or: [ {'accessability' : 'public'},
+                     { $and: [ {'accessability' : 'private'}, 
+                               {'users' : {$in: [user]}} ] }
+            ]})
+        .toArray(function(error, result) {
+            if (error) {
+                response.send(error);
+            } else {
+                response.send(result);
+            }
+        });
+    } else {
+        database.collection('channels').find().toArray(function (err, result) {
+            response.send(result);
+        });
+    }
 });
+
 // gets specific channel from Db
 app.get('/channel', function(request, response){
     database.collection('channels').findOne({'name' : request.query.channelName}, function(err, result){
