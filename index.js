@@ -4,7 +4,6 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var database;
 var path = require('path');
-var fs = require('fs-extra');
 var app = express();
 var multer  = require('multer');
 var mime = require('mime-types');
