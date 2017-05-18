@@ -39,6 +39,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     };
     $scope.getUsers = function() {
         userService.getUsers().then(function(response){
+            console.log(response);
         $scope.usersDb = response;
         });
     };

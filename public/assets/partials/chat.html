@@ -30,10 +30,10 @@
                 <div id="chat-text-box-header">
                 </div>
                 <md-content layout="column">
-                    <div id="chat-box" smilies="message.text" ng-repeat="message in messageDb  | orderBy: 'date' track by $index">
+                    <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index">
                         <p id="username">{{message.username}}</p>
                         <p id="date">{{message.date}}</p>
-                        <p id="messagetext">{{message.text}}</p>
+                        <p smilies="message.text" id="messagetext">{{message.text}}</p>
                     </div>
                 </md-content>       
             </div>
