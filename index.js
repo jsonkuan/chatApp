@@ -50,8 +50,27 @@ app.get('/channel', function(request, response){
   
 // Adds channels to DB
 app.post('/channel', function(request, response) {
-    database.collection('channels').insert(request.body);
-    response.send("Channel post works" + request.body);
+    database.collection('channels').insert(request.body, function(error, documents) {
+        if (error) {
+            response.send(error);
+        } else {
+            response.send(documents.ops);
+        }
+    });
+});
+
+app.get('/channel/direct', function(request, response) {
+    var sender = request.query.sender;
+    var recipient = request.query.recipient;
+    console.log('sender recipient', sender, recipient);
+    database.collection('channels').findOne( 
+        { $and: [ {'accessability' : 'direct'}, 
+                  {'users' : {$in: [sender]}}, 
+                  {'users' : {$in: [recipient]}} ] },
+        function(error, result) {
+            console.log('channel/direct', result);
+            response.send(result);
+        });
 });
 
 // Gets all users from DB  
