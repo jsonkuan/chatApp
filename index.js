@@ -7,9 +7,8 @@ var path = require('path');
 var app = express();
 var multer  = require('multer');
 var mime = require('mime-types');
-// del(['public/assets/images/github.png']);
 //const del = require('del');
-
+// del(['public/assets/images/github.png']);
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/assets/images')
@@ -18,7 +17,6 @@ var storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now() + '.' + mime.extension(file.mimetype));
     }
 });
-
 var upload = multer({ storage: storage });
 
 app.use(body.json());
@@ -65,8 +63,8 @@ app.get('/users', function (req, res) {
 });
 
 // Adds users to DB
-//TODO need to add channels
-app.post('/users', function(request, response) {
+//TODO need to add avatar and channels
+app.post('/users', upload.single('avatar'), function(request, response) {
     var user = request.body;
     database.collection('users').insert({"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar});
