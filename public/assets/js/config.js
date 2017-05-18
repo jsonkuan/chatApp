@@ -13,12 +13,12 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             //add controller
         })
         .state('chat', {
-            url:'/chat/:channelName',
+            url:'/chat',
             controller: 'chatController',
             templateUrl: 'assets/partials/chat.html',
             resolve: {
                 currentChannel: function(channelService) {
-                    return channelService.get('?channelName=' + channelService.current._id);
+                    return channelService.get('?id=' + channelService.current._id);
                 },
                 userChannels: function(channelService, userService) {
                     return channelService.getChannelsForUser(userService.active._id);
@@ -127,6 +127,8 @@ app.run(function($rootScope, channelService) {
                 $rootScope.generateChannels();
             } else {
                 $rootScope.channels = response;
+                //NOTE: Sets current channel first entry.
+                //TODO: Channel should / MUST be set when user logs in.
                 channelService.current = $rootScope.channels[0];
             }
         });

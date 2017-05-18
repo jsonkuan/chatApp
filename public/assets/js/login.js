@@ -70,6 +70,7 @@ angular.module('app').factory('Authentication', function($rootScope, userService
                     isAuthenticated = true;
 
                     $rootScope.activeUser = $rootScope.user[i];
+                    //NOTE: Set active user in userService
                     userService.active = $rootScope.user[i];
                     console.log("input email and password  " + inputEmail + " " + "  " + inputPassword + ":::  database data  " +
                         $rootScope.user[i].email + "  " + $rootScope.user[i].password);

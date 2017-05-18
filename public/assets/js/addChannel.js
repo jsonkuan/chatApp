@@ -5,7 +5,7 @@ angular.module('app').controller("channelController", function ($scope, $state, 
         var channels = {
             name: newChannel.channelName,
             purpose: newChannel.channelPurpose,
-            accessability: $scope.publicOrPrivate,
+            accessability: String($scope.publicOrPrivate).toLowerCase(),
             users: $scope.tempUserArray,
             timestamp: ""
         };
