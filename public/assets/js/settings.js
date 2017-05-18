@@ -1,5 +1,4 @@
 angular.module('app').controller("settingsController", function ($scope, $state, $rootScope, userService, upload) {
-    $scope.profileImage = "assets/images/defaultProfile.png";
 
     if($rootScope.activeUser.avatar){
         $scope.profileImage = $rootScope.activeUser.avatar;
