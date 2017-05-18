@@ -1,19 +1,12 @@
-<div
-        class="btn btn-primary btn-upload"
-        upload-button
-        url="/upload"
-        on-success="onSuccess(response)"
-        on-error="onError(response)"
-        param="avatar"
->Upload</div>
-
-
 <md-content>
     <div layout = "row" layout-align="center">
         <div layout = "column" flex="60">
             <h2>Edit your profile</h2>
             <h3>{{activeUser.email}}</h3>
-
+                <img src="{{profileImage}}" class="thumb" ngf-thumbnail="avatar" alt="Profile picture" flex="25"
+                     style='height: 100px; width: 80px; object-fit: contain'>
+            <input class="ng-hide" id="selected" type="file" ngf-select ng-model="avatar">
+            <label for="selected" class="md-button md-raised md-primary">Select image</label>
             <form name = "settingsForm" layout="column" novalidate>
                 <md-input-container>
                     <label>Change E-Mail</label>

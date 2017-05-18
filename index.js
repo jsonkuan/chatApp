@@ -7,11 +7,25 @@ var path = require('path');
 var fs = require('fs-extra');
 var app = express();
 var multer  = require('multer');
-var upload = multer({ dest: 'public/assets/images/'});
+var mime = require('mime-types');
+
+
+//const del = require('del');
+
+
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/assets/images')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.' + mime.extension(file.mimetype));
+    }
+});
+
+var upload = multer({ storage: storage });
 
 app.use(body.json());
-app.use(body.json({limit: '10000mb'}));
-app.use(body.urlencoded({limit: '5mb', extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -28,7 +42,7 @@ MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, databas
 // Adds message to channel in DB
 app.post('/messages', function(request, response) {
     database.collection('channels').updateOne({"name": request.body.name},
-                                            { $push : {"messages": request.body.message}});
+        { $push : {"messages": request.body.message}});
     console.log("Hepp!");
     response.send("It works");
 });
@@ -40,7 +54,7 @@ app.get('/channel', function(request, response) {
         response.send(result);
     });
 });
-  
+
 // Adds channels to DB
 app.post('/channel', function(request, response) {
     database.collection('channels').insert(request.body);
@@ -48,7 +62,7 @@ app.post('/channel', function(request, response) {
     response.send("Channel post works" + request.body);
 });
 
-// Gets all users from DB  
+// Gets all users from DB
 app.get('/users', function (req, res) {
     database.collection('users').find().toArray(function (err, results) {
         res.send(results);
@@ -56,7 +70,7 @@ app.get('/users', function (req, res) {
 });
 
 // Adds users to DB
-  //TODO need to add avatar and channels
+//TODO need to add avatar and channels
 app.post('/users', upload.single('avatar'), function(request, response) {
     var user = request.body;
     database.collection('users').insert({"username" : user.username, "email" : user.email,
@@ -68,19 +82,18 @@ app.post('/users', upload.single('avatar'), function(request, response) {
 // Updates the users info in DB
 app.put('/users', function(request, response) {
     var user = request.body;
-    console.log(request.body.avatar);
     database.collection('users').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar});
 });
 
 // adds avatar image to localhost
 app.post('/upload',upload.single('avatar'), function(req, res) {
-
-    res.send({ test: req.file, test2: req.files });
-
+    res.send(req.file.path);
 });
 
 // used port
 app.listen(3000, function() {
     console.log("Starting new server");
 });
+
+// del(['public/assets/images/github.png']);
