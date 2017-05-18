@@ -1,5 +1,6 @@
 angular.module('app').controller("channelController", function ($scope, $state, $rootScope, userService,  channelService) {
     $scope.tempUserArray = [$rootScope.activeUser._id];
+    $scope.invitedUsers = [];
     $scope.createChannel = function(newChannel) {
         var channels = {
             name: newChannel.channelName,
@@ -27,6 +28,7 @@ angular.module('app').controller("channelController", function ($scope, $state, 
 
     $scope.addToChannel = function(user) {
       $scope.tempUserArray.push(user._id);
+      $scope.invitedUsers.push(user.username);
       console.log("Added " + user.username + " to channel.");
     }
 });
