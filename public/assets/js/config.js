@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload', 'lr.upload']);
+var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload', 'lr.upload', 'ngSanitize', 'ui.bootstrap', 'angular-smilies']);
 
 app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterProvider) {
     $qProvider.errorOnUnhandledRejections(false);
@@ -13,15 +13,20 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             //add controller
         })
         .state('chat', {
-            url:'/chat/:channelId',
+            url:'/chat/:channelName',
             controller: 'chatController',
             templateUrl: 'assets/partials/chat.html'
         })
         .state('settings', {
             url: '/settings',
-            controller: "settingsController",
+            controller: 'settingsController',
             templateUrl: 'assets/partials/settings.html'
-        });
+        })
+        .state('addChannel', {
+            url: '/addChannel',
+            controller: 'channelController',
+            templateUrl: 'assets/partials/addChannel.html'
+        })
 });
 
 app.factory('REST', ['$http', '$q', function($http, $q) {
@@ -70,6 +75,10 @@ app.factory("messageService", ["REST", function (REST) {
     return {
         post: function(message) {
             return REST.post(url, message);
+        },
+        getAllMessages: function(query) {
+            console.log("messageService.get query: ",query);
+            return REST.get(url + query);
         }
     };
 }]);
@@ -80,8 +89,12 @@ angular.module('app').factory('channelService', function(REST) {
         post: function(channel) {
             return REST.post(url, channel);
         },
-        get: function() {
-            return REST.get(url);
+        get: function(query) {
+            console.log("channelService.get Url + query", url + query);
+            return REST.get(url + query);
+        },
+        getAll: function() {
+            return REST.get('/channels');
         }
     };
 });
@@ -90,7 +103,7 @@ app.run(function($rootScope, channelService) {
     $rootScope.channels = [];
 
     $rootScope.checkChannels = function() {
-        channelService.get().then(function(response) {
+        channelService.getAll().then(function(response) {
             if (response.length === 0) {
                 $rootScope.generateChannels();
             } else {
