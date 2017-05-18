@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload', 'ngSanitize', 'ui.bootstrap', 'angular-smilies']);
+var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload', 'lr.upload', 'ngSanitize', 'ui.bootstrap', 'angular-smilies']);
 
 app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterProvider) {
     $qProvider.errorOnUnhandledRejections(false);
@@ -59,7 +59,7 @@ app.factory("userService", ["REST", function(REST) {
     var url = '/users';
     return{
         post: function (user){
-            return REST.post(url, user);
+            return REST.post(url, user)
         },
         updateUser: function (user){
             return REST.put(url, user);
@@ -144,6 +144,5 @@ app.run(function($rootScope, channelService) {
             $rootScope.checkChannels();
         });
     };
-
     $rootScope.checkChannels();
 });

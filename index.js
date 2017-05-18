@@ -4,10 +4,21 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var database;
 var path = require('path');
-
 var app = express();
+var multer  = require('multer');
+var mime = require('mime-types');
+//const del = require('del');
+// del(['public/assets/images/github.png']);
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/assets/images')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.' + mime.extension(file.mimetype));
+    }
+});
+var upload = multer({ storage: storage });
 app.use(body.json());
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
@@ -45,7 +56,6 @@ app.get('/channel', function(request, response){
     database.collection('channels').findOne({'name' : request.query.channelName}, function(err, result){
         response.send(result);
     });
-
 });
   
 // Adds channels to DB
@@ -73,7 +83,7 @@ app.get('/channel/direct', function(request, response) {
         });
 });
 
-// Gets all users from DB  
+// Gets all users from DB
 app.get('/users', function (req, res) {
     database.collection('users').find().toArray(function (err, results) {
         res.send(results);
@@ -81,8 +91,8 @@ app.get('/users', function (req, res) {
 });
 
 // Adds users to DB
-  //TODO need to add avatar and channels
-app.post('/users', function(request, response) {
+//TODO need to add avatar and channels
+app.post('/users', upload.single('avatar'), function(request, response) {
     var user = request.body;
     database.collection('users').insert({"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar});
@@ -97,6 +107,12 @@ app.put('/users', function(request, response) {
         "password" : user.password, "avatar" : user.avatar});
 });
 
+// adds avatar image to localhost
+app.post('/upload',upload.single('avatar'), function(req, res) {
+    res.send(req.file.path);
+});
+
+// used port
 app.listen(3000, function() {
     console.log("Starting new server");
 });
