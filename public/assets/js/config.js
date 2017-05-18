@@ -131,6 +131,5 @@ app.run(function($rootScope, channelService) {
             $rootScope.checkChannels();
         });
     };
-
     $rootScope.checkChannels();
 });

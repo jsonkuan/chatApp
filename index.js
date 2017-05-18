@@ -4,15 +4,11 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var database;
 var path = require('path');
-var fs = require('fs-extra');
 var app = express();
 var multer  = require('multer');
 var mime = require('mime-types');
-
-
+// del(['public/assets/images/github.png']);
 //const del = require('del');
-
-
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -27,7 +23,6 @@ var upload = multer({ storage: storage });
 
 app.use(body.json());
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
     if(error) {
@@ -70,8 +65,8 @@ app.get('/users', function (req, res) {
 });
 
 // Adds users to DB
-//TODO need to add avatar and channels
-app.post('/users', upload.single('avatar'), function(request, response) {
+//TODO need to add channels
+app.post('/users', function(request, response) {
     var user = request.body;
     database.collection('users').insert({"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar});
@@ -95,5 +90,3 @@ app.post('/upload',upload.single('avatar'), function(req, res) {
 app.listen(3000, function() {
     console.log("Starting new server");
 });
-
-// del(['public/assets/images/github.png']);
