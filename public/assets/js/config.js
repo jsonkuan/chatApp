@@ -95,6 +95,9 @@ angular.module('app').factory('channelService', function(REST) {
         },
         getAll: function() {
             return REST.get('/channels');
+        },
+        updateTimeStamp: function(channel) {
+            return REST.put(url,channel);
         }
     };
 });

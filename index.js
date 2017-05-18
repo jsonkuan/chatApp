@@ -69,6 +69,12 @@ app.post('/channel', function(request, response) {
     });
 });
 
+//updates channels timestamp
+app.put('/channel', function(request,response) {
+    database.collection('channels').update({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": Date.now()}});
+    response.send(request.body);
+});
+
 app.get('/channel/direct', function(request, response) {
     var sender = request.query.sender;
     var recipient = request.query.recipient;
