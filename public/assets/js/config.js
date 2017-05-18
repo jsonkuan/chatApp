@@ -111,6 +111,9 @@ angular.module('app').factory('channelService', function(REST, userService) {
         },
         getChannelsForUser: function(userId) {
             return REST.get('/channels?user=' + userId);
+        },
+        updateTimeStamp: function(channel) {
+            return REST.put(url,channel);
         }
     };
 });
