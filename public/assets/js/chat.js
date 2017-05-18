@@ -15,6 +15,8 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     }
     channelService.get('?channelName=' + $scope.channelName).then(function(response){
         console.log("Hepp! channelService.get: ",response);
+        $scope.currentChannel = response;
+
     });
     $scope.sendMessage = function(input) {
         console.log("Activeuser: ",$rootScope.activeUser);
@@ -28,6 +30,8 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
 
+        channelService.updateTimeStamp($scope.currentChannel);
+        console.log("currentchannel: ", $scope.currentChannel);
         messageService.post(message);
         $scope.getMessages();
 
@@ -60,8 +64,6 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
 
                 if(messages[i].userId === users[e]._id) {
                     messages[i].username = users[e].username;
-                    console.log(messages[i].username);
-                    console.log(users[e].username);
                 }
                 if(messages[i].userId === users[e]._id) {
                     messages[i].avatar = users[e].avatar;
@@ -80,7 +82,6 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             }
         });
     };
-
     $scope.createDirectChat = function(userA, userB) {
         channelService.post({
             name: userA + userB,
@@ -93,10 +94,12 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             $scope.startDirectChat(users[0], users[1]); 
         });
     };
-
+    setInterval(function(){
+        //TODO Compare activeChannel timestamp with channel from db
+        //if($scope.currentChannel.timestamp > channelService.get)
+        $scope.getMessages(); }, 2000);
     //Example: $scope.startDirectChat($rootScope.activeUser._id, otherPerson._id);
 });
-
 // Temp randomizing function
 function rnd(number) {
     return Math.floor((Math.random() * number) + 1);
