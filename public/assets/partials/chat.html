@@ -16,7 +16,7 @@
              <h3 class="channel-header" flex="100">Direct Messages</h3>
         </div>
         <ul>
-            <li class="channelMsgLists" ng-repeat="contact in contacts" ui-sref="chat({channelId: contact})">{{contact}}</li>
+            <li class="channelMsgLists" ng-repeat="contact in contacts" ui-sref="chat({channelId: contact})">{{contact.username}}</li>
         </ul>
     </aside>
     <main id="chat-main" flex="80">

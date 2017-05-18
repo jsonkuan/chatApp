@@ -1,7 +1,7 @@
-angular.module('app').controller('chatController', function($scope, $rootScope, $state, messageService, channelService, userService, userChannels, currentChannel) {
+angular.module('app').controller('chatController', function($scope, $rootScope, $state, messageService, channelService, userService, userChannels, currentChannel, userContacts) {
     $scope.userChannels = userChannels;
     $scope.currentChannel = currentChannel;
-    $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super Jakob?', 'Nerd-Dervish', 'Killer-Christian'];
+    $scope.contacts = userContacts;
     $scope.messageDb = [];
     $scope.usersDb = [];
 
