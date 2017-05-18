@@ -19,8 +19,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     $scope.sendMessage = function(input) {
         console.log("Activeuser: ",$rootScope.activeUser);
         var message = {
-            username: $rootScope.activeUser.username,
-            userId: $rootScope.activeUser._id, 
+            userId: $rootScope.activeUser._id,
             date: formatDate(), 
             text: input, channel: 
             $scope.channelName
@@ -59,8 +58,13 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         for(var i = 0; i < messages.length; i++) {
             for(var e = 0; e < users.length; e++){
 
-                if(messages[i].user === users[e]._id) {
+                if(messages[i].userId === users[e]._id) {
                     messages[i].username = users[e].username;
+                    console.log(messages[i].username);
+                    console.log(users[e].username);
+                }
+                if(messages[i].userId === users[e]._id) {
+                    messages[i].avatar = users[e].avatar;
                 }
             }
         }
