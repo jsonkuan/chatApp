@@ -8,12 +8,8 @@ var fs = require('fs-extra');
 var app = express();
 var multer  = require('multer');
 var mime = require('mime-types');
-
-
 //const del = require('del');
-
-
-
+// del(['public/assets/images/github.png']);
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/assets/images')
@@ -22,12 +18,10 @@ var storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now() + '.' + mime.extension(file.mimetype));
     }
 });
-
 var upload = multer({ storage: storage });
 
 app.use(body.json());
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
     if(error) {
@@ -95,5 +89,3 @@ app.post('/upload',upload.single('avatar'), function(req, res) {
 app.listen(3000, function() {
     console.log("Starting new server");
 });
-
-// del(['public/assets/images/github.png']);
