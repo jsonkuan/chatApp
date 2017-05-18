@@ -17,19 +17,37 @@ h1 {
     display: flex; 
     flex: 20;
 }
-
-h3.channel-header {
-    text-align: center;
+.addButton{
+    color: white;
 }
 
-.channelMsgLists:hover {
+h3.channel-header {
+    margin-left: 14%;
+    color: #AB9BA9;
+}
+h3.channel-header:hover{
+    color: white;
+}
+
+.channels-list{
+    font-family: Lato, Helvetica, sans-serif;
+    margin-left: 2%;
+}
+
+.channels:hover{
+    background-color: #3E313C;
+}
+.channels {
+    font-family: Lato, Helvetica, sans-serif;
+
+    font-weight: bold;
     text-decoration: underline;
-    color: lightblue;
+    color: #AB9BA9;
     cursor: pointer;
 }
 
 #chat-channel-container {
-    background-color: purple;
+    background-color: #4D394B;
     border-radius: 3px;
     border-left: solid 2px black;
     border-top: solid 2px black;
