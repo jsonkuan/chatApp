@@ -33,8 +33,8 @@
                 </div>
                 <md-content layout="column">
                     <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index">
-                        <img src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
-                        <p id="username">{{message.username}}</p>
+                        <img id="avatar-thumb" src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
+                        <p id="username" href ng-click="startDirectChat($root.activeUser._id, message.userId)">{{message.username}}</p>
                         <p id="date">{{message.date}}</p>
                         <p smilies="message.text" id="messagetext">{{message.text}}</p>
                     </div>

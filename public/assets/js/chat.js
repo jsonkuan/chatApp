@@ -52,6 +52,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             //console.log("Hepp! messageService.getAllMessages: ", response);
             $scope.messageDb = response;
             $scope.addUserToMsg($scope.usersDb, $scope.messageDb);
+            console.log(response);
         });
     };
     $scope.getMessages();
@@ -69,7 +70,6 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
                 }
             }
         }
-
     };
 
     $scope.startDirectChat = function(userA, userB) {
