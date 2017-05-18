@@ -73,10 +73,16 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     };
 
     $scope.startDirectChat = function(userA, userB) {
+        console.log("userA: " + userA );
+        console.log("userB: " + userB );
         channelService.get('/direct?sender=' + userA + '&recipient=' + userB).then(function(response) {
+            console.log("responseData: " +response);
             if (!response) {
+                console.log("creating new chat between userA: " +userA+" and userB: "+ userB);
                 $scope.createDirectChat(userA, userB);
             } else {
+                console.log("open old chat with id: "+response._id);
+                $scope.openChat(response._id);
                 //TODO open chat with response._id
             }
         });
