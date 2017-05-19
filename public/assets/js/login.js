@@ -8,15 +8,10 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
     $scope.showRegButton = false;
     $scope.user = {};
 
-    userService.getUsers().then(function(response) {
-        $scope.user = response;
-    });
-
     $scope.loginButtonClicked = function() {
         if ($scope.login($scope.email, $scope.password)) {
             userService.active.status = "online";
             userService.updateUser(userService.active);
-            console.log("login ",userService.active);
             $state.transitionTo('chat');
         } else {
             /*$scope.error = '';
@@ -28,7 +23,7 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
 
     $scope.registerButtonClicked = function() {
         if ($scope.register($scope.email, $scope.password, $scope.passwordConfirm)){
-            var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "", status: ""};
+            var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "assets/images/defaultProfile.png", status: "offline"};
             shownElements();
             userService.post(user).then(function(response) {
                userService.getUsers().then(function(response) {
@@ -56,6 +51,10 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
     $scope.login = function(inputEmail, inputPassword) {
         var isAuthenticated = false;
 
+        userService.getUsers().then(function(response) {
+            $scope.user = response;
+        });
+
         for (var i = 0; i < $scope.user.length; i++) {
             if (inputEmail === $scope.user[i].email && inputPassword === $scope.user[i].password) {
                 isAuthenticated = true;
@@ -74,8 +73,6 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
             } else {
                 isAuthenticated = true;
             }
-        } else {
-            isAuthenticated = false;
         }
         return isAuthenticated;
     };
