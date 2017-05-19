@@ -11,7 +11,6 @@ angular.module('app').controller("channelController", function ($scope, $state, 
         };
 
         channelService.post(channels).then(function(response) {
-            console.log("Channel service completed.");
             $state.go("chat");
         });
     };
@@ -29,6 +28,5 @@ angular.module('app').controller("channelController", function ($scope, $state, 
     $scope.addToChannel = function(user) {
       $scope.tempUserArray.push(user._id);
       $scope.invitedUsers.push(user.username);
-      console.log("Added " + user.username + " to channel.");
     }
 });
