@@ -52,6 +52,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             //console.log("Hepp! messageService.getAllMessages: ", response);
             $scope.messageDb = response;
             $scope.addUserToMsg($scope.usersDb, $scope.messageDb);
+            console.log(response);
         });
     };
     $scope.getMessages();
@@ -69,28 +70,44 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
                 }
             }
         }
-
     };
 
     $scope.startDirectChat = function(userA, userB) {
-        channelService.get('/direct?sender=' + userA + '&recipient=' + userB).then(function(response) {
-            if (!response) {
-                $scope.createDirectChat(userA, userB);
-            } else {
-                //TODO open chat with response._id
-            }
-        });
+        if(userA._id!==userB._id){
+            console.log("userA: " + userA._id );
+            console.log("userB: " + userB._id );
+            channelService.get('/direct?sender=' + userA._id + '&recipient=' + userB._id).then(function(response) {
+                console.log("responseData: " +response);
+                if (!response) {
+                    console.log("creating new chat between userA: " +userA._id+" and userB: "+ userB._id);
+                    $scope.createDirectChat(userA, userB);
+                } else {
+                    console.log("open old chat with id: "+response._id);
+                    $scope.openChat(response);
+                }
+            });
+        }
+
     };
+
+    $scope.getUserFromMsg = function (userId){
+        var user = {};
+        for(var y = 0; y < $scope.usersDb.length; y++){
+            if($scope.usersDb[y]._id === userId) {
+                user = $scope.usersDb[y];
+            }
+        }
+    };
+
     $scope.createDirectChat = function(userA, userB) {
         channelService.post({
-            name: userA + userB,
+            name: userA.username +" & "+ userB.username,
             purpose: '',
             accessability: 'direct',
-            users: [userA, userB],
+            users: [userA._id, userB._id],
             timestamp: ''
         }).then(function(response) {
-            var users = response.data[0].users;
-            $scope.startDirectChat(users[0], users[1]); 
+            $scope.startDirectChat(userA, userB);
         });
     };
     
