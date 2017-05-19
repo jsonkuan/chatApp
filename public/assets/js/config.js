@@ -130,10 +130,9 @@ app.run(function($rootScope, channelService) {
             if (response.length === 0) {
                 $rootScope.generateChannels();
             } else {
-                $rootScope.channels = response;
                 //NOTE: Sets current channel first entry.
                 //TODO: Channel should / MUST be set when user logs in.
-                channelService.current = $rootScope.channels[0];
+                channelService.current = response[0];
             }
         });
     };

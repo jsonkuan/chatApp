@@ -1,14 +1,15 @@
-angular.module('app').controller('chatController', function($scope, $rootScope, $state, messageService, channelService, userService, userChannels, currentChannel, userContacts) {
+angular.module('app').controller('chatController', function($scope, $state, messageService, channelService, userService, userChannels, currentChannel, userContacts) {
     $scope.userChannels = userChannels;
     $scope.currentChannel = currentChannel;
     $scope.contacts = userContacts;
     $scope.messageDb = [];
     $scope.usersDb = [];
-    console.log($rootScope.activeUser);
+    console.log("chat ",userService.active);
+
 
     window.addEventListener("beforeunload", function(e){
-        $rootScope.activeUser.status = "offline";
-        userService.updateUser($rootScope.activeUser);
+        userService.active.status = "offline";
+        userService.updateUser(userService.active);
     }, false);
 
     $scope.openChat = function(channel) {
@@ -26,7 +27,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     $scope.sendMessage = function(input) {
         //console.log("Activeuser: ",$rootScope.activeUser);
         var message = {
-            userId: $rootScope.activeUser._id,
+            userId: userService.active._id,
             date: formatDate(), 
             text: input, 
             channel: $scope.currentChannel._id

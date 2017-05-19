@@ -1,15 +1,23 @@
-angular.module('app').controller("settingsController", function ($scope, $state, $rootScope, userService, upload) {
+angular.module('app').controller("settingsController", function ($scope, $state, userService, upload) {
 
-    if($rootScope.activeUser.avatar){
-        $scope.profileImage = $rootScope.activeUser.avatar;
+
+    console.log("settings ",userService.active);
+
+    $scope.password = userService.active.password ;
+    $scope.email = userService.active.email;
+    $scope.username = userService.active.username;
+
+
+    if(userService.active.avatar){
+        $scope.profileImage = userService.active.avatar;
     }else{
         $scope.profileImage = "assets/images/defaultProfile.png";
     }
 
-    $scope.saveSettings = function (activeUser) {
-        $rootScope.activeUser.password = activeUser.password;
-        $rootScope.activeUser.email = activeUser.email;
-        $rootScope.activeUser.username = activeUser.username;
+    $scope.saveSettings = function () {
+        userService.active.password = $scope.password;
+        userService.active.email = $scope.email;
+        userService.active.username = $scope.username;
 
         upload({
             url: '/upload',
@@ -19,8 +27,8 @@ angular.module('app').controller("settingsController", function ($scope, $state,
             }
         }).then(
             function (response) {
-                $rootScope.activeUser.avatar = response.data.slice(7);
-                userService.updateUser($rootScope.activeUser);
+                userService.active.avatar = response.data.slice(7);
+                userService.updateUser(userService.active);
             },
             function (response) {
                 console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
