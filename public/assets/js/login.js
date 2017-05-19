@@ -57,7 +57,7 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
     };
 });
 
-angular.module('app').factory('Authentication', function($rootScope) {
+angular.module('app').factory('Authentication', function($rootScope, userService) {
     return {
         login: function(inputEmail, inputPassword) {
             var isAuthenticated = false;
@@ -70,6 +70,8 @@ angular.module('app').factory('Authentication', function($rootScope) {
                     isAuthenticated = true;
 
                     $rootScope.activeUser = $rootScope.user[i];
+                    //NOTE: Set active user in userService
+                    userService.active = $rootScope.user[i];
                     console.log("input email and password  " + inputEmail + " " + "  " + inputPassword + ":::  database data  " +
                         $rootScope.user[i].email + "  " + $rootScope.user[i].password);
                 }

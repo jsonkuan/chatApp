@@ -10,7 +10,7 @@
             </md-button>
         </div>
         <ul>
-           <li class="channelMsgLists" ng-repeat="channel in channels" ui-sref="chat({channelId: channel.name})">{{channel.name}}</li>
+           <li class="channelMsgLists" ng-repeat="channel in userChannels" ng-click="openChat(channel)">{{channel.name}}</li>
         </ul>           
         <div layout="row" layout-align="center">
              <h3 class="channel-header" flex="100">Direct Messages</h3>
