@@ -4,6 +4,12 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     $scope.messageDb = [];
     $scope.usersDb = [];
 
+    window.addEventListener("beforeunload", function(e){
+        $rootScope.activeUser.status = "offline";
+        userService.updateUser($rootScope.activeUser);
+    }, false);
+
+
     $scope.sendToSettings = function(){
         $state.transitionTo('settings');
     };
@@ -26,6 +32,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             text: input, channel: 
             $scope.channelName
         };
+
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
@@ -40,12 +47,23 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             chatContent.scrollTop = chatContent.scrollHeight;
         }, true);
     };
+
+
     $scope.getUsers = function() {
         userService.getUsers().then(function(response){
             console.log(response);
         $scope.usersDb = response;
+
+            for(var i = 0; i < $scope.usersDb.length; i++){
+                if($scope.usersDb.status === "online"){
+                    console.log($scope.usersDb.status);
+                    $scope.status = "radio_button_checked";
+                }
+            }
         });
     };
+
+    
     $scope.getUsers();
 
     $scope.getMessages = function() {

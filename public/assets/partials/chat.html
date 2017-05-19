@@ -16,7 +16,7 @@
             <h3 class="channel-header">Direct Messages</h3>
         </div>
         <div class="channels-list">
-            <li class="channels" ng-repeat="contact in contacts" ui-sref="chat({channelId: contact})"><i class="material-icons md-dark">radio_button_checked</i>{{contact}}</li>
+            <li class="channels" ng-repeat="contact in contacts" ui-sref="chat({channelId: contact})"><i class="material-icons md-dark">{{status}}</i>{{contact}}</li>
         </div>
     </aside>
     <main id="chat-main" flex="80">

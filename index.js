@@ -101,7 +101,7 @@ app.get('/users', function (req, res) {
 app.post('/users', upload.single('avatar'), function(request, response) {
     var user = request.body;
     database.collection('users').insert({"username" : user.username, "email" : user.email,
-        "password" : user.password, "avatar" : user.avatar});
+        "password" : user.password, "avatar" : user.avatar, "status" : user.status});
     response.send();
     console.log("User created");
 });
@@ -110,7 +110,7 @@ app.post('/users', upload.single('avatar'), function(request, response) {
 app.put('/users', function(request, response) {
     var user = request.body;
     database.collection('users').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
-        "password" : user.password, "avatar" : user.avatar});
+        "password" : user.password, "avatar" : user.avatar, "status" : user.status});
 });
 
 // adds avatar image to localhost
