@@ -11,13 +11,13 @@
         </div>
 
         <div class="channels-list">
-           <li class="channelMsgLists" ng-repeat="channel in userChannels" ng-click="openChat(channel)">{{channel.name}}</li>
+           <li class="channelMsgLists" ng-repeat="channel in userChannels" ng-click="openChat(channel)"><i class="material-icons md-18">lock_open</i>{{channel.name}}</li>
         </div>         
         <div layout="row" layout-align="center">
              <h3 class="channel-header" flex="100">Direct Messages</h3>
         </div>
         <div class="channels-list">
-            <li class="channelMsgLists" ng-repeat="contact in contacts track by $index" ng-click="startDirectChat($root.activeUser, contact)">
+            <li class="channelMsgLists" ng-repeat="contact in contacts" ng-click="startDirectChat($root.activeUser, contact)">
                 <i class="material-icons md-dark" ng-if="contact.status == 'online'">radio_button_checked</i>
                 <i class="material-icons md-dark" ng-if="contact.status == 'offline'">radio_button_unchecked</i>{{contact.username}}</li>
         </div>

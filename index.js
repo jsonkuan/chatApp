@@ -129,6 +129,7 @@ app.put('/users', function(request, response) {
     var user = request.body;
     database.collection('users').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar, "status" : user.status});
+    response.send();
 });
 
 // adds avatar image to localhost
