@@ -16,7 +16,7 @@
              <h3 class="channel-header" flex="100">Direct Messages</h3>
         </div>
         <ul>
-            <li class="channelMsgLists" ng-repeat="contact in contacts" ng-click="startDirectChat($root.activeUser._id, contact._id)">{{contact.username}}</li>
+            <li class="channelMsgLists" ng-repeat="contact in contacts" ng-click="startDirectChat($root.activeUser, contact)">{{contact.username}}</li>
         </ul>
     </aside>
     <main id="chat-main" flex="80">
@@ -34,7 +34,7 @@
                 <md-content layout="column">
                     <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index">
                         <img id="avatar-thumb" src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
-                        <p id="username" href ng-click="startDirectChat($root.activeUser._id, message.userId)">{{message.username}}</p>
+                        <p id="username" href ng-click="startDirectChat($root.activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
                         <p id="date">{{message.date}}</p>
                         <p smilies="message.text" id="messagetext">{{message.text}}</p>
                     </div>
