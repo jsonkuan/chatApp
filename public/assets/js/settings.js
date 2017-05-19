@@ -33,6 +33,7 @@ angular.module('app').controller("settingsController", function ($scope, $state,
                 }
             );
         }
+        $scope.profileImage = userService.active.avatar;
         userService.updateUser(userService.active);
         $state.go("chat");
     };
