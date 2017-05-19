@@ -1,4 +1,4 @@
-angular.module('app').controller('chatController', function($scope, $state, messageService, channelService, userService, userChannels, currentChannel, userContacts) {
+angular.module('app').controller('chatController', function($scope, $state, $cookies, messageService, channelService, userService, userChannels, currentChannel, userContacts) {
     $scope.userChannels = userChannels;
     $scope.currentChannel = currentChannel;
     $scope.contacts = userContacts;
@@ -20,8 +20,11 @@ angular.module('app').controller('chatController', function($scope, $state, mess
             $state.transitionTo('settings');
         }else{
             userService.active.status = "offline";
-            userService.updateUser(userService.active);
-            $state.transitionTo('login');
+            userService.updateUser(userService.active).then(function(response) {
+                userService.active = null;
+                $cookies.remove('user');
+                $state.transitionTo('login');
+            }
         }
     };
 
