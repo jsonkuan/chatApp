@@ -21,8 +21,10 @@
     </aside>
     <main id="chat-main" flex="80">
         <header id="chat-header">
-            <div layout="column" layout-align="start end">
-                <md-button class="md-accent md-raised" ng-click="sendToSettings()"  aria-label="SettingsButton"> Settings </md-button>
+            <div layout="row" layout-align="start end">
+                <h3 class="channel-title">{{currentChannel.name}}</h3>
+                <span flex></span>
+                <md-button id="settings-button" class="md-accent md-raised" ng-click="sendToSettings()"  aria-label="SettingsButton"> Settings </md-button>
             </div>
         </header>
         <div layout="column">
