@@ -13,9 +13,22 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             //add controller
         })
         .state('chat', {
-            url:'/chat/:channelName',
+            url:'/chat',
             controller: 'chatController',
-            templateUrl: 'assets/partials/chat.html'
+            templateUrl: 'assets/partials/chat.html',
+            resolve: {
+                currentChannel: function(channelService) {
+                    return channelService.get('?id=' + channelService.current._id);
+                },
+                userChannels: function(channelService, userService) {
+                    return channelService.getChannelsForUser(userService.active._id);
+                },
+                userContacts: function(userService){
+                    return userService.getUsers();
+                }
+
+
+            }
         })
         .state('settings', {
             url: '/settings',
@@ -26,7 +39,7 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             url: '/addChannel',
             controller: 'channelController',
             templateUrl: 'assets/partials/addChannel.html'
-        })
+        });
 });
 
 app.factory('REST', ['$http', '$q', function($http, $q) {
@@ -58,8 +71,10 @@ app.factory('REST', ['$http', '$q', function($http, $q) {
 app.factory("userService", ["REST", function(REST) {
     var url = '/users';
     return{
+        active: null,
+
         post: function (user){
-            return REST.post(url, user)
+            return REST.post(url, user);
         },
         updateUser: function (user){
             return REST.put(url, user);
@@ -83,9 +98,11 @@ app.factory("messageService", ["REST", function (REST) {
     };
 }]);
 
-angular.module('app').factory('channelService', function(REST) {
+angular.module('app').factory('channelService', function(REST, userService) {
     var url = '/channel';
     return {
+        current: null,
+
         post: function(channel) {
             return REST.post(url, channel);
         },
@@ -96,6 +113,9 @@ angular.module('app').factory('channelService', function(REST) {
         getAll: function() {
             return REST.get('/channels');
         },
+        getChannelsForUser: function(userId) {
+            return REST.get('/channels?user=' + userId);
+        },
         updateTimeStamp: function(channel) {
             return REST.put(url,channel);
         }
@@ -103,7 +123,7 @@ angular.module('app').factory('channelService', function(REST) {
 });
 
 app.run(function($rootScope, channelService) {
-    $rootScope.channels = [];
+    //$rootScope.channels = [];
 
     $rootScope.checkChannels = function() {
         channelService.getAll().then(function(response) {
@@ -111,6 +131,9 @@ app.run(function($rootScope, channelService) {
                 $rootScope.generateChannels();
             } else {
                 $rootScope.channels = response;
+                //NOTE: Sets current channel first entry.
+                //TODO: Channel should / MUST be set when user logs in.
+                channelService.current = $rootScope.channels[0];
             }
         });
     };
@@ -118,29 +141,34 @@ app.run(function($rootScope, channelService) {
     $rootScope.generateChannels = function() {
         var channels = [{
             name: "General",
-            private: false,
-            user: [],
-            message: []
+            purpose: '',
+            accessability: 'public',
+            users: [],
+            timestamp: ''
         }, {
             name: "Work",
-            private: false,
-            user: [],
-            message: []
+            purpose: '',
+            accessability: 'public',
+            users: [],
+            timestamp: ''
         }, {
             name: "Afterwork",
-            private: false,
-            user: [],
-            message: []
+            purpose: '',
+            accessability: 'public',
+            users: [],
+            timestamp: ''
         }, {
             name: "Crazy cat-lady Videos",
-            private: false,
-            user: [],
-            message: []
+            purpose: '',
+            accessability: 'public',
+            users: [],
+            timestamp: ''
         }, {
             name: "pr0n",
-            private: false,
-            user: [],
-            message: []
+            purpose: '',
+            accessability: 'public',
+            users: [],
+            timestamp: ''
         }];
         channelService.post(channels).then(function(response){
             console.log("Generating new channels.", response);

@@ -1,6 +1,7 @@
-angular.module('app').controller('chatController', function($scope, $rootScope, $state, $stateParams, messageService, channelService, userService) {
-    $scope.channelName = $stateParams.channelName;
-    $scope.contacts = ['Snygg-Kuan', 'Cool-boy-Scolari', 'Papa-Niklas', 'Super Jakob?', 'Nerd-Dervish', 'Killer-Christian'];
+angular.module('app').controller('chatController', function($scope, $rootScope, $state, messageService, channelService, userService, userChannels, currentChannel, userContacts) {
+    $scope.userChannels = userChannels;
+    $scope.currentChannel = currentChannel;
+    $scope.contacts = userContacts;
     $scope.messageDb = [];
     $scope.usersDb = [];
 
@@ -9,6 +10,10 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         userService.updateUser($rootScope.activeUser);
     }, false);
 
+    $scope.openChat = function(channel) {
+        channelService.current = channel;
+        $state.reload();
+    };
 
     $scope.sendToSettings = function(){
         $state.transitionTo('settings');
@@ -16,21 +21,14 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     $scope.sendToCreateChannel = function() {
         $state.transitionTo('addChannel');
     };
-    if(!$scope.channelName) {
-        $scope.channelName = "General";
-    }
-    channelService.get('?channelName=' + $scope.channelName).then(function(response){
-        console.log("Hepp! channelService.get: ",response);
-        $scope.currentChannel = response;
 
-    });
     $scope.sendMessage = function(input) {
         console.log("Activeuser: ",$rootScope.activeUser);
         var message = {
             userId: $rootScope.activeUser._id,
             date: formatDate(), 
-            text: input, channel: 
-            $scope.channelName
+            text: input, 
+            channel: $scope.currentChannel._id
         };
 
         $scope.chatInput = '';
@@ -67,10 +65,11 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     $scope.getUsers();
 
     $scope.getMessages = function() {
-        $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.channelName).then(function(response){
-            console.log("Hepp! messageService.getAllMessages: ", response);
+        $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
+            //console.log("Hepp! messageService.getAllMessages: ", response);
             $scope.messageDb = response;
             $scope.addUserToMsg($scope.usersDb, $scope.messageDb);
+            console.log(response);
         });
     };
     $scope.getMessages();
@@ -88,35 +87,53 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
                 }
             }
         }
-
     };
 
     $scope.startDirectChat = function(userA, userB) {
-        channelService.get('/direct?sender=' + userA + '&recipient=' + userB).then(function(response) {
-            if (!response) {
-                $scope.createDirectChat(userA, userB);
-            } else {
-                //TODO open chat with response._id
-            }
-        });
+        if(userA._id!==userB._id){
+            console.log("userA: " + userA._id );
+            console.log("userB: " + userB._id );
+            channelService.get('/direct?sender=' + userA._id + '&recipient=' + userB._id).then(function(response) {
+                console.log("responseData: " +response);
+                if (!response) {
+                    console.log("creating new chat between userA: " +userA._id+" and userB: "+ userB._id);
+                    $scope.createDirectChat(userA, userB);
+                } else {
+                    console.log("open old chat with id: "+response._id);
+                    $scope.openChat(response);
+                }
+            });
+        }
+
     };
+
+    $scope.getUserFromMsg = function (userId){
+        var user = {};
+        for(var y = 0; y < $scope.usersDb.length; y++){
+            if($scope.usersDb[y]._id === userId) {
+                user = $scope.usersDb[y];
+            }
+        }
+    };
+
     $scope.createDirectChat = function(userA, userB) {
         channelService.post({
-            name: userA + userB,
+            name: userA.username +" & "+ userB.username,
             purpose: '',
             accessability: 'direct',
-            users: [userA, userB],
+            users: [userA._id, userB._id],
             timestamp: ''
         }).then(function(response) {
-            var users = response.data[0].users;
-            $scope.startDirectChat(users[0], users[1]); 
+            $scope.startDirectChat(userA, userB);
         });
     };
+    
     setInterval(function(){
         //TODO Compare activeChannel timestamp with channel from db
         //if($scope.currentChannel.timestamp > channelService.get)
         $scope.getMessages(); }, 2000);
     //Example: $scope.startDirectChat($rootScope.activeUser._id, otherPerson._id);
+    
 });
 // Temp randomizing function
 function rnd(number) {

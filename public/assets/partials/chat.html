@@ -9,20 +9,23 @@
                 <md-icon md-svg-src="assets/images/ic_add_circle_outline_black_24px.svg"></md-icon>
             </md-button>
         </div>
+
         <div class="channels-list">
-            <li class="channels" ng-repeat="channel in channels" ui-sref="chat({channelId: channel.name})"><i class="material-icons md-18">https</i>{{channel.name}}</li>
-        </div>
-        <div layout="row">
-            <h3 class="channel-header">Direct Messages</h3>
+           <li class="channelMsgLists" ng-repeat="channel in userChannels" ng-click="openChat(channel)">{{channel.name}}</li>
+        </div>         
+        <div layout="row" layout-align="center">
+             <h3 class="channel-header" flex="100">Direct Messages</h3>
         </div>
         <div class="channels-list">
-            <li class="channels" ng-repeat="contact in contacts" ui-sref="chat({channelId: contact})"><i class="material-icons md-dark">{{status}}</i>{{contact}}</li>
+            <li class="channelMsgLists" ng-repeat="contact in contacts" ng-click="startDirectChat($root.activeUser, contact)">{{contact.username}}</li>
         </div>
     </aside>
     <main id="chat-main" flex="80">
         <header id="chat-header">
-            <div layout="column" layout-align="start end">
-                <md-button class="md-accent md-raised" ng-click="sendToSettings()"  aria-label="SettingsButton"> Settings </md-button>
+            <div layout="row" layout-align="start end">
+                <h3 class="channel-title">{{currentChannel.name}}</h3>
+                <span flex></span>
+                <md-button id="settings-button" class="md-accent md-raised" ng-click="sendToSettings()"  aria-label="SettingsButton"> Settings </md-button>
             </div>
         </header>
         <div layout="column">
@@ -31,7 +34,8 @@
                 </div>
                 <md-content layout="column">
                     <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index">
-                        <p id="username">{{message.username}}</p>
+                        <img id="avatar-thumb" src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
+                        <p id="username" href ng-click="startDirectChat($root.activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
                         <p id="date">{{message.date}}</p>
                         <p smilies="message.text" id="messagetext">{{message.text}}</p>
                     </div>
