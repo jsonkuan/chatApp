@@ -15,9 +15,16 @@ angular.module('app').controller('chatController', function($scope, $state, mess
         $state.reload();
     };
 
-    $scope.sendToSettings = function(){
-        $state.transitionTo('settings');
+    $scope.announceClick = function(index) {
+        if(index === 0){
+            $state.transitionTo('settings');
+        }else{
+            userService.active.status = "offline";
+            userService.updateUser(userService.active);
+            $state.transitionTo('login');
+        }
     };
+
     $scope.sendToCreateChannel = function() {
         $state.transitionTo('addChannel');
     };

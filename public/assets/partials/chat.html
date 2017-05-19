@@ -1,7 +1,7 @@
 <div id="container" layout="row" >
     <aside id="chat-channel-container" flex="20">
         <div id="app_logo">
-            <img src="/public/assets/images/snakk_logo.png" alt="sNakk" />
+            <img src="assets/images/snakk_logo.png" alt="sNakk" />
         </div>
         <div layout="row">
             <h3 class="channel-header">Channels</h3>
@@ -27,7 +27,16 @@
             <div layout="row" layout-align="start end">
                 <h3 class="channel-title">{{currentChannel.name}}</h3>
                 <span flex></span>
-                <md-button id="settings-button" class="md-accent md-raised" ng-click="sendToSettings()"  aria-label="SettingsButton"> Settings </md-button>
+                <md-menu>
+                    <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                        <i class="material-icons">settings</i>
+                    </md-button>
+                    <md-menu-content width="2" ng-mouseleave="$mdMenu.close()">
+                        <md-menu-item ng-repeat="item in ['Settings', 'Log Out']">
+                            <md-button ng-click="announceClick($index)">{{item}}</md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
             </div>
         </header>
         <div layout="column">
