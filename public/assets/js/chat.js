@@ -63,7 +63,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         });
     };
 
-    
+
     $scope.getUsers();
 
     $scope.getMessages = function() {
