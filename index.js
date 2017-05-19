@@ -89,7 +89,8 @@ app.post('/channel', function(request, response) {
 
 //updates channels timestamp
 app.put('/channel', function(request,response) {
-    database.collection('channels').update({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": Date.now()}});
+    var date = Date();
+    database.collection('channels').update({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": date}});
     response.send(request.body);
 });
 

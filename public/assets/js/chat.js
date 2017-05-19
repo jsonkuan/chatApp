@@ -4,6 +4,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     $scope.contacts = userContacts;
     $scope.messageDb = [];
     $scope.usersDb = [];
+    $scope.timestampChecker = $scope.currentChannel.timestamp;
 
     $scope.openChat = function(channel) {
         channelService.current = channel;
@@ -29,15 +30,26 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
 
-        channelService.updateTimeStamp($scope.currentChannel);
-        console.log("currentchannel: ", $scope.currentChannel);
+        channelService.updateTimeStamp($scope.currentChannel).then(function(response){
+            $scope.currentChannel = response;
+        });
+        console.log("End of sendMessage: 1", $scope.currentChannel.timestamp);
+
+        console.log("timestamp: ", $scope.timestampChecker, typeof($scope.timestampChecker));
+        console.log("currentchannel: ",$scope.currentChannel.timestamp, typeof($scope.currentChannel.timestamp));
+
         messageService.post(message);
+        console.log("End of sendMessage: 2", $scope.currentChannel.timestamp);
         $scope.getMessages();
+
+        console.log("End of sendMessage: 3", $scope.currentChannel.timestamp);
 
         $scope.$watch('messageDb', function f() {
             var chatContent = document.getElementById('chat-text-box-container');
             chatContent.scrollTop = chatContent.scrollHeight;
         }, true);
+
+        console.log("End of sendMessage: 4", $scope.currentChannel.timestamp);
     };
     $scope.getUsers = function() {
         userService.getUsers().then(function(response){
@@ -48,11 +60,12 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     $scope.getUsers();
 
     $scope.getMessages = function() {
+        console.log("inside getMessages() 1", $scope.currentChannel.timestamp);
         $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
-            //console.log("Hepp! messageService.getAllMessages: ", response);
             $scope.messageDb = response;
+            console.log("inside getMessages() 2", $scope.currentChannel.timestamp);
             $scope.addUserToMsg($scope.usersDb, $scope.messageDb);
-            console.log(response);
+            console.log("inside getMessages() 3", $scope.currentChannel.timestamp);
         });
     };
     $scope.getMessages();
@@ -112,9 +125,14 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
     };
     
     setInterval(function(){
+
+        if($scope.timestampChecker !== $scope.currentChannel.timestamp) {
+            $scope.getMessages();
+            console.log("Interval körs, getMessages() körs", $scope.timestampChecker," och ", $scope.currentChannel.timestamp);
+        }
         //TODO Compare activeChannel timestamp with channel from db
         //if($scope.currentChannel.timestamp > channelService.get)
-        $scope.getMessages(); }, 2000);
+        }, 3000);
     //Example: $scope.startDirectChat($rootScope.activeUser._id, otherPerson._id);
     
 });
