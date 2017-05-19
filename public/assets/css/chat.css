@@ -47,10 +47,10 @@ h3.channel-header:hover{
 }
 
 
-.channels:hover{
+.channelMsgLists:hover{
     background-color: #3E313C;
 }
-.channels {
+.channelMsgLists {
     margin-left: 2%;
     font-family: Impact, Charcoal, sans-serif;
     text-decoration: underline;

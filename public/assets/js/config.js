@@ -92,7 +92,7 @@ app.factory("messageService", ["REST", function (REST) {
             return REST.post(url, message);
         },
         getAllMessages: function(query) {
-            console.log("messageService.get query: ",query);
+            //console.log("messageService.get query: ",query);
             return REST.get(url + query);
         }
     };
@@ -107,7 +107,7 @@ angular.module('app').factory('channelService', function(REST, userService) {
             return REST.post(url, channel);
         },
         get: function(query) {
-            console.log("channelService.get Url + query", url + query);
+            //console.log("channelService.get Url + query", url + query);
             return REST.get(url + query);
         },
         getAll: function() {
@@ -171,7 +171,7 @@ app.run(function($rootScope, channelService) {
             timestamp: ''
         }];
         channelService.post(channels).then(function(response){
-            console.log("Generating new channels.", response);
+            //console.log("Generating new channels.", response);
             $rootScope.checkChannels();
         });
     };
