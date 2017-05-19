@@ -23,6 +23,10 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
                 userChannels: function(channelService, userService) {
                     return channelService.getChannelsForUser(userService.active._id);
                 },
+                userContacts: function(userService){
+                    return userService.getUsers();
+                }
+
 
             }
         })
