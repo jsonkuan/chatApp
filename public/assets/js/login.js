@@ -20,28 +20,34 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
         if (Authentication.login($scope.email, $scope.password)) {
             $state.transitionTo('chat');
         } else {
-            /*$scope.error = '';
-            $scope.email = '';
-            $scope.password = '';*/
-            alert("Incorrect!");
+            $scope.password = "";
         }
     };
 
     $scope.registerButtonClicked = function() {
-        if (Authentication.register($scope.email, $scope.password, $scope.passwordConfirm)){
-            var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: ""};
-            shownElements();
-            userService.post(user).then(function(response) {
-                console.log('new user added');
-                var allUsers = userService.getUsers();
-                allUsers.then(function(response) {
-                    $rootScope.user = response;
-                });                
-            });
+        //TODO if database is empty on users you shouldnt have to press login 2 times
+        if($scope.username && $scope.email && $scope.password && $scope.confirm){
+            if (Authentication.register($scope.email, $scope.password, $scope.confirm)){
+                var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: ""};
+                shownElements();
+                $scope.email = $scope.email.toLowerCase();
+                userService.post(user).then(function(response) {
+                    console.log('new user added');
+                    var allUsers = userService.getUsers();
+                    allUsers.then(function(response) {
+                        $rootScope.user = response;
+                    });
+                });
 
-        } else {
-            alert("Incorrect!");
+            } else {
+            }
+        }else{
+            $scope.loginForm.username.$touched = true;
+            $scope.loginForm.email.$touched = true;
+            $scope.loginForm.password.$touched = true;
+            $scope.loginForm.confirm.$touched = true;
         }
+
     };
 
     $scope.registerClicked = function() {
@@ -78,6 +84,7 @@ angular.module('app').factory('Authentication', function($rootScope, userService
             }
             return isAuthenticated;
         },
+        //TODO should not be able to register user with same mail.
         register: function(inputEmail, inputPassword, passwordConfirm) {
             var isAuthenticated = false;
             if (inputPassword === passwordConfirm) {
