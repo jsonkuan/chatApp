@@ -11,14 +11,15 @@
                     <label>&emsp;&emsp;&emsp;&emsp; Invite some friends</label>
                     <md-menu> 
                         <md-button aria-label="Open menu with hover" ng-mouseenter="$mdMenu.open()">
-                            <md-icon md-svg-src="assets/images/ic_face_black_24px.svg"></md-icon>
+                            <i class="material-icons">face_black</i>
                         </md-button>
                         <md-menu-content width="8" ng-mouseleave="$mdMenu.close()">
                             <md-menu-item ng-repeat='user in users'>
                                 <md-button ng-click="addToChannel(user)">{{user.username}}</md-button>
                             </md-menu-item>
-                        </md-menu>
-                    </md-input-container>
+                        </md-menu-content>
+                    </md-menu>
+                </md-input-container>
             </div>
             <form name = "addChannelForm" layout="column" novalidate>
                 <md-input-container>

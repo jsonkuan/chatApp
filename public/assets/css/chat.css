@@ -1,5 +1,5 @@
 #chat-text-box-container {
-    margin: 0px 15px 0px 0px;
+    margin: 0 15px 0 0;
     overflow:auto;
     border: solid 2px black;
 }
@@ -38,6 +38,9 @@ h3.channel-header:hover{
     font-size: 15px;
     color: rgb(56, 151, 141);
 }
+.material-icons{
+text-align: center;
+}
 
 .channels-list{
     list-style: none;
@@ -67,7 +70,7 @@ h3.channel-header:hover{
 }
 
 #chat-input-area {
-    margin: 0px 15px 0px 5px;
+    margin: 0 15px 0 5px;
 }
 
 #container {
@@ -80,7 +83,7 @@ div.layout-column {
 
 #chat-header {
     background:darkgrey;
-    margin: 0px 15px 0px 0px;
+    margin: 0 15px 0 0;
     border-left: solid 2px black;
     border-top: solid 2px black;
     border-right: solid 2px black;
