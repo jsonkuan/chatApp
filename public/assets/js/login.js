@@ -8,7 +8,7 @@ angular.module('app').run(function($rootScope) {
     $rootScope.activeUser = {};
     $rootScope.activeChannel = 'Afterwork';
 });
-
+//TODO validationmessage for existing email
 angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter, userService) {
     var allUsers = userService.getUsers();
     allUsers.then(function(response) {
@@ -24,8 +24,15 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
         }
     };
 
+    $scope.validateEmail = function(){
+        for(var x = 0; x < allUsers.length; x++){
+            if (allUsers[x].email === $scope.email){
+                $scope.loginForm.email.$setValidity("validationError", true);
+            }
+        }
+    };
+
     $scope.registerButtonClicked = function() {
-        //TODO if database is empty on users you shouldnt have to press login 2 times
         if($scope.username && $scope.email && $scope.password && $scope.confirm){
             if (Authentication.register($scope.email, $scope.password, $scope.confirm)){
                 var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: ""};

@@ -6,7 +6,7 @@
           <md-card-title-text>
             <img id="app_logo_login" src="assets/images/snakk_logo.png" alt="sNakk" />
             
-            <form name="loginForm" ng-submit="submitForm(loginForm)">
+            <form name="loginForm" ng-model="loginForm">
               <md-input-container ng-show="showUserName" layout="row">
                 <label>Username</label>
                 <input type="text" name="username" ng-model="username" required maxlength="20">
@@ -20,7 +20,7 @@
                 <input type="email" name="email" ng-model="email" required>
                 <div ng-messages="loginForm.email.$error">
                   <div ng-message="email"> invalid email.</div>
-                  <div ng-message="isValidEmail"> account exists</div>
+                  <div ng-message="validationError"> account exists</div>
                 </div>
               </md-input-container>
 
