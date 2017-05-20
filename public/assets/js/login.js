@@ -40,6 +40,7 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
                 });
 
             } else {
+
             }
         }else{
             $scope.loginForm.username.$touched = true;
@@ -84,17 +85,14 @@ angular.module('app').factory('Authentication', function($rootScope, userService
             }
             return isAuthenticated;
         },
-        //TODO should not be able to register user with same mail.
         register: function(inputEmail, inputPassword, passwordConfirm) {
-            var isAuthenticated = false;
+            var isAuthenticated = true;
             if (inputPassword === passwordConfirm) {
-                if ($rootScope.user.length > 0){
                     for (var i = 0; i < $rootScope.user.length; i++){
-                        isAuthenticated = inputEmail !== $rootScope.user[i].email;
+                        if (inputEmail === $rootScope.user[i].email){
+                            isAuthenticated = false;
+                        }
                     }
-                } else {
-                    isAuthenticated = true;
-                }
             } else {
                 isAuthenticated = false;
             }
