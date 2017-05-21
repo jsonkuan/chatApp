@@ -11,7 +11,8 @@
     "gulp-live-server": "0.0.30",
     "mongodb": "^2.2.26",
     "multer": "latest",
-    "mime-types": "latest"
+    "mime-types": "latest",
+    "connect": "latest"
   },
   "devDependencies": {},
   "scripts": {

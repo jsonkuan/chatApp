@@ -5,7 +5,7 @@
         </div>
         <div layout="row">
             <h3 class="channel-header">Channels</h3>
-            <md-button id="add-channel-button" name="addChannel" ng-click="sendToCreateChannel()"  aria-label="AddChannelButton">
+            <md-button class="md-icon-button" ng-click="sendToCreateChannel()"  aria-label="AddChannelButton">
                 <i class="material-icons">add_circle_outline_black</i>
             </md-button>
         </div>
@@ -28,7 +28,7 @@
                 <h3 class="channel-title">{{currentChannel.name}}</h3>
                 <span flex></span>
                 <md-menu>
-                    <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                    <md-button class="md-icon-button" ng-click="$mdMenu.open($event)">
                         <i class="material-icons">settings</i>
                     </md-button>
                     <md-menu-content width="2" ng-mouseleave="$mdMenu.close()">
