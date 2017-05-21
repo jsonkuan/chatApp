@@ -5,12 +5,25 @@ angular.module('app').controller("settingsController", function ($scope, $state,
     $scope.username = userService.active.username;
     $scope.avatar = userService.active.avatar;
 
+
+    if(userService.active._id === "59215b22297e210a12265f12"){
+        $scope.delete = true;
+    }
+
+    userService.getUsers().then(function(response) {
+        $scope.users = response;
+    });
+
+    $scope.deleteUser = function(user) {
+        userService.deleteUser(user._id);
+    };
+
     $scope.saveSettings = function () {
         userService.active.password = $scope.password;
         userService.active.email = $scope.email;
         userService.active.username = $scope.username;
 
-        if($scope.avatar) {
+        if($scope.avatar != userService.active.avatar && $scope.avatar != "assets/images/defaultProfile.png") {
             upload({
                 url: '/upload',
                 method: 'POST',
