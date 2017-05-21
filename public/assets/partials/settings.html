@@ -2,15 +2,30 @@
     <div layout = "row" layout-align="center">
         <div layout = "column" flex="60">
             <h2>Edit your profile</h2>
-            <h3>{{activeUser.email}}</h3>
-            <img src="{{profileImage}}" name="avatar" alt="Profile picture" flex="25"
+            <h3>{{email}}</h3>
+            <div ng-if="delete" ng-show="deleteUser">
+                    <p>Delete users</p>
+                    <md-menu>
+                        <md-button class="md-icon-button" ng-click="$mdMenu.open($event)">
+                            <i class="material-icons">face_black</i>
+                        </md-button>
+                        <md-menu-content ng-model="delete">
+                            <md-menu-item ng-repeat='user in users'>
+                                <md-button ng-click="deleteUser(user)">{{user.username}}</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+            </div>
+            <img ngf-src="avatar" name="avatar" alt="Profile picture" flex="25"
                      style='height: 100px; width: 80px; object-fit: contain'>
             <input class="ng-hide" id="selected" type="file" ngf-select ng-model="avatar">
-            <label for="selected" class="md-button md-raised md-primary">Select image</label>
+            <div class="button">
+                <label for="selected" class="md-button md-raised md-primary">Select image</label>
+            </div>
             <form name = "settingsForm" layout="column" novalidate>
                 <md-input-container>
                     <label>Change E-Mail</label>
-                    <input type = "email" ng-model="email" required>
+                    <input type="email" ng-model="email" required>
                 </md-input-container>
                 <md-input-container>
                     <label>Change username</label>

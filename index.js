@@ -18,6 +18,7 @@ var storage = multer.diskStorage({
     }
 });
 var upload = multer({ storage: storage });
+
 app.use(body.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -107,6 +108,7 @@ app.get('/channel/direct', function(request, response) {
         });
 });
 
+
 // Gets all users from DB
 app.get('/users', function (req, res) {
     database.collection('users').find().toArray(function (err, results) {
@@ -124,17 +126,25 @@ app.post('/users', upload.single('avatar'), function(request, response) {
     console.log("User created");
 });
 
+
 // Updates the users info in DB
-app.put('/users', function(request, response) {
-    var user = request.body;
+app.put('/users', function(req, res) {
+    var user = req.body;
     database.collection('users').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar, "status" : user.status});
-    response.send();
+    res.send({});
 });
+
 
 // adds avatar image to localhost
 app.post('/upload',upload.single('avatar'), function(req, res) {
     res.send(req.file.path);
+});
+
+
+app.delete('/users/:id', function(req, res) {
+    database.collection('users').remove({"_id": ObjectId(req.params.id)});
+    res.send({});
 });
 
 // used port
