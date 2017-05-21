@@ -18,6 +18,7 @@ var storage = multer.diskStorage({
     }
 });
 var upload = multer({ storage: storage });
+
 app.use(body.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -51,16 +52,16 @@ app.get('/channels', function(request, response) {
         var user = request.query.user;
         database.collection('channels').find(
             { $or: [ {'accessability' : 'public'},
-                     { $and: [ {'accessability' : 'private'}, 
-                               {'users' : {$in: [user]}} ] }
+                { $and: [ {'accessability' : 'private'},
+                    {'users' : {$in: [user]}} ] }
             ]})
-        .toArray(function(error, result) {
-            if (error) {
-                response.send(error);
-            } else {
-                response.send(result);
-            }
-        });
+            .toArray(function(error, result) {
+                if (error) {
+                    response.send(error);
+                } else {
+                    response.send(result);
+                }
+            });
     } else {
         database.collection('channels').find().toArray(function (err, result) {
             response.send(result);
@@ -75,7 +76,7 @@ app.get('/channel', function(request, response){
         response.send(result);
     });
 });
-  
+
 // Adds channels to DB
 app.post('/channel', function(request, response) {
     database.collection('channels').insert(request.body, function(error, documents) {
@@ -97,15 +98,16 @@ app.get('/channel/direct', function(request, response) {
     var sender = request.query.sender;
     var recipient = request.query.recipient;
     console.log('sender recipient', sender, recipient);
-    database.collection('channels').findOne( 
-        { $and: [ {'accessability' : 'direct'}, 
-                  {'users' : {$in: [sender]}}, 
-                  {'users' : {$in: [recipient]}} ] },
+    database.collection('channels').findOne(
+        { $and: [ {'accessability' : 'direct'},
+            {'users' : {$in: [sender]}},
+            {'users' : {$in: [recipient]}} ] },
         function(error, result) {
             console.log('channel/direct', result);
             response.send(result);
         });
 });
+
 
 // Gets all users from DB
 app.get('/users', function (req, res) {
@@ -124,17 +126,25 @@ app.post('/users', upload.single('avatar'), function(request, response) {
     console.log("User created");
 });
 
+
 // Updates the users info in DB
-app.put('/users', function(request, response) {
-    var user = request.body;
+app.put('/users', function(req, res) {
+    var user = req.body;
     database.collection('users').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar, "status" : user.status});
-    response.send();
+    res.send({});
 });
+
 
 // adds avatar image to localhost
 app.post('/upload',upload.single('avatar'), function(req, res) {
     res.send(req.file.path);
+});
+
+
+app.delete('/users/:id', function(req, res) {
+    database.collection('users').remove({"_id": ObjectId(req.params.id)});
+    res.send({});
 });
 
 // used port
