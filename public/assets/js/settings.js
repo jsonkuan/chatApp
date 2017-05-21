@@ -4,6 +4,7 @@ angular.module('app').controller("settingsController", function ($scope, $state,
     $scope.email = userService.active.email;
     $scope.username = userService.active.username;
     $scope.avatar = userService.active.avatar;
+    console.log($scope.avatar);
 
 
     if(userService.active._id === "5921894d70c8ec0d18393f8f"){
@@ -23,7 +24,7 @@ angular.module('app').controller("settingsController", function ($scope, $state,
         userService.active.email = $scope.email;
         userService.active.username = $scope.username;
 
-        if($scope.avatar != userService.active.avatar && $scope.avatar != "assets/images/defaultProfile.png") {
+        if($scope.avatar != userService.active.avatar && $scope.avatar != "") {
             upload({
                 url: '/upload',
                 method: 'POST',
