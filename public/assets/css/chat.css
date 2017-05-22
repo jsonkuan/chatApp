@@ -37,8 +37,9 @@ h3.channel-header {
     font-size: 15px;
     color: rgb(56, 151, 141);
 }
+
 .material-icons{
-text-align: center;
+    text-align: center;
 }
 
 .channels-list{
@@ -91,6 +92,9 @@ div.layout-column {
 #avatar-thumb{
     display: inline-block;
     vertical-align: middle;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
 }
 
 #username{
@@ -144,7 +148,7 @@ i.smilies-selector{
 
 #chat-button {
     margin: 10px 0 60px 10px;
-    display: none;;
+    display: none;
 }
 
 .smilies-selector-content {
@@ -153,7 +157,19 @@ i.smilies-selector{
 }
 
 .channel-title {
+    color: grey;
+    font-weight: bold;
+    font-size: 1.5em;
     margin: 0 10px 8px 10px;
+}
+
+.channel-purpose{
+    color: lightgray;
+    font-size: 15px;
+}
+
+md-menu {
+    padding-bottom: 8px;
 }
 
 #addChannel {

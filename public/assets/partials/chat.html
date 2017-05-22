@@ -1,5 +1,5 @@
 <div id="container" layout="row" >
-    <aside id="chat-channel-container" flex="20">
+    <md-content id="chat-channel-container" flex="20">
         <div id="app_logo">
             <img src="assets/images/snakk_icon_white.png" alt="sNakk" />
         </div>
@@ -13,8 +13,10 @@
         </div>
 
         <div class="channels-list">
-           <li class="channelMsgLists" ng-repeat="channel in userChannels" ng-click="openChat(channel)"><i class="material-icons md-18">lock_open</i>{{channel.name}}</li>
-        </div>         
+            <li class="channelMsgLists" ng-repeat="channel in userChannels" ng-click="openChat(channel)">
+            <i class="material-icons md-dark" ng-if="channel.accessability == 'public'">lock_open</i>
+            <i class="material-icons md-dark" ng-if="channel.accessability == 'private'">lock</i>{{channel.name}}</li>
+        </div>
         <div layout="row" layout-align="center">
              <h3 class="channel-header" flex="100">Direct Messages</h3>
         </div>
@@ -23,11 +25,12 @@
                 <i class="material-icons md-dark" ng-if="contact.status == 'online'">radio_button_checked</i>
                 <i class="material-icons md-dark" ng-if="contact.status == 'offline'">radio_button_unchecked</i>{{contact.username}}</li>
         </div>
-    </aside>
+    </md-content>
     <main id="chat-main" flex="80">
         <header id="chat-header">
             <div layout="row" layout-align="start end">
-                <h3 class="channel-title">{{currentChannel.name}}</h3>
+                <p class="channel-title">{{currentChannel.name}}</p>
+                <p class="channel-purpose">{{currentChannel.purpose}}</p>
                 <span flex></span>
                 <md-menu>
                     <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
@@ -62,7 +65,7 @@
                             smilies-placement="right">
                         </div>
                     </div>
-                    <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @{{channel.name}}" flex="100"/>
+                    <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @ {{currentChannel.name}}" flex="100"/>
                     <div class="add-attachment"><p class="add-attachment-icon">+</p></div>
                     <md-button id="chat-button" class="md-accent md-raised" type="submit" ng-disabled="!chatInput || chatInput.length == 0" ng-click="sendMessage(chatInput)" ng-keypress="$event.keyCode === 13 && sendMessage(chatInput)">Send</md-button>
                 </form>
