@@ -1,31 +1,49 @@
-angular.module('app').controller('chatController', function($scope, $rootScope, $state, messageService, channelService, userService, userChannels, currentChannel, userContacts) {
+angular.module('app').controller('chatController', function($scope, $state, $cookies, messageService, channelService, userService, userChannels, currentChannel, userContacts, session) {
+    $scope.activeUser = session;
     $scope.userChannels = userChannels;
     $scope.currentChannel = currentChannel;
     $scope.contacts = userContacts;
     $scope.messageDb = [];
-    $scope.usersDb = [];
+    $scope.usersDb = userContacts;
     $scope.timestampChecker = $scope.currentChannel.timestamp;
+    $scope.glued = true;
+
+/*    window.addEventListener("beforeunload", function(){
+        userService.active.status = "offline";
+        userService.updateUser(userService.active);
+    }, false);*/
 
     $scope.openChat = function(channel) {
         channelService.current = channel;
         $state.reload();
     };
 
-    $scope.sendToSettings = function(){
-        $state.transitionTo('settings');
+    $scope.announceClick = function(index) {
+        if(index === 0){
+            $state.transitionTo('settings');
+        } else {
+            userService.active.status = "offline";
+            userService.updateUser(userService.active).then(function(response) {
+                $cookies.remove('user');
+                userService.active = null;
+                $state.transitionTo('login');
+            });
+
+        }
     };
+
     $scope.sendToCreateChannel = function() {
         $state.transitionTo('addChannel');
     };
 
     $scope.sendMessage = function(input) {
-        console.log("Activeuser: ",$rootScope.activeUser);
         var message = {
-            userId: $rootScope.activeUser._id,
+            userId: userService.active._id,
             date: formatDate(), 
             text: input, 
             channel: $scope.currentChannel._id
         };
+
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
@@ -34,6 +52,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             $scope.currentChannel = response;
             console.log("updatetimeStamp: ",$scope.currentChannel);
         });
+
         messageService.post(message);
         //$scope.getMessages();
 
@@ -42,16 +61,16 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             chatContent.scrollTop = chatContent.scrollHeight;
         }, true);
     };
+
     $scope.getUsers = function() {
         userService.getUsers().then(function(response){
-            console.log(response);
         $scope.usersDb = response;
         });
     };
+
     $scope.getUsers();
 
     $scope.addUserToMsg = function(users, messages) {
-
         for(var i = 0; i < messages.length; i++) {
             for(var e = 0; e < users.length; e++){
 
@@ -80,15 +99,10 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
 
     $scope.startDirectChat = function(userA, userB) {
         if(userA._id!==userB._id){
-            console.log("userA: " + userA._id );
-            console.log("userB: " + userB._id );
             channelService.get('/direct?sender=' + userA._id + '&recipient=' + userB._id).then(function(response) {
-                console.log("responseData: " +response);
                 if (!response) {
-                    console.log("creating new chat between userA: " +userA._id+" and userB: "+ userB._id);
                     $scope.createDirectChat(userA, userB);
                 } else {
-                    console.log("open old chat with id: "+response._id);
                     $scope.openChat(response);
                 }
             });
@@ -102,6 +116,7 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
                 user = $scope.usersDb[y];
             }
         }
+        return user;
     };
 
     $scope.createDirectChat = function(userA, userB) {
@@ -130,9 +145,10 @@ angular.module('app').controller('chatController', function($scope, $rootScope, 
             }
         });
         //TODO Compare activeChannel timestamp with channel from db
-        }, 5000);
-    //Example: $scope.startDirectChat($rootScope.activeUser._id, otherPerson._id);
+    }, 5000);
+    
 });
+
 // Temp randomizing function
 function rnd(number) {
     return Math.floor((Math.random() * number) + 1);

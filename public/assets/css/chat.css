@@ -1,7 +1,8 @@
 #chat-text-box-container {
-    margin: 0px 15px 0px 0px;
+    margin: 0 15px 0 10px;
     overflow:auto;
-    border: solid 2px black;
+    border-top: solid 1px lightgray;
+    border-bottom: solid 1px lightgray;
 }
 
 p {
@@ -14,30 +15,56 @@ h1 {
 }
 
 #app_logo {
-    display: flex; 
+    display: flex;
     flex: 20;
+    padding: 25px;
+}
+.addButton{
+    color: white;
 }
 
 h3.channel-header {
-    text-align: center;
+    margin-left: 14%;
+    color: #AB9BA9;
 }
 
-.channelMsgLists:hover {
-    text-decoration: underline;
-    color: lightblue;
+.material-icons.md-18 {
+    font-size: 15px;
+}
+
+.material-icons.md-dark {
+    margin-right: 2%;
+    font-size: 15px;
+    color: rgb(56, 151, 141);
+}
+.material-icons{
+text-align: center;
+}
+
+.channels-list{
+    list-style: none;
+    font-family: Impact, Charcoal, sans-serif;
+    margin-left: 2%;
+    margin-bottom: 5px;
+}
+
+.channelMsgLists:hover{
+    background-color: #3E313C;
+}
+.channelMsgLists {
+    margin-left: 2%;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    text-decoration: none;
+    color: #AB9BA9;
     cursor: pointer;
 }
 
 #chat-channel-container {
-    background-color: purple;
-    border-radius: 3px;
-    border-left: solid 2px black;
-    border-top: solid 2px black;
-    border-bottom: solid 2px black;
+    background-color: #4D394B;
 }
 
 #chat-input-area {
-    margin: 0px 15px 0px 5px;
+    margin: 0 15px 0 5px;
 }
 
 #container {
@@ -49,11 +76,8 @@ div.layout-column {
 }
 
 #chat-header {
-    background:darkgrey;
-    margin: 0px 15px 0px 0px;
-    border-left: solid 2px black;
-    border-top: solid 2px black;
-    border-right: solid 2px black;
+    background:white;
+    margin: 0 15px 0 0;
 }
 
 #chat-main{
@@ -89,7 +113,13 @@ div.layout-column {
     background-color: transparent;
     margin: 10px 0 60px 10px;
     height: 40px;
+    min-width: 30px !important;
     border-radius: 3px;
+    cursor: pointer;
+}
+
+i.smilies-selector{
+    border: solid 6px white;
 }
 
 .add-attachment {
@@ -98,6 +128,12 @@ div.layout-column {
     margin: 10px 0 60px 0;
     height: 40px;
     border-radius: 3px;
+    min-width: 30px;
+    cursor: pointer;
+}
+
+.add-attachment-icon{
+    margin: 10px;
 }
 
 #chat-input-container {
@@ -108,6 +144,7 @@ div.layout-column {
 
 #chat-button {
     margin: 10px 0 60px 10px;
+    display: none;;
 }
 
 .smilies-selector-content {
@@ -116,5 +153,17 @@ div.layout-column {
 }
 
 .channel-title {
-    margin: 0 10px 0 10px;
+    margin: 0 10px 8px 10px;
+}
+
+#addChannel {
+    vertical-align: middle;
+}
+
+button#add-channel-button {
+    min-width: 35px !important;
+    position: relative;
+    right: 0;
+    margin-top: 18px;
+    color:rgb(171, 155, 169, 1);
 }

@@ -1,3 +1,6 @@
+# Snakk app avatar images
+images/avatar-
+
 # Created by https://www.gitignore.io/api/macos,angular
 
 ### Angular ###
@@ -12,7 +15,6 @@
 /node_modules
 /public/bower_components
 /bower_components
-
 
 # IDEs and editors
 /.idea
