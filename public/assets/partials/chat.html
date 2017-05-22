@@ -41,12 +41,12 @@
                 </md-menu>
             </div>
         </header>
-        <div layout="column">
-            <div flex="75" id="chat-text-box-container">
+        <div layout="column" >
+            <div flex="75" id="chat-text-box-container" scroll-glue="glued">
                 <div id="chat-text-box-header">
                 </div>
                 <md-content layout="column">
-                    <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index">
+                    <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
                         <img id="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
                         <p id="username" href ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
                         <p id="date">{{message.date}}</p>
