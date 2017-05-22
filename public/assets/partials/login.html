@@ -33,7 +33,7 @@
               
               <md-input-container ng-show="showPasswordConfirm" layout="row">
                 <label>Retype password</label>
-                <input type="password" name="confirm" ng-pattern="\b{{password}}\b" ng-model="confirm" required maxlength="20">
+                <input type="password" name="confirm" ng-pattern="{{password}}" ng-model="confirm" required maxlength="20">
                 <div ng-messages="loginForm.confirm.$error">
                   <div ng-message="pattern"> no match</div>
                 </div>
