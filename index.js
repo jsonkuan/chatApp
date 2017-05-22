@@ -70,7 +70,7 @@ app.get('/channels', function(request, response) {
 
 // gets specific channel from Db
 app.get('/channel', function(request, response){
-    console.log('GET /channel', request.query.id);
+    //console.log('GET /channel', request.query.id);
     database.collection('channels').findOne({'_id' : ObjectId(request.query.id)}, function(err, result){
         response.send(result);
     });
@@ -90,8 +90,17 @@ app.post('/channel', function(request, response) {
 //updates channels timestamp
 app.put('/channel', function(request,response) {
     var date = Date();
-    database.collection('channels').update({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": date}});
-    response.send(request.body);
+    console.log("updateTimestamp request.body",request.body);
+    database.collection('channels').update({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": date}}, function(error, documents, result){
+        if(error) {
+            response.send(error);
+        } else {
+            console.log("result: ",result);
+            console.log("UpdateChannel häpp!!",documents);
+            response.send(documents.ops);
+        }
+    });
+
 });
 
 app.get('/channel/direct', function(request, response) {
