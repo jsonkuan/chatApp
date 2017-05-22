@@ -1,23 +1,27 @@
-angular.module('app').run(function($rootScope) {
-    $rootScope.showReg = true;
-    $rootScope.showUserName = false;
-    $rootScope.showPasswordConfirm = false;
-    $rootScope.showLoginButton = true;
-    $rootScope.showRegButton = false;
-    $rootScope.user = {};
-    $rootScope.activeUser = {};
-    $rootScope.activeChannel = 'Afterwork';
-});
-//TODO validationmessage for existing email
-angular.module('app').controller('loginController', function($scope, $rootScope, Authentication, $state, $filter, userService) {
-    var allUsers = userService.getUsers();
-    allUsers.then(function(response) {
-        console.log('allUsers', response);
-        $rootScope.user = response;
+angular.module('app').controller('loginController', function($scope, $state, $filter, $cookies, userService, session) {
+    $scope.showReg = true;
+    $scope.showUserName = false;
+    $scope.showPasswordConfirm = false;
+    $scope.showLoginButton = true;
+    $scope.showRegButton = false;
+    $scope.isAuthenticated = false;
+    $scope.user = {};
+
+    userService.getUsers().then(function(response) {
+        $scope.user = response;
     });
 
     $scope.loginButtonClicked = function() {
-        if (Authentication.login($scope.email, $scope.password)) {
+        userService.getUsers().then(function(response) {
+            $scope.user = response;
+        });
+        if ($scope.login($scope.email, $scope.password)) {
+            userService.active.status = "online";
+            userService.updateUser(userService.active);
+            
+            //NOTE: Store user id as cookie on login.
+            $cookies.put('user', userService.active._id);
+
             $state.transitionTo('chat');
         } else {
             $scope.password = "";
@@ -35,19 +39,15 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
     $scope.registerButtonClicked = function() {
         if($scope.username && $scope.email && $scope.password && $scope.confirm){
             if (Authentication.register($scope.email, $scope.password, $scope.confirm)){
-                var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: ""};
+                var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "assets/images/defaultProfile.png", status: "offline"};
                 shownElements();
                 $scope.email = $scope.email.toLowerCase();
                 userService.post(user).then(function(response) {
-                    console.log('new user added');
-                    var allUsers = userService.getUsers();
-                    allUsers.then(function(response) {
-                        $rootScope.user = response;
-                    });
+                  userService.getUsers().then(function(response) {
+                    $scope.user = response;
+                  });
                 });
-
             } else {
-
             }
         }else{
             $scope.loginForm.username.$touched = true;
@@ -55,7 +55,6 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
             $scope.loginForm.password.$touched = true;
             $scope.loginForm.confirm.$touched = true;
         }
-
     };
 
     $scope.registerClicked = function() {
@@ -63,47 +62,35 @@ angular.module('app').controller('loginController', function($scope, $rootScope,
     };
 
     var shownElements = function() {
-        $rootScope.showReg = !$rootScope.showReg;
-        $rootScope.showLoginButton = !$rootScope.showLoginButton;
-        $rootScope.showRegButton = !$rootScope.showRegButton;
-        $rootScope.showPasswordConfirm = !$rootScope.showPasswordConfirm;
-        $rootScope.showUserName = !$rootScope.showUserName;
+        $scope.showReg = !$scope.showReg;
+        $scope.showLoginButton = !$scope.showLoginButton;
+        $scope.showRegButton = !$scope.showRegButton;
+        $scope.showPasswordConfirm = !$scope.showPasswordConfirm;
+        $scope.showUserName = !$scope.showUserName;
     };
-});
 
-angular.module('app').factory('Authentication', function($rootScope, userService) {
-    return {
-        login: function(inputEmail, inputPassword) {
-            var isAuthenticated = false;
-
-            for (var i = 0; i < $rootScope.user.length; i++) {
-                if (inputEmail === $rootScope.user[i].email && inputPassword === $rootScope.user[i].password) {
-                    var em = $rootScope.user[i].email;
-                    var pw = $rootScope.user[i].password;
-                    console.log(em + " " + pw);
-                    isAuthenticated = true;
-
-                    $rootScope.activeUser = $rootScope.user[i];
-                    //NOTE: Set active user in userService
-                    userService.active = $rootScope.user[i];
-                    console.log("input email and password  " + inputEmail + " " + "  " + inputPassword + ":::  database data  " +
-                        $rootScope.user[i].email + "  " + $rootScope.user[i].password);
-                }
+    $scope.login = function(inputEmail, inputPassword) {
+        console.log($scope.user.length);
+        for (var i = 0; i < $scope.user.length; i++) {
+            if (inputEmail === $scope.user[i].email && inputPassword === $scope.user[i].password) {
+                $scope.isAuthenticated = true;
+                userService.active = $scope.user[i];
+                return $scope.isAuthenticated;
             }
-            return isAuthenticated;
-        },
-        register: function(inputEmail, inputPassword, passwordConfirm) {
-            var isAuthenticated = true;
-            if (inputPassword === passwordConfirm) {
-                    for (var i = 0; i < $rootScope.user.length; i++){
-                        if (inputEmail === $rootScope.user[i].email){
-                            isAuthenticated = false;
-                        }
-                    }
-            } else {
-                isAuthenticated = false;
-            }
-            return isAuthenticated;
         }
+    };
+  
+    $scope.register = function(inputEmail, inputPassword, passwordConfirm) {
+        console.log(inputPassword, passwordConfirm);
+        if (inputPassword === passwordConfirm && inputPassword != undefined) {
+            if ($scope.user.length > 0){
+                for (var i = 0; i < $scope.user.length; i++){
+                    $scope.isAuthenticated = inputEmail !== $scope.user[i].email;
+                }
+            } else {
+                $scope.isAuthenticated = true;
+            }
+        }
+        return $scope.isAuthenticated;
     };
 });
