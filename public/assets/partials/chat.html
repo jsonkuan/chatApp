@@ -1,18 +1,22 @@
 <div id="container" layout="row" >
-    <aside id="chat-channel-container" flex="20">
+    <md-content id="chat-channel-container" flex="20">
         <div id="app_logo">
-            <img src="assets/images/snakk_logo.png" alt="sNakk" />
+            <img src="assets/images/snakk_icon_white.png" alt="sNakk" />
         </div>
-        <div layout="row">
+        <div id="addChannel" layout="row">
             <h3 class="channel-header">Channels</h3>
-            <md-button id="add-channel-button" name="addChannel" ng-click="sendToCreateChannel()"  aria-label="AddChannelButton">
+            <span flex="90"></span>
+            <md-button flex="5" id="add-channel-button" name="addChannel" ng-click="sendToCreateChannel()"  aria-label="AddChannelButton">
                 <i class="material-icons">add_circle_outline_black</i>
             </md-button>
+            <span flex="5"></span>
         </div>
 
         <div class="channels-list">
-           <li class="channelMsgLists" ng-repeat="channel in userChannels" ng-click="openChat(channel)"><i class="material-icons md-18">lock_open</i>{{channel.name}}</li>
-        </div>         
+            <li class="channelMsgLists" ng-repeat="channel in userChannels" ng-click="openChat(channel)">
+            <i class="material-icons md-dark" ng-if="channel.accessability == 'public'">lock_open</i>
+            <i class="material-icons md-dark" ng-if="channel.accessability == 'private'">lock</i>{{channel.name}}</li>
+        </div>
         <div layout="row" layout-align="center">
              <h3 class="channel-header" flex="100">Direct Messages</h3>
         </div>
@@ -21,7 +25,7 @@
                 <i class="material-icons md-dark" ng-if="contact.status == 'online'">radio_button_checked</i>
                 <i class="material-icons md-dark" ng-if="contact.status == 'offline'">radio_button_unchecked</i>{{contact.username}}</li>
         </div>
-    </aside>
+    </md-content>
     <main id="chat-main" flex="80">
         <header id="chat-header">
             <div layout="row" layout-align="start end">
@@ -40,12 +44,12 @@
                 </md-menu>
             </div>
         </header>
-        <div layout="column">
-            <div flex="75" id="chat-text-box-container">
+        <div layout="column" >
+            <div flex="75" id="chat-text-box-container" scroll-glue="glued">
                 <div id="chat-text-box-header">
                 </div>
                 <md-content layout="column">
-                    <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index">
+                    <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
                         <img id="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
                         <p id="username" href ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
                         <p id="date">{{message.date}}</p>

@@ -148,7 +148,7 @@ app.post('/upload',upload.single('avatar'), function(req, res) {
     res.send(req.file.path);
 });
 
-app.delete('/users/:id', function(req, res) {
+app.delete('/users:id', function(req, res) {
     database.collection('users').remove({"_id": ObjectId(req.params.id)});
     res.send({});
 });
