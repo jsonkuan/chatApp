@@ -1,6 +1,6 @@
 //TODO bug: if not registered user clicks login before registration and then register and log in = Fails to login
 
-angular.module('app').controller('loginController', function($scope, $state, $filter, userService) {
+angular.module('app').controller('loginController', function($scope, $state, $filter, $cookies, userService, session) {
     $scope.showReg = true;
     $scope.showUserName = false;
     $scope.showPasswordConfirm = false;
@@ -20,6 +20,10 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
         if ($scope.login($scope.email, $scope.password)) {
             userService.active.status = "online";
             userService.updateUser(userService.active);
+            
+            //NOTE: Store user id as cookie on login.
+            $cookies.put('user', userService.active._id);
+
             $state.transitionTo('chat');
         } else {
             /*$scope.error = '';
