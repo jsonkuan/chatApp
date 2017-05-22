@@ -27,7 +27,7 @@ MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, databas
         console.error('Failed to connect to server!"');
         console.log(error);
     } else {
-        console.log('Connected to server!"');
+        console.log('Connected to MongoDB Server!');
         database = database_;
     }
 });
@@ -108,6 +108,17 @@ app.get('/channel/direct', function(request, response) {
         });
 });
 
+app.get('/user', function(request, response) {
+    var id = request.query.id;
+    //TODO: account for faulty id
+    if (id) {
+        database.collection('users').findOne({'_id' : ObjectId(id)}, function(error, result) {
+            response.send(result);
+        });
+    } else {
+        response.send(false);
+    }
+});
 
 // Gets all users from DB
 app.get('/users', function (req, res) {
@@ -126,7 +137,6 @@ app.post('/users', upload.single('avatar'), function(request, response) {
     console.log("User created");
 });
 
-
 // Updates the users info in DB
 app.put('/users', function(req, res) {
     var user = req.body;
@@ -135,12 +145,10 @@ app.put('/users', function(req, res) {
     res.send({});
 });
 
-
 // adds avatar image to localhost
 app.post('/upload',upload.single('avatar'), function(req, res) {
     res.send(req.file.path);
 });
-
 
 app.delete('/users/:id', function(req, res) {
     database.collection('users').remove({"_id": ObjectId(req.params.id)});
