@@ -5,12 +5,13 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.contacts = userContacts;
     $scope.messageDb = [];
     $scope.usersDb = userContacts;
+    $scope.timestampChecker = $scope.currentChannel.timestamp;
     $scope.glued = true;
 
-/*    window.addEventListener("beforeunload", function(){
-        userService.active.status = "offline";
-        userService.updateUser(userService.active);
-    }, false);*/
+    /*    window.addEventListener("beforeunload", function(){
+     userService.active.status = "offline";
+     userService.updateUser(userService.active);
+     }, false);*/
 
     $scope.openChat = function(channel) {
         channelService.current = channel;
@@ -38,8 +39,8 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.sendMessage = function(input) {
         var message = {
             userId: userService.active._id,
-            date: formatDate(), 
-            text: input, 
+            date: formatDate(),
+            text: input,
             channel: $scope.currentChannel._id
         };
 
@@ -47,9 +48,13 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
 
-        channelService.updateTimeStamp($scope.currentChannel);
-        messageService.post(message);
-        $scope.getMessages();
+        channelService.updateTimeStamp($scope.currentChannel).then(function(response){
+            $scope.currentChannel = response.data;
+        });
+        messageService.post(message).then(function(response){
+
+            $scope.checkTimeStamp();
+        });
 
         $scope.$watch('messageDb', function f() {
             var chatContent = document.getElementById('chat-text-box-container');
@@ -57,22 +62,13 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         }, true);
     };
 
-
     $scope.getUsers = function() {
         userService.getUsers().then(function(response){
-        $scope.usersDb = response;
+            $scope.usersDb = response;
         });
     };
 
     $scope.getUsers();
-
-    $scope.getMessages = function() {
-        $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
-            $scope.messageDb = response;
-            $scope.addUserToMsg($scope.usersDb, $scope.messageDb);
-        });
-    };
-    $scope.getMessages();
 
     $scope.addUserToMsg = function(users, messages) {
         for(var i = 0; i < messages.length; i++) {
@@ -88,6 +84,14 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         }
     };
 
+    $scope.getMessages = function() {
+        $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
+            $scope.messageDb = response;
+            $scope.addUserToMsg($scope.usersDb, $scope.messageDb);
+        });
+    };
+    $scope.getMessages();
+
     $scope.startDirectChat = function(userA, userB) {
         if(userA._id!==userB._id){
             channelService.get('/direct?sender=' + userA._id + '&recipient=' + userB._id).then(function(response) {
@@ -98,7 +102,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
                 }
             });
         }
-
     };
 
     $scope.getUserFromMsg = function (userId){
@@ -122,14 +125,27 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             $scope.startDirectChat(userA, userB);
         });
     };
-    
-    setInterval(function(){
+
+    $scope.checkTimeStamp = function() {
+        channelService.get('?id='+$scope.currentChannel._id).then(function(response){
+
+            $scope.currentChannel = response;
+            if($scope.timestampChecker !== $scope.currentChannel.timestamp) {
+                $scope.getMessages();
+                $scope.timestampChecker = $scope.currentChannel.timestamp;
+            }
+        });
+    };
+
+    setInterval(function() {
+
+        $scope.checkTimeStamp();
+
         //TODO Compare activeChannel timestamp with channel from db
-        //if($scope.currentChannel.timestamp > channelService.get)
-        $scope.getMessages(); }, 2000);
-    //Example: $scope.startDirectChat($rootScope.activeUser._id, otherPerson._id);
-    
+    }, 500);
+
 });
+
 // Temp randomizing function
 function rnd(number) {
     return Math.floor((Math.random() * number) + 1);
