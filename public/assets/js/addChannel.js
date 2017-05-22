@@ -19,10 +19,10 @@ angular.module('app').controller("channelController", function ($scope, $state, 
         $scope.users = response;
     });
 
-    $scope.publicOrPrivate = "Public";
+    $scope.publicOrPrivate = "public";
     $scope.onChange = function(state) {
         $scope.privateText = "private";
-        return state ? ($scope.publicOrPrivate = "Private", $scope.privateText= "private") : ($scope.publicOrPrivate = "Public", $scope.privateText= "");
+        return state ? ($scope.publicOrPrivate = "private", $scope.privateText= "private") : ($scope.publicOrPrivate = "public", $scope.privateText= "");
     };
 
     $scope.addToChannel = function(user) {
