@@ -8,10 +8,10 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.timestampChecker = $scope.currentChannel.timestamp;
     $scope.glued = true;
 
-/*    window.addEventListener("beforeunload", function(){
-        userService.active.status = "offline";
-        userService.updateUser(userService.active);
-    }, false);*/
+    /*    window.addEventListener("beforeunload", function(){
+     userService.active.status = "offline";
+     userService.updateUser(userService.active);
+     }, false);*/
 
     $scope.openChat = function(channel) {
         channelService.current = channel;
@@ -39,8 +39,8 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.sendMessage = function(input) {
         var message = {
             userId: userService.active._id,
-            date: formatDate(), 
-            text: input, 
+            date: formatDate(),
+            text: input,
             channel: $scope.currentChannel._id
         };
 
@@ -49,12 +49,12 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         button.focus();
 
         channelService.updateTimeStamp($scope.currentChannel).then(function(response){
-            $scope.currentChannel = response;
-            console.log("updatetimeStamp: ",$scope.currentChannel);
+            $scope.currentChannel = response.data;
         });
+        messageService.post(message).then(function(response){
 
-        messageService.post(message);
-        //$scope.getMessages();
+            $scope.checkTimeStamp();
+        });
 
         $scope.$watch('messageDb', function f() {
             var chatContent = document.getElementById('chat-text-box-container');
@@ -64,7 +64,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
 
     $scope.getUsers = function() {
         userService.getUsers().then(function(response){
-        $scope.usersDb = response;
+            $scope.usersDb = response;
         });
     };
 
@@ -85,15 +85,10 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     };
 
     $scope.getMessages = function() {
-        console.log("inside getMessages() 1", $scope.currentChannel.timestamp);
         $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
             $scope.messageDb = response;
-            console.log("getMessages: ", response);
             $scope.addUserToMsg($scope.usersDb, $scope.messageDb);
-            console.log('getMessages, currentChannel', $scope.currentChannel);
         });
-            console.log("inside getMessages() 2", $scope.currentChannel.timestamp);
-            console.log("inside getMessages() 3", $scope.currentChannel.timestamp);
     };
     $scope.getMessages();
 
@@ -130,23 +125,25 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             $scope.startDirectChat(userA, userB);
         });
     };
-    
-    setInterval(function() {
-        channelService.get('?id='+$scope.currentChannel._id).then(function(response){
-            console.log("before: ",$scope.currentChannel.timestamp);
-            $scope.currentChannel = response;
-            console.log("after: ",$scope.currentChannel.timestamp);
-            if($scope.timestampChecker !== $scope.currentChannel.timestamp) {
-                console.log($scope.currentChannel.timestamp);
-                $scope.getMessages();
-                console.log("setInterval, fetches new messages and updates timestamp.");
 
+    $scope.checkTimeStamp = function() {
+        channelService.get('?id='+$scope.currentChannel._id).then(function(response){
+
+            $scope.currentChannel = response;
+            if($scope.timestampChecker !== $scope.currentChannel.timestamp) {
+                $scope.getMessages();
                 $scope.timestampChecker = $scope.currentChannel.timestamp;
             }
         });
+    };
+
+    setInterval(function() {
+
+        $scope.checkTimeStamp();
+
         //TODO Compare activeChannel timestamp with channel from db
-    }, 5000);
-    
+    }, 500);
+
 });
 
 // Temp randomizing function

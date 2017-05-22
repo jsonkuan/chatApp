@@ -91,17 +91,14 @@ app.post('/channel', function(request, response) {
 //updates channels timestamp
 app.put('/channel', function(request,response) {
     var date = Date();
-    console.log("updateTimestamp request.body",request.body);
-    database.collection('channels').update({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": date}}, function(error, documents, result){
+    database.collection('channels').findOneAndUpdate({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": date}}, {new: true}, function(error, documents) {
         if(error) {
+            console.log('update channel ERROR!');
             response.send(error);
         } else {
-            console.log("result: ",result);
-            console.log("UpdateChannel häpp!!",documents);
-            response.send(documents.ops);
+            response.send(documents.value);
         }
     });
-
 });
 
 app.get('/channel/direct', function(request, response) {
