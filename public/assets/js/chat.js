@@ -1,14 +1,15 @@
-angular.module('app').controller('chatController', function($scope, $state, messageService, channelService, userService, userChannels, currentChannel, userContacts) {
+angular.module('app').controller('chatController', function($scope, $state, $cookies, messageService, channelService, userService, userChannels, currentChannel, userContacts, session) {
+    $scope.activeUser = session;
     $scope.userChannels = userChannels;
     $scope.currentChannel = currentChannel;
     $scope.contacts = userContacts;
     $scope.messageDb = [];
-    $scope.usersDb = [];
+    $scope.usersDb = userContacts;
 
-    window.addEventListener("beforeunload", function(){
+/*    window.addEventListener("beforeunload", function(){
         userService.active.status = "offline";
         userService.updateUser(userService.active);
-    }, false);
+    }, false);*/
 
     $scope.openChat = function(channel) {
         channelService.current = channel;
@@ -18,10 +19,14 @@ angular.module('app').controller('chatController', function($scope, $state, mess
     $scope.announceClick = function(index) {
         if(index === 0){
             $state.transitionTo('settings');
-        }else{
+        } else {
             userService.active.status = "offline";
-            userService.updateUser(userService.active);
-            $state.transitionTo('login');
+            userService.updateUser(userService.active).then(function(response) {
+                $cookies.remove('user');
+                userService.active = null;
+                $state.transitionTo('login');
+            });
+
         }
     };
 
@@ -69,7 +74,6 @@ angular.module('app').controller('chatController', function($scope, $state, mess
     $scope.getMessages();
 
     $scope.addUserToMsg = function(users, messages) {
-
         for(var i = 0; i < messages.length; i++) {
             for(var e = 0; e < users.length; e++){
 

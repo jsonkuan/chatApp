@@ -13,9 +13,9 @@ angular.module('app').factory('Resolvers', function($q, $cookies, REST, channelS
                             resolve(channelService.current);
                         } else {
                             Generator.channels().then(function(response) {
-                                channelService.current = response[0];
+                                channelService.current = response.data[0];
                                 resolve(channelService.current);
-                            })
+                            });
                         }
                     });
                 }
@@ -80,5 +80,5 @@ angular.module('app').factory('Generator', function(channelService) {
             }];
             return channelService.post(channels);            
         }
-    }
+    };
 });

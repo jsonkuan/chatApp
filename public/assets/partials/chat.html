@@ -17,7 +17,7 @@
              <h3 class="channel-header" flex="100">Direct Messages</h3>
         </div>
         <div class="channels-list">
-            <li class="channelMsgLists" ng-repeat="contact in contacts" ng-click="startDirectChat($root.activeUser, contact)">
+            <li class="channelMsgLists" ng-repeat="contact in contacts" ng-click="startDirectChat(activeUser, contact)">
                 <i class="material-icons md-dark" ng-if="contact.status == 'online'">radio_button_checked</i>
                 <i class="material-icons md-dark" ng-if="contact.status == 'offline'">radio_button_unchecked</i>{{contact.username}}</li>
         </div>
@@ -45,8 +45,8 @@
                 </div>
                 <md-content layout="column">
                     <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index">
-                        <img id="avatar-thumb" src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
-                        <p id="username" href ng-click="startDirectChat(userService.active, getUserFromMsg(message.userId))">{{message.username}}</p>
+                        <img id="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
+                        <p id="username" href ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
                         <p id="date">{{message.date}}</p>
                         <p smilies="message.text" id="messagetext">{{message.text}}</p>
                     </div>

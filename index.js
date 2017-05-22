@@ -71,7 +71,6 @@ app.get('/channels', function(request, response) {
 
 // gets specific channel from Db
 app.get('/channel', function(request, response){
-    console.log('GET /channel', request.query.id);
     database.collection('channels').findOne({'_id' : ObjectId(request.query.id)}, function(err, result){
         response.send(result);
     });
@@ -97,7 +96,6 @@ app.put('/channel', function(request,response) {
 app.get('/channel/direct', function(request, response) {
     var sender = request.query.sender;
     var recipient = request.query.recipient;
-    console.log('sender recipient', sender, recipient);
     database.collection('channels').findOne(
         { $and: [ {'accessability' : 'direct'},
             {'users' : {$in: [sender]}},
