@@ -4,7 +4,7 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
     $scope.showPasswordConfirm = false;
     $scope.showLoginButton = true;
     $scope.showRegButton = false;
-    $scope.isAuthenticated = false;
+    $scope.isAuthenticated = true;
     $scope.user = {};
 
     userService.getUsers().then(function(response) {
@@ -18,27 +18,17 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
         if ($scope.login($scope.email, $scope.password)) {
             userService.active.status = "online";
             userService.updateUser(userService.active);
-            
             //NOTE: Store user id as cookie on login.
             $cookies.put('user', userService.active._id);
-
             $state.transitionTo('chat');
         } else {
             $scope.password = "";
         }
     };
 
-    $scope.validateEmail = function(){
-        for(var x = 0; x < allUsers.length; x++){
-            if (allUsers[x].email === $scope.email){
-                $scope.loginForm.email.$setValidity("validationError", true);
-            }
-        }
-    };
-
     $scope.registerButtonClicked = function() {
         if($scope.username && $scope.email && $scope.password && $scope.confirm){
-            if (Authentication.register($scope.email, $scope.password, $scope.confirm)){
+            if ($scope.register($scope.email, $scope.password, $scope.confirm)){
                 var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "assets/images/defaultProfile.png", status: "offline"};
                 shownElements();
                 $scope.email = $scope.email.toLowerCase();
@@ -47,7 +37,6 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
                     $scope.user = response;
                   });
                 });
-            } else {
             }
         }else{
             $scope.loginForm.username.$touched = true;
@@ -82,14 +71,15 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
   
     $scope.register = function(inputEmail, inputPassword, passwordConfirm) {
         console.log(inputPassword, passwordConfirm);
-        if (inputPassword === passwordConfirm && inputPassword != undefined) {
-            if ($scope.user.length > 0){
-                for (var i = 0; i < $scope.user.length; i++){
-                    $scope.isAuthenticated = inputEmail !== $scope.user[i].email;
+        if (inputPassword === passwordConfirm) {
+            for (var i = 0; i < $scope.user.length; i++){
+                if(inputEmail === $scope.user[i].email)
+                {
+                    $scope.isAuthenticated = false;
                 }
-            } else {
-                $scope.isAuthenticated = true;
             }
+        } else {
+            $scope.isAuthenticated = false;
         }
         return $scope.isAuthenticated;
     };
