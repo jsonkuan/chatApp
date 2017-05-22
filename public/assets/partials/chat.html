@@ -1,5 +1,5 @@
 <div id="container" layout="row" >
-    <aside id="chat-channel-container" flex="20">
+    <md-content id="chat-channel-container" flex="20">
         <div id="app_logo">
             <img src="assets/images/snakk_logo.png" alt="sNakk" />
         </div>
@@ -23,7 +23,7 @@
                 <i class="material-icons md-dark" ng-if="contact.status == 'online'">radio_button_checked</i>
                 <i class="material-icons md-dark" ng-if="contact.status == 'offline'">radio_button_unchecked</i>{{contact.username}}</li>
         </div>
-    </aside>
+    </md-content>
     <main id="chat-main" flex="80">
         <header id="chat-header">
             <div layout="row" layout-align="start end">
