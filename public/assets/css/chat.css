@@ -155,9 +155,9 @@ i.smilies-selector{
 }
 
 .channel-title {
-    color: black;
+    color: grey;
     font-weight: bold;
-    font-size: 35px;
+    font-size: 1.5em;
     margin: 0 10px 8px 10px;
 }
 
