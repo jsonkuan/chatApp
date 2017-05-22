@@ -1,5 +1,5 @@
 # Snakk app avatar images
-images/avatar-*
+*/images/avatar*
 
 # Created by https://www.gitignore.io/api/macos,angular
 
