@@ -3,8 +3,8 @@ angular.module('app').controller("channelController", function ($scope, $state, 
     $scope.invitedUsers = [];
     $scope.createChannel = function(newChannel) {
         var channels = {
-            name: newChannel.channelName,
-            purpose: newChannel.channelPurpose,
+            name: newChannel.channelName.charAt(0).toUpperCase() + newChannel.channelName.slice(1),
+            purpose: newChannel.channelPurpose.charAt(0).toUpperCase() + newChannel.channelPurpose.slice(1),
             accessability: String($scope.publicOrPrivate).toLowerCase(),
             users: $scope.tempUserArray,
             timestamp: ""
@@ -19,10 +19,10 @@ angular.module('app').controller("channelController", function ($scope, $state, 
         $scope.users = response;
     });
 
-    $scope.publicOrPrivate = "Public";
+    $scope.publicOrPrivate = "public";
     $scope.onChange = function(state) {
         $scope.privateText = "private";
-        return state ? ($scope.publicOrPrivate = "Private", $scope.privateText= "private") : ($scope.publicOrPrivate = "Public", $scope.privateText= "");
+        return state ? ($scope.publicOrPrivate = "private", $scope.privateText= "private") : ($scope.publicOrPrivate = "public", $scope.privateText= "");
     };
 
     $scope.addToChannel = function(user) {
