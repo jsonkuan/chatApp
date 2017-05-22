@@ -160,9 +160,16 @@ i.smilies-selector{
 .channel-title {
     color: black;
     font-weight: bold;
+    font-size: 35px;
 }
 
 .channel-purpose{
     color: lightgray;
+    font-size: 15px;
+    padding-bottom: 5px;
 
+}
+
+md-menu {
+    padding-bottom: 8px;
 }
