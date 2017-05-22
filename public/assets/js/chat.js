@@ -5,6 +5,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.contacts = userContacts;
     $scope.messageDb = [];
     $scope.usersDb = userContacts;
+    $scope.glued = true;
 
 /*    window.addEventListener("beforeunload", function(){
         userService.active.status = "offline";

@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload', 'lr.upload', 'ngSanitize', 'ui.bootstrap', 'angular-smilies', 'ngMessages', 'ngCookies']);
+var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload', 'lr.upload', 'ngSanitize', 'ui.bootstrap', 'angular-smilies', 'ngMessages', 'ngCookies', 'luegg.directives']);
 
 app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterProvider) {
     $qProvider.errorOnUnhandledRejections(false);
