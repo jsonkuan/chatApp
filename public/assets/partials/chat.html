@@ -65,7 +65,7 @@
                             smilies-placement="right">
                         </div>
                     </div>
-                    <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @{{channel.name}}" flex="100"/>
+                    <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message @ {{currentChannel.name}}" flex="100"/>
                     <div class="add-attachment"><p class="add-attachment-icon">+</p></div>
                     <md-button id="chat-button" class="md-accent md-raised" type="submit" ng-disabled="!chatInput || chatInput.length == 0" ng-click="sendMessage(chatInput)" ng-keypress="$event.keyCode === 13 && sendMessage(chatInput)">Send</md-button>
                 </form>
