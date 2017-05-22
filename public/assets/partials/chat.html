@@ -3,11 +3,13 @@
         <div id="app_logo">
             <img src="assets/images/snakk_logo.png" alt="sNakk" />
         </div>
-        <div layout="row">
+        <div id="addChannel" layout="row">
             <h3 class="channel-header">Channels</h3>
-            <md-button id="add-channel-button" name="addChannel" ng-click="sendToCreateChannel()"  aria-label="AddChannelButton">
+            <span flex="90"></span>
+            <md-button flex="5" id="add-channel-button" name="addChannel" ng-click="sendToCreateChannel()"  aria-label="AddChannelButton">
                 <i class="material-icons">add_circle_outline_black</i>
             </md-button>
+            <span flex="5"></span>
         </div>
 
         <div class="channels-list">

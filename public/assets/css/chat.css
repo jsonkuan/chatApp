@@ -16,6 +16,7 @@ h1 {
 #app_logo {
     display: flex;
     flex: 20;
+    padding: 25px;
 }
 .addButton{
     color: white;
@@ -56,7 +57,7 @@ text-align: center;
 .channelMsgLists {
     margin-left: 2%;
     font-family: Impact, Charcoal, sans-serif;
-    text-decoration: underline;
+    text-decoration: none;
     color: #AB9BA9;
     cursor: pointer;
 }
@@ -163,4 +164,15 @@ i.smilies-selector{
 
 .channel-title {
     margin: 0 10px 8px 10px;
+}
+
+#addChannel {
+    vertical-align: middle;
+}
+
+button#add-channel-button {
+    min-width: 35px !important;
+    position: relative;
+    right: 0;
+    margin-top: 18px;
 }
