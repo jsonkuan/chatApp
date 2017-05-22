@@ -1,7 +1,9 @@
 #chat-text-box-container {
     margin: 0 15px 0 0;
     overflow:auto;
-    border: solid 2px black;
+    border-top: solid 1px lightgray;
+    border-bottom: solid 1px lightgray;
+
 }
 
 p {
@@ -63,10 +65,6 @@ text-align: center;
 
 #chat-channel-container {
     background-color: #4D394B;
-    border-radius: 3px;
-    border-left: solid 2px black;
-    border-top: solid 2px black;
-    border-bottom: solid 2px black;
 }
 
 #chat-input-area {
@@ -82,11 +80,8 @@ div.layout-column {
 }
 
 #chat-header {
-    background:darkgrey;
+    background:white;
     margin: 0 15px 0 0;
-    border-left: solid 2px black;
-    border-top: solid 2px black;
-    border-right: solid 2px black;
 }
 
 #chat-main{
@@ -153,12 +148,12 @@ i.smilies-selector{
 
 #chat-button {
     margin: 10px 0 60px 10px;
+    display: none;;
 }
 
 .smilies-selector-content {
     background-color: white;
     max-width: 400px !important;
-
 }
 
 .channel-title {
