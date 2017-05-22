@@ -49,31 +49,31 @@ angular.module('app').factory('Generator', function(channelService) {
         channels: function() {
             var channels = [{
                 name: "General",
-                purpose: '',
+                purpose: 'Chat about everything.',
                 accessability: 'public',
                 users: [],
                 timestamp: ''
             }, {
                 name: "Work",
-                purpose: '',
+                purpose: 'Keep it clean!',
                 accessability: 'public',
                 users: [],
                 timestamp: ''
             }, {
                 name: "Afterwork",
-                purpose: '',
+                purpose: 'NSFW is alllowed here.',
                 accessability: 'public',
                 users: [],
                 timestamp: ''
             }, {
                 name: "Crazy cat-lady Videos",
-                purpose: '',
+                purpose: 'Here everyone has to love cats!',
                 accessability: 'public',
                 users: [],
                 timestamp: ''
             }, {
                 name: "pr0n",
-                purpose: '',
+                purpose: 'A chat for funny ASCII images',
                 accessability: 'public',
                 users: [],
                 timestamp: ''
