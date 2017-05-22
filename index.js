@@ -135,7 +135,7 @@ app.get('/users', function (req, res) {
 
 // Adds users to DB
 //TODO need to add avatar and channels
-app.post('/users', upload.single('avatar'), function(request, response) {
+app.post('/users', function(request, response) {
     var user = request.body;
     database.collection('users').insert({"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar, "status" : user.status});
