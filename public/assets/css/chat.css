@@ -40,8 +40,9 @@ h3.channel-header:hover{
     font-size: 15px;
     color: rgb(56, 151, 141);
 }
+
 .material-icons{
-text-align: center;
+    text-align: center;
 }
 
 .channels-list{
@@ -157,5 +158,11 @@ i.smilies-selector{
 }
 
 .channel-title {
-    margin: 0 10px 0 10px;
+    color: black;
+    font-weight: bold;
+}
+
+.channel-purpose{
+    color: lightgray;
+
 }
