@@ -13,8 +13,10 @@
         </div>
 
         <div class="channels-list">
-           <li class="channelMsgLists" ng-repeat="channel in userChannels" ng-click="openChat(channel)"><i class="material-icons md-18">lock_open</i>{{channel.name}}</li>
-        </div>         
+            <li class="channelMsgLists" ng-repeat="channel in userChannels" ng-click="openChat(channel)">
+            <i class="material-icons md-dark" ng-if="channel.accessability == 'public'">lock_open</i>
+            <i class="material-icons md-dark" ng-if="channel.accessability == 'private'">lock</i>{{channel.name}}</li>
+        </div>
         <div layout="row" layout-align="center">
              <h3 class="channel-header" flex="100">Direct Messages</h3>
         </div>
