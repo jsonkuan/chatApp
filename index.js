@@ -114,7 +114,7 @@ app.get('/channel/direct', function(request, response) {
         });
 });
 
-app.get('/user', function(request, response) {
+app.get('/users', function(request, response) {
     var id = request.query.id;
     //TODO: account for faulty id
     if (id) {
