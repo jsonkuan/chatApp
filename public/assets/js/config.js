@@ -79,25 +79,34 @@ app.factory('REST', ['$http', '$q', function($http, $q) {
                     resolve(response);
                 });
             });
+        },
+        delete: function put(url, id) {
+            return $q(function(resolve) {
+                $http.delete(url + id).then(function(response) {
+                    resolve(response);
+                });
+            });
         }
     };
 }]);
 
-app.factory("userService", ["REST", function(REST, $cookies) {
+app.factory("userService", ["REST", function(REST) {
     var url = '/users';
     return{
         active: null,
-        
         post: function (user) {
             return REST.post(url, user);
         },
         updateUser: function (user) {
             return REST.put(url, user);
         },
+        deleteUser: function(id) {
+            return REST.delete(url, id);
+        },
         getUsers: function() {
             return REST.get(url);
         },
-        get: function (id) {
+        get: function(id) {
             return REST.get('/user?id=' + id);
         }
     };

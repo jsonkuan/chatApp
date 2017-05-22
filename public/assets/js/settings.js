@@ -3,24 +3,38 @@ angular.module('app').controller("settingsController", function ($scope, $state,
     $scope.password = userService.active.password ;
     $scope.email = userService.active.email;
     $scope.username = userService.active.username;
-    $scope.profileImage = userService.active.avatar;
+    $scope.avatar = userService.active.avatar;
+    console.log($scope.avatar);
+
+
+    if(userService.active._id === "5921894d70c8ec0d18393f8f"){
+        $scope.delete = true;
+    }
+
+    userService.getUsers().then(function(response) {
+        $scope.users = response;
+    });
+
+    $scope.deleteUser = function(user) {
+        userService.deleteUser(user._id);
+    };
 
     $scope.saveSettings = function () {
         userService.active.password = $scope.password;
         userService.active.email = $scope.email;
         userService.active.username = $scope.username;
 
-        if($scope.avatar) {
+        if($scope.avatar != userService.active.avatar && $scope.avatar != "") {
             upload({
                 url: '/upload',
                 method: 'POST',
                 data: {
-                    avatar: $scope.avatar // a jqLite type="file" element, upload() will extract all the files from the input and put them into the FormData object before sending.
+                    avatar: $scope.avatar
                 }
             }).then(
                 function (response) {
                     userService.active.avatar = response.data.slice(7);
-                    $scope.profileImage = userService.active.avatar;
+                    $scope.avatar = userService.active.avatar;
                     userService.updateUser(userService.active);
                 },
                 function (response) {
