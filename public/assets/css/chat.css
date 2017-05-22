@@ -37,8 +37,9 @@ h3.channel-header {
     font-size: 15px;
     color: rgb(56, 151, 141);
 }
+
 .material-icons{
-text-align: center;
+    text-align: center;
 }
 
 .channels-list{
@@ -153,7 +154,20 @@ i.smilies-selector{
 }
 
 .channel-title {
+    color: black;
+    font-weight: bold;
+    font-size: 35px;
     margin: 0 10px 8px 10px;
+}
+
+.channel-purpose{
+    color: lightgray;
+    font-size: 15px;
+    padding-bottom: 5px;
+}
+
+md-menu {
+    padding-bottom: 8px;
 }
 
 #addChannel {
