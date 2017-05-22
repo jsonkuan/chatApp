@@ -1,5 +1,3 @@
-//TODO bug: if not registered user clicks login before registration and then register and log in = Fails to login
-
 angular.module('app').controller('loginController', function($scope, $state, $filter, $cookies, userService, session) {
     $scope.showReg = true;
     $scope.showUserName = false;
@@ -26,25 +24,36 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
 
             $state.transitionTo('chat');
         } else {
-            /*$scope.error = '';
-            $scope.email = '';
-            $scope.password = '';*/
-            alert("Incorrect!");
+            $scope.password = "";
+        }
+    };
+
+    $scope.validateEmail = function(){
+        for(var x = 0; x < allUsers.length; x++){
+            if (allUsers[x].email === $scope.email){
+                $scope.loginForm.email.$setValidity("validationError", true);
+            }
         }
     };
 
     $scope.registerButtonClicked = function() {
-        if ($scope.register($scope.email, $scope.password, $scope.passwordConfirm)){
-            var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "assets/images/defaultProfile.png", status: "offline"};
-            shownElements();
-            userService.post(user).then(function(response) {
-               userService.getUsers().then(function(response) {
+        if($scope.username && $scope.email && $scope.password && $scope.confirm){
+            if (Authentication.register($scope.email, $scope.password, $scope.confirm)){
+                var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "assets/images/defaultProfile.png", status: "offline"};
+                shownElements();
+                $scope.email = $scope.email.toLowerCase();
+                userService.post(user).then(function(response) {
+                  userService.getUsers().then(function(response) {
                     $scope.user = response;
+                  });
                 });
-            });
-
-        } else {
-            alert("Incorrect!");
+            } else {
+            }
+        }else{
+            $scope.loginForm.username.$touched = true;
+            $scope.loginForm.email.$touched = true;
+            $scope.loginForm.password.$touched = true;
+            $scope.loginForm.confirm.$touched = true;
         }
     };
 
@@ -70,6 +79,7 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
             }
         }
     };
+  
     $scope.register = function(inputEmail, inputPassword, passwordConfirm) {
         console.log(inputPassword, passwordConfirm);
         if (inputPassword === passwordConfirm && inputPassword != undefined) {

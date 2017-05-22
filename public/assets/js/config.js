@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload', 'lr.upload', 'ngSanitize', 'ui.bootstrap', 'angular-smilies', 'ngCookies']);
+var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload', 'lr.upload', 'ngSanitize', 'ui.bootstrap', 'angular-smilies', 'ngMessages', 'ngCookies']);
 
 app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterProvider) {
     $qProvider.errorOnUnhandledRejections(false);
@@ -138,11 +138,9 @@ angular.module('app').factory('channelService', function(REST, userService) {
     };
 });
 
-
 app.run(function($rootScope, $state, $cookies, Resolvers) {
     //NOTE: Uncomment below and run app to clear user cookie.
     //$cookies.remove('user');
-
     //Watches for state changes.
     $rootScope.$on('$stateChangeStart', function(event, to) {
         var destination = to.name;
@@ -160,5 +158,4 @@ app.run(function($rootScope, $state, $cookies, Resolvers) {
             }
         });
     });
-
 });
