@@ -50,6 +50,10 @@ h3.channel-header {
     color: rgb(56, 151, 141);
 }
 
+.material-icons.hash{
+    font-size: 15px;
+}
+
 .material-icons{
     text-align: center;
 }
