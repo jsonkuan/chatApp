@@ -24,17 +24,17 @@ h1 {
 }
 
 h3.channel-header {
-    margin-left: 14%;
+    margin-top: 50px;
     color: #AB9BA9;
 }
 .loged{
-    margin-left: 2%;
+    margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     text-decoration: none;
     color: #AB9BA9;
 }
 .loged-user{
-    margin-left: 2%;
+    margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     text-decoration: none;
     color: rgb(56, 151, 141);
@@ -198,7 +198,7 @@ button#add-channel-button {
     min-width: 35px !important;
     position: relative;
     right: 0;
-    margin-top: 18px;
+    margin-top: 50px;
     color:rgb(171, 155, 169);
 }
 
