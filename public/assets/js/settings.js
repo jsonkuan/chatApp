@@ -21,7 +21,6 @@ angular.module('app').controller("settingsController", function ($scope, $state,
 
     $scope.saveSettings = function () {
         userService.active.password = $scope.password;
-        userService.active.email = $scope.email;
         userService.active.username = $scope.username;
 
         if($scope.avatar != userService.active.avatar && $scope.avatar != "") {
