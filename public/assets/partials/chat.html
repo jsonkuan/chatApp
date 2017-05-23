@@ -18,7 +18,7 @@
 
         <div class="channels-list">
             <li class="channelMsgLists" ng-repeat="channel in userChannels | orderBy: 'name'" ng-click="openChat(channel)">
-            <i class="material-icons md-dark" ng-if="channel.accessability == 'public'">lock_open</i>
+            <i class="material-icons hash" ng-if="channel.accessability == 'public'">#</i>
             <i class="material-icons md-dark" ng-if="channel.accessability == 'private'">lock</i>{{channel.name}}</li>
         </div>
         <div layout="row" layout-align="center">
