@@ -7,11 +7,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.usersDb = userContacts;
     $scope.timestampChecker = $scope.currentChannel.timestamp;
     $scope.glued = true;
-
-    /*    window.addEventListener("beforeunload", function(){
-     userService.active.status = "offline";
-     userService.updateUser(userService.active);
-     }, false);*/
+    $scope.chatInput = "";
 
     $scope.openChat = function(channel) {
         channelService.current = channel;
