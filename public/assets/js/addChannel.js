@@ -1,6 +1,7 @@
 angular.module('app').controller("channelController", function ($scope, $state, userService,  channelService) {
     $scope.tempUserArray = [userService.active._id];
-    $scope.invitedUsers = [];
+    $scope.invitedUsers = [userService.active.username + " (you)"];
+    $scope.userID = userService.active._id;
     $scope.createChannel = function(newChannel) {
         var channels = {
             name: newChannel.channelName.charAt(0).toUpperCase() + newChannel.channelName.slice(1),

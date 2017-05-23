@@ -8,13 +8,13 @@
                     <md-switch ng-model="publicOrPrivateSwitch" aria-label="public or private switch" ng-change="onChange(publicOrPrivateSwitch)">{{publicOrPrivate}}</md-switch>
                 </md-input-container>
                 <md-input-container flex="80" ng-show="publicOrPrivateSwitch">
-                    <label>&emsp;&emsp;&emsp;&emsp; Invite some friends</label>
+                    <label>&emsp;&emsp;&emsp;Invite some friends</label>
                     <md-menu> 
                         <md-button aria-label="Open menu with hover" ng-mouseenter="$mdMenu.open()">
                             <i class="material-icons">face_black</i>
                         </md-button>
                         <md-menu-content width="8" ng-mouseleave="$mdMenu.close()">
-                            <md-menu-item ng-repeat='user in users'>
+                            <md-menu-item ng-repeat='user in users | filter: {_id:"!" + userID}'>
                                 <md-button ng-click="addToChannel(user)">{{user.username}}</md-button>
                             </md-menu-item>
                         </md-menu-content>
