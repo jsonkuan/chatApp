@@ -4,6 +4,7 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
     $scope.showPasswordConfirm = false;
     $scope.showLoginButton = true;
     $scope.showRegButton = false;
+    $scope.showCancel = false;
     $scope.isAuthenticated = true;
     $scope.user = {};
 
@@ -27,6 +28,7 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
     };
 
     $scope.registerButtonClicked = function() {
+        $scope.isAuthenticated = true;
         if($scope.username && $scope.email && $scope.password && $scope.confirm){
             if ($scope.register($scope.email, $scope.password, $scope.confirm)){
                 var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "assets/images/defaultProfile.png", status: "offline"};
@@ -50,12 +52,17 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
         shownElements();
     };
 
+    $scope.cancelClicked = function() {
+        shownElements();
+    };
+
     var shownElements = function() {
         $scope.showReg = !$scope.showReg;
         $scope.showLoginButton = !$scope.showLoginButton;
         $scope.showRegButton = !$scope.showRegButton;
         $scope.showPasswordConfirm = !$scope.showPasswordConfirm;
         $scope.showUserName = !$scope.showUserName;
+        $scope.showCancel = !$scope.showCancel;
     };
 
     $scope.login = function(inputEmail, inputPassword) {
@@ -76,6 +83,8 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
                 if(inputEmail === $scope.user[i].email)
                 {
                     $scope.isAuthenticated = false;
+                    $scope.email = "";
+                    $scope.email = "User exists";
                 }
             }
         } else {

@@ -20,7 +20,6 @@
                 <input type="email" name="email" ng-model="email" required>
                 <div ng-messages="loginForm.email.$error">
                   <div ng-message="email"> invalid email.</div>
-                  <div ng-message="validationError"> account exists</div>
                 </div>
               </md-input-container>
 
@@ -47,6 +46,7 @@
             <md-button type="submit" ng-click="loginButtonClicked()" ng-show="showLoginButton">Login</md-button>
             <md-label class="textHover" ng-click="registerClicked()" style="text-align:center" ng-show="showReg">Register</md-label>
             <md-button type="submit" ng-click="registerButtonClicked()" ng-show="showRegButton">Register</md-button>
+            <md-label class="textHover" ng-click="cancelClicked()" style="text-align:center" ng-show="showCancel">Cancel</md-label>
           </md-card-actions>
         </md-card-footer>
       </md-card>
