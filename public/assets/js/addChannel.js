@@ -1,13 +1,12 @@
 angular.module('app').controller("channelController", function ($scope, $state, userService,  channelService) {
-    $scope.tempUserArray = [userService.active._id];
-    $scope.invitedUsers = [userService.active.username + " (you)"];
-    $scope.userID = userService.active._id;
+    $scope.invitedUserArray = [userService.active._id];
+    $scope.invitedUserList = [userService.active.username + " (you)"];
     $scope.createChannel = function(newChannel) {
         var channels = {
             name: newChannel.channelName.charAt(0).toUpperCase() + newChannel.channelName.slice(1),
             purpose: newChannel.channelPurpose.charAt(0).toUpperCase() + newChannel.channelPurpose.slice(1),
             accessability: String($scope.publicOrPrivate).toLowerCase(),
-            users: $scope.tempUserArray,
+            users: $scope.invitedUserArray,
             timestamp: ""
         };
 
@@ -27,7 +26,20 @@ angular.module('app').controller("channelController", function ($scope, $state, 
     };
 
     $scope.addToChannel = function(user) {
-      $scope.tempUserArray.push(user._id);
-      $scope.invitedUsers.push(user.username);
+        $scope.invitedUserArray.push(user._id);
+        $scope.invitedUserList.push(user.username);
+    }
+
+    $scope.filterInvitedUsers = function(user) {
+        return ($scope.invitedUserArray.contains(user._id)) ? "" : user._id;
     }
 });
+
+Array.prototype.contains = function contains(obj) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+};
