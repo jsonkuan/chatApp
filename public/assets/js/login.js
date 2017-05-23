@@ -79,14 +79,8 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
                 if(inputEmail === $scope.user[i].email)
                 {
                     $scope.isAuthenticated = false;
-                    console.log($scope.loginForm);
-                    //$scope.email = "User Exists";
-                    console.log("only email: " +$scope.email.$error);
-                    console.log("Loginform " + $scope.loginForm.email.$error);
-                    var x = $scope.loginForm.email.$error;
-                    console.log(x);
-                    $scope.password = "";
-                    $scope.confirm = "";
+                    $scope.email = "";
+                    $scope.email = "User exists";
                 }
             }
         } else {
