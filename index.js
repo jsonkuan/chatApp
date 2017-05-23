@@ -71,6 +71,7 @@ app.get('/channels', function(request, response) {
 
 // gets specific channel from Db
 app.get('/channel', function(request, response){
+    //console.log('GET /channel', request.query.id);
     database.collection('channels').findOne({'_id' : ObjectId(request.query.id)}, function(err, result){
         response.send(result);
     });
@@ -89,8 +90,15 @@ app.post('/channel', function(request, response) {
 
 //updates channels timestamp
 app.put('/channel', function(request,response) {
-    database.collection('channels').update({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": Date.now()}});
-    response.send(request.body);
+    var date = Date();
+    database.collection('channels').findOneAndUpdate({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": date}}, {new: true}, function(error, documents) {
+        if(error) {
+            console.log('update channel ERROR!');
+            response.send(error);
+        } else {
+            response.send(documents.value);
+        }
+    });
 });
 
 app.get('/channel/direct', function(request, response) {
@@ -127,7 +135,7 @@ app.get('/users', function (req, res) {
 
 // Adds users to DB
 //TODO need to add avatar and channels
-app.post('/users', upload.single('avatar'), function(request, response) {
+app.post('/users', function(request, response) {
     var user = request.body;
     database.collection('users').insert({"username" : user.username, "email" : user.email,
         "password" : user.password, "avatar" : user.avatar, "status" : user.status});
@@ -148,6 +156,7 @@ app.post('/upload',upload.single('avatar'), function(req, res) {
     res.send(req.file.path);
 });
 
+//delete function
 app.delete('/users:id', function(req, res) {
     database.collection('users').remove({"_id": ObjectId(req.params.id)});
     res.send({});

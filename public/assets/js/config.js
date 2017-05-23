@@ -142,7 +142,7 @@ angular.module('app').factory('channelService', function(REST, userService) {
             return REST.get('/channels?user=' + userId);
         },
         updateTimeStamp: function(channel) {
-            return REST.put(url,channel);
+            return REST.put(url, channel);
         }
     };
 });
