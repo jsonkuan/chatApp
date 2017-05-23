@@ -34,7 +34,9 @@
                     <label>Invited Friends:</label>
                 </md-input-container>
                 <md-input-container ng-show="publicOrPrivateSwitch">
-                    <li id="invited-friends" ng-repeat="user in invitedUserList" ng-click="removeFromChannel($index)">{{user}}</li>
+                        <li id="invited-friends" ng-repeat="user in invitedUserList" ng-click="removeFromChannel($index)">{{user}}
+                        <i class="material-icons">delete_forever</i>
+                        </li>
                 </md-input-container>
                 <div layout = "row" layout-align= "end" >
                     <md-button ui-sref= "chat"  aria-label="CancelButton" >Cancel</md-button >

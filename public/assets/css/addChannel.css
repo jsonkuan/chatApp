@@ -2,3 +2,7 @@ li#invited-friends {
     color: hotpink;
     list-style: none; 
 }
+
+li#invited-friends:hover {
+    color: red;
+}
