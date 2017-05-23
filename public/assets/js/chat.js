@@ -146,14 +146,10 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     };
     setInterval(function() {
         $scope.checkTimeStamp();
-        console.log("Hej");
     }, 500);
-
     setInterval(function() {
         $scope.newChannelChecker();
-        console.log("Bajs");
     }, 3000);
-
 });
 
 // Temp randomizing function
