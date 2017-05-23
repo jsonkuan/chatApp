@@ -166,6 +166,9 @@ i.smilies-selector{
 .channel-purpose{
     color: lightgray;
     font-size: 15px;
+    font-style: italic;
+    position: relative; 
+    top: -10px;
 }
 
 md-menu {
