@@ -14,7 +14,7 @@
                             <i class="material-icons">face_black</i>
                         </md-button>
                         <md-menu-content width="8" ng-mouseleave="$mdMenu.close()">
-                            <md-menu-item ng-repeat='user in users | filter: filterInvitedUsers'>
+                                <md-menu-item ng-repeat='user in users | filter: filterInvitedUsers'>
                                 <md-button ng-click="addToChannel(user)">{{user.username}}</md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -34,7 +34,7 @@
                     <label>Invited Friends:</label>
                 </md-input-container>
                 <md-input-container ng-show="publicOrPrivateSwitch">
-                    <li id="invited-friends" ng-repeat="user in invitedUserList">{{user}}</li>
+                    <li id="invited-friends" ng-repeat="user in invitedUserList" ng-click="removeFromChannel($index)">{{user}}</li>
                 </md-input-container>
                 <div layout = "row" layout-align= "end" >
                     <md-button ui-sref= "chat"  aria-label="CancelButton" >Cancel</md-button >

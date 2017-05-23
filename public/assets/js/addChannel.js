@@ -1,5 +1,5 @@
 angular.module('app').controller("channelController", function ($scope, $state, userService,  channelService) {
-    $scope.invitedUserArray = [userService.active._id];
+    $scope.inviteUsersArray = [userService.active._id];
     $scope.invitedUserList = [userService.active.username + " (you)"];
     $scope.createChannel = function(newChannel) {
         var channels = {
@@ -26,12 +26,17 @@ angular.module('app').controller("channelController", function ($scope, $state, 
     };
 
     $scope.addToChannel = function(user) {
-        $scope.invitedUserArray.push(user._id);
+        $scope.inviteUsersArray.push(user._id);
         $scope.invitedUserList.push(user.username);
     }
 
+    $scope.removeFromChannel = function(index) {
+        $scope.invitedUserList.splice(index, 1);
+        $scope.inviteUsersArray.splice(index, 1);
+    }
+
     $scope.filterInvitedUsers = function(user) {
-        return ($scope.invitedUserArray.contains(user._id)) ? "" : user._id;
+        return ($scope.inviteUsersArray.contains(user._id)) ? "" : user._id;
     }
 });
 
