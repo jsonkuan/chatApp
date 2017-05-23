@@ -6,9 +6,11 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
     $scope.showRegButton = false;
     $scope.isAuthenticated = true;
     $scope.user = {};
+    $scope.users = {};
 
     userService.getUsers().then(function(response) {
         $scope.user = response;
+        $scope.users = response;
     });
 
     $scope.loginButtonClicked = function() {
@@ -27,6 +29,7 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
     };
 
     $scope.registerButtonClicked = function() {
+        $scope.isAuthenticated = true;
         if($scope.username && $scope.email && $scope.password && $scope.confirm){
             if ($scope.register($scope.email, $scope.password, $scope.confirm)){
                 var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "assets/images/defaultProfile.png", status: "offline"};
@@ -76,6 +79,8 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
                 if(inputEmail === $scope.user[i].email)
                 {
                     $scope.isAuthenticated = false;
+                    $scope.email = "";
+                    $scope.email = "User exists";
                 }
             }
         } else {
