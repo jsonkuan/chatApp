@@ -53,6 +53,8 @@ app.get('/channels', function(request, response) {
         database.collection('channels').find(
             { $or: [ {'accessability' : 'public'},
                 { $and: [ {'accessability' : 'private'},
+                    {'users' : {$in: [user]}} ] },
+                { $and: [ {'accessability' : 'direct'},
                     {'users' : {$in: [user]}} ] }
             ]})
             .toArray(function(error, result) {

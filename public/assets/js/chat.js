@@ -9,6 +9,21 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.glued = true;
     $scope.chatInput = "";
 
+    // Retrieve all channels for user, but filter out direct
+    $scope.filterChannels = function() {
+        console.log('Filter: in', $scope.userChannels);
+        var filtered = $scope.userChannels.filter(function(channel) {
+            return channel.accessability === 'public' || channel.accessability === 'private';
+        });
+        $scope.userChannels = filtered;
+        console.log('Filter: out', $scope.userChannels);
+    };
+    $scope.filterChannels();
+
+    $scope.updateChannelStatus = function() {
+
+    };
+
     $scope.openChat = function(channel) {
         channelService.current = channel;
         $state.reload();
@@ -140,7 +155,10 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         //TODO Compare activeChannel timestamp with channel from db
     }, 500);
 
+
+
 });
+
 
 // Temp randomizing function
 function rnd(number) {
