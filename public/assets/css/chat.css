@@ -45,8 +45,8 @@ h3.channel-header {
 }
 
 .material-icons.md-dark {
-    font-size: 15px;
-    color: rgb(56, 151, 141);
+    font-size: 14px;
+    margin-left: -2px;
 }
 
 .material-icons.hash{
