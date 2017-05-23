@@ -24,7 +24,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
                 userService.active = null;
                 $state.transitionTo('login');
             });
-
         }
     };
 
@@ -32,11 +31,52 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         $state.transitionTo('addChannel');
     };
 
+    $scope.snakkBot = function(message){
+        var regPattern = /[A-ZÅÄÖ]/;
+        var badWords = ["dåligt", "dålig"];
+        var banWords = ["kuk", "fitta", "hora", "röv", "bög"];
+        var uppercaseIndex = [];
+        for (var j = 0; j < message.length; j++){
+           if(message[j].match(regPattern)){
+               uppercaseIndex.push(j);
+           }
+
+        }
+
+        console.log(uppercaseIndex);
+        var newMessage = message.toLowerCase();
+        var tempMessage = "";
+        var tempLetter = "";
+
+        var concealedWord = "";
+        for(var i = 0; i < badWords.length; i++){
+            tempMessage = newMessage.replace(badWords[i],"mindre bra");
+            newMessage = tempMessage
+        }
+
+        for(var y = 0; y < banWords.length; y++){
+            concealedWord = new Array(banWords[y].length+1).join('*');
+            tempMessage = newMessage.replace(banWords[y], concealedWord);
+            newMessage = tempMessage;
+            concealedWord = "";
+        }
+
+        for(var z = 0; z < uppercaseIndex.length; z++){
+            tempLetter = newMessage.charAt(uppercaseIndex[z]).toUpperCase();
+            tempMessage = newMessage.replace(tempLetter.toLowerCase(), tempLetter);
+            newMessage = tempMessage;
+
+
+        }
+
+        return newMessage;
+    };
+
     $scope.sendMessage = function(input) {
         var message = {
             userId: userService.active._id,
             date: formatDate(),
-            text: input,
+            text: $scope.snakkBot(input),
             channel: $scope.currentChannel._id
         };
 
