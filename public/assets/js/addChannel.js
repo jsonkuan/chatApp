@@ -28,12 +28,12 @@ angular.module('app').controller("channelController", function ($scope, $state, 
     $scope.addToChannel = function(user) {
         $scope.inviteUsersArray.push(user._id);
         $scope.invitedUserList.push(user.username);
-    }
+    };
 
     $scope.removeFromChannel = function(index) {
         $scope.invitedUserList.splice(index, 1);
         $scope.inviteUsersArray.splice(index, 1);
-    }
+    };
 
     $scope.filterInvitedUsers = function(user) {
         return ($scope.inviteUsersArray.contains(user._id)) ? "" : user._id;

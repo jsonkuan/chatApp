@@ -204,7 +204,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     }, 1000);
 });
 
-
 // Temp randomizing function
 function rnd(number) {
     return Math.floor((Math.random() * number) + 1);
