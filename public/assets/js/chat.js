@@ -125,10 +125,9 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             $scope.startDirectChat(userA, userB);
         });
     };
-
+    //Watches for new messages
     $scope.checkTimeStamp = function() {
         channelService.get('?id='+$scope.currentChannel._id).then(function(response){
-
             $scope.currentChannel = response;
             if($scope.timestampChecker !== $scope.currentChannel.timestamp) {
                 $scope.getMessages();
@@ -136,10 +135,20 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             }
         });
     };
+    //Watches for new channels
+    $scope.newChannelChecker = function() {
+        channelService.getChannelsForUser('?id='+$scope.activeUser._id).then(function(response){
+            $scope.tempChannels = response;
+            if($scope.tempChannels.length > $scope.userChannels.length){
+                $scope.userChannels = $scope.tempChannels;
+            }
+        });
+    };
 
     setInterval(function() {
 
         $scope.checkTimeStamp();
+        $scope.newChannelChecker();
 
         //TODO Compare activeChannel timestamp with channel from db
     }, 500);
