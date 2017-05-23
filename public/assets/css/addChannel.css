@@ -3,6 +3,10 @@ li#invited-friends {
     list-style: none; 
 }
 
+li#invited-friends:hover {
+    color: red;
+}
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
 .ng-cloak, .x-ng-cloak,
 .ng-hide {
