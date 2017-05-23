@@ -202,7 +202,12 @@ button#add-channel-button {
     color:rgb(171, 155, 169);
 }
 
-.username{
+.channel-highlight {
+    color: #f3efef;
+    font-weight: bold;
+}
+
+.username {
     margin-left: 10%;
     margin-top: -10%;
     margin-bottom: -10%;

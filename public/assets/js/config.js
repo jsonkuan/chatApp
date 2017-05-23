@@ -148,6 +148,12 @@ angular.module('app').factory('channelService', function(REST, userService) {
 });
 
 app.run(function($rootScope, $state, $cookies, Resolvers) {
+    /* Clear all cookies
+    var cookies = $cookies.getAll();
+    angular.forEach(cookies, function (v, k) {
+        $cookies.remove(k);
+    });*/
+
     //NOTE: Uncomment below and run app to clear user cookie.
     //$cookies.remove('user');
     //Watches for state changes.

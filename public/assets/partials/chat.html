@@ -19,15 +19,21 @@
         <div class="channels-list">
             <li class="channelMsgLists" ng-repeat="channel in userChannels | orderBy: 'name'" ng-click="openChat(channel)">
             <i class="material-icons hash" ng-if="channel.accessability == 'public'">#</i>
-            <i class="material-icons md-dark" ng-if="channel.accessability == 'private'">lock</i>{{channel.name}}</li>
+            <i class="material-icons md-dark" ng-if="channel.accessability == 'private'">lock</i>
+            <span ng-if="channelStatus[channel._id].update" class="channel-highlight">{{channel.name}}</span>
+            <span ng-if="!channelStatus[channel._id].update">{{channel.name}}</span>
+            </li>
         </div>
         <div layout="row" layout-align="center">
              <h3 class="channel-header" flex="100">Direct Messages</h3>
         </div>
         <div class="channels-list">
-            <li class="channelMsgLists" ng-repeat="contact in contacts" ng-click="startDirectChat(activeUser, contact)">
+            <li class="channelMsgLists" ng-repeat="contact in contacts | orderBy: 'username'" ng-click="startDirectChat(activeUser, contact)">
                 <i class="material-icons md-dark" ng-if="contact.status == 'online'">radio_button_checked</i>
-                <i class="material-icons md-dark" ng-if="contact.status == 'offline'">radio_button_unchecked</i>{{contact.username}}</li>
+                <i class="material-icons md-dark" ng-if="contact.status == 'offline'">radio_button_unchecked</i>
+                <span ng-if="channelStatus[contact.channelId].update" class="channel-highlight">{{contact.username}}</span>
+                <span ng-if="!channelStatus[contact.channelId].update">{{contact.username}}</span>
+            </li>
         </div>
     </md-content>
     <main id="chat-main" flex="80">

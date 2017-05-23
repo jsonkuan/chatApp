@@ -2,12 +2,74 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.activeUser = session;
     $scope.userChannels = userChannels;
     $scope.currentChannel = currentChannel;
-    $scope.contacts = userContacts;
     $scope.messageDb = [];
-    $scope.usersDb = userContacts;
+    $scope.contacts = userContacts;
+    $scope.users = userContacts;
     $scope.timestampChecker = $scope.currentChannel.timestamp;
     $scope.glued = true;
     $scope.chatInput = "";
+    $scope.channelStatus;
+    $scope.tmpChannels = $scope.userChannels;
+    $scope.tmpContacts = $scope.contacts;
+
+    // Filter channels for user
+    $scope.filterChannels = function() {
+        var contacts = $scope.tmpContacts.filter(function(user) {
+            return user._id != userService.active._id;
+        });
+        var channels = $scope.userChannels.filter(function(channel) {
+            return channel.accessability === 'public' || channel.accessability === 'private';
+        });
+        var direct = $scope.userChannels.filter(function(channel) {
+            return channel.accessability === 'direct';
+        });
+        for (var i = 0; i < direct.length; i ++) {
+            for (var j = 0; j < contacts.length; j ++) {
+                if (direct[i].users.includes(contacts[j]._id)) {
+                    contacts[j].channelId = direct[i]._id;
+                }
+            }
+        }
+        $scope.userChannels = channels;
+        $scope.contacts = contacts;
+        $scope.users = $scope.tmpContacts;
+    };
+    $scope.updateChannelStatus = function() {
+        // Retrieve cookie based on user
+        $scope.userChannels = $scope.tmpChannels;
+        var cookie = $cookies.get(userService.active._id);
+        if (!cookie) {
+            cookie = {};
+        } else {
+            cookie = JSON.parse(cookie);
+        }
+        // Compare timestamp between channels and cookies
+        var channels = $scope.userChannels;
+        for (var i = 0; i < channels.length; i ++) {
+            var channelId = channels[i]._id;
+            if (!cookie[channelId]) {
+                cookie[channelId] = {
+                    timestamp: Date(),
+                    update: true
+                };
+            } else {
+                if (channels[i].timestamp > cookie[channelId].timestamp) {
+                    cookie[channelId].timestamp = channels[i].timestamp;
+                    cookie[channelId].update = true;
+                }
+            }
+        }
+
+        // Always mark current channel as read
+        cookie[channelService.current._id].timestamp = Date();
+        cookie[channelService.current._id].update = false;
+
+        $scope.channelStatus = cookie;
+        $cookies.put(userService.active._id, JSON.stringify(cookie));
+    };
+    
+    $scope.updateChannelStatus();
+    $scope.filterChannels();
 
     $scope.openChat = function(channel) {
         channelService.current = channel;
@@ -24,7 +86,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
                 userService.active = null;
                 $state.transitionTo('login');
             });
-
         }
     };
 
@@ -58,14 +119,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         }, true);
     };
 
-    $scope.getUsers = function() {
-        userService.getUsers().then(function(response){
-            $scope.usersDb = response;
-        });
-    };
-
-    $scope.getUsers();
-
     $scope.addUserToMsg = function(users, messages) {
         for(var i = 0; i < messages.length; i++) {
             for(var e = 0; e < users.length; e++){
@@ -83,7 +136,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.getMessages = function() {
         $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
             $scope.messageDb = response;
-            $scope.addUserToMsg($scope.usersDb, $scope.messageDb);
+            $scope.addUserToMsg($scope.users, $scope.messageDb);
         });
     };
     $scope.getMessages();
@@ -102,9 +155,9 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
 
     $scope.getUserFromMsg = function (userId){
         var user = {};
-        for(var y = 0; y < $scope.usersDb.length; y++){
-            if($scope.usersDb[y]._id === userId) {
-                user = $scope.usersDb[y];
+        for(var y = 0; y < $scope.contacts.length; y++){
+            if($scope.contacts[y]._id === userId) {
+                user = $scope.contacts[y];
             }
         }
         return user;
@@ -123,7 +176,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     };
     //Watches for new messages
     $scope.checkTimeStamp = function() {
-        channelService.get('?id='+$scope.currentChannel._id).then(function(response){
+        channelService.get('?id='+$scope.currentChannel._id).then(function(response) {
             $scope.currentChannel = response;
             if($scope.timestampChecker !== $scope.currentChannel.timestamp) {
                 $scope.getMessages();
@@ -133,20 +186,24 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     };
     //Watches for new channels
     $scope.newChannelChecker = function() {
-        channelService.getChannelsForUser('?id='+$scope.activeUser._id).then(function(response){
-            $scope.tempChannels = response;
-            if($scope.tempChannels.length > $scope.userChannels.length){
-                $scope.userChannels = $scope.tempChannels;
-            }
+        channelService.getChannelsForUser($scope.activeUser._id).then(function(channelResponse) {
+            $scope.tmpChannels = channelResponse;
+            userService.getUsers().then(function(userResponse) {
+                $scope.tmpContacts = userResponse;
+                $scope.updateChannelStatus();
+                $scope.filterChannels();
+            });
         });
     };
     setInterval(function() {
         $scope.checkTimeStamp();
     }, 500);
+
     setInterval(function() {
         $scope.newChannelChecker();
-    }, 3000);
+    }, 1000);
 });
+
 
 // Temp randomizing function
 function rnd(number) {

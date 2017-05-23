@@ -53,6 +53,8 @@ app.get('/channels', function(request, response) {
         database.collection('channels').find(
             { $or: [ {'accessability' : 'public'},
                 { $and: [ {'accessability' : 'private'},
+                    {'users' : {$in: [user]}} ] },
+                { $and: [ {'accessability' : 'direct'},
                     {'users' : {$in: [user]}} ] }
             ]})
             .toArray(function(error, result) {
@@ -71,7 +73,6 @@ app.get('/channels', function(request, response) {
 
 // gets specific channel from Db
 app.get('/channel', function(request, response){
-    //console.log('GET /channel', request.query.id);
     database.collection('channels').findOne({'_id' : ObjectId(request.query.id)}, function(err, result){
         response.send(result);
     });
