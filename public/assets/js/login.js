@@ -28,17 +28,8 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
         }
     };
 
-    $scope.validateEmail = function(){
-        for (var i = 0; i < $scope.users.length; i++){
-            if($scope.email === $scope.users[i].email){
-                //då skall error sättas
-                alert("error");
-            }
-        }
-    };
-
     $scope.registerButtonClicked = function() {
-        $scope.validateEmail();
+        $scope.isAuthenticated = true;
         if($scope.username && $scope.email && $scope.password && $scope.confirm){
             if ($scope.register($scope.email, $scope.password, $scope.confirm)){
                 var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "assets/images/defaultProfile.png", status: "offline"};
@@ -88,6 +79,9 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
                 if(inputEmail === $scope.user[i].email)
                 {
                     $scope.isAuthenticated = false;
+                    console.log($scope.loginForm);
+                    $scope.loginForm.email.$error.emailEqual = false;
+                    //Todo set error to true.
                 }
             }
         } else {
