@@ -80,8 +80,13 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
                 {
                     $scope.isAuthenticated = false;
                     console.log($scope.loginForm);
-                    $scope.loginForm.email.$error.emailEqual = false;
-                    //Todo set error to true.
+                    //$scope.email = "User Exists";
+                    console.log("only email: " +$scope.email.$error);
+                    console.log("Loginform " + $scope.loginForm.email.$error);
+                    var x = $scope.loginForm.email.$error;
+                    console.log(x);
+                    $scope.password = "";
+                    $scope.confirm = "";
                 }
             }
         } else {
