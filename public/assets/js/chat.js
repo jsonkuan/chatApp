@@ -84,6 +84,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             userService.updateUser(userService.active).then(function(response) {
                 $cookies.remove('user');
                 userService.active = null;
+                channelService.current = null;
                 $state.transitionTo('login');
             });
         }
