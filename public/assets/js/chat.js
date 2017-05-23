@@ -8,21 +8,70 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.timestampChecker = $scope.currentChannel.timestamp;
     $scope.glued = true;
     $scope.chatInput = "";
+    $scope.channelStatus;
 
-    // Retrieve all channels for user, but filter out direct
+    // Filter channels for user
     $scope.filterChannels = function() {
-        console.log('Filter: in', $scope.userChannels);
-        var filtered = $scope.userChannels.filter(function(channel) {
+        var channels = $scope.userChannels.filter(function(channel) {
             return channel.accessability === 'public' || channel.accessability === 'private';
         });
-        $scope.userChannels = filtered;
-        console.log('Filter: out', $scope.userChannels);
+        var direct = $scope.userChannels.filter(function(channel) {
+            return channel.accessability === 'direct';
+        });
+        var contacts = $scope.contacts.filter(function(user) {
+            return user._id != userService.active._id;
+        });
+        for (var i = 0; i < direct.length; i ++) {
+            for (var j = 0; j < contacts.length; j ++) {
+                if (direct[i].users.includes(contacts[j]._id)) {
+                    console.log('Applying channelId to user', direct[i].name, contacts[j].username);
+                    contacts[j].channelId = direct[i]._id;
+                }
+            }
+        }
+        $scope.userChannels = channels;
+        $scope.contacts = contacts;
     };
-    $scope.filterChannels();
 
     $scope.updateChannelStatus = function() {
+        // Retrieve cookie based on user
+        var cookie = $cookies.get(userService.active._id);
+        if (!cookie) {
+            cookie = {};
+        } else {
+            cookie = JSON.parse(cookie);
+        }
 
+        // Compare timestamp between channels and cookies
+        var channels = $scope.userChannels;
+        for (var i = 0; i < channels.length; i ++) {
+            var channelId = channels[i]._id;
+            if (!cookie[channelId]) {
+                console.log('New cookie propery', channels[i].name);
+                cookie[channelId] = {
+                    timestamp: Date(),
+                    update: true
+                };
+            } else {
+                if (channels[i].timestamp > cookie[channelId].timestamp) {
+                    console.log('Update cookie propery', channels[i].name);
+                    console.log('channel vs cookie', channels[i].timestamp, cookie[channelId].timestamp);
+                    cookie[channelId].timestamp = channels[i].timestamp;
+                    cookie[channelId].update = true;
+                }
+            }
+        }
+
+        // Always mark current channel as read
+        cookie[channelService.current._id].timestamp = Date();
+        cookie[channelService.current._id].update = false;
+
+        $scope.channelStatus = cookie;
+        $cookies.put(userService.active._id, JSON.stringify(cookie));
     };
+    
+    $scope.updateChannelStatus();
+    $scope.filterChannels();
 
     $scope.openChat = function(channel) {
         channelService.current = channel;

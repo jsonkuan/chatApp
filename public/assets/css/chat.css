@@ -183,3 +183,8 @@ button#add-channel-button {
     margin-top: 18px;
     color:rgb(171, 155, 169, 1);
 }
+
+.channel-highlight {
+    color: white;
+    font-weight: bold;
+}
