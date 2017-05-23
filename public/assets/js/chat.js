@@ -149,8 +149,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
 
         $scope.checkTimeStamp();
         $scope.newChannelChecker();
-
-        //TODO Compare activeChannel timestamp with channel from db
     }, 500);
 
 });
