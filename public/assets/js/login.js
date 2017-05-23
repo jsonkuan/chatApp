@@ -4,13 +4,12 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
     $scope.showPasswordConfirm = false;
     $scope.showLoginButton = true;
     $scope.showRegButton = false;
+    $scope.showCancel = false;
     $scope.isAuthenticated = true;
     $scope.user = {};
-    $scope.users = {};
 
     userService.getUsers().then(function(response) {
         $scope.user = response;
-        $scope.users = response;
     });
 
     $scope.loginButtonClicked = function() {
@@ -53,12 +52,17 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
         shownElements();
     };
 
+    $scope.cancelClicked = function() {
+        shownElements();
+    };
+
     var shownElements = function() {
         $scope.showReg = !$scope.showReg;
         $scope.showLoginButton = !$scope.showLoginButton;
         $scope.showRegButton = !$scope.showRegButton;
         $scope.showPasswordConfirm = !$scope.showPasswordConfirm;
         $scope.showUserName = !$scope.showUserName;
+        $scope.showCancel = !$scope.showCancel;
     };
 
     $scope.login = function(inputEmail, inputPassword) {
