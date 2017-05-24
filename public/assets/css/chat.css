@@ -46,7 +46,7 @@ h3.channel-header {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     text-decoration: none;
-    color: rgba(56, 151, 141);
+    color: rgba(56, 151, 141, 1);
 }
 
 .material-icons.md-18 {
@@ -231,7 +231,7 @@ button#add-channel-button {
     position: relative;
     right: 0;
     margin-top: 50px;
-    color:rgba(171, 155, 169);
+    color:rgba(171, 155, 169, 1);
 }
 
 .channel-highlight {
