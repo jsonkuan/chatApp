@@ -11,6 +11,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.channelStatus;
     $scope.tmpChannels = $scope.userChannels;
     $scope.tmpContacts = $scope.contacts;
+    $scope.warning = false;
 
     // Filter channels for user
     $scope.filterChannels = function() {
@@ -112,6 +113,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
 
         console.log(uppercaseIndex);
         var newMessage = message.toLowerCase();
+        var oldMessage = message;
         var tempLetter = "";
 
         var concealedWord = "";
@@ -130,6 +132,10 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             newMessage = newMessage.replace(tempLetter.toLowerCase(), tempLetter);
         }
 
+        if(oldMessage !== newMessage){
+            $scope.warning = true;
+        }
+
         return newMessage;
     };
 
@@ -141,6 +147,41 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             channel: $scope.currentChannel._id
         };
 
+
+        if($scope.warning){
+            var warningMessage = "";
+            if(userService.active.warnings === 0){
+                warningMessage = $scope.activeUser.username + " have been warned! Keep it clean.";
+            }else if(userService.active.warnings === 1){
+                warningMessage = "Last warning for " + $scope.activeUser.username + " before ban!";
+            }else{
+                warningMessage = "Bye bye";
+                console.log(warningMessage);
+                console.log(userService.active.warnings);
+            }
+            var botMessage = {
+                userId: "133333333333333333333337",
+                date: formatDate(),
+                text:  warningMessage,
+                channel: $scope.currentChannel._id
+            };
+
+            $scope.activeUser.warnings += 1;
+            console.log($scope.activeUser.warnings);
+            if($scope.activeUser.warnings > 2){
+                userService.updateUser(userService.active).then(function(response) {
+                    $cookies.remove('user');
+                });
+                userService.deleteUser($scope.activeUser._id);
+                window.location = "https://www.google.se/#q=low+self+esteem";
+
+            }else {
+                userService.updateUser(userService.active);
+            }
+
+            $scope.warning = false;
+        }
+
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
@@ -149,6 +190,11 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             $scope.currentChannel = response.data;
         });
         messageService.post(message).then(function(response){
+
+            $scope.checkTimeStamp();
+        });
+
+        messageService.post(botMessage).then(function(response){
 
             $scope.checkTimeStamp();
         });
@@ -168,6 +214,8 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
                 }
                 if(messages[i].userId === users[e]._id) {
                     messages[i].avatar = users[e].avatar;
+                }else if(messages[i].avatar === undefined){
+                    messages[i].avatar = "assets/images/defaultProfile.png";
                 }
             }
         }

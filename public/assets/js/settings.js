@@ -6,7 +6,7 @@ angular.module('app').controller("settingsController", function ($scope, $state,
     $scope.avatar = userService.active.avatar;
     console.log($scope.avatar);
 
-    if(userService.active._id === "5921894d70c8ec0d18393f8f"){
+    if(userService.active._id === "133333333333333333333337"){
         $scope.delete = true;
     }
 

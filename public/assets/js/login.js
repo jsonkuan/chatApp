@@ -8,6 +8,15 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
     $scope.isAuthenticated = true;
     $scope.user = {};
 
+    userService.post({
+        _id: "133333333333333333333337",
+        username: "SnakkBot",
+        email: "bot@snakk.com",
+        password: "2017",
+        avatar: "assets/images/snakk-bot.jpg",
+        status: "offline"
+    });
+
     userService.getUsers().then(function(response) {
         $scope.user = response;
     });
@@ -17,11 +26,15 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
             $scope.user = response;
         });
         if ($scope.login($scope.email, $scope.password)) {
-            userService.active.status = "online";
-            userService.updateUser(userService.active);
-            //NOTE: Store user id as cookie on login.
-            $cookies.put('user', userService.active._id);
-            $state.transitionTo('chat');
+            if(userService.active.status === "online"){
+                $scope.email = "You are already logged in";
+            }else {
+                userService.active.status = "online";
+                userService.updateUser(userService.active);
+                //NOTE: Store user id as cookie on login.
+                $cookies.put('user', userService.active._id);
+                $state.transitionTo('chat');
+            }
         } else {
             $scope.password = "";
         }
@@ -31,7 +44,8 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
         $scope.isAuthenticated = true;
         if($scope.username && $scope.email && $scope.password && $scope.confirm){
             if ($scope.register($scope.email, $scope.password, $scope.confirm)){
-                var user = { email: $filter('lowercase')($scope.email), username: $scope.username, password: $scope.password, avatar: "assets/images/defaultProfile.png", status: "offline"};
+                var user = { email: $filter('lowercase')($scope.email), username: $scope.username,
+                    password: $scope.password, avatar: "assets/images/defaultProfile.png", status: "offline", warnings: 0};
                 shownElements();
                 $scope.email = $scope.email.toLowerCase();
                 userService.post(user).then(function(response) {
