@@ -1,10 +1,7 @@
 li#invited-friends {
-    color: hotpink;
+    color: black;
     list-style: none; 
-}
-
-li#invited-friends:hover {
-    color: red;
+    min-width: 200px;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
@@ -26,4 +23,17 @@ ng\:form {
  * animation is ongoing, but the .ng-hide class is active */
 .ng-hide-add-active, .ng-hide-remove {
     display: block!important;
+}
+
+.deleteIcon{
+    color:black;
+    clear: right;
+    font-size: 20px !important;
+    line-height: 1.5rem;
+    vertical-align: bottom !important;
+    float: right !important;
+}
+
+.deleteIcon:hover {
+    color: rgb(255,64,129);
 }

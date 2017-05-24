@@ -1,6 +1,7 @@
 angular.module('app').controller("channelController", function ($scope, $state, userService,  channelService) {
     $scope.inviteUsersArray = [userService.active._id];
     $scope.invitedUserList = [userService.active.username + " (you)"];
+    $scope.counter = $scope.invitedUserList.length;
     $scope.createChannel = function(newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
         if (access === 'public') {
@@ -32,11 +33,13 @@ angular.module('app').controller("channelController", function ($scope, $state, 
     $scope.addToChannel = function(user) {
         $scope.inviteUsersArray.push(user._id);
         $scope.invitedUserList.push(user.username);
+        $scope.counter--;
     };
 
     $scope.removeFromChannel = function(index) {
         $scope.invitedUserList.splice(index, 1);
         $scope.inviteUsersArray.splice(index, 1);
+        $scope.counter++;
     };
 
     $scope.filterInvitedUsers = function(user) {

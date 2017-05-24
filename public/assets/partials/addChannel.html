@@ -7,7 +7,7 @@
                 <md-input-container flex="20">
                     <md-switch ng-model="publicOrPrivateSwitch" aria-label="public or private switch" ng-change="onChange(publicOrPrivateSwitch)">{{publicOrPrivate}}</md-switch>
                 </md-input-container>
-                <md-input-container flex="80" ng-show="publicOrPrivateSwitch">
+                <md-input-container flex="80" ng-show="publicOrPrivateSwitch && counter > 0"> 
                     <label>&emsp;&emsp;&emsp;Invite some friends</label>
                     <md-menu> 
                         <md-button aria-label="Open menu with hover" ng-mouseenter="$mdMenu.open()">
@@ -33,9 +33,9 @@
                 <md-input-container ng-show="publicOrPrivateSwitch">
                     <label>Invited Friends:</label>
                 </md-input-container>
-                <md-input-container ng-show="publicOrPrivateSwitch">
+                <md-input-container ng-show="publicOrPrivateSwitch" style="line-height: 1.5rem; width: 10rem">
                         <li id="invited-friends" ng-repeat="user in invitedUserList" ng-click="removeFromChannel($index)">{{user}}
-                        <i class="material-icons">delete_forever</i>
+                        <i class="material-icons deleteIcon">backspace</i>
                         </li>
                 </md-input-container>
                 <div layout = "row" layout-align= "end" >
