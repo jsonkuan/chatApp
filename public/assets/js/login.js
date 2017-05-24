@@ -14,7 +14,7 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
         email: "bot@snakk.com",
         password: "2017",
         avatar: "assets/images/snakk-bot.jpg",
-        status: "online"
+        status: "offline"
     });
 
     userService.getUsers().then(function(response) {
