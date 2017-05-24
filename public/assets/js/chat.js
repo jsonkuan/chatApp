@@ -31,10 +31,15 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         $state.transitionTo('addChannel');
     };
 
+    String.prototype.replaceAll = function(search, replacement) {
+        var target = this;
+        return target.replace(new RegExp(search, 'g'), replacement);
+    };
+
     $scope.snakkBot = function(message){
         var regPattern = /[A-ZÅÄÖ]/;
         var badWords = ["dåligt", "dålig"];
-        var banWords = ["kuk", "fitta", "hora", "röv", "bög"];
+        var banWords = ["ett", "två", "tre", "fyra", "fem"];
         var uppercaseIndex = [];
         for (var j = 0; j < message.length; j++){
            if(message[j].match(regPattern)){
@@ -45,26 +50,23 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
 
         console.log(uppercaseIndex);
         var newMessage = message.toLowerCase();
-        var tempMessage = "";
         var tempLetter = "";
 
         var concealedWord = "";
         for(var i = 0; i < badWords.length; i++){
-            tempMessage = newMessage.replace(badWords[i],"mindre bra");
-            newMessage = tempMessage
+            newMessage = newMessage.replace(badWords[i],"mindre bra");
+
         }
 
         for(var y = 0; y < banWords.length; y++){
             concealedWord = new Array(banWords[y].length+1).join('*');
-            tempMessage = newMessage.replace(banWords[y], concealedWord);
-            newMessage = tempMessage;
+            newMessage = newMessage.replaceAll(banWords[y], concealedWord);
             concealedWord = "";
         }
 
         for(var z = 0; z < uppercaseIndex.length; z++){
             tempLetter = newMessage.charAt(uppercaseIndex[z]).toUpperCase();
-            tempMessage = newMessage.replace(tempLetter.toLowerCase(), tempLetter);
-            newMessage = tempMessage;
+            newMessage = newMessage.replace(tempLetter.toLowerCase(), tempLetter);
 
 
         }
