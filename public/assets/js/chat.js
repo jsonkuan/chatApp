@@ -155,6 +155,20 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
                 text: $scope.activeUser.username + " have been warned! Keep it clean.",
                 channel: $scope.currentChannel._id
             };
+
+            $scope.activeUser.warnings += 1;
+            console.log($scope.activeUser.warnings);
+            if($scope.activeUser.warnings > 2){
+                userService.updateUser(userService.active).then(function(response) {
+                    $cookies.remove('user');
+                });
+                userService.deleteUser($scope.activeUser._id);
+                window.location = "https://www.google.se/#q=low+self+esteem";
+
+            }else {
+                userService.updateUser(userService.active);
+            }
+
             $scope.warning = false;
         }
 

@@ -140,12 +140,12 @@ app.post('/users', function(request, response) {
     var user = request.body;
     if(user._id === "133333333333333333333337"){
         database.collection('users').insert({"_id": ObjectId("133333333333333333333337"), "username" : user.username, "email" : user.email,
-            "password" : user.password, "avatar" : user.avatar, "status" : user.status});
+            "password" : user.password, "avatar" : user.avatar, "status" : user.status, "warnings": user.warnings});
         response.send();
         console.log("Bot created");
     }else{
         database.collection('users').insert({"username" : user.username, "email" : user.email,
-            "password" : user.password, "avatar" : user.avatar, "status" : user.status});
+            "password" : user.password, "avatar" : user.avatar, "status" : user.status, "warnings": user.warnings});
         response.send();
         console.log("User created");
     }
@@ -155,7 +155,7 @@ app.post('/users', function(request, response) {
 app.put('/users', function(req, res) {
     var user = req.body;
     database.collection('users').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
-        "password" : user.password, "avatar" : user.avatar, "status" : user.status});
+        "password" : user.password, "avatar" : user.avatar, "status" : user.status, "warnings": user.warnings});
     res.send({});
 });
 
