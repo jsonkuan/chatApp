@@ -45,7 +45,7 @@ h3.channel-header {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     text-decoration: none;
-    color: rgb(56, 151, 141);
+    color: rgba(56, 151, 141);
 }
 
 .material-icons.md-18 {
@@ -136,7 +136,7 @@ div.layout-column {
 }
 
 .input-group-addon {
-    border: solid 2px rgb(187, 189, 191, 1);
+    border: solid 2px #bbbdbf;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     background-color: transparent;
@@ -152,7 +152,7 @@ i.smilies-selector{
 }
 
 .add-attachment {
-    border: solid 2px rgb(187, 189, 191, 1);
+    border: solid 2px rgba(187, 189, 191, 1);
     border-left: none;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -164,12 +164,12 @@ i.smilies-selector{
 }
 
 .add-attachment:hover {
-    background-color: rgb(86, 182, 139, 1);
+    background-color: rgba(86, 182, 139, 1);
     color: white;
 }
 
 .add-attachment-icon{
-    color: rgb(113, 114, 116, 1); 
+    color: rgba(113, 114, 116, 1); 
     font-size: 25px;
 }
 
@@ -178,7 +178,7 @@ i.smilies-selector{
 }
 
 #chat-input-container {
-    border: solid 2px rgb(187, 189, 191, 1);
+    border: solid 2px rgba(187, 189, 191, 1);
     border-right: none;
     background-color: transparent;
     margin: 10px -2px 60px -2px;
@@ -224,7 +224,7 @@ button#add-channel-button {
     position: relative;
     right: 0;
     margin-top: 50px;
-    color:rgb(171, 155, 169);
+    color:rgba(171, 155, 169);
 }
 
 .channel-highlight {
