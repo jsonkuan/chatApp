@@ -35,18 +35,11 @@ h3.channel-header {
     margin-left: 10px;
 }
 
-.loged {
+.logged-in-user {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     text-decoration: none;
     color: #AB9BA9;
-    
-}
-.loged-user {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    text-decoration: none;
-    color: rgba(56, 151, 141, 1);
 }
 
 .material-icons.md-18 {
@@ -240,8 +233,8 @@ button#add-channel-button {
 }
 
 .username {
-    margin-left: 10%;
-    margin-top: -10%;
+    margin-left: 38%;
+    margin-top: -16%;
     margin-bottom: -10%;
 }
 
