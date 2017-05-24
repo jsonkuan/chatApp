@@ -26,11 +26,15 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
             $scope.user = response;
         });
         if ($scope.login($scope.email, $scope.password)) {
-            userService.active.status = "online";
-            userService.updateUser(userService.active);
-            //NOTE: Store user id as cookie on login.
-            $cookies.put('user', userService.active._id);
-            $state.transitionTo('chat');
+            if(userService.active.status === "online"){
+                $scope.email = "You are already logged in";
+            }else {
+                userService.active.status = "online";
+                userService.updateUser(userService.active);
+                //NOTE: Store user id as cookie on login.
+                $cookies.put('user', userService.active._id);
+                $state.transitionTo('chat');
+            }
         } else {
             $scope.password = "";
         }
