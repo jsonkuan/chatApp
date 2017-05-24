@@ -129,37 +129,53 @@ div.layout-column {
 }
 
 .input-group-addon {
-    border: solid 2px grey;
+    border: solid 2px rgb(187, 189, 191, 1);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
     background-color: transparent;
     margin: 10px 0 60px 10px;
     height: 40px;
-    min-width: 30px !important;
-    border-radius: 3px;
+    min-width: 35px !important;
     cursor: pointer;
 }
 
 i.smilies-selector{
     border: solid 6px white;
+    margin: 5px 0 0 3px;
 }
 
 .add-attachment {
-    border: solid 2px grey;
+    border: solid 2px rgb(187, 189, 191, 1);
+    border-left: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
     background-color: transparent;
     margin: 10px 0 60px 0;
     height: 40px;
-    border-radius: 3px;
-    min-width: 30px;
+    min-width: 35px;
     cursor: pointer;
 }
 
+.add-attachment:hover {
+    background-color: rgb(86, 182, 139, 1);
+    color: white;
+}
+
 .add-attachment-icon{
-    margin: 10px;
+    color: rgb(113, 114, 116, 1); 
+    font-size: 25px;
+}
+
+.add-attachment-icon:hover {
+    color: white;
 }
 
 #chat-input-container {
-    border: solid 2px grey;
+    border: solid 2px rgb(187, 189, 191, 1);
     background-color: transparent;
     margin: 10px -2px 60px -2px;
+    color: slategrey;
+    font-family: sans-serif;
 }
 
 #chat-button {
