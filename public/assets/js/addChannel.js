@@ -3,21 +3,24 @@ angular.module('app').controller("channelController", function ($scope, $state, 
     $scope.invitedUserList = [userService.active.username + " (you)"];
     $scope.counter = $scope.invitedUserList.length;
     $scope.channelPurpose = "";
+    $scope.channelName = "";
     $scope.createChannel = function(newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
         if (access === 'public') {
             $scope.inviteUsersArray = [];
         }
-        var channels = {
-            name: $scope.channelName,
-            purpose: $scope.channelPurpose.charAt(0).toUpperCase() + $scope.channelPurpose.slice(1),
-            accessability: access,
-            users: $scope.inviteUsersArray,
-            timestamp: ""
-        };
-        channelService.post(channels).then(function(response) {
-            $state.go("chat");
-        });
+        if($scope.addChannelForm.$valid){
+            var channels = {
+                name: $scope.channelName,
+                purpose: $scope.channelPurpose.charAt(0).toUpperCase() + $scope.channelPurpose.slice(1),
+                accessability: access,
+                users: $scope.inviteUsersArray,
+                timestamp: ""
+            };
+            channelService.post(channels).then(function(response) {
+                $state.go("chat");
+            });
+        }
     };
 
     userService.getUsers().then(function(response) {
