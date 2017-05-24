@@ -102,7 +102,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.snakkBot = function(message){
         var regPattern = /[A-ZÅÄÖ]/;
         var badWords = ["dåligt", "dålig"];
-        var banWords = ["ett", "två", "tre", "fyra", "fem"];
+        var banWords = ["trump", "fitta", "kuk", "cunt", "dick", "hora", "hoe", "faggot", "bög"];
         var uppercaseIndex = [];
         for (var j = 0; j < message.length; j++){
            if(message[j].match(regPattern)){
