@@ -15,10 +15,16 @@ h1 {
 }
 
 #app_logo {
-    display: flex;
-    flex: 20;
+    display: block;
+    box-sizing: border-box;
     padding: 25px;
+    width: 100%;
 }
+
+#app_logo img {
+    width: 100%;
+}
+
 .addButton{
     color: white;
 }
