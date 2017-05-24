@@ -4,8 +4,8 @@
             <img src="assets/images/snakk_icon_white.png" alt="sNakk" />
         </div>
         <div class="username" layout="row">
-            <h6 class="loged">Logged in as:</h6>
-            <h6 class="loged-user"> {{activeUser.username}}</h6>
+            <h5 class="loged">Logged in as:</h5>
+            <h5 class="loged-user"> {{activeUser.username}}</h5>
         </div>
         <div id="addChannel" layout="row">
             <h3 class="channel-header">Channels</h3>
@@ -43,11 +43,20 @@
                 <span flex></span>
                 <md-menu>
                     <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
-                        <i class="material-icons">settings</i>
+                        <i class="material-icons">menu</i>
                     </md-button>
-                    <md-menu-content width="2" ng-mouseleave="$mdMenu.close()">
-                        <md-menu-item ng-repeat="item in ['Settings', 'Log Out']">
-                            <md-button ng-click="announceClick($index)">{{item}}</md-button>
+                    <md-menu-content width="1.5" ng-mouseleave="$mdMenu.close()">
+                        <md-menu-item>
+                            <md-button ng-click="announceClick(0)">
+                                <md-icon class="material-icons">settings</md-icon>
+                                    Settings
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="announceClick(1)">
+                                <md-icon class="material-icons">home</md-icon>
+                                    Logout
+                            </md-button>
                         </md-menu-item>
                     </md-menu-content>
                 </md-menu>
