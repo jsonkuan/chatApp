@@ -2,6 +2,9 @@
     margin-top:10%;
     border-radius: 10px;
 }
+#login_card{
+    margin-top: 9%;
+}
 
 #login-form-content{
     background-image: url("../images/communicating_background_sharp.png");
