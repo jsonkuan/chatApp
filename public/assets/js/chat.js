@@ -108,7 +108,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
            if(message[j].match(regPattern)){
                uppercaseIndex.push(j);
            }
-
         }
 
         console.log(uppercaseIndex);
@@ -118,7 +117,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         var concealedWord = "";
         for(var i = 0; i < badWords.length; i++){
             newMessage = newMessage.replace(badWords[i],"mindre bra");
-
         }
 
         for(var y = 0; y < banWords.length; y++){
@@ -130,8 +128,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         for(var z = 0; z < uppercaseIndex.length; z++){
             tempLetter = newMessage.charAt(uppercaseIndex[z]).toUpperCase();
             newMessage = newMessage.replace(tempLetter.toLowerCase(), tempLetter);
-
-
         }
 
         return newMessage;
