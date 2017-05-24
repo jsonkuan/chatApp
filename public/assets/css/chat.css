@@ -173,6 +173,7 @@ i.smilies-selector{
 
 #chat-input-container {
     border: solid 2px rgb(187, 189, 191, 1);
+    border-right: none;
     background-color: transparent;
     margin: 10px -2px 60px -2px;
     color: slategrey;
