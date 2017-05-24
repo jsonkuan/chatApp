@@ -138,10 +138,17 @@ app.get('/users', function (req, res) {
 //TODO need to add avatar and channels
 app.post('/users', function(request, response) {
     var user = request.body;
-    database.collection('users').insert({"username" : user.username, "email" : user.email,
-        "password" : user.password, "avatar" : user.avatar, "status" : user.status});
-    response.send();
-    console.log("User created");
+    if(user._id === "133333333333333333333337"){
+        database.collection('users').insert({"_id": ObjectId("133333333333333333333337"), "username" : user.username, "email" : user.email,
+            "password" : user.password, "avatar" : user.avatar, "status" : user.status});
+        response.send();
+        console.log("Bot created");
+    }else{
+        database.collection('users').insert({"username" : user.username, "email" : user.email,
+            "password" : user.password, "avatar" : user.avatar, "status" : user.status});
+        response.send();
+        console.log("User created");
+    }
 });
 
 // Updates the users info in DB

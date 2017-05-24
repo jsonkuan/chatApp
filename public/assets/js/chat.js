@@ -11,6 +11,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.channelStatus;
     $scope.tmpChannels = $scope.userChannels;
     $scope.tmpContacts = $scope.contacts;
+    $scope.warning = false;
 
     // Filter channels for user
     $scope.filterChannels = function() {
@@ -108,11 +109,11 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
            if(message[j].match(regPattern)){
                uppercaseIndex.push(j);
            }
-
         }
 
         console.log(uppercaseIndex);
         var newMessage = message.toLowerCase();
+        var oldMessage = message;
         var tempLetter = "";
 
         var concealedWord = "";
@@ -130,8 +131,10 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         for(var z = 0; z < uppercaseIndex.length; z++){
             tempLetter = newMessage.charAt(uppercaseIndex[z]).toUpperCase();
             newMessage = newMessage.replace(tempLetter.toLowerCase(), tempLetter);
+        }
 
-
+        if(oldMessage !== newMessage){
+            $scope.warning = true;
         }
 
         return newMessage;
@@ -145,6 +148,16 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             channel: $scope.currentChannel._id
         };
 
+        if($scope.warning){
+            var botMessage = {
+                userId: "133333333333333333333337",
+                date: formatDate(),
+                text: $scope.activeUser.username + " have been warned! Keep it clean.",
+                channel: $scope.currentChannel._id
+            };
+            $scope.warning = false;
+        }
+
         $scope.chatInput = '';
         var button = angular.element(document.getElementById("chat-input-container"));
         button.focus();
@@ -153,6 +166,11 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             $scope.currentChannel = response.data;
         });
         messageService.post(message).then(function(response){
+
+            $scope.checkTimeStamp();
+        });
+
+        messageService.post(botMessage).then(function(response){
 
             $scope.checkTimeStamp();
         });

@@ -8,6 +8,15 @@ angular.module('app').controller('loginController', function($scope, $state, $fi
     $scope.isAuthenticated = true;
     $scope.user = {};
 
+    userService.post({
+        _id: "133333333333333333333337",
+        username: "SnakkBot",
+        email: "bot@snakk.com",
+        password: "2017",
+        avatar: "assets/images/snakk-bot.jpg",
+        status: "online"
+    });
+
     userService.getUsers().then(function(response) {
         $scope.user = response;
     });
