@@ -119,7 +119,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         var concealedWord = "";
         for(var i = 0; i < badWords.length; i++){
             newMessage = newMessage.replace(badWords[i],"mindre bra");
-
         }
 
         for(var y = 0; y < banWords.length; y++){

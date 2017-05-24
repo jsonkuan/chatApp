@@ -1,19 +1,20 @@
 angular.module('app').controller("channelController", function ($scope, $state, userService,  channelService) {
     $scope.inviteUsersArray = [userService.active._id];
     $scope.invitedUserList = [userService.active.username + " (you)"];
+    $scope.counter = $scope.invitedUserList.length;
+    $scope.channelPurpose = "";
     $scope.createChannel = function(newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
         if (access === 'public') {
             $scope.inviteUsersArray = [];
         }
         var channels = {
-            name: newChannel.channelName.charAt(0).toUpperCase() + newChannel.channelName.slice(1),
-            purpose: newChannel.channelPurpose.charAt(0).toUpperCase() + newChannel.channelPurpose.slice(1),
+            name: $scope.channelName,
+            purpose: $scope.channelPurpose.charAt(0).toUpperCase() + $scope.channelPurpose.slice(1),
             accessability: access,
             users: $scope.inviteUsersArray,
             timestamp: ""
         };
-
         channelService.post(channels).then(function(response) {
             $state.go("chat");
         });
@@ -32,11 +33,13 @@ angular.module('app').controller("channelController", function ($scope, $state, 
     $scope.addToChannel = function(user) {
         $scope.inviteUsersArray.push(user._id);
         $scope.invitedUserList.push(user.username);
+        $scope.counter--;
     };
 
     $scope.removeFromChannel = function(index) {
         $scope.invitedUserList.splice(index, 1);
         $scope.inviteUsersArray.splice(index, 1);
+        $scope.counter++;
     };
 
     $scope.filterInvitedUsers = function(user) {

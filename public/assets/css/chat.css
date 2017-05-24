@@ -34,18 +34,12 @@ h3.channel-header {
     color: #AB9BA9;
     margin-left: 10px;
 }
-.loged{
+
+.logged-in-user {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     text-decoration: none;
     color: #AB9BA9;
-    
-}
-.loged-user{
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    text-decoration: none;
-    color: rgb(56, 151, 141);
 }
 
 .material-icons.md-18 {
@@ -57,8 +51,14 @@ h3.channel-header {
     margin-left: -2px;
 }
 
-.material-icons.hash{
+.material-icons.hash {
     font-size: 15px;
+}
+
+.material-icons.slack-green {
+    color: #38968C;
+    font-size: 15px;
+    margin-left: -3px;
 }
 
 .material-icons{
@@ -136,7 +136,7 @@ div.layout-column {
 }
 
 .input-group-addon {
-    border: solid 2px rgb(187, 189, 191, 1);
+    border: solid 2px #bbbdbf;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     background-color: transparent;
@@ -152,7 +152,7 @@ i.smilies-selector{
 }
 
 .add-attachment {
-    border: solid 2px rgb(187, 189, 191, 1);
+    border: solid 2px rgba(187, 189, 191, 1);
     border-left: none;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -164,12 +164,12 @@ i.smilies-selector{
 }
 
 .add-attachment:hover {
-    background-color: rgb(86, 182, 139, 1);
+    background-color: rgba(86, 182, 139, 1);
     color: white;
 }
 
 .add-attachment-icon{
-    color: rgb(113, 114, 116, 1); 
+    color: rgba(113, 114, 116, 1); 
     font-size: 25px;
 }
 
@@ -178,12 +178,12 @@ i.smilies-selector{
 }
 
 #chat-input-container {
-    border: solid 2px rgb(187, 189, 191, 1);
+    border: solid 2px rgba(187, 189, 191, 1);
     border-right: none;
     background-color: transparent;
     margin: 10px -2px 60px -2px;
-    color: slategrey;
     font-family: sans-serif;
+    text-indent: 10px;
 }
 
 #chat-button {
@@ -224,7 +224,7 @@ button#add-channel-button {
     position: relative;
     right: 0;
     margin-top: 50px;
-    color:rgb(171, 155, 169);
+    color:rgba(171, 155, 169, 1);
 }
 
 .channel-highlight {
@@ -233,8 +233,8 @@ button#add-channel-button {
 }
 
 .username {
-    margin-left: 10%;
-    margin-top: -10%;
+    margin-left: 38%;
+    margin-top: -16%;
     margin-bottom: -10%;
 }
 
@@ -247,7 +247,23 @@ button#add-channel-button {
 ng\:form {
     display: block;
 }
-
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: lightgrey;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: lightgrey;
+    opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: lightgrey;
+    opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: lightgrey;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: lightgrey;
+}
 .ng-animate-block-transitions {
     transition:0s all!important;
     -webkit-transition:0s all!important;
@@ -255,6 +271,6 @@ ng\:form {
 
 /* show the element during a show/hide animation when the
  * animation is ongoing, but the .ng-hide class is active */
-.ng-hide-add-active, .ng-hide-remove {
-    display: block!important;
-}
+    .ng-hide-add-active, .ng-hide-remove {
+        display: block!important;
+    }
