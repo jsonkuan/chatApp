@@ -189,8 +189,8 @@ i.smilies-selector{
     border-right: none;
     background-color: transparent;
     margin: 10px -2px 60px -2px;
-    color: slategrey;
     font-family: sans-serif;
+    text-indent: 10px;
 }
 
 #chat-button {
@@ -254,7 +254,23 @@ button#add-channel-button {
 ng\:form {
     display: block;
 }
-
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: lightgrey;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: lightgrey;
+    opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: lightgrey;
+    opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: lightgrey;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: lightgrey;
+}
 .ng-animate-block-transitions {
     transition:0s all!important;
     -webkit-transition:0s all!important;
@@ -262,6 +278,6 @@ ng\:form {
 
 /* show the element during a show/hide animation when the
  * animation is ongoing, but the .ng-hide class is active */
-.ng-hide-add-active, .ng-hide-remove {
-    display: block!important;
-}
+    .ng-hide-add-active, .ng-hide-remove {
+        display: block!important;
+    }
