@@ -250,6 +250,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         }
         return user;
     };
+    document.getElementById("chat-input-container").focus();
 
     $scope.createDirectChat = function(userA, userB) {
         channelService.post({
