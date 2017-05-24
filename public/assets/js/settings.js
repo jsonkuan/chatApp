@@ -16,6 +16,9 @@ angular.module('app').controller("settingsController", function ($scope, $state,
 
     $scope.deleteUser = function(user) {
         userService.deleteUser(user._id);
+        userService.getUsers().then(function(response) {
+            $scope.users = response;
+        });
     };
 
     $scope.saveSettings = function () {
