@@ -51,6 +51,9 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
             resolve: {
                 session: function(Resolvers) {
                     return Resolvers.getUser();
+                }, 
+                allUsers: function(userService){
+                    return userService.getUsers();
                 }
             }
         });
