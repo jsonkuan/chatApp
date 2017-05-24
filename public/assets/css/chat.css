@@ -35,14 +35,14 @@ h3.channel-header {
     margin-left: 10px;
 }
 .loged{
-    margin: 4;
+    margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     text-decoration: none;
     color: #AB9BA9;
     
 }
 .loged-user{
-    margin: 4;
+    margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     text-decoration: none;
     color: rgb(56, 151, 141);
