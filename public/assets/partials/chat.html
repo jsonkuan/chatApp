@@ -29,7 +29,7 @@
         </div>
         <div class="channels-list">
             <li class="channelMsgLists" ng-repeat="contact in contacts | orderBy: 'username'" ng-click="startDirectChat(activeUser, contact)">
-                <i class="material-icons md-dark" ng-if="contact.status == 'online'">radio_button_checked</i>
+                <i class="material-icons slack-green" ng-if="contact.status == 'online'">radio_button_checked</i>
                 <i class="material-icons md-dark" ng-if="contact.status == 'offline'">radio_button_unchecked</i>
                 <span ng-if="channelStatus[contact.channelId].update" class="channel-highlight">{{contact.username}}</span>
                 <span ng-if="!channelStatus[contact.channelId].update">{{contact.username}}</span>
