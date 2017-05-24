@@ -2,19 +2,19 @@ angular.module('app').controller("channelController", function ($scope, $state, 
     $scope.inviteUsersArray = [userService.active._id];
     $scope.invitedUserList = [userService.active.username + " (you)"];
     $scope.counter = $scope.invitedUserList.length;
+    $scope.channelPurpose = "";
     $scope.createChannel = function(newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
         if (access === 'public') {
             $scope.inviteUsersArray = [];
         }
         var channels = {
-            name: newChannel.channelName.charAt(0).toUpperCase() + newChannel.channelName.slice(1),
-            purpose: newChannel.channelPurpose.charAt(0).toUpperCase() + newChannel.channelPurpose.slice(1),
+            name: $scope.channelName,
+            purpose: $scope.channelPurpose.charAt(0).toUpperCase() + $scope.channelPurpose.slice(1),
             accessability: access,
             users: $scope.inviteUsersArray,
             timestamp: ""
         };
-
         channelService.post(channels).then(function(response) {
             $state.go("chat");
         });

@@ -102,13 +102,12 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.snakkBot = function(message){
         var regPattern = /[A-ZÅÄÖ]/;
         var badWords = ["dåligt", "dålig"];
-        var banWords = ["ett", "två", "tre", "fyra", "fem"];
+        var banWords = ["trump", "fitta", "kuk", "cunt", "dick", "hora", "hoe", "faggot", "bög"];
         var uppercaseIndex = [];
         for (var j = 0; j < message.length; j++){
            if(message[j].match(regPattern)){
                uppercaseIndex.push(j);
            }
-
         }
 
         console.log(uppercaseIndex);
@@ -118,7 +117,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         var concealedWord = "";
         for(var i = 0; i < badWords.length; i++){
             newMessage = newMessage.replace(badWords[i],"mindre bra");
-
         }
 
         for(var y = 0; y < banWords.length; y++){
@@ -130,8 +128,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         for(var z = 0; z < uppercaseIndex.length; z++){
             tempLetter = newMessage.charAt(uppercaseIndex[z]).toUpperCase();
             newMessage = newMessage.replace(tempLetter.toLowerCase(), tempLetter);
-
-
         }
 
         return newMessage;

@@ -4,8 +4,8 @@
             <img src="assets/images/snakk_icon_white.png" alt="sNakk" />
         </div>
         <div class="username" layout="row">
-            <h5 class="loged">Logged in as:</h5>
-            <h5 class="loged-user"> {{activeUser.username}}</h5>
+            <i class="material-icons slack-green">radio_button_checked</i>
+            <h5 class="logged-in-user">&nbsp;{{activeUser.username}}</h5>
         </div>
         <div id="addChannel" layout="row">
             <h3 class="channel-header">Channels</h3>
@@ -29,7 +29,7 @@
         </div>
         <div class="channels-list">
             <li class="channelMsgLists" ng-repeat="contact in contacts | orderBy: 'username'" ng-click="startDirectChat(activeUser, contact)">
-                <i class="material-icons md-dark" ng-if="contact.status == 'online'">radio_button_checked</i>
+                <i class="material-icons slack-green" ng-if="contact.status == 'online'">radio_button_checked</i>
                 <i class="material-icons md-dark" ng-if="contact.status == 'offline'">radio_button_unchecked</i>
                 <span ng-if="channelStatus[contact.channelId].update" class="channel-highlight">{{contact.username}}</span>
                 <span ng-if="!channelStatus[contact.channelId].update">{{contact.username}}</span>
@@ -84,7 +84,7 @@
                             smilies-placement="right">
                         </div>
                     </div>
-                    <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder=" Message {{currentChannel.name}}" flex="100"/>
+                    <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message {{currentChannel.name}}" flex="100"/>
                     <div class="add-attachment"><p class="add-attachment-icon">+</p></div>
                     <md-button id="chat-button" class="md-accent md-raised" type="submit" ng-disabled="!chatInput || chatInput.length == 0" ng-click="sendMessage(chatInput)" ng-keypress="$event.keyCode === 13 && sendMessage(chatInput)">Send</md-button>
                 </form>
