@@ -148,11 +148,22 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             channel: $scope.currentChannel._id
         };
 
+
         if($scope.warning){
+            var warningMessage = "";
+            if(userService.active.warnings === 0){
+                warningMessage = $scope.activeUser.username + " have been warned! Keep it clean.";
+            }else if(userService.active.warnings === 1){
+                warningMessage = "Last warning for " + $scope.activeUser.username + " before ban!";
+            }else{
+                warningMessage = "Bye bye";
+                console.log(warningMessage);
+                console.log(userService.active.warnings);
+            }
             var botMessage = {
                 userId: "133333333333333333333337",
                 date: formatDate(),
-                text: $scope.activeUser.username + " have been warned! Keep it clean.",
+                text:  warningMessage,
                 channel: $scope.currentChannel._id
             };
 
@@ -204,6 +215,8 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
                 }
                 if(messages[i].userId === users[e]._id) {
                     messages[i].avatar = users[e].avatar;
+                }else if(messages[i].avatar === undefined){
+                    messages[i].avatar = "assets/images/defaultProfile.png";
                 }
             }
         }
