@@ -136,10 +136,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             newMessage = newMessage.replace(tempLetter.toLowerCase(), tempLetter);
         }
 
-        if(oldMessage !== newMessage){
-
-        }
-
         return newMessage;
     };
 
