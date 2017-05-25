@@ -4,7 +4,6 @@ angular.module('app').controller("settingsController", function ($scope, $state,
     $scope.email = userService.active.email;
     $scope.username = userService.active.username;
     $scope.avatar = userService.active.avatar;
-    console.log($scope.avatar);
 
     if(userService.active._id === "133333333333333333333337"){
         $scope.delete = true;
@@ -37,8 +36,6 @@ angular.module('app').controller("settingsController", function ($scope, $state,
                     userService.active.avatar = response.data.slice(7);
                     $scope.avatar = userService.active.avatar;
                     userService.updateUser(userService.active);
-                },
-                function (response) {
                 }
             );
         }

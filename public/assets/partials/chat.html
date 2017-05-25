@@ -69,13 +69,15 @@
                 </div>
                 <md-content layout="column">
                     <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
-                        <img id="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
-                        <p id="username" href ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
+                        <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
+                        <p id="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
                         <p id="date">{{message.date}}</p>
-                        <p smilies="message.text" id="messagetext">{{message.text}}</p>
+                        <p smilies="message.text" id="messagetext">{{message.text}}"</p>
+                        <img ng-src="{{message.attachment}}" flex="25">
                     </div>
                 </md-content>
             </div>
+
             <md-content id="chat-input-area" layout="row">
                 <form layout="row" flex="100">
                     <div class="input-group">
@@ -85,7 +87,8 @@
                         </div>
                     </div>
                     <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message {{currentChannel.name}}" flex="100"/>
-                    <div class="add-attachment"><p class="add-attachment-icon">+</p></div>
+                    <input ngf-select class="ng-hide" ng-model="attachment" id="selectedAttach" ng-change="addAttachment()">
+                    <label for="selectedAttach" class="add-attachment"><p class="add-attachment-icon">+</p></label>
                     <md-button id="chat-button" class="md-accent md-raised" type="submit" ng-disabled="!chatInput || chatInput.length == 0" ng-click="sendMessage(chatInput)" ng-keypress="$event.keyCode === 13 && sendMessage(chatInput)">Send</md-button>
                 </form>
             </md-content>

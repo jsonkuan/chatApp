@@ -112,7 +112,7 @@ div.layout-column {
     margin: 5px 0 5px 5px;
 }
 
-#avatar-thumb{
+.avatar-thumb{
     display: inline-block;
     vertical-align: middle;
     border-radius: 50%;
