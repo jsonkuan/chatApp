@@ -1,4 +1,4 @@
-angular.module('app').controller('chatController', function($scope, $state, $cookies, messageService, channelService, userService, userChannels, currentChannel, userContacts, session) {
+angular.module('app').controller('chatController', function($scope, upload, $state, $cookies, messageService, channelService, userService, userChannels, currentChannel, userContacts, session) {
     $scope.activeUser = session;
     $scope.userChannels = userChannels;
     $scope.currentChannel = currentChannel;
@@ -12,6 +12,9 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     $scope.tmpChannels = $scope.userChannels;
     $scope.tmpContacts = $scope.contacts;
     $scope.warning = false;
+
+
+
 
     // Filter channels for user
     $scope.filterChannels = function() {
@@ -111,7 +114,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
            }
         }
 
-        console.log(uppercaseIndex);
         var newMessage = message.toLowerCase();
         var tempLetter = "";
 
@@ -139,14 +141,34 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
         return newMessage;
     };
 
+    $scope.addAttachment = function () {
+        if($scope.attachment) {
+            upload({
+                url: '/upload',
+                method: 'POST',
+                data: {
+                    avatar: $scope.attachment
+                }
+            }).then(
+                function (response) {
+                    $scope.attachmentPath = response.data.slice(7);
+                }
+            );
+        }
+    };
+
+    $scope.removeAttachment = function () {
+        $scope.attachmentPath = "";
+    };
+
     $scope.sendMessage = function(input) {
         var message = {
             userId: userService.active._id,
             date: formatDate(),
             text: $scope.snakkBot(input),
-            channel: $scope.currentChannel._id
+            channel: $scope.currentChannel._id,
+            attachment: $scope.attachmentPath
         };
-
 
         if($scope.warning){
             var warningMessage = "";
@@ -165,7 +187,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             };
 
             $scope.activeUser.warnings += 1;
-            console.log($scope.activeUser.warnings);
             if($scope.activeUser.warnings > 2){
                 userService.updateUser(userService.active).then(function(response) {
                     $cookies.remove('user');
@@ -212,7 +233,8 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
                 }
                 if(messages[i].userId === users[e]._id) {
                     messages[i].avatar = users[e].avatar;
-                }else if(messages[i].avatar === undefined){
+                }
+                else if(messages[i].avatar === undefined){
                     messages[i].avatar = "assets/images/defaultProfile.png";
                 }
             }
@@ -220,6 +242,7 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
     };
 
     $scope.getMessages = function() {
+        $scope.attachmentPath = "";
         $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
             $scope.messageDb = response;
             $scope.addUserToMsg($scope.users, $scope.messageDb);

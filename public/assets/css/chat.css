@@ -61,6 +61,24 @@ h3.channel-header {
     margin-left: -3px;
 }
 
+.material-icons.attachment {
+    text-align: center;
+    color: #7E7D7D;
+    font-size: 40px;
+    border: solid 2px rgba(187, 189, 191, 1);
+    border-left: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: transparent;
+    margin: 10px 0 60px 0;
+    height: 40px;
+    min-width: 35px;
+    cursor: pointer;
+}
+.material-icons.attachment:hover {
+    background-color: #F04357;
+}
+
 .material-icons{
     text-align: center;
 }
@@ -112,7 +130,7 @@ div.layout-column {
     margin: 5px 0 5px 5px;
 }
 
-#avatar-thumb{
+.avatar-thumb{
     display: inline-block;
     vertical-align: middle;
     border-radius: 50%;
@@ -163,6 +181,10 @@ i.smilies-selector{
     cursor: pointer;
 }
 
+.add-attachment:hover {
+    background-color: #D01B2C;
+    color: white;
+}
 .add-attachment:hover {
     background-color: rgba(86, 182, 139, 1);
     color: white;

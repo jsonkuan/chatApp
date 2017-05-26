@@ -35,7 +35,6 @@ MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, databas
 // Adds message to channel in DB
 app.post('/messages', function(request, response) {
     database.collection('messages').insert(request.body);
-    console.log("Message saved: " , request.body);
     response.send(request.body);
 });
 // fetches message from Db
