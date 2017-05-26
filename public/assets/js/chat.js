@@ -173,7 +173,7 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
         if($scope.warning){
             var warningMessage = "";
             if(userService.active.warnings < 1){
-                warningMessage = $scope.activeUser.username + " have been warned! Keep it clean.";
+                warningMessage = $scope.activeUser.username + " has been warned! Keep it clean.";
             }else if(userService.active.warnings < 2){
                 warningMessage = "Last warning for " + $scope.activeUser.username + " before ban!";
             }else if (userService.active.warnings < 3){
