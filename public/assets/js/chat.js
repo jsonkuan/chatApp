@@ -161,6 +161,10 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
         $scope.attachmentPath = "";
     };
 
+    $scope.validMessage = function (){
+        return (!$scope.chatInput && !$scope.attachment) || ($scope.chatInput.length === 0 && !$scope.attachment)
+    };
+
     $scope.sendMessage = function(input) {
         var message = {
             userId: userService.active._id,
