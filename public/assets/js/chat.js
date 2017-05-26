@@ -157,9 +157,11 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
         }
     };
 
+    $scope.removeAttachment = function () {
+        $scope.attachmentPath = "";
+    };
+
     $scope.sendMessage = function(input) {
-
-
         var message = {
             userId: userService.active._id,
             date: formatDate(),
