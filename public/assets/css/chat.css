@@ -247,6 +247,7 @@ button#add-channel-button {
     right: 0;
     margin-top: 50px;
     color:rgba(171, 155, 169, 1);
+    background-color: #4D394B;
 }
 
 .channel-highlight {
