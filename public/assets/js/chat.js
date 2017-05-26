@@ -113,7 +113,6 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
 
         console.log(uppercaseIndex);
         var newMessage = message.toLowerCase();
-        var oldMessage = message;
         var tempLetter = "";
 
         var concealedWord = "";
@@ -121,19 +120,20 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
             newMessage = newMessage.replace(badWords[i],"mindre bra");
         }
 
+        var oldMessage = newMessage;
         for(var y = 0; y < banWords.length; y++){
             concealedWord = new Array(banWords[y].length+1).join('*');
             newMessage = newMessage.replaceAll(banWords[y], concealedWord);
             concealedWord = "";
         }
 
+        if(oldMessage !== newMessage){
+            $scope.warning = true;
+        }
+
         for(var z = 0; z < uppercaseIndex.length; z++){
             tempLetter = newMessage.charAt(uppercaseIndex[z]).toUpperCase();
             newMessage = newMessage.replace(tempLetter.toLowerCase(), tempLetter);
-        }
-
-        if(oldMessage !== newMessage){
-            $scope.warning = true;
         }
 
         return newMessage;
@@ -150,14 +150,12 @@ angular.module('app').controller('chatController', function($scope, $state, $coo
 
         if($scope.warning){
             var warningMessage = "";
-            if(userService.active.warnings === 0){
+            if(userService.active.warnings < 1){
                 warningMessage = $scope.activeUser.username + " have been warned! Keep it clean.";
-            }else if(userService.active.warnings === 1){
+            }else if(userService.active.warnings < 2){
                 warningMessage = "Last warning for " + $scope.activeUser.username + " before ban!";
-            }else{
+            }else if (userService.active.warnings < 3){
                 warningMessage = "Bye bye";
-                console.log(warningMessage);
-                console.log(userService.active.warnings);
             }
             var botMessage = {
                 userId: "133333333333333333333337",
