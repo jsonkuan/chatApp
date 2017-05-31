@@ -2,6 +2,7 @@
  * Created by niklasbolwede on 2017-05-31.
  */
 (function() {
+
     app.factory('REST', ['$http', '$q', function($http, $q) {
         return {
             get: function get(url) {

@@ -9,4 +9,12 @@ gulp.task('serve', function(){
     gulp.watch('index.js', function(){
         server.start.apply(server);
     });
+
+    gulp.watch('common/common.js', function(){
+        gulp.src('./common/common.js').pipe(gulp.dest('./webb'));
+        gulp.src('./common/common.js').pipe(gulp.dest('./mobile'));
+        server.start.apply(server);
+    });
 });
+
+
