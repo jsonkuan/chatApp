@@ -1,4 +1,6 @@
-angular.module('app').controller("channelController", function ($scope, $state, userService,  channelService, allUsers) {
+//angular.module('app')
+
+app.controller("channelController", function ($scope, $state, userService, channelService, allUsers) {
     $scope.inviteUsersArray = [userService.active._id];
     $scope.invitedUserList = [userService.active.username + " (you)"];
     $scope.users = allUsers;

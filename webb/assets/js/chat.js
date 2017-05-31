@@ -1,4 +1,5 @@
-angular.module('app').controller('chatController', function($scope, upload, $state, $cookies, messageService, channelService, userService, userChannels, currentChannel, userContacts, session) {
+//angular.module('app')
+app.controller('chatController', function($scope, upload, $state, $cookies, messageService, channelService, userService, userChannels, currentChannel, userContacts, session) {
     $scope.activeUser = session;
     $scope.userChannels = userChannels;
     $scope.currentChannel = currentChannel;
