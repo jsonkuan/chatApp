@@ -12,9 +12,10 @@
 /app/**/*.js.map
 
 # dependencies
-/node_modules
-/public/bower_components
-/bower_components
+/webb/node_modules
+/webb/bower_components
+/mobile/bower_components
+/mobile/node_modules
 
 # IDEs and editors
 /.idea
@@ -28,6 +29,8 @@ npm-debug.log
 testem.log
 /typings
 /webb/common.js
+/mobile/common.js
+
 
 # e2e
 /e2e/*.js
