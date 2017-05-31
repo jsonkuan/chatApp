@@ -1,4 +1,4 @@
-angular.module('app').controller('loginController', function($scope, $state, $filter, $cookies, userService, session) {
+app.controller('loginController', function($scope, $state, $filter, $cookies, userService, session) {
     $scope.showReg = true;
     $scope.showUserName = false;
     $scope.showPasswordConfirm = false;

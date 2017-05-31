@@ -1,5 +1,5 @@
 // Factory for handling specific/detailed promises/resolves
-angular.module('app').factory('Resolvers', function($q, $cookies, REST, channelService, userService, Generator) {
+app.factory('Resolvers', function($q, $cookies, REST, channelService, userService, Generator) {
     return {
         //Makes sure a current channel is set and returns it
         getChannel: function() {
