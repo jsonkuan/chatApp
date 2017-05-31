@@ -1,4 +1,5 @@
-angular.module('app').controller("settingsController", function ($scope, $state, userService, upload) {
+//angular.module('app')
+app.controller("settingsController", function ($scope, $state, userService, upload) {
 
     $scope.password = userService.active.password ;
     $scope.email = userService.active.email;
