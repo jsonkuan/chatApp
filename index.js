@@ -37,6 +37,10 @@ app.post('/messages', function(request, response) {
     database.collection('messages').insert(request.body);
     response.send(request.body);
 });
+
+
+
+
 // fetches message from Db
 app.get('/messages', function(request, response) {
     database.collection('messages').find({'channel': request.query.channel}).toArray(function (err, result) {
