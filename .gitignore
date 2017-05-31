@@ -12,6 +12,8 @@
 /app/**/*.js.map
 
 # dependencies
+/bower_components
+/node_modules
 /webb/bower_components
 /mobile/bower_components
 /webb/node_modules
