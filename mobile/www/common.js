@@ -2,12 +2,12 @@
  * Created by niklasbolwede on 2017-05-31.
  */
 (function() {
-  var app = angular.module('common', []);
-  app.factory('REST', ['$http', '$q', function($http, $q) {
-        var host = 'localhost:3000';
+    var app = angular.module('common', []);
+    app.factory('REST', ['$http', '$q', function($http, $q) {
+        var host = 'http://localhost:3000';
         return {
             get: function get(url) {
-                url = host + url;
+                url = host +url;
                 //console.log('REST.get', url);
                 return $q(function(resolve) {
                     $http.get(url).then(function(response) {
@@ -16,7 +16,6 @@
                 });
             },
             post: function post(url, body) {
-                url = host + url;
                 return $q(function(resolve) {
                     $http.post(url, body).then(function(response) {
                         resolve(response);
@@ -24,7 +23,6 @@
                 });
             },
             put: function put(url, body) {
-                url = host + url;
                 return $q(function(resolve) {
                     $http.put(url, body).then(function(response) {
                         resolve(response);
@@ -32,7 +30,6 @@
                 });
             },
             delete: function put(url, id) {
-                url = host + url;
                 return $q(function(resolve) {
                     $http.delete(url + id).then(function(response) {
                         resolve(response);
