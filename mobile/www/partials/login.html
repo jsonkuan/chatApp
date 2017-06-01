@@ -1,20 +1,42 @@
 <div class="list">
-  <label class="item item-input">
+
+  <form name="loginForm">
+  <label class="item item-input" ng-show="showUserName">
     <span class="input-label">Username</span>
-    <input type="text">
+    <input ng-model="username" type="text">
+    <div ng-messages="loginForm.username.$error">
+      <div ng-message="max"> max 20 characters</div>
+    </div>
   </label>
+
   <label class="item item-input">
-    <span class="input-label">Pasword</span>
-    <input type="password">
+    <span class="input-label">Email</span>
+    <input type="email" name="email" ng-model="email" required>
+    <div ng-messages="loginForm.email.$error">
+      <div
+        ng-message="email"> invalid email
+      </div>
+    </div>
   </label>
-  <label class="item item-input" ng-hide="true" ng-model="password2">
+
+  <label class="item item-input">
+    <span class="input-label">Password</span>
+    <input type="password" name="password" ng-model="password" required maxlength="20">
+    <div ng-messages="loginForm.password.$error"></div>
+  </label>
+
+  <label class="item item-input" ng-show="showPasswordConfirm">
     <span class="input-label">Password again</span>
-    <input type="password">
+    <input type="password" name="confirm" ng-pattern="{{password}}" ng-model="confirm" required maxlength="20">
+    <div ng-messages="loginForm.confirm.$error">
+      <div ng-message="pattern"> no match</div>
+    </div>
   </label>
-  <button class="button button-block button-positive">
-  Login
-</button>
-<button class="button button-block button-positive" ng-click="register()">
-  Register
-</button>
+  </form>
+
+  <button type="submit" class="button button-block button-positive" ng-click="loginButtonClicked()" ng-show="showLoginButton">Login</button>
+  <button class="button button-block button-positive" ng-click="registerClicked()" style="text-align:center" ng-show="showReg">Register</button>
+  <button type="submit" class="button button-block button-positive" ng-click="registerButtonClicked()" ng-show="showRegButton">Register</button>
+  <button class="button button-block button-positive" ng-click="cancelClicked()" style="text-align:center" ng-show="showCancel">Cancel</button>
+
 </div>

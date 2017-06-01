@@ -1,4 +1,4 @@
-var app = angular.module('starter', ['ui.router','ionic', 'common']);
+var app = angular.module('starter', ['ui.router','ionic', 'common', 'ngMessages']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('login');
