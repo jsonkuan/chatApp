@@ -15,8 +15,9 @@
 /bower_components
 /node_modules
 /webb/bower_components
-/mobile/bower_components
 /webb/node_modules
+/mobile/bower_components
+/mobile/www/lib
 /mobile/node_modules
 
 # IDEs and editors
