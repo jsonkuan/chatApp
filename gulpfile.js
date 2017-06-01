@@ -12,7 +12,7 @@ gulp.task('serve', function(){
 
     gulp.watch('common/common.js', function(){
         gulp.src('./common/common.js').pipe(gulp.dest('./webb'));
-        gulp.src('./common/common.js').pipe(gulp.dest('./mobile'));
+        gulp.src('./common/common.js').pipe(gulp.dest('./mobile/www'));
         server.start.apply(server);
     });
 });
