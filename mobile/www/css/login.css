@@ -1,0 +1,82 @@
+#wonderful-card {
+    margin-top:10%;
+    border-radius: 10px;
+}
+#login_card{
+    margin-top: 9%;
+}
+
+#login-form-content{
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#card-title {
+    background: lightcyan;
+    border: solid;
+    border-bottom: none;
+    border-width: 10px;
+    border-color: teal;
+    border-radius: 10px 10px 0 0;
+}
+
+#card-footer {
+    background: lightcyan;
+    border: solid;
+    border-top: none;
+    border-width: 10px;
+    border-color: darkslategrey;
+    border-radius: 0 0 10px 10px;
+}
+
+.md-headline{
+    font-size: 2em;
+}
+.md-subhead {
+    font-size: 1.5em !important;
+}
+.textHover {
+    font-size: 0.8em !important;
+}
+.textHover:hover {
+    cursor: pointer;
+    color: darkblue;
+    text-decoration: none;
+}
+
+/*  #a3e9a4
+    #72d572
+    #42bd41
+    colors
+    */
+md-card {
+    background-color: #d0f8ce !important;
+}
+
+img#app_logo_login {
+    width: 80%;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide {
+    display: none !important;
+}
+
+ng\:form {
+    display: block;
+}
+
+.ng-animate-block-transitions {
+    transition:0s all!important;
+    -webkit-transition:0s all!important;
+}
+
+/* show the element during a show/hide animation when the
+ * animation is ongoing, but the .ng-hide class is active */
+.ng-hide-add-active, .ng-hide-remove {
+    display: block!important;
+}

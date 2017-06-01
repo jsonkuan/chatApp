@@ -1,0 +1,299 @@
+#chat-text-box-container {
+    margin: 0 15px 0 10px;
+    overflow:auto;
+    border-top: solid 1px lightgray;
+    border-bottom: solid 1px lightgray;
+}
+
+p {
+    margin: 5px 5px 10px 10px;
+    word-wrap: break-word;
+}
+
+h1 {
+    margin: 15px;
+}
+
+#app_logo {
+    display: block;
+    box-sizing: border-box;
+    padding: 25px;
+    width: 100%;
+}
+
+#app_logo img {
+    width: 100%;
+}
+
+.addButton{
+    color: white;
+}
+
+h3.channel-header {
+    margin-top: 50px;
+    color: #AB9BA9;
+    margin-left: 10px;
+}
+
+.logged-in-user {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    text-decoration: none;
+    color: #AB9BA9;
+}
+
+.material-icons.md-18 {
+    font-size: 15px;
+}
+
+.material-icons.md-dark {
+    font-size: 14px;
+    margin-left: -2px;
+}
+
+.material-icons.hash {
+    font-size: 15px;
+}
+
+.material-icons.slack-green {
+    color: #38968C;
+    font-size: 15px;
+    margin-left: -3px;
+}
+
+.material-icons.attachment {
+    text-align: center;
+    color: #7E7D7D;
+    font-size: 40px;
+    border: solid 2px rgba(187, 189, 191, 1);
+    border-left: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: transparent;
+    margin: 10px 0 60px 0;
+    height: 40px;
+    min-width: 35px;
+    cursor: pointer;
+}
+.material-icons.attachment:hover {
+    background-color: #F04357;
+}
+
+.material-icons{
+    text-align: center;
+}
+
+.channels-list{
+    list-style: none;
+    font-family: Impact, Charcoal, sans-serif;
+    margin-left: 2%;
+    margin-bottom: 5px;
+}
+
+.channelMsgLists:hover{
+    background-color: #3E313C;
+}
+.channelMsgLists {
+    margin-left: 2%;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    text-decoration: none;
+    color: #AB9BA9;
+    cursor: pointer;
+}
+
+#chat-channel-container {
+    background-color: #4D394B;
+}
+
+#chat-input-area {
+    margin: 0 15px 0 5px;
+}
+
+#container {
+    height: 100%;
+}
+
+div.layout-column {
+    height: 100%;
+}
+
+#chat-header {
+    background:white;
+    margin: 0 15px 0 0;
+}
+
+#chat-main{
+    overflow:hidden;
+}
+
+#chat-box{
+    margin: 5px 0 5px 5px;
+}
+
+.avatar-thumb{
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+#username{
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#date{
+    color: #9e9e9e;
+    font-style: italic;
+    font-size: small;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.input-group-addon {
+    border: solid 2px #bbbdbf;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: transparent;
+    margin: 10px 0 60px 10px;
+    height: 40px;
+    min-width: 35px !important;
+    cursor: pointer;
+}
+
+i.smilies-selector{
+    border: solid 6px white;
+    margin: 5px 0 0 3px;
+}
+
+.add-attachment {
+    border: solid 2px rgba(187, 189, 191, 1);
+    border-left: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: transparent;
+    margin: 10px 0 60px 0;
+    height: 40px;
+    min-width: 35px;
+    cursor: pointer;
+}
+
+.add-attachment:hover {
+    background-color: #D01B2C;
+    color: white;
+}
+.add-attachment:hover {
+    background-color: rgba(86, 182, 139, 1);
+    color: white;
+}
+
+.add-attachment-icon{
+    color: rgba(113, 114, 116, 1); 
+    font-size: 25px;
+}
+
+.add-attachment-icon:hover {
+    color: white;
+}
+
+#chat-input-container {
+    border: solid 2px rgba(187, 189, 191, 1);
+    border-right: none;
+    background-color: transparent;
+    margin: 10px -2px 60px -2px;
+    font-family: sans-serif;
+    text-indent: 10px;
+}
+
+#chat-button {
+    margin: 10px 0 60px 10px;
+    display: none;
+}
+
+.smilies-selector-content {
+    background-color: white;
+    max-width: 400px !important;
+}
+
+.channel-title {
+    color: grey;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0 10px 8px 10px;
+}
+
+.channel-purpose{
+    color: lightgray;
+    font-size: 15px;
+    font-style: italic;
+    position: relative; 
+    top: -10px;
+}
+
+md-menu {
+    padding-bottom: 8px;
+}
+
+#addChannel {
+    vertical-align: middle;
+}
+
+button#add-channel-button {
+    min-width: 35px !important;
+    position: relative;
+    right: 0;
+    margin-top: 50px;
+    color:rgba(171, 155, 169, 1);
+    background-color: #4D394B;
+}
+
+.channel-highlight {
+    color: #f3efef;
+    font-weight: bold;
+}
+
+.username {
+    margin-left: 38%;
+    margin-top: -16%;
+    margin-bottom: -10%;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide {
+    display: none !important;
+}
+
+ng\:form {
+    display: block;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: lightgrey;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: lightgrey;
+    opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: lightgrey;
+    opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: lightgrey;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: lightgrey;
+}
+.ng-animate-block-transitions {
+    transition:0s all!important;
+    -webkit-transition:0s all!important;
+}
+
+/* show the element during a show/hide animation when the
+ * animation is ongoing, but the .ng-hide class is active */
+    .ng-hide-add-active, .ng-hide-remove {
+        display: block!important;
+    }

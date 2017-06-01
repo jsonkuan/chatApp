@@ -16,6 +16,7 @@
                 });
             },
             post: function post(url, body) {
+                url = host +url;
                 return $q(function(resolve) {
                     $http.post(url, body).then(function(response) {
                         resolve(response);
@@ -23,6 +24,7 @@
                 });
             },
             put: function put(url, body) {
+                url = host +url;
                 return $q(function(resolve) {
                     $http.put(url, body).then(function(response) {
                         resolve(response);
@@ -30,6 +32,7 @@
                 });
             },
             delete: function put(url, id) {
+                url = host +url;
                 return $q(function(resolve) {
                     $http.delete(url + id).then(function(response) {
                         resolve(response);
