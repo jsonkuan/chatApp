@@ -4,4 +4,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate) {
        $ionicSideMenuDelegate.toggleLeft();
      };
 
+
+
 });

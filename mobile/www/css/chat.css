@@ -191,7 +191,7 @@ i.smilies-selector{
 }
 
 .add-attachment-icon{
-    color: rgba(113, 114, 116, 1); 
+    color: rgba(113, 114, 116, 1);
     font-size: 25px;
 }
 
@@ -229,7 +229,7 @@ i.smilies-selector{
     color: lightgray;
     font-size: 15px;
     font-style: italic;
-    position: relative; 
+    position: relative;
     top: -10px;
 }
 
@@ -292,8 +292,15 @@ ng\:form {
     -webkit-transition:0s all!important;
 }
 
+#sidemenu-thumbNail {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
 /* show the element during a show/hide animation when the
  * animation is ongoing, but the .ng-hide class is active */
     .ng-hide-add-active, .ng-hide-remove {
         display: block!important;
     }
+
