@@ -20,10 +20,10 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 //Taken from stackoverflow
-var allowCrossDomain = function(request, response, next) {
-    response.header('Access-Control-Allow-Origin', '*');
-    response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    response.header('Access-Control-Allow-Headers', 'Content-Type');
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
 
     next();
 };
