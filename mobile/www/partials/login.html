@@ -1,55 +1,20 @@
-<div class="loginCard">
-  <md-content id="login-form-content" class="md-padding" layout-xs="column" layout="row" layout-align="center center">
-    <div id="login_card" flex-xs flex-gt-xs="35" layout="column">
-      <md-card id="wonderful-card" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-        <md-card-title id="card-title">
-          <md-card-title-text>
-            <img id="app_logo_login" src="img/snakk_logo.png" alt="sNakk" />
-
-            <form name="loginForm" ng-model="loginForm">
-              <md-input-container ng-show="showUserName" layout="row">
-                <label>Username</label>
-                <input type="text" name="username" ng-model="username" required maxlength="20">
-                <div ng-messages="loginForm.username.$error">
-                  <div ng-message="max"> max 20 characters</div>
-                </div>
-              </md-input-container>
-
-              <md-input-container layout="row">
-                <label>E-mail</label>
-                <input type="email" name="email" ng-model="email" required>
-                <div ng-messages="loginForm.email.$error">
-                  <div ng-message="email"> invalid email.</div>
-                </div>
-              </md-input-container>
-
-              <md-input-container layout="row">
-                <label>Password</label>
-                <input type="password" name="password" ng-model="password" required maxlength="20">
-                <div ng-messages="loginForm.password.$error">
-                </div>
-              </md-input-container>
-
-              <md-input-container ng-show="showPasswordConfirm" layout="row">
-                <label>Retype password</label>
-                <input type="password" name="confirm" ng-pattern="{{password}}" ng-model="confirm" required maxlength="20">
-                <div ng-messages="loginForm.confirm.$error">
-                  <div ng-message="pattern"> no match</div>
-                </div>
-              </md-input-container>
-            </form>
-          </md-card-title-text>
-
-        </md-card-title>
-        <md-card-footer id="card-footer" layout="row" layout-align="center">
-          <md-card-actions layout="column" layout-align="center">
-            <md-button type="submit" ng-click="loginButtonClicked()" ng-show="showLoginButton">Login</md-button>
-            <md-label class="textHover" ng-click="registerClicked()" style="text-align:center" ng-show="showReg">Register</md-label>
-            <md-button type="submit" ng-click="registerButtonClicked()" ng-show="showRegButton">Register</md-button>
-            <md-label class="textHover" ng-click="cancelClicked()" style="text-align:center" ng-show="showCancel">Cancel</md-label>
-          </md-card-actions>
-        </md-card-footer>
-      </md-card>
-    </div>
-  </md-content>
+<div class="list">
+  <label class="item item-input">
+    <span class="input-label">Username</span>
+    <input type="text">
+  </label>
+  <label class="item item-input">
+    <span class="input-label">Pasword</span>
+    <input type="password">
+  </label>
+  <label class="item item-input" ng-hide="true" ng-model="password2">
+    <span class="input-label">Password again</span>
+    <input type="password">
+  </label>
+  <button class="button button-block button-positive">
+  Login
+</button>
+<button class="button button-block button-positive" ng-click="register()">
+  Register
+</button>
 </div>
