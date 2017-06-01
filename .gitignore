@@ -19,6 +19,8 @@
 /mobile/bower_components
 /mobile/www/lib
 /mobile/node_modules
+/mobile/platforms
+/mobile/plugins
 
 # IDEs and editors
 /.idea
