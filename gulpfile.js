@@ -15,6 +15,12 @@ gulp.task('serve', function(){
         gulp.src('./common/common.js').pipe(gulp.dest('./mobile/www'));
         server.start.apply(server);
     });
+
+    gulp.watch('common/images/**/*.{ttf,woff,eof,svg,png}', function(){
+        gulp.src('./common/images/**/*.{ttf,woff,eof,svg,png}').pipe(gulp.dest('./mobile/www/img'));
+        gulp.src('./common/images/**/*.{ttf,woff,eof,svg,png}').pipe(gulp.dest('./webb/assets/images'));
+    });
+
 });
 
 
