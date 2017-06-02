@@ -9,6 +9,7 @@
     $scope.glued = true;
     $scope.chatInput = "";
     $scope.channelStatus;
+    $scope.channelStatus;
     $scope.tmpChannels = $scope.users;
     $scope.tmpContacts = $scope.contacts;
     $scope.warning = false;
@@ -239,7 +240,7 @@
                     messages[i].avatar = users[e].avatar;
                 }
                 else if(messages[i].avatar === undefined){
-                    messages[i].avatar = "assets/images/defaultProfile.png";
+                    messages[i].avatar = "common/images/defaultProfile.png";
                 }
             }
         }
