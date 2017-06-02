@@ -1,0 +1,100 @@
+<div id="container" layout="row" >
+    <md-content id="chat-channel-container" flex="20">
+        <div id="app_logo">
+            <img src="assets/images/snakk_icon_white.png" alt="sNakk" />
+        </div>
+        <div class="username" layout="row">
+            <i class="material-icons slack-green">radio_button_checked</i>
+            <h5 class="logged-in-user">&nbsp;{{activeUser.username}}</h5>
+        </div>
+        <div id="addChannel" layout="row">
+            <h3 class="channel-header">Channels</h3>
+            <span flex="90"></span>
+            <md-button flex="5" id="add-channel-button" name="addChannel" ng-click="sendToCreateChannel()"  aria-label="AddChannelButton">
+                <i class="material-icons">add_circle_outline_black</i>
+            </md-button>
+            <span flex="5"></span>
+        </div>
+
+        <div class="channels-list">
+            <li class="channelMsgLists" ng-repeat="channel in userChannels | orderBy: 'name'" ng-click="openChat(channel)">
+            <i class="material-icons hash" ng-if="channel.accessability == 'public'">#</i>
+            <i class="material-icons md-dark" ng-if="channel.accessability == 'private'">lock</i>
+            <span ng-if="channelStatus[channel._id].update" class="channel-highlight">{{channel.name}}</span>
+            <span ng-if="!channelStatus[channel._id].update">{{channel.name}}</span>
+            </li>
+        </div>
+        <div layout="row" layout-align="center">
+             <h3 class="channel-header" flex="100">Direct Messages</h3>
+        </div>
+        <div class="channels-list">
+            <li class="channelMsgLists" ng-repeat="contact in contacts | orderBy: 'username'" ng-click="startDirectChat(activeUser, contact)">
+                <i class="material-icons slack-green" ng-if="contact.status == 'online'">radio_button_checked</i>
+                <i class="material-icons md-dark" ng-if="contact.status == 'offline'">radio_button_unchecked</i>
+                <span ng-if="channelStatus[contact.channelId].update" class="channel-highlight">{{contact.username}}</span>
+                <span ng-if="!channelStatus[contact.channelId].update">{{contact.username}}</span>
+            </li>
+        </div>
+    </md-content>
+    <main id="chat-main" flex="80">
+        <header id="chat-header">
+            <div layout="row" layout-align="start end">
+                <p class="channel-title">{{currentChannel.name}}</p>
+                <span flex></span>
+                <md-menu>
+                    <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                        <i class="material-icons">menu</i>
+                    </md-button>
+                    <md-menu-content width="1.5" ng-mouseleave="$mdMenu.close()">
+                        <md-menu-item>
+                            <md-button ng-click="announceClick(0)">
+                                <md-icon class="material-icons">settings</md-icon>
+                                    Settings
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="announceClick(1)">
+                                <md-icon class="material-icons">home</md-icon>
+                                    Logout
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </div>
+            <p class="channel-purpose">{{currentChannel.purpose}}</p>
+        </header>
+        <div layout="column" >
+            <div flex="75" id="chat-text-box-container" scroll-glue="glued">
+                <div id="chat-text-box-header">
+                </div>
+                <md-content layout="column">
+                    <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
+                        <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
+                        <p id="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
+                        <p id="date">{{message.date}}</p>
+                        <p smilies="message.text" id="messagetext">{{message.text}}"</p>
+                        <img ng-src="{{message.attachment}}" flex="20">
+                    </div>
+                </md-content>
+            </div>
+
+            <md-content id="chat-input-area" layout="row">
+                <form layout="row" flex="100">
+                    <div class="input-group">
+                        <div class="input-group-addon"
+                            smilies-selector="chatInput"
+                            smilies-placement="right">
+                        </div>
+                    </div>
+                    <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message {{currentChannel.name}}" flex="100"/>
+
+
+                    <input ngf-select class="ng-hide" ng-model="attachment" id="selectedAttach" ng-change="addAttachment()">
+                    <label ng-click="removeAttachment()" ng-show="attachmentPath"><i class="material-icons attachment">attach_file</i></label>
+                    <label for="selectedAttach" class="add-attachment"><p class="add-attachment-icon">+</p></label>
+                    <md-button id="chat-button" class="md-accent md-raised" type="submit" ng-disabled="validMessage()" ng-click="sendMessage(chatInput)" ng-keypress="$event.keyCode === 13 && sendMessage(chatInput)">Send</md-button>
+                </form>
+            </md-content>
+        </div>
+    </main>
+</div>
