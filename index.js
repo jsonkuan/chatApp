@@ -30,7 +30,7 @@ var allowCrossDomain = function(req, res, next) {
 
 app.use(allowCrossDomain);
 app.use(body.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'webb')));
 
 MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
     if(error) {
