@@ -5,6 +5,7 @@ app.controller("channelController", function ($scope, $state, userService,  chan
     $scope.counter = $scope.users.length -1;
     $scope.channelPurpose = "";
     $scope.channelName = "";
+    
     $scope.createChannel = function(newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
         if (access === 'public') {
@@ -22,6 +23,11 @@ app.controller("channelController", function ($scope, $state, userService,  chan
                 $state.go("chat");
             });
         }
+    };
+
+    $scope.resetLines = function() {
+        $scope.hej = "";
+        console.log("adkfnalkcnasc");
     };
 
     userService.getUsers().then(function(response) {

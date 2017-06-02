@@ -9,8 +9,9 @@
             Public or private chat
         </div>
     <select>
-      <option>Public</option>
-      <option>Private</option>
+        <option selected>Type</option>
+        <option>Public</option>
+        <option>Private</option>
     </select>
   </label>
 
@@ -19,20 +20,25 @@
            Add friends
         </div>
     <select>
-      <option>PÅKE</option>
-      <option>PÅKE</option>
+        <option selected>Friends</option>
+        <option>PÅKE</option>
+        <option>PÅKE</option>
+        <option>PÅKES KOMPIS</option>
     </select>
   </label>
 
   <label class="item item-input">
     <input type="text" placeholder="Channel name">
+    <i class="ion-close-circled"></i>
   </label>
   <label class="item item-input">
-    <input type="text" placeholder="Purpose">
+    <input type="text" placeholder="Purpose" ng-model="hej">
+    <i class="ion-close-circled" ng-click="resetLines()"></i>
   </label>
 </div>
 
 <button class="button button-block button-positive">
   Create channel
 </button>
+
   

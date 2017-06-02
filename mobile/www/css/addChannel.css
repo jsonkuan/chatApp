@@ -14,11 +14,12 @@ h1 {
 .item.item-input {
     border: solid #4D394B 3px;
     margin-top: 5px;
+    height: 45px;
 }
 
 .button.button-block.button-positive {
     background-color: #4D394B !important;
-    border-radius: 100px;
+
 }
 
 .snakk_logo_add {
