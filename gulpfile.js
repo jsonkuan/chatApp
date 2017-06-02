@@ -1,6 +1,7 @@
 
 var gulp = require('gulp');
 var live = require('gulp-live-server');
+var watch = require('gulp-watch');
 
 gulp.task('serve', function(){
     var server = live.new('index.js');
@@ -16,9 +17,10 @@ gulp.task('serve', function(){
         server.start.apply(server);
     });
 
-    gulp.watch('common/images/**/*.{ttf,woff,eof,svg,png}', function(){
+    watch('./common/images/**/*.{ttf,woff,eof,svg,png,jpeg}', function(){
         gulp.src('./common/images/**/*.{ttf,woff,eof,svg,png}').pipe(gulp.dest('./mobile/www/img'));
         gulp.src('./common/images/**/*.{ttf,woff,eof,svg,png}').pipe(gulp.dest('./webb/assets/images'));
+        server.start.apply(server);
     });
 
 });

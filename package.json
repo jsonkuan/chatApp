@@ -9,9 +9,10 @@
     "express": "^4.15.2",
     "gulp": "^3.9.1",
     "gulp-live-server": "0.0.30",
+    "gulp-watch": "^4.3.11",
+    "mime-types": "latest",
     "mongodb": "^2.2.26",
-    "multer": "latest",
-    "mime-types": "latest"
+    "multer": "latest"
   },
   "devDependencies": {},
   "scripts": {
