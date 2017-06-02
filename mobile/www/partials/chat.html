@@ -25,9 +25,9 @@
     <div class="bar bar-footer bar-positive">
         <div class="item item-input-inset">
           <label class="item-input-wrapper">
-            <input type="text" placeholder="@ Message">
+            <input type="text" placeholder="@ Message" ng-model="chatInput" name="chatInput" >
           </label>
-          <button class="button button-small">Send</button>
+          <button class="button button-small" ng-click="sendMessage(chatInput)">Send</button>
         </div>
     </div>
     <!--End of chat page content here -->
