@@ -6,9 +6,13 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.attachmentPath = "";
   $scope.chatInput= {text : ""};
 
-     $scope.toggleLeft = function() {
-       $ionicSideMenuDelegate.toggleLeft();
-     };
+    $scope.toggleLeft = function() {
+        $ionicSideMenuDelegate.toggleLeft();
+    };
+
+    $scope.toggleRight = function() {
+      $ionicSideMenuDelegate.toggleRight();
+    };
 
     userService.getUsers().then(function(result){
     $scope.users = result;
