@@ -4,6 +4,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.users = [];
   $scope.currentChannel = currentChannel;
   $scope.attachmentPath = "";
+  $scope.chatInput= {text : ""};
 
      $scope.toggleLeft = function() {
        $ionicSideMenuDelegate.toggleLeft();
@@ -94,9 +95,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       $scope.warning = false;
     }
 
-    $scope.chatInput = '';
-    /*var button = angular.element(document.getElementById("chat-input-box"));
-    button.focus();*/
+    $scope.chatInput.text = "";
 
     channelService.updateTimeStamp($scope.currentChannel).then(function(response){
       $scope.currentChannel = response.data;

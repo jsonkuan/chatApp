@@ -16,7 +16,7 @@
           <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
           <p class="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
           <p class="date">{{message.date}}</p>
-          <p smilies="message.text" class="messagetext">{{message.text}}"</p>
+          <p smilies="message.text" class="messagetext">{{message.text}}</p>
           <img class="attachment" ng-src="{{message.attachment}}">
         </div>
 
@@ -25,9 +25,9 @@
     <div class="bar bar-footer bar-positive">
         <div class="item item-input-inset">
           <label class="item-input-wrapper">
-            <input type="text" placeholder="@ Message" ng-model="chatInput" name="chatInput" >
+            <input type="text" placeholder="@ Message" ng-model="chatInput.text">
           </label>
-          <button class="button button-small" ng-click="sendMessage(chatInput)">Send</button>
+          <button class="button button-small" ng-click=sendMessage(chatInput.text)>Send</button>
         </div>
     </div>
     <!--End of chat page content here -->
