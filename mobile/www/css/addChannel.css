@@ -28,4 +28,9 @@ h1 {
     object-fit: contain;
 } 
 
+.ion-close-circled {
+    color: darkred !important;
+}
+
+
 

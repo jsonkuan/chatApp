@@ -1,10 +1,11 @@
 app.controller("channelController", function ($scope, $state, userService,  channelService, allUsers) {
-    $scope.inviteUsersArray = [userService.active._id];
-    $scope.invitedUserList = [userService.active.username + " (you)"];
-    $scope.users = allUsers;
-    $scope.counter = $scope.users.length -1;
-    $scope.channelPurpose = "";
-    $scope.channelName = "";
+    //$scope.inviteUsersArray = [userService.active._id];
+    //$scope.invitedUserList = [userService.active.username + " (you)"];
+    //$scope.users = allUsers;
+    //$scope.counter = $scope.users.length -1;
+    //$scope.channelPurpose = "";
+    //$scope.channelName = "";
+
     
     $scope.createChannel = function(newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
@@ -26,8 +27,9 @@ app.controller("channelController", function ($scope, $state, userService,  chan
     };
 
     $scope.resetLines = function() {
-        $scope.hej = "";
-        console.log("adkfnalkcnasc");
+        $scope.channelName = "";
+        $scope.purpose = "";
+        console.log("PÅKE");
     };
 
     userService.getUsers().then(function(response) {
