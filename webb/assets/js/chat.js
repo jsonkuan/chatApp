@@ -1,6 +1,6 @@
  app.controller('chatController', function($scope, upload, $state, $cookies, messageService, channelService, userService, userChannels, currentChannel, userContacts, session) {
     $scope.activeUser = session;
-    $scope.userChannels = userChannels;
+    $scope.users = users;
     $scope.currentChannel = currentChannel;
     $scope.messageDb = [];
     $scope.contacts = userContacts;
@@ -9,7 +9,8 @@
     $scope.glued = true;
     $scope.chatInput = "";
     $scope.channelStatus;
-    $scope.tmpChannels = $scope.userChannels;
+    $scope.channelStatus;
+    $scope.tmpChannels = $scope.users;
     $scope.tmpContacts = $scope.contacts;
     $scope.warning = false;
 
@@ -21,10 +22,10 @@
         var contacts = $scope.tmpContacts.filter(function(user) {
             return user._id != userService.active._id;
         });
-        var channels = $scope.userChannels.filter(function(channel) {
+        var channels = $scope.users.filter(function(channel) {
             return channel.accessability === 'public' || channel.accessability === 'private';
         });
-        var direct = $scope.userChannels.filter(function(channel) {
+        var direct = $scope.users.filter(function(channel) {
             return channel.accessability === 'direct';
         });
         for (var i = 0; i < direct.length; i ++) {
@@ -34,13 +35,13 @@
                 }
             }
         }
-        $scope.userChannels = channels;
+        $scope.users = channels;
         $scope.contacts = contacts;
         $scope.users = $scope.tmpContacts;
     };
     $scope.updateChannelStatus = function() {
         // Retrieve cookie based on user
-        $scope.userChannels = $scope.tmpChannels;
+        $scope.users = $scope.tmpChannels;
         var cookie = $cookies.get(userService.active._id);
         if (!cookie) {
             cookie = {};
@@ -48,7 +49,7 @@
             cookie = JSON.parse(cookie);
         }
         // Compare timestamp between channels and cookies
-        var channels = $scope.userChannels;
+        var channels = $scope.users;
         for (var i = 0; i < channels.length; i ++) {
             var channelId = channels[i]._id;
             if (!cookie[channelId]) {
@@ -239,7 +240,7 @@
                     messages[i].avatar = users[e].avatar;
                 }
                 else if(messages[i].avatar === undefined){
-                    messages[i].avatar = "assets/images/defaultProfile.png";
+                    messages[i].avatar = "common/images/defaultProfile.png";
                 }
             }
         }

@@ -1,0 +1,47 @@
+<ion-side-menus>
+  <ion-side-menu-content>
+    <ion-header-bar class="bar-positive">
+      <div class="buttons">
+      <button class="button icon button-clear ion-navicon-round"
+              ng-click="toggleLeft()">Menu</button>
+      </div>
+      <!--TODO add chatroom title-->
+      <h1 class="title">Chat Title</h1>
+    </ion-header-bar>
+    <!--Start of chat page content here -->
+    <ion-content class="has-header has-footer chat-input-box">
+
+
+        <div class="chat-box" ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
+          <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
+          <p class="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
+          <p class="date">{{message.date}}</p>
+          <p smilies="message.text" class="messagetext">{{message.text}}"</p>
+          <img class="attachment" ng-src="{{message.attachment}}">
+        </div>
+
+
+    </ion-content>
+    <div class="bar bar-footer bar-positive">
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="@ Message" ng-model="chatInput" name="chatInput" >
+          </label>
+          <button class="button button-small" ng-click="sendMessage(chatInput)">Send</button>
+        </div>
+    </div>
+    <!--End of chat page content here -->
+  </ion-side-menu-content>
+
+  <!-- Left menu -->
+  <ion-side-menu side="left">
+    <ion-content class="list-avatar-page">
+    <div class="list">
+      <a class="item" ng-repeat="user in users" ng-click="">
+        <!--<img id="sidemenu-thumbNail" src={{user.avatar}}> -->
+        <h2>{{user.username}}</h2>
+      </a>
+    </div>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
