@@ -8,8 +8,6 @@ app.controller('loginController', function($scope, $state, $filter, userService)
     $scope.isAuthenticated = true;
     $scope.user = {};
 
-    console.log(angular.version);
-
     userService.post({
         _id: "133333333333333333333337",
         username: "SnakkBot",
@@ -56,10 +54,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
                 });
             }
         }else{
-            $scope.loginForm.username.$touched = true;
-            $scope.loginForm.email.$touched = true;
-            $scope.loginForm.password.$touched = true;
-            $scope.loginForm.confirm.$touched = true;
+            
         }
     };
 
