@@ -86,14 +86,14 @@ app.run(function($ionicPlatform, $state, $rootScope, Resolvers) {
         Resolvers.getUser().then(function(response) {
             var user = response;
             //Block access outside of login when not logged in
-            if (!user && destination !== "login") {
+            if (!user && destination !== "addChannel") {
                 event.preventDefault();
-                $state.go('login');
+                $state.go('addChannel');
             //Block access to login when not logged in
-            } else if (user && destination === "login") {
+            } else if (user && destination === "addChannel") {
                 event.preventDefault();
                 //TODO: Send back to previous state instead of 'chat
-                $state.go('chat');
+                $state.go('addChannel');
             }
         });
     });

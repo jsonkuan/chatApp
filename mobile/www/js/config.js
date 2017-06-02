@@ -12,6 +12,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/chat',
             controller : 'chatController',
             templateUrl: 'partials/chat.html'
+        })
+        .state('addChannel', {
+            url: '/addChannel',
+            controller : 'channelController',
+            templateUrl: 'partials/addChannel.html'
         });
 
 });
