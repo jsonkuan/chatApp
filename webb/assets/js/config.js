@@ -26,7 +26,7 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
                 currentChannel: function(session, Resolvers) {
                     return Resolvers.getChannel();
                 },
-                userChannels: function(session, currentChannel, channelService) {
+                users: function(session, currentChannel, channelService) {
                     return channelService.getChannelsForUser(session._id);
                 },
                 userContacts: function(session, userService){

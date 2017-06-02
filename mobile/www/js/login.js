@@ -85,7 +85,6 @@ app.controller('loginController', function($scope, $state, $filter, userService)
             }
         }
     };
-
     $scope.register = function(inputEmail, inputPassword, passwordConfirm) {
         console.log(inputPassword, passwordConfirm);
         if (inputPassword === passwordConfirm) {

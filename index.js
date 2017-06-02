@@ -8,10 +8,10 @@ var app = express();
 var multer  = require('multer');
 var mime = require('mime-types');
 //const del = require('del');
-// del(['public/assets/images/github.png']);
+// del(['common/images/github.png']);
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/assets/images')
+        cb(null, 'common/images')
     },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + '.' + mime.extension(file.mimetype));
