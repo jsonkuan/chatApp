@@ -6,6 +6,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
     $scope.showRegButton = false;
     $scope.showCancel = false;
     $scope.isAuthenticated = true;
+    $scope.placeHolder = "Email";
     $scope.user = {};
 
     userService.post({
@@ -27,7 +28,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
         });
         if ($scope.login($scope.email, $scope.password)) {
             if(userService.active.status === "online"){
-                $scope.email = "You are already logged in";
+                $scope.placeHolder = "You are already logged in";
             }else {
                 userService.active.status = "online";
                 userService.updateUser(userService.active);
@@ -54,7 +55,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
                 });
             }
         }else{
-            
+
         }
     };
 
@@ -94,7 +95,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
                 {
                     $scope.isAuthenticated = false;
                     $scope.email = "";
-                    $scope.email = "User exists";
+                    $scope.placeHolder = "User exists";
                 }
             }
         } else {
