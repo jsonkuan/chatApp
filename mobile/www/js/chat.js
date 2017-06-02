@@ -1,5 +1,5 @@
 app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService) {
-
+  
   $scope.messageDb = [];
   $scope.users = [];
   $scope.currentChannel = currentChannel;
@@ -8,7 +8,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
      $scope.toggleLeft = function() {
        $ionicSideMenuDelegate.toggleLeft();
      };
-
+  
     userService.getUsers().then(function(result){
     $scope.users = result;
     console.log(result);

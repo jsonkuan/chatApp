@@ -54,10 +54,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
                 });
             }
         }else{
-            $scope.loginForm.username.$touched = true;
-            $scope.loginForm.email.$touched = true;
-            $scope.loginForm.password.$touched = true;
-            $scope.loginForm.confirm.$touched = true;
+            
         }
     };
 
@@ -88,7 +85,6 @@ app.controller('loginController', function($scope, $state, $filter, userService)
             }
         }
     };
-
     $scope.register = function(inputEmail, inputPassword, passwordConfirm) {
         console.log(inputPassword, passwordConfirm);
         if (inputPassword === passwordConfirm) {
