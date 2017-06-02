@@ -1,21 +1,24 @@
-<div class="list">
 
+
+<div class="list">
+  <div class="logo_frame">
+    <img class="snakk_logo" src="img/snakk_logo.png">
+  </div>
+  
   <form name="loginForm" ng-model="loginForm">
-  <label class="item item-input" ng-show="showUserName">
+  <div class="item item-input" ng-show="showUserName">
     <span class="input-label">Username</span>
     <input ng-model="username" type="text">
     <div ng-messages="loginForm.username.$error">
       <div ng-message="max"> max 20 characters</div>
     </div>
-  </label>
+  </div>
 
   <label class="item item-input">
     <span class="input-label">Email</span>
     <input type="email" name="email" ng-model="email" required>
     <div ng-messages="loginForm.email.$error">
-      <div
-        ng-message="email"> invalid email
-      </div>
+      <div class="invalid-msg" ng-message="email"> invalid email</div>
     </div>
   </label>
 
@@ -26,7 +29,7 @@
   </label>
 
   <label class="item item-input" ng-show="showPasswordConfirm">
-    <span class="input-label">Password again</span>
+    <span class="input-label">Confirm</span>
     <input type="password" name="confirm" ng-pattern="{{password}}" ng-model="confirm" required maxlength="20">
     <div ng-messages="loginForm.confirm.$error">
       <div ng-message="pattern"> no match</div>
