@@ -27,8 +27,8 @@ app.controller("channelController", function ($scope, $state, userService,  chan
     };
 
     $scope.resetLines = function() {
-        $scope.channelName = "";
-        $scope.purpose = "";
+       $scope.channelName = "";
+       $scope.purpose = "";
         console.log("PÅKE");
     };
 
