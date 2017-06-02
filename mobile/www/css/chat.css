@@ -297,6 +297,9 @@ ng\:form {
   width: 40px;
   border-radius: 50%;
 }
+.item{
+  padding: 10px !important;
+}
 
 /* show the element during a show/hide animation when the
  * animation is ongoing, but the .ng-hide class is active */
