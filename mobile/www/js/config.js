@@ -7,5 +7,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/login',
             controller : 'loginController',
             templateUrl: 'partials/login.html'
+        })
+        .state('chat', {
+            url: '/chat',
+            controller : 'chatController',
+            templateUrl: 'partials/chat.html'
         });
 });

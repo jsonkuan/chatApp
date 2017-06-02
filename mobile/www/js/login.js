@@ -8,6 +8,8 @@ app.controller('loginController', function($scope, $state, $filter, userService)
     $scope.isAuthenticated = true;
     $scope.user = {};
 
+    console.log(angular.version);
+
     userService.post({
         _id: "133333333333333333333337",
         username: "SnakkBot",
