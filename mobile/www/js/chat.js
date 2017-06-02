@@ -1,18 +1,66 @@
 app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService) {
-  
+
   $scope.messageDb = [];
   $scope.users = [];
   $scope.currentChannel = currentChannel;
   $scope.attachmentPath = "";
+  $scope.chatInput= {text : ""};
 
-     $scope.toggleLeft = function() {
-       $ionicSideMenuDelegate.toggleLeft();
-     };
-  
+    $scope.toggleLeft = function() {
+        $ionicSideMenuDelegate.toggleLeft();
+    };
+
+    $scope.toggleRight = function() {
+      $ionicSideMenuDelegate.toggleRight();
+    };
+
     userService.getUsers().then(function(result){
     $scope.users = result;
     console.log(result);
   });
+
+  String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+  };
+
+  $scope.snakkBot = function(message){
+    var regPattern = /[A-ZÅÄÖ]/;
+    var badWords = ["dåligt", "dålig"];
+    var banWords = ["trump", "fitta", "kuk", "cunt", "dick", "hora", "hoe", "faggot", "bög"];
+    var uppercaseIndex = [];
+    for (var j = 0; j < message.length; j++){
+      if(message[j].match(regPattern)){
+        uppercaseIndex.push(j);
+      }
+    }
+
+    var newMessage = message.toLowerCase();
+    var tempLetter = "";
+
+    var concealedWord = "";
+    for(var i = 0; i < badWords.length; i++){
+      newMessage = newMessage.replace(badWords[i],"mindre bra");
+    }
+
+    var oldMessage = newMessage;
+    for(var y = 0; y < banWords.length; y++){
+      concealedWord = new Array(banWords[y].length+1).join('*');
+      newMessage = newMessage.replaceAll(banWords[y], concealedWord);
+      concealedWord = "";
+    }
+
+    if(oldMessage !== newMessage){
+      $scope.warning = true;
+    }
+
+    for(var z = 0; z < uppercaseIndex.length; z++){
+      tempLetter = newMessage.charAt(uppercaseIndex[z]).toUpperCase();
+      newMessage = newMessage.replace(tempLetter.toLowerCase(), tempLetter);
+    }
+
+    return newMessage;
+  };
 
   $scope.sendMessage = function(input) {
     var message = {
@@ -22,7 +70,8 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       channel: $scope.currentChannel._id,
       attachment: $scope.attachmentPath
     };
-    /*if($scope.warning){
+
+    if($scope.warning){
       var warningMessage = "";
       if(userService.active.warnings < 1){
         warningMessage = $scope.activeUser.username + " has been warned! Keep it clean.";
@@ -48,11 +97,9 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
         userService.updateUser(userService.active);
       }
       $scope.warning = false;
-    }*/
+    }
 
-    /*$scope.chatInput = '';
-    var button = angular.element(document.getElementById("chat-input-container"));
-    button.focus();*/
+    $scope.chatInput.text = "";
 
     channelService.updateTimeStamp($scope.currentChannel).then(function(response){
       $scope.currentChannel = response.data;
@@ -61,9 +108,9 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       $scope.checkTimeStamp();
     });
 
-    /*messageService.post(botMessage).then(function(response){
+    messageService.post(botMessage).then(function(response){
       $scope.checkTimeStamp();
-    });*/
+    });
 
     /*$scope.$watch('messageDb', function f() {
       var chatContent = document.getElementById('chat-text-box-container');
@@ -91,7 +138,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
           messages[i].avatar = users[e].avatar;
         }
         else if(messages[i].avatar === undefined){
-          messages[i].avatar = "assets/images/defaultProfile.png";
+          messages[i].avatar = "img/defaultProfile.png";
         }
       }
     }
