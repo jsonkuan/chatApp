@@ -21,14 +21,12 @@
         </div>
     <select>
         <option selected>Friends</option>
-        <option>PÅKE</option>
-        <option>PÅKE</option>
-        <option>PÅKES KOMPIS</option>
+        <option ng-repeat="user in users" value="{{user.username}}">{{user.username}}</option>
     </select>
   </label>
 
   <label class="item item-input">
-    <input type="text" placeholder="Channel name" ng-model="channelName">
+    <input type="text" placeholder="Channel name" ng-model="channelName" required ng-minlength="3" maxlength="25">
     <i class="ion-close-circled" ng-click="resetLines()"></i>
   </label>
   <label class="item item-input">

@@ -1,11 +1,10 @@
 app.controller("channelController", function ($scope, $state, userService,  channelService, allUsers) {
     //$scope.inviteUsersArray = [userService.active._id];
     //$scope.invitedUserList = [userService.active.username + " (you)"];
-    //$scope.users = allUsers;
-    //$scope.counter = $scope.users.length -1;
-    //$scope.channelPurpose = "";
-    //$scope.channelName = "";
-
+    $scope.users = allUsers;
+    $scope.counter = $scope.users.length -1;
+    $scope.channelPurpose = "";
+    $scope.channelName = "";
     
     $scope.createChannel = function(newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
