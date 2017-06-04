@@ -1,4 +1,4 @@
-app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService) {
+app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService, upload) {
 
   $scope.messageDb = [];
   $scope.users = [];
@@ -165,4 +165,34 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
 
     return (year + today + " - " + hour + ":" + minutes);
   }
+
+
+  $scope.password = userService.active.password;
+  $scope.email = userService.active.email;
+  $scope.username = userService.active.username;
+  $scope.avatar = userService.active.avatar;
+
+  $scope.saveSettings = function (user) {
+    userService.active.password = $scope.password;
+    userService.active.username = $scope.username;
+    console.log($scope.username);
+    console.log(userService.active.username);
+
+    if($scope.avatar != userService.active.avatar && $scope.avatar != "") {
+      upload({
+        url: 'http://localhost:3000/upload',
+        method: 'POST',
+        data: {
+          avatar: $scope.avatar
+        }
+      }).then(
+        function (response) {
+          userService.active.avatar = response.data.slice(7);
+          $scope.avatar = userService.active.avatar;
+          userService.updateUser(userService.active);
+        }
+      );
+    }
+    userService.updateUser(userService.active);
+  };
 });
