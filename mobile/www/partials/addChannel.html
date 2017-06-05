@@ -33,15 +33,19 @@
     <input type="text" placeholder="Purpose" ng-model="purpose">
     <i class="ion-close-circled" ng-click="resetLines()"></i>
   </label>
-  
+  <div>
+  <ion-scroll>
   <ion-list>
     <ion-checkbox ng-repeat="user in users" value="{{user.username}}">{{user.username}}</ion-checkbox>
 </ion-list>
+  </ion-scroll>
+  </div>
 </div>
 
 <button class="button button-block button-positive" ng-click="resetLines()">
   Create channel
 </button>
 </ion-content>
+
 
   
