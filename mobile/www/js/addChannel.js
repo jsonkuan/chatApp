@@ -5,6 +5,7 @@ app.controller("channelController", function ($scope, $state, userService,  chan
     $scope.counter = $scope.users.length -1;
     $scope.channelName = {text: ""}; 
     $scope.purpose = {text: ""};
+    
     $scope.createChannel = function(newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
         if (access === 'public') {
