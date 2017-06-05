@@ -3,9 +3,8 @@ app.controller("channelController", function ($scope, $state, userService,  chan
     //$scope.invitedUserList = [userService.active.username + " (you)"];
     $scope.users = allUsers;
     $scope.counter = $scope.users.length -1;
-    $scope.channelPurpose = "";
-    $scope.channelName = "";
-    
+    $scope.channelName = {text: ""}; 
+    $scope.purpose = {text: ""};
     $scope.createChannel = function(newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
         if (access === 'public') {
@@ -25,9 +24,13 @@ app.controller("channelController", function ($scope, $state, userService,  chan
         }
     };
 
-    $scope.resetLines = function() {
-       $scope.channelName = "";
-       $scope.purpose = "";
+    $scope.resetChannelname = function(name) {
+       $scope.channelName.text = "";
+       console.log("PÅKE");
+    };
+
+    $scope.resetPurpose = function() {
+        $scope.purpose.text = "";
         console.log("PÅKE");
     };
 
