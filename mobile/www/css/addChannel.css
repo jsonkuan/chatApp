@@ -17,8 +17,16 @@ h1 {
     height: 45px;
 }
 
+.friendsList {
+    border: solid #4D394B 3px;;
+}
+
 .button.button-block.button-positive {
     background-color: #4D394B !important;
+    width: 300px !important;
+    height: 50px !important;
+    
+    margin: 0 auto !important;
 
 }
 
