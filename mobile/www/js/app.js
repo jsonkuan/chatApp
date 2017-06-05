@@ -85,7 +85,9 @@ app.run(function($ionicPlatform, $state, $rootScope, Resolvers) {
         var destination = to.name;
         Resolvers.getUser().then(function(response) {
             var user = response;
+            console.log('achtung', user);
             //Block access outside of login when not logged in
+
             if (!user && destination !== "addChannel") {
                 event.preventDefault();
                 $state.go('addChannel');

@@ -8,6 +8,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
     $scope.isAuthenticated = true;
     $scope.placeHolder = "Email";
     $scope.user = {};
+  
     userService.post({
         _id: "133333333333333333333337",
         username: "SnakkBot",
@@ -15,6 +16,19 @@ app.controller('loginController', function($scope, $state, $filter, userService)
         password: "2017",
         avatar: "img/snakk-bot.jpg",
         status: "offline"
+
+
+    userService.get('133333333333333333333337').then(function(response) {
+        if (!response) {
+            userService.post({
+                _id: "133333333333333333333337",
+                username: "SnakkBot",
+                email: "bot@snakk.com",
+                password: "2017",
+                avatar: "assets/images/snakk-bot.jpg",
+                status: "offline"
+            });
+        }
     });
 
     userService.getUsers().then(function(response) {
@@ -26,14 +40,15 @@ app.controller('loginController', function($scope, $state, $filter, userService)
             $scope.user = response;
         });
         if ($scope.login($scope.email, $scope.password)) {
-            if(userService.active.status === "online"){
+            /*if(userService.active.status === "online"){
                 $scope.placeHolder = "You are already logged in";
-            }else {
+            }else {*/
                 userService.active.status = "online";
                 userService.updateUser(userService.active);
                 //NOTE: Store user id as cookie on login.
+                localStorage['user'] = userService.active._id;
                 $state.transitionTo('chat');
-            }
+            //}
         } else {
             $scope.password = "";
         }
