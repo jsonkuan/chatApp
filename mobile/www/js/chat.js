@@ -71,6 +71,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       attachment: $scope.attachmentPath
     };
 
+
     if($scope.warning){
       var warningMessage = "";
       if(userService.active.warnings < 1){
@@ -194,5 +195,26 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       );
     }
     userService.updateUser(userService.active);
+  };
+
+  $scope.addAttachment = function () {
+    console.log($scope.attachment);
+
+    if($scope.attachment) {
+      upload({
+        url: 'http://localhost:3000/upload',
+        method: 'POST',
+        data: {
+          avatar: $scope.attachment
+        }
+      }).then(
+        function (response) {
+          $scope.attachmentPath = response.data.slice(7);
+        }
+      );
+    }
+  };
+  $scope.removeAttachment = function () {
+    $scope.attachmentPath = "";
   };
 });

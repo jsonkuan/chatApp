@@ -75,3 +75,10 @@
   margin-left: 3%;
   width: 94%;
 }
+
+.button.button-small.icon:active{
+  background-color: rgba(86, 182, 139, 1);
+  color: white;
+}
+
+

@@ -25,6 +25,7 @@
           <p smilies="message.text" class="messagetext">{{message.text}}</p>
           <img class="attachment" ng-src="{{message.attachment}}">
         </div>
+
     </ion-content>
     <!--End of chat page content here -->
 
@@ -34,13 +35,16 @@
           <label class="item-input-wrapper">
             <input type="text" placeholder="@ Message" ng-model="chatInput.text">
           </label>
+
+          <input ngf-select class="ng-hide" ng-model="attachment" id="selectedAttach" ng-change="addAttachment()">
+          <label ng-click="removeAttachment()" ng-show="attachmentPath"><i class="ion-paperclip"></i></label>
+          <label for="selectedAttach" class="button button-small icon">+</label>
           <button class="button button-small" ng-click=sendMessage(chatInput.text)>Send</button>
         </div>
     </div>
 
   </ion-side-menu-content>
   <!--Main content container end -->
-
   <!-- Left menu -->
   <ion-side-menu side="left">
     <ion-header-bar class="bar-light">
