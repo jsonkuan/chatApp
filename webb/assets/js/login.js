@@ -1,4 +1,4 @@
-app.controller('loginController', function($scope, $state, $filter, $cookies, userService, session) {
+app.controller('loginController', function($scope, $state, $filter, userService, session) {
     $scope.showReg = true;
     $scope.showUserName = false;
     $scope.showPasswordConfirm = false;
@@ -8,13 +8,17 @@ app.controller('loginController', function($scope, $state, $filter, $cookies, us
     $scope.isAuthenticated = true;
     $scope.user = {};
 
-    userService.post({
-        _id: "133333333333333333333337",
-        username: "SnakkBot",
-        email: "bot@snakk.com",
-        password: "2017",
-        avatar: "assets/images/snakk-bot.jpg",
-        status: "offline"
+    userService.get('133333333333333333333337').then(function(response) {
+        if (!response) {
+            userService.post({
+                _id: "133333333333333333333337",
+                username: "SnakkBot",
+                email: "bot@snakk.com",
+                password: "2017",
+                avatar: "assets/images/snakk-bot.jpg",
+                status: "offline"
+            });
+        }
     });
 
     userService.getUsers().then(function(response) {
@@ -32,7 +36,7 @@ app.controller('loginController', function($scope, $state, $filter, $cookies, us
                 userService.active.status = "online";
                 userService.updateUser(userService.active);
                 //NOTE: Store user id as cookie on login.
-                $cookies.put('user', userService.active._id);
+                localStorage['user'] = userService.active._id;
                 $state.transitionTo('chat');
             }
         } else {

@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload', 'lr.upload', 'ngSanitize', 'ui.bootstrap', 'angular-smilies', 'ngMessages', 'ngCookies', 'luegg.directives', 'common']);
+var app = angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial','ngFileUpload', 'lr.upload', 'ngSanitize', 'ui.bootstrap', 'angular-smilies', 'ngMessages', 'luegg.directives', 'common']);
 
 app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterProvider) {
     $qProvider.errorOnUnhandledRejections(false);
@@ -26,7 +26,7 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
                 currentChannel: function(session, Resolvers) {
                     return Resolvers.getChannel();
                 },
-                users: function(session, currentChannel, channelService) {
+                channels: function(session, currentChannel, channelService) {
                     return channelService.getChannelsForUser(session._id);
                 },
                 userContacts: function(session, userService){
@@ -61,7 +61,7 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
 
 
 
-app.run(function($rootScope, $state, $cookies, Resolvers) {
+app.run(function($rootScope, $state, Resolvers) {
 
     //NOTE: Uncomment below and run app to clear user cookie.
     //$cookies.remove('user');

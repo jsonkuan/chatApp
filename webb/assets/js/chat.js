@@ -1,6 +1,6 @@
- app.controller('chatController', function($scope, upload, $state, $cookies, messageService, channelService, userService, userChannels, currentChannel, userContacts, session) {
+angular.module('app').controller('chatController', function($scope, upload, $state, messageService, channelService, userService, channels, currentChannel, userContacts, session) {
     $scope.activeUser = session;
-    $scope.users = users;
+    $scope.userChannels = channels;
     $scope.currentChannel = currentChannel;
     $scope.messageDb = [];
     $scope.contacts = userContacts;
@@ -9,8 +9,7 @@
     $scope.glued = true;
     $scope.chatInput = "";
     $scope.channelStatus;
-    $scope.channelStatus;
-    $scope.tmpChannels = $scope.users;
+    $scope.tmpChannels = $scope.userChannels;
     $scope.tmpContacts = $scope.contacts;
     $scope.warning = false;
 
@@ -22,10 +21,10 @@
         var contacts = $scope.tmpContacts.filter(function(user) {
             return user._id != userService.active._id;
         });
-        var channels = $scope.users.filter(function(channel) {
+        var channels = $scope.userChannels.filter(function(channel) {
             return channel.accessability === 'public' || channel.accessability === 'private';
         });
-        var direct = $scope.users.filter(function(channel) {
+        var direct = $scope.userChannels.filter(function(channel) {
             return channel.accessability === 'direct';
         });
         for (var i = 0; i < direct.length; i ++) {
@@ -35,42 +34,44 @@
                 }
             }
         }
-        $scope.users = channels;
+        $scope.userChannels = channels;
         $scope.contacts = contacts;
         $scope.users = $scope.tmpContacts;
     };
     $scope.updateChannelStatus = function() {
         // Retrieve cookie based on user
-        $scope.users = $scope.tmpChannels;
-        var cookie = $cookies.get(userService.active._id);
-        if (!cookie) {
-            cookie = {};
+        $scope.userChannels = $scope.tmpChannels;
+        //var cookie = $cookies.get(userService.active._id);
+        var storage = localStorage[userService.active._id];
+        if (!storage) {
+            storage = {};
         } else {
-            cookie = JSON.parse(cookie);
+            storage = JSON.parse(storage);
         }
-        // Compare timestamp between channels and cookies
-        var channels = $scope.users;
+        // Compare timestamp between channels and storage data
+        var channels = $scope.userChannels;
         for (var i = 0; i < channels.length; i ++) {
             var channelId = channels[i]._id;
-            if (!cookie[channelId]) {
-                cookie[channelId] = {
+            if (!storage[channelId]) {
+                storage[channelId] = {
                     timestamp: Date(),
                     update: true
                 };
             } else {
-                if (channels[i].timestamp > cookie[channelId].timestamp) {
-                    cookie[channelId].timestamp = channels[i].timestamp;
-                    cookie[channelId].update = true;
+                if (channels[i].timestamp > storage[channelId].timestamp) {
+                    storage[channelId].timestamp = channels[i].timestamp;
+                    storage[channelId].update = true;
                 }
             }
         }
 
         // Always mark current channel as read
-        cookie[channelService.current._id].timestamp = Date();
-        cookie[channelService.current._id].update = false;
+        storage[channelService.current._id].timestamp = Date();
+        storage[channelService.current._id].update = false;
 
-        $scope.channelStatus = cookie;
-        $cookies.put(userService.active._id, JSON.stringify(cookie));
+        $scope.channelStatus = storage;
+        localStorage[userService.active._id] = JSON.stringify(storage);
+        //$cookies.put(userService.active._id, JSON.stringify(storage));
     };
     
     $scope.updateChannelStatus();
@@ -87,7 +88,8 @@
         } else {
             userService.active.status = "offline";
             userService.updateUser(userService.active).then(function(response) {
-                $cookies.remove('user');
+                //$cookies.remove('user');
+                localStorage.removeItem('user');
                 userService.active = null;
                 channelService.current = null;
                 $state.transitionTo('login');
@@ -194,7 +196,8 @@
             $scope.activeUser.warnings += 1;
             if($scope.activeUser.warnings > 2){
                 userService.updateUser(userService.active).then(function(response) {
-                    $cookies.remove('user');
+                    //$cookies.remove('user');
+                    localStorage.removeItem('user');
                 });
                 userService.deleteUser($scope.activeUser._id);
                 window.location = "https://www.google.se/#q=low+self+esteem";

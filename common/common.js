@@ -123,9 +123,7 @@
                     if (userService.active) {
                         resolve(userService.active);
                     } else {
-                        //TODO: Replace cookies with localStorage
-                        //var userId = $cookies.get('user');
-                        var userId = null;
+                        var userId = localStorage['user'];
                         if (userId) {
                             userService.get(userId).then(function(response) {
                                 //TODO: account for empty response
