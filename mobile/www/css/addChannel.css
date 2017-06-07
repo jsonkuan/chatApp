@@ -1,40 +1,58 @@
-li#invited-friends {
-    color: black;
-    list-style: none; 
-    min-width: 200px;
+.bar.bar-header.bar-stable {
+    background: #4D394B;
+    
 }
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
-.ng-cloak, .x-ng-cloak,
-.ng-hide {
-    display: none !important;
+h1 {
+    color: white !important;
 }
 
-ng\:form {
-    display: block;
+.tesst {
+    margin-top: 35px !important;
+    border: solid #4D394B 1px !important;
 }
 
-.ng-animate-block-transitions {
-    transition:0s all!important;
-    -webkit-transition:0s all!important;
+.card {
+    border: solid #4D394B 1px !important;
 }
 
-/* show the element during a show/hide animation when the
- * animation is ongoing, but the .ng-hide class is active */
-.ng-hide-add-active, .ng-hide-remove {
-    display: block!important;
+.item.item-input {
+    border: solid #4D394B 1px;
+    margin-top: 5px;
+    height: 45px;
 }
 
-.deleteIcon{
-    color:black;
-    clear: right;
+.item-checkbox {
+    border: 0px !important;
+}
+
+.item {
+    border-width: 1px !important;
+    border-color: #4D394B !important;
+    padding-left: 55px !important;
     font-size: 20px !important;
-    line-height: 1.5rem;
-    vertical-align: bottom !important;
-    float: right !important;
 }
 
-.deleteIcon:hover {
-    color: rgb(255,64,129);
+.toggle{
+    margin: -10px !important;
 }
+
+.button.button-block.button-positive {
+    background-color: #4D394B !important;
+    width: 300px !important;
+    height: 50px !important;
+    margin: 0 auto !important;
+}
+
+.snakk_logo_add {
+    position: static;
+    height: 90%;
+    object-fit: contain;
+} 
+
+.ion-close-circled {
+    color: darkred !important;
+}
+
+
 
