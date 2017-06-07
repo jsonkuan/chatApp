@@ -1,9 +1,29 @@
-app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService, upload) {
+app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService, upload, $ionicScrollDelegate, $cordovaCamera) {
+
   $scope.messageDb = [];
   $scope.users = [];
   $scope.currentChannel = currentChannel;
   $scope.chatInput= {text : "", attachment : "", attachmentPath: ""};
   $scope.userInput = userService.active;
+  $scope.pictureUrl = "";
+
+
+  //TODO test if camera it works on device with camera
+   $scope.takePhoto = function(){
+     console.log("YESSS!");
+    var options = {
+    encodingType: Camera.EncodingType.JPEG
+    };
+     console.log("YESSS2!");
+    $cordovaCamera.getPicture(options)
+      .then(function(data){
+      //$scope.pictureUrl = 'data:image/jpeg;base64,'+data;
+        $scope.userInput.avatar = data;
+
+      }, function(error){
+
+      })
+   };
 
     $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
@@ -69,7 +89,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       attachment: $scope.chatInput.attachmentPath
     };
 
-
     if($scope.warning){
       var warningMessage = "";
       if(userService.active.warnings < 1){
@@ -121,6 +140,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
     $scope.chatInput.attachmentPath = "";
     $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
       $scope.messageDb = response;
+      $ionicScrollDelegate.scrollBottom();
       $scope.addUserToMsg($scope.users, $scope.messageDb);
     });
   };
@@ -142,7 +162,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       }
     }
   };
-
   //Watches for new messages
   $scope.checkTimeStamp = function() {
     channelService.get('?id='+$scope.currentChannel._id).then(function(response) {
@@ -164,8 +183,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
 
     return (year + today + " - " + hour + ":" + minutes);
   }
-
-
+  
   $scope.password = userService.active.password;
   $scope.email = userService.active.email;
   $scope.username = userService.active.username;
@@ -177,7 +195,9 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
     $scope.userInput.username = userService.active.username;
     $scope.userInput.password = userService.active.password;
 
-    if($scope.userInput.avatar != "") {
+
+    if($scope.userInput.avatar !== "") {
+
       upload({
         url: 'http://localhost:3000/upload',
         method: 'POST',
