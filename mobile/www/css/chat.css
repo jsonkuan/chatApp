@@ -81,4 +81,15 @@
   color: white;
 }
 
+.button.button-small.icon_red:active{
+  background-color: #D01B2C;
+  color: white;
+}
+
+.button.button-small.icon_red{
+  font-size: 30px;
+}
+
+
+
 

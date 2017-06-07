@@ -20,6 +20,7 @@ gulp.task('watchCommon', function() {
     });    
 });
 
+
 gulp.task('watchImages', function() {
     var path = 'common/images/*.{gif,jpg,jpeg,png,svg}';
     return watch([path], { ignoreInitial: false }, function() {
