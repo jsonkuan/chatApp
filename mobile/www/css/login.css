@@ -1,6 +1,5 @@
 .list {
     padding: 20px !important;
-    max-width: 100%;
 
 }
 
@@ -12,13 +11,22 @@
 
 .logo_frame {
     border: solid #4D394B 3px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     margin-bottom: 20px;
 }
 
+.button.button-block.button-positive {
+    background-color: #4D394B !important;
+    border-radius: 100px;
+}
+
+.formFrame {
+    border: solid #4D394B 3px !important;
+    
+}
+
 .item.item-input {
+    height: 50px;
     border: solid #4D394B 1px;
-    border-radius: 10px;
-    margin-bottom: 3px;
-    padding-right: 2%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

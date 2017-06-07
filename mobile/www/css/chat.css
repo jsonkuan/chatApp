@@ -50,3 +50,35 @@
 .ion-pound{
   transform: scaleX(-1);
 }
+.item.item-input.item-stacked-label{
+  border: solid 2px #4D394B;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding: 0;
+  line-height: 0;
+}
+
+.input.settings{
+  background-color: #E3E4E5;
+}
+
+.side-right{
+  background-color: #E3E4E5 !important;
+}
+
+.avatarFrame{
+  background-color: #E3E4E5 !important;
+  padding-left: 22% !important;
+  padding-top: 7% !important;
+}
+
+.button.button-block.button-positive.chat{
+  margin-left: 3%;
+  width: 94%;
+}
+
+.button.button-small.icon:active{
+  background-color: rgba(86, 182, 139, 1);
+  color: white;
+}
