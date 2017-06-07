@@ -72,7 +72,7 @@
 
 
       <div class="item item-avatar avatarFrame">
-        <img ngf-src="avatar" ngf-select ng-model="avatar" name="avatar" alt="Profile picture">
+        <img ngf-src="avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Profile picture">
 
         <h4 >{{username}}</h4>
         <h5 >{{email}}</h5>
@@ -83,11 +83,11 @@
 
         <label class="item item-input item-stacked-label">
           <span class="input-label">Change Username</span>
-          <input ng-model="username" class="input settings" type="text" placeholder="username">
+          <input ng-model="userInput.username" class="input settings" type="text" placeholder="username">
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Change Password</span>
-          <input class="input settings" ng-model="password" type="password" placeholder="password">
+          <input class="input settings" ng-model="userInput.password" type="password" placeholder="password">
         </label>
       </form>
 

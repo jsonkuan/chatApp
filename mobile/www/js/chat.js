@@ -5,6 +5,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.currentChannel = currentChannel;
   $scope.attachmentPath = "";
   $scope.chatInput= {text : ""};
+  $scope.userInput = userService.active;
 
     $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
@@ -174,24 +175,26 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.avatar = userService.active.avatar;
 
   $scope.saveSettings = function () {
-    userService.active.password = $scope.password;
-    userService.active.username = $scope.username;
-    console.log($scope.username);
+    userService.active.password = $scope.userInput.password;
+    userService.active.username = $scope.userInput.username;
+    $scope.userInput.username = userService.active.username;
+    $scope.userInput.password = userService.active.password;
+
     console.log(userService.active.username);
     console.log(userService.active.avatar);
     console.log($scope.avatar);
 
-    if($scope.avatar != "") {
+    if($scope.userInput.avatar != "") {
       upload({
         url: 'http://localhost:3000/upload',
         method: 'POST',
         data: {
-          avatar: $scope.avatar
+          avatar: $scope.userInput.avatar
         }
       }).then(
         function (response) {
-          userService.active.avatar = response.data.slice(7);
-          $scope.avatar = userService.active.avatar;
+          userService.active.avatar = "img/" + response.data.slice(14);
+          $scope.userInput.avatar = userService.active.avatar;
           userService.updateUser(userService.active);
         }
       );
@@ -211,7 +214,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
         }
       }).then(
         function (response) {
-          $scope.attachmentPath = response.data.slice(7);
+          $scope.attachmentPath = "img/" + response.data.slice(14);
         }
       );
     }
