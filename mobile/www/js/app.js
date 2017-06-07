@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'common', 'ngMessages', 'ngFileUpload', 'lr.upload']);
+var app = angular.module('starter', ['ionic', 'common', 'ngMessages', 'ngFileUpload', 'lr.upload', 'ngCordova']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('login');
@@ -85,7 +85,6 @@ app.run(function($ionicPlatform, $state, $rootScope, Resolvers) {
         var destination = to.name;
         Resolvers.getUser().then(function(response) {
             var user = response;
-            console.log('achtung', user);
             //Block access outside of login when not logged in
 
             if (!user && destination !== "addChannel") {

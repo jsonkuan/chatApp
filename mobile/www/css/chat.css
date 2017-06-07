@@ -28,6 +28,7 @@
   border-radius: 50%;
   height: 40px;
   width: 40px;
+  object-fit: contain;
 }
 
 .username{
@@ -47,7 +48,9 @@
 .messagetext {
   margin-left: 10px;
 }
-
+.ion-pound{
+  transform: scaleX(-1);
+}
 .item.item-input.item-stacked-label{
   border: solid 2px #4D394B;
   margin-bottom: 5px;
@@ -81,4 +84,17 @@
   color: white;
 }
 
+.button.button-small.icon_red:active{
+  background-color: #D01B2C;
+  color: white;
+}
 
+.button.button-small.icon_red{
+  font-size: 30px;
+}
+
+.attachment{
+  height: 20%;
+  width: 20%;
+  object-fit: contain;
+}
