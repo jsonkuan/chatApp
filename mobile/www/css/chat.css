@@ -30,6 +30,33 @@
   width: 40px;
 }
 
+#channel-drawer{
+    background: rgb(77, 57, 75, 1); 
+}
+
+img#lock-icon {
+  width: 12px; 
+  height: 12px;
+}
+
+span.hashtag-icon {
+    font-size: 15px;
+}
+
+.list a {
+    background: transparent; 
+    border: none;
+}
+
+.list-title {
+    color: #AB9BA9;
+}
+
+.list-style {
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    color: #AB9BA9;
+}
+
 .username{
   font-weight: bold;
   display: inline-block;
