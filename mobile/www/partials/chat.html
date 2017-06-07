@@ -37,7 +37,7 @@
           </label>
 
           <input ngf-select class="ng-hide" ng-model="chatInput.attachment" id="selectedAttach" ng-change="addAttachment()">
-          <label ng-click="removeAttachment()" ng-show="chatInput.attachment"><i class="ion-paperclip button button-small icon_red"></i></label>
+          <label ng-click="removeAttachment()" ng-show="chatInput.attachmentPath"><i class="ion-paperclip button button-small icon_red"></i></label>
           <label for="selectedAttach" class="button button-small icon">+</label>
           <button class="button button-small" ng-click=sendMessage(chatInput.text)>Send</button>
         </div>
