@@ -37,13 +37,15 @@
   </ion-item>
   </ion-list>
   
-<div>
-  <ion-scroll>
-    <ion-list>
-        <ion-checkbox id="check" class="checkbox-calm" ng-repeat="user in users" value="{{user.username}}" ng-click="addToChannel()">{{user.username}}</ion-checkbox>
+<div class="card">
+    <ion-list >
+        <ion-item class="item-checkbox checkbox-calm" style="background-color:white" ng-repeat="user in users" value="{{user.username}}" ng-click="addToChannel()">{{user.username}}
+            <label class="checkbox">
+                <input type="checkbox"/>
+            </label>
+        </ion-item>
     </ion-list>
-  </ion-scroll>
-  </div>
+</div>
   
 <button class="button button-block button-positive" ng-click="createChannel2()">
   Create channel

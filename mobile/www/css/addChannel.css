@@ -12,10 +12,18 @@ h1 {
     border: solid #4D394B 1px !important;
 }
 
+.card {
+    border: solid #4D394B 1px !important;
+}
+
 .item.item-input {
     border: solid #4D394B 1px;
     margin-top: 5px;
     height: 45px;
+}
+
+.item-checkbox {
+    border: 0px !important;
 }
 
 .item {
