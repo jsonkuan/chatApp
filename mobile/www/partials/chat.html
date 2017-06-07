@@ -6,7 +6,7 @@
     <!--Header bar -->
     <ion-header-bar class="bar-light">
       <div class="buttons">
-      <button class="button icon button-clear ion-navicon-round" ng-click="toggleLeft()"></button>
+        <button class="button icon button-clear ion-pound" ng-click="toggleLeft()"></button>
       </div>
       <h1 class="title">Channel Title</h1>
       <div class="buttons">
@@ -15,6 +15,7 @@
     </ion-header-bar>
 
     <!--Start of chat page content here -->
+
     <ion-content class="has-header has-footer chat-input-box">
         <div class="chat-box" ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
           <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
@@ -63,5 +64,4 @@
 
     </ion-content>
   </ion-side-menu>
-
 </ion-side-menus>

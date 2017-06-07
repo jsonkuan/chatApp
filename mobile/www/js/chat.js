@@ -1,4 +1,4 @@
-app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService) {
+app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService, $ionicScrollDelegate) {
 
   $scope.messageDb = [];
   $scope.users = [];
@@ -122,6 +122,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
     //$scope.attachmentPath = "";
     $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
       $scope.messageDb = response;
+      $ionicScrollDelegate.scrollBottom();
       $scope.addUserToMsg($scope.users, $scope.messageDb);
     });
   };
