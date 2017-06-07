@@ -154,7 +154,7 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
                 }
             }).then(
                 function (response) {
-                    $scope.attachmentPath = response.data.slice(7);
+                    $scope.attachmentPath = response.data.slice;
                 }
             );
         }
@@ -243,7 +243,7 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
                     messages[i].avatar = users[e].avatar;
                 }
                 else if(messages[i].avatar === undefined){
-                    messages[i].avatar = "common/images/defaultProfile.png";
+                    messages[i].avatar = "assets/images/defaultProfile.png";
                 }
             }
         }

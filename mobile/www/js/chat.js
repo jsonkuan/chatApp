@@ -1,5 +1,4 @@
 app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService, upload) {
-
   $scope.messageDb = [];
   $scope.users = [];
   $scope.currentChannel = currentChannel;
@@ -187,7 +186,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
         }
       }).then(
         function (response) {
-          userService.active.avatar = "img/" + response.data.slice(14);
+          userService.active.avatar = response.data.slice(8);
           $scope.userInput.avatar = userService.active.avatar;
           userService.updateUser(userService.active);
         }
@@ -197,9 +196,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   };
 
   $scope.addAttachment = function () {
-    console.log("hej");
-    console.log($scope.chatInput.attachment);
-
     if($scope.chatInput.attachment) {
       upload({
         url: 'http://localhost:3000/upload',
@@ -209,12 +205,23 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
         }
       }).then(
         function (response) {
-          $scope.chatInput.attachmentPath = "img/" + response.data.slice(14);
+          $scope.chatInput.attachmentPath = response.data.slice(8);
+          console.log($scope.chatInput.attachmentPath);
         }
       );
     }
   };
   $scope.removeAttachment = function () {
-    $scope.chatInput.attachmentPath = "";
+      upload({
+        url: 'http://localhost:3000/upload',
+        method: 'DELETE',
+        data: {
+          avatar: $scope.chatInput.attachment
+        }
+      }).then(
+        function (response) {
+        }
+      );
+    $scope.chatInput.attachment = "";
   };
 });

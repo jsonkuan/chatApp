@@ -6,15 +6,15 @@ var database;
 var path = require('path');
 var app = express();
 var multer  = require('multer');
-var mime = require('mime-types');
 //const del = require('del');
 // del(['common/images/github.png']);
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'common/images')
+        cb(null, 'mobile/www/img');
+        cb(null, 'webb/assets/images');
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + '.' + mime.extension(file.mimetype));
+        cb(null, file.originalname);
     }
 });
 var upload = multer({ storage: storage });
