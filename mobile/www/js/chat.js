@@ -107,8 +107,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
 
       $scope.currentChannel = response.data;
       message.timestamp = $scope.currentChannel.timestamp;
-      console.log(message.timestamp, "message.timestamp");
-
 
         messageService.post(message).then(function(response){
           $scope.checkTimeStamp();
@@ -142,7 +140,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       $scope.attachmentPath = "";
       $scope.newMessages = messageService.getNewMessages('?channel=' + $scope.currentChannel._id + '&timestamp=' + $scope.localTimestamp).then(function(response){
         $scope.messageDb = $scope.messageDb.concat(response);
-        console.log("messageDb", $scope.messageDb);
         $ionicScrollDelegate.scrollBottom();
         $scope.addUserToMsg($scope.users, $scope.messageDb);
       })
