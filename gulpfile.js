@@ -20,13 +20,4 @@ gulp.task('watchCommon', function() {
     });    
 });
 
-gulp.task('watchImages', function() {
-    var path = 'common/images/*.{gif,jpg,jpeg,png,svg}';
-    return watch([path], { ignoreInitial: false }, function() {
-        gulp.src(path)
-        .pipe(gulp.dest('webb/assets/images'))
-        .pipe(gulp.dest('mobile/www/img'));
-    });
-});
-
-gulp.task('default', ['watchServer', 'watchCommon', 'watchImages']);
+gulp.task('default', ['watchServer', 'watchCommon']);
