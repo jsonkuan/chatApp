@@ -15,6 +15,8 @@
     </ion-header-bar>
 
     <!--Start of chat page content here -->
+
+
     <ion-content class="has-header has-footer chat-input-box">
         <div class="chat-box" ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
           <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
@@ -23,6 +25,7 @@
           <p smilies="message.text" class="messagetext">{{message.text}}</p>
           <img class="attachment" ng-src="{{message.attachment}}">
         </div>
+
     </ion-content>
     <!--End of chat page content here -->
 
@@ -32,13 +35,16 @@
           <label class="item-input-wrapper">
             <input type="text" placeholder="@ Message" ng-model="chatInput.text">
           </label>
+
+          <input ngf-select class="ng-hide" ng-model="attachment" id="selectedAttach" ng-change="addAttachment()">
+          <label ng-click="removeAttachment()" ng-show="attachmentPath"><i class="ion-paperclip"></i></label>
+          <label for="selectedAttach" class="button button-small icon">+</label>
           <button class="button button-small" ng-click=sendMessage(chatInput.text)>Send</button>
         </div>
     </div>
 
   </ion-side-menu-content>
   <!--Main content container end -->
-
   <!-- Left menu -->
   <ion-side-menu side="left">
     <ion-header-bar class="bar-light">
@@ -58,8 +64,37 @@
   <ion-side-menu side="right">
     <ion-header-bar class="bar-light">
       <h1 class="title">Settings</h1>
+
     </ion-header-bar>
-    <ion-content class="has-header">
+
+    <ion-content class="list-avatar-page has-header side-right">
+
+
+
+      <div class="item item-avatar avatarFrame">
+        <img ngf-src="avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Profile picture">
+
+        <h4 >{{username}}</h4>
+        <h5 >{{email}}</h5>
+      </div>
+
+
+      <form>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Change Username</span>
+          <input ng-model="userInput.username" class="input settings" type="text" placeholder="username">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Change Password</span>
+          <input class="input settings" ng-model="userInput.password" type="password" placeholder="password">
+        </label>
+      </form>
+
+      <div>
+        <button class="button button-block button-positive chat" ng-click="saveSettings()">Save changes</button>
+      </div>
+
 
     </ion-content>
   </ion-side-menu>

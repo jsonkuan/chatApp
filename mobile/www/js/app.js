@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'common', 'ngMessages']);
+var app = angular.module('starter', ['ionic', 'common', 'ngMessages', 'ngFileUpload', 'lr.upload']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('login');
@@ -54,7 +54,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 session: function(Resolvers) {
                     return Resolvers.getUser();
-                }, 
+                },
                 allUsers: function(userService){
                     return userService.getUsers();
                 }
