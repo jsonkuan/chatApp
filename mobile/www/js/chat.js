@@ -120,7 +120,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   };
 
   $scope.getMessages = function() {
-    //$scope.attachmentPath = "";
+    $scope.attachmentPath = "";
     $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
       $scope.messageDb = response;
       $scope.addUserToMsg($scope.users, $scope.messageDb);
@@ -173,13 +173,15 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.username = userService.active.username;
   $scope.avatar = userService.active.avatar;
 
-  $scope.saveSettings = function (user) {
+  $scope.saveSettings = function () {
     userService.active.password = $scope.password;
     userService.active.username = $scope.username;
     console.log($scope.username);
     console.log(userService.active.username);
+    console.log(userService.active.avatar);
+    console.log($scope.avatar);
 
-    if($scope.avatar != userService.active.avatar && $scope.avatar != "") {
+    if($scope.avatar != "") {
       upload({
         url: 'http://localhost:3000/upload',
         method: 'POST',
