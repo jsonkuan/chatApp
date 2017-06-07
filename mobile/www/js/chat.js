@@ -186,9 +186,12 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
         }
       }).then(
         function (response) {
-          userService.active.avatar = "img/" + response.data.slice(14);
-          $scope.userInput.avatar = userService.active.avatar;
-          userService.updateUser(userService.active);
+          userService.active.avatar = response.data.slice(10);
+          if (userService.active.avatar[0] === "s") {
+            userService.active.avatar.slice(8);
+            userService.active.avatar = "img" + response.data.slice(18);
+            userService.updateUser(userService.active);
+          }
         }
       );
     }
@@ -205,7 +208,11 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
         }
       }).then(
         function (response) {
-          $scope.chatInput.attachmentPath = "img" + response.data.slice(14);
+          $scope.chatInput.attachmentPath = response.data.slice(10);
+          if($scope.chatInput.attachmentPath[0] === "s"){
+            $scope.chatInput.attachmentPath.slice(8);
+            $scope.chatInput.attachmentPath = "img" + response.data.slice(18);
+          }
           console.log($scope.chatInput.attachmentPath)
         }
       );

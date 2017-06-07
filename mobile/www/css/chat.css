@@ -91,6 +91,12 @@
   font-size: 30px;
 }
 
+.attachment{
+  height: 20%;
+  width: 20%;
+  object-fit: contain;
+}
+
 
 
 
