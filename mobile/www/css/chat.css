@@ -34,6 +34,10 @@
     background: rgb(77, 57, 75, 1); 
 }
 
+img#add-channel-icon {
+   transform: translate(800%); 
+}
+
 img#lock-icon {
   width: 12px; 
   height: 12px;
@@ -41,6 +45,7 @@ img#lock-icon {
 
 span.hashtag-icon {
     font-size: 15px;
+    color: #7C6A7A;
 }
 
 .list a {
@@ -48,13 +53,17 @@ span.hashtag-icon {
     border: none;
 }
 
-.list-title {
-    color: #AB9BA9;
+.bottom-list {
+    margin-top: -50px;
 }
 
 .list-style {
     font-family: Roboto, "Helvetica Neue", sans-serif; 
     color: #AB9BA9;
+}
+
+.list-title {
+    color: #7C6A7A;
 }
 
 .username{

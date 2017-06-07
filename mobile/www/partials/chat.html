@@ -53,7 +53,7 @@
     </ion-header-bar>
     <ion-content class="list-avatar-page has-header">
     <div class="list">
-        <h5 class="list-style">Channels</h5>
+        <h5 class="list-title">Channels<img id="add-channel-icon" src="img/ic_add_circle_outline_snakk_24px.svg" alt="+"/></h5>
         <a class="item" ng-repeat="channel in channels | orderBy: 'name'" ng-click="openChat(channel)">
         <h2 class="list-style">
             <span class="hashtag-icon" ng-if="channel.accessability == 'public'">#</span>
@@ -62,8 +62,8 @@
         </h2>
         </a>
     </div>
-    <div class="list">
-        <h5 class="list-style">Direct Messages</h5>
+    <div class="list bottom-list">
+        <h5 class="list-title">Direct Messages</h5>
         <a class="item" ng-repeat="user in users | orderBy: 'username'" ng-click="startDirectChat(activeUser, user)">
         <!--<img id="sidemenu-thumbNail" src={{user.avatar}}> -->
         <h2 class="list-style">{{user.username}}</h2>
