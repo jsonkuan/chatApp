@@ -6,6 +6,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.attachmentPath = "";
   $scope.chatInput= {text : ""};
   $scope.userInput = userService.active;
+  $scope.localTimestamp = $scope.currentChannel.timestamp;
 
     $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
@@ -66,7 +67,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.sendMessage = function(input) {
     var message = {
       userId: userService.active._id,
-      date: formatDate(),
+      timestamp: "",
       text: $scope.snakkBot(input),
       channel: $scope.currentChannel._id,
       attachment: $scope.attachmentPath
@@ -103,15 +104,25 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
     $scope.chatInput.text = "";
 
     channelService.updateTimeStamp($scope.currentChannel).then(function(response){
+
       $scope.currentChannel = response.data;
-    });
-    messageService.post(message).then(function(response){
-      $scope.checkTimeStamp();
+      message.timestamp = $scope.currentChannel.timestamp;
+      console.log(message.timestamp, "message.timestamp");
+
+
+        messageService.post(message).then(function(response){
+          $scope.checkTimeStamp();
+
+          if($scope.warning) {
+            messageService.post(botMessage).then(function (response) {
+              $scope.checkTimeStamp();
+            });
+          }
+        });
     });
 
-    messageService.post(botMessage).then(function(response){
-      $scope.checkTimeStamp();
-    });
+
+
 
     /*$scope.$watch('messageDb', function f() {
       var chatContent = document.getElementById('chat-text-box-container');
@@ -126,6 +137,16 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       $ionicScrollDelegate.scrollBottom();
       $scope.addUserToMsg($scope.users, $scope.messageDb);
     });
+
+    $scope.getNewMessages = function() {
+      $scope.attachmentPath = "";
+      $scope.newMessages = messageService.getNewMessages('?channel=' + $scope.currentChannel._id + '&timestamp=' + $scope.localTimestamp).then(function(response){
+        $scope.messageDb = $scope.messageDb.concat(response);
+        console.log("messageDb", $scope.messageDb);
+        $ionicScrollDelegate.scrollBottom();
+        $scope.addUserToMsg($scope.users, $scope.messageDb);
+      })
+    }
   };
   $scope.getMessages();
 
@@ -149,9 +170,10 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.checkTimeStamp = function() {
     channelService.get('?id='+$scope.currentChannel._id).then(function(response) {
       $scope.currentChannel = response;
-      if($scope.timestampChecker !== $scope.currentChannel.timestamp) {
-        $scope.getMessages();
-        $scope.timestampChecker = $scope.currentChannel.timestamp;
+      if($scope.localTimestamp !== $scope.currentChannel.timestamp) {
+        $scope.getNewMessages();
+        //$scope.getMessages();
+        $scope.localTimestamp = $scope.currentChannel.timestamp;
       }
     });
   };
@@ -166,7 +188,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
 
     return (year + today + " - " + hour + ":" + minutes);
   }
-  
+
   $scope.password = userService.active.password;
   $scope.email = userService.active.email;
   $scope.username = userService.active.username;
