@@ -47,7 +47,9 @@
 .messagetext {
   margin-left: 10px;
 }
-
+.ion-pound{
+  transform: scaleX(-1);
+}
 .item.item-input.item-stacked-label{
   border: solid 2px #4D394B;
   margin-bottom: 5px;
@@ -80,5 +82,3 @@
   background-color: rgba(86, 182, 139, 1);
   color: white;
 }
-
-

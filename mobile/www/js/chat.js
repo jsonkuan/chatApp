@@ -1,4 +1,4 @@
-app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService, upload) {
+app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService, upload, $ionicScrollDelegate) {
 
   $scope.messageDb = [];
   $scope.users = [];
@@ -72,7 +72,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       attachment: $scope.attachmentPath
     };
 
-
     if($scope.warning){
       var warningMessage = "";
       if(userService.active.warnings < 1){
@@ -124,6 +123,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
     $scope.attachmentPath = "";
     $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
       $scope.messageDb = response;
+      $ionicScrollDelegate.scrollBottom();
       $scope.addUserToMsg($scope.users, $scope.messageDb);
     });
   };
@@ -145,7 +145,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       }
     }
   };
-
   //Watches for new messages
   $scope.checkTimeStamp = function() {
     channelService.get('?id='+$scope.currentChannel._id).then(function(response) {
@@ -167,8 +166,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
 
     return (year + today + " - " + hour + ":" + minutes);
   }
-
-
+  
   $scope.password = userService.active.password;
   $scope.email = userService.active.email;
   $scope.username = userService.active.username;

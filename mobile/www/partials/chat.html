@@ -1,12 +1,10 @@
 <ion-side-menus>
-
   <!--Main content container start -->
   <ion-side-menu-content>
-
     <!--Header bar -->
     <ion-header-bar class="bar-light">
       <div class="buttons">
-      <button class="button icon button-clear ion-navicon-round" ng-click="toggleLeft()"></button>
+        <button class="button icon button-clear ion-pound" ng-click="toggleLeft()"></button>
       </div>
       <h1 class="title">Channel Title</h1>
       <div class="buttons">
@@ -15,8 +13,6 @@
     </ion-header-bar>
 
     <!--Start of chat page content here -->
-
-
     <ion-content class="has-header has-footer chat-input-box">
         <div class="chat-box" ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
           <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
@@ -25,7 +21,6 @@
           <p smilies="message.text" class="messagetext">{{message.text}}</p>
           <img class="attachment" ng-src="{{message.attachment}}">
         </div>
-
     </ion-content>
     <!--End of chat page content here -->
 
@@ -64,23 +59,17 @@
   <ion-side-menu side="right">
     <ion-header-bar class="bar-light">
       <h1 class="title">Settings</h1>
-
     </ion-header-bar>
 
     <ion-content class="list-avatar-page has-header side-right">
 
-
-
       <div class="item item-avatar avatarFrame">
         <img ngf-src="avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Profile picture">
-
         <h4 >{{username}}</h4>
         <h5 >{{email}}</h5>
       </div>
 
-
       <form>
-
         <label class="item item-input item-stacked-label">
           <span class="input-label">Change Username</span>
           <input ng-model="userInput.username" class="input settings" type="text" placeholder="username">
@@ -94,9 +83,7 @@
       <div>
         <button class="button button-block button-positive chat" ng-click="saveSettings()">Save changes</button>
       </div>
-
-
+      
     </ion-content>
   </ion-side-menu>
-
 </ion-side-menus>
