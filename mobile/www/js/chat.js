@@ -1,10 +1,11 @@
-app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService) {
+app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService, upload) {
 
   $scope.messageDb = [];
   $scope.users = [];
   $scope.currentChannel = currentChannel;
   $scope.attachmentPath = "";
   $scope.chatInput= {text : ""};
+  $scope.userInput = userService.active;
 
     $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
@@ -71,6 +72,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       attachment: $scope.attachmentPath
     };
 
+
     if($scope.warning){
       var warningMessage = "";
       if(userService.active.warnings < 1){
@@ -119,7 +121,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   };
 
   $scope.getMessages = function() {
-    //$scope.attachmentPath = "";
+    $scope.attachmentPath = "";
     $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
       $scope.messageDb = response;
       $scope.addUserToMsg($scope.users, $scope.messageDb);
@@ -165,4 +167,59 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
 
     return (year + today + " - " + hour + ":" + minutes);
   }
+
+
+  $scope.password = userService.active.password;
+  $scope.email = userService.active.email;
+  $scope.username = userService.active.username;
+  $scope.avatar = userService.active.avatar;
+
+  $scope.saveSettings = function () {
+    userService.active.password = $scope.userInput.password;
+    userService.active.username = $scope.userInput.username;
+    $scope.userInput.username = userService.active.username;
+    $scope.userInput.password = userService.active.password;
+
+    console.log(userService.active.username);
+    console.log(userService.active.avatar);
+    console.log($scope.avatar);
+
+    if($scope.userInput.avatar != "") {
+      upload({
+        url: 'http://localhost:3000/upload',
+        method: 'POST',
+        data: {
+          avatar: $scope.userInput.avatar
+        }
+      }).then(
+        function (response) {
+          userService.active.avatar = "img/" + response.data.slice(14);
+          $scope.userInput.avatar = userService.active.avatar;
+          userService.updateUser(userService.active);
+        }
+      );
+    }
+    userService.updateUser(userService.active);
+  };
+
+  $scope.addAttachment = function () {
+    console.log($scope.attachment);
+
+    if($scope.attachment) {
+      upload({
+        url: 'http://localhost:3000/upload',
+        method: 'POST',
+        data: {
+          avatar: $scope.attachment
+        }
+      }).then(
+        function (response) {
+          $scope.attachmentPath = "img/" + response.data.slice(14);
+        }
+      );
+    }
+  };
+  $scope.removeAttachment = function () {
+    $scope.attachmentPath = "";
+  };
 });
