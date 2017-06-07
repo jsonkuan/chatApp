@@ -1,4 +1,4 @@
-app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService, upload) {
+app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService, upload ,$cordovaCamera) {
 
   $scope.messageDb = [];
   $scope.users = [];
@@ -6,20 +6,24 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.attachmentPath = "";
   $scope.chatInput= {text : ""};
   $scope.userInput = userService.active;
-
-
   $scope.pictureUrl = "";
-   $scope.takePicture = function(){
-    var options = {
-    destinationType: Camera.DestinationType.DATA_URL,
-    encodingType: Camera.EncodingType.JPEG
-   };
-   $cordovaCamera.getPicture(options)
-    .then(function(data){
-    $scope.pictureUrl = 'data:image/jpeg;base64,'+data;
-   }, function(error){
 
-   })
+
+  //TODO test if camera it works on device with camera
+   $scope.takePhoto = function(){
+     console.log("YESSS!");
+    var options = {
+    encodingType: Camera.EncodingType.JPEG
+    };
+     console.log("YESSS2!");
+    $cordovaCamera.getPicture(options)
+      .then(function(data){
+      //$scope.pictureUrl = 'data:image/jpeg;base64,'+data;
+        $scope.userInput.avatar = data;
+
+      }, function(error){
+
+      })
    };
 
     $scope.toggleLeft = function() {
@@ -199,7 +203,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
     console.log(userService.active.avatar);
     console.log($scope.avatar);
 
-    if($scope.userInput.avatar != "") {
+    if($scope.userInput.avatar !== "") {
       upload({
         url: 'http://localhost:3000/upload',
         method: 'POST',

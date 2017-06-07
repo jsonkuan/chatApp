@@ -1,5 +1,3 @@
-var app = angular.module('starter', ['ui.router','ionic', 'common']);
-
 app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('login');
     $stateProvider
