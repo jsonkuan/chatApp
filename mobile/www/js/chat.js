@@ -7,6 +7,21 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.chatInput= {text : ""};
   $scope.userInput = userService.active;
 
+
+  $scope.pictureUrl = "";
+   $scope.takePicture = function(){
+    var options = {
+    destinationType: Camera.DestinationType.DATA_URL,
+    encodingType: Camera.EncodingType.JPEG
+   };
+   $cordovaCamera.getPicture(options)
+    .then(function(data){
+    $scope.pictureUrl = 'data:image/jpeg;base64,'+data;
+   }, function(error){
+
+   })
+   };
+
     $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
     };
