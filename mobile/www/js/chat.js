@@ -84,7 +84,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       }
       var botMessage = {
         userId: "133333333333333333333337",
-        date: formatDate(),
+        timestamp: "",
         text:  warningMessage,
         channel: $scope.currentChannel._id
       };
@@ -100,37 +100,32 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       }
       $scope.warning = false;
     }
-
     $scope.chatInput.text = "";
 
     channelService.updateTimeStamp($scope.currentChannel).then(function(response){
-
       $scope.currentChannel = response.data;
       message.timestamp = $scope.currentChannel.timestamp;
 
-        messageService.post(message).then(function(response){
-          $scope.checkTimeStamp();
+      messageService.post(message).then(function(response){
+        $scope.checkTimeStamp();
 
-          if($scope.warning) {
-            messageService.post(botMessage).then(function (response) {
-              $scope.checkTimeStamp();
-            });
-          }
-        });
+        if($scope.warning) {
+          botMessage.timestamp = $scope.currentChannel.timestamp;
+          messageService.post(botMessage).then(function (response) {
+            $scope.checkTimeStamp();
+          });
+        }
+      });
     });
-
-
-
 
     /*$scope.$watch('messageDb', function f() {
       var chatContent = document.getElementById('chat-text-box-container');
       chatContent.scrollTop = chatContent.scrollHeight;
     }, true); */
   };
-
   $scope.getMessages = function() {
     $scope.attachmentPath = "";
-    $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
+    $scope.messagesFromDb = messageService.getAllMessages($scope.currentChannel._id).then(function(response){
       $scope.messageDb = response;
       $ionicScrollDelegate.scrollBottom();
       $scope.addUserToMsg($scope.users, $scope.messageDb);
@@ -138,7 +133,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
 
     $scope.getNewMessages = function() {
       $scope.attachmentPath = "";
-      $scope.newMessages = messageService.getNewMessages('?channel=' + $scope.currentChannel._id + '&timestamp=' + $scope.localTimestamp).then(function(response){
+      $scope.newMessages = messageService.getNewMessages($scope.currentChannel._id, $scope.localTimestamp).then(function(response){
         $scope.messageDb = $scope.messageDb.concat(response);
         $ionicScrollDelegate.scrollBottom();
         $scope.addUserToMsg($scope.users, $scope.messageDb);

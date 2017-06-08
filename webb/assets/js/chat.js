@@ -5,16 +5,13 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
     $scope.messageDb = [];
     $scope.contacts = userContacts;
     $scope.users = userContacts;
-    $scope.timestampChecker = $scope.currentChannel.timestamp;
+    $scope.localTimestamp = $scope.currentChannel.timestamp;
     $scope.glued = true;
     $scope.chatInput = "";
     $scope.channelStatus;
     $scope.tmpChannels = $scope.userChannels;
     $scope.tmpContacts = $scope.contacts;
     $scope.warning = false;
-
-
-
 
     // Filter channels for user
     $scope.filterChannels = function() {
@@ -171,7 +168,7 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
     $scope.sendMessage = function(input) {
         var message = {
             userId: userService.active._id,
-            date: formatDate(),
+            timestamp: "",
             text: $scope.snakkBot(input),
             channel: $scope.currentChannel._id,
             attachment: $scope.attachmentPath
@@ -188,7 +185,7 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
             }
             var botMessage = {
                 userId: "133333333333333333333337",
-                date: formatDate(),
+                timestamp: "",
                 text:  warningMessage,
                 channel: $scope.currentChannel._id
             };
@@ -215,15 +212,18 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
 
         channelService.updateTimeStamp($scope.currentChannel).then(function(response){
             $scope.currentChannel = response.data;
-        });
-        messageService.post(message).then(function(response){
+            message.timestamp = $scope.currentChannel.timestamp;
 
-            $scope.checkTimeStamp();
-        });
+            messageService.post(message).then(function(response){
+                $scope.checkTimeStamp();
 
-        messageService.post(botMessage).then(function(response){
-
-            $scope.checkTimeStamp();
+                if($scope.warning) {
+                    botMessage.timestamp = $scope.currentChannel.timestamp;
+                    messageService.post(botMessage).then(function (response) {
+                        $scope.checkTimeStamp();
+                    });
+                }
+            });
         });
 
         $scope.$watch('messageDb', function f() {
@@ -251,8 +251,15 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
 
     $scope.getMessages = function() {
         $scope.attachmentPath = "";
-        $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
+        $scope.messagesFromDb = messageService.getAllMessages($scope.currentChannel._id).then(function(response){
             $scope.messageDb = response;
+            $scope.addUserToMsg($scope.users, $scope.messageDb);
+        });
+    };
+    $scope.getNewMessages = function() {
+        $scope.attachmentPath = "";
+        $scope.newMessages = messageService.getNewMessages($scope.currentChannel._id, $scope.localTimestamp).then(function(response){
+            $scope.messageDb = $scope.messageDb.concat(response);
             $scope.addUserToMsg($scope.users, $scope.messageDb);
         });
     };
@@ -296,9 +303,9 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
     $scope.checkTimeStamp = function() {
         channelService.get('?id='+$scope.currentChannel._id).then(function(response) {
             $scope.currentChannel = response;
-            if($scope.timestampChecker !== $scope.currentChannel.timestamp) {
-                $scope.getMessages();
-                $scope.timestampChecker = $scope.currentChannel.timestamp;
+            if($scope.localTimestamp !== $scope.currentChannel.timestamp) {
+                $scope.getNewMessages();
+                $scope.localTimestamp = $scope.currentChannel.timestamp;
             }
         });
     };
@@ -315,11 +322,11 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
     };
     setInterval(function() {
         $scope.checkTimeStamp();
-    }, 500);
+    }, 1500);
 
     setInterval(function() {
         $scope.newChannelChecker();
-    }, 1000);
+    }, 4000);
 });
 
 // Temp randomizing function
