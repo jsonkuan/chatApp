@@ -6,7 +6,7 @@
       <div class="buttons">
         <button class="button icon button-clear ion-pound" ng-click="toggleLeft()"></button>
       </div>
-      <h1 class="title">Channel Title</h1>
+      <h1 class="title">{{currentChannel.name}}</h1>
       <div class="buttons">
         <button class="button icon button-clear ion-navicon-round" ng-click="toggleRight()"></button>
       </div>
@@ -15,7 +15,7 @@
     <!--Start of chat page content here -->
     <ion-content class="has-header has-footer chat-input-box">
         <div class="chat-box" ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
-          <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
+          <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture">
           <p class="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
           <p class="date">{{message.date}}</p>
           <p smilies="message.text" class="messagetext">{{message.text}}</p>
@@ -30,9 +30,8 @@
           <label class="item-input-wrapper">
             <input type="text" placeholder="@ Message" ng-model="chatInput.text">
           </label>
-
-          <input ngf-select class="ng-hide" ng-model="attachment" id="selectedAttach" ng-change="addAttachment()">
-          <label ng-click="removeAttachment()" ng-show="attachmentPath"><i class="ion-paperclip"></i></label>
+          <input ngf-select class="ng-hide" ng-model="chatInput.attachment" id="selectedAttach" ng-change="addAttachment()">
+          <label ng-click="removeAttachment()" ng-show="chatInput.attachmentPath"><i class="ion-paperclip button button-small icon_red"></i></label>
           <label for="selectedAttach" class="button button-small icon">+</label>
           <button class="button button-small" ng-click=sendMessage(chatInput.text)>Send</button>
         </div>
@@ -41,17 +40,37 @@
   </ion-side-menu-content>
   <!--Main content container end -->
   <!-- Left menu -->
-  <ion-side-menu side="left">
+  <ion-side-menu id="channel-drawer" side="left">
     <ion-header-bar class="bar-light">
-      <h1 class="title">channels</h1>
+      <img src="img/snakk_logo.png" alt="#SNAKK" class="title">
+       <div class="activeUserName">
+        <i class="ion-social-octocat slack-green"></i>
+        <p class="usernamePad">{{username}}</p>
+      </div>
     </ion-header-bar>
     <ion-content class="list-avatar-page has-header">
+      <!--Channels -->
     <div class="list">
-      <a class="item" ng-repeat="user in users" ng-click="">
-        <!--<img id="sidemenu-thumbNail" src={{user.avatar}}> -->
-        <h2>{{user.username}}</h2>
-      </a>
+        <h5 class="list-title">Channels<img id="add-channel-icon" src="img/ic_add_circle_outline_snakk_24px.svg" alt="+"/></h5>
+        <a class="item" ng-repeat="channel in channels | orderBy: 'name'" ng-click="openChat(channel)">
+        <h2 class="list-style">
+            <span class="hashtag-icon" ng-if="channel.accessability == 'public'">#</span>
+            <span ng-if="channel.accessability == 'private'"><img id="lock-icon" src="img/ic_lock_black_24px.svg" alt="!"/></span>
+            {{channel.name}}
+        </h2>
+        </a>
     </div>
+      <!--Direct Messages -->
+
+        <h5 class="list-title">Direct Messages</h5>
+        <a class="item list_side" ng-repeat="user in users | orderBy: 'username'" ng-click="startDirectChat(activeUser, user)">
+          <div class="list chat userList">
+           <img id="sidemenu-thumbNail" ngf-thumbnail="user.avatar">
+            <p class="user">{{user.username}}</p>
+            <i ng-if="user.status == 'online'" class="ion-ios-circle-filled slack-green"> online</i>
+            <i ng-if="user.status == 'offline'" class="ion-ios-circle-outline slack-off"> offline</i>
+          </div>
+        </a>
     </ion-content>
   </ion-side-menu>
 
@@ -60,16 +79,13 @@
     <ion-header-bar class="bar-light">
       <h1 class="title">Settings</h1>
     </ion-header-bar>
-
     <ion-content class="list-avatar-page has-header side-right">
-
       <div class="item item-avatar avatarFrame">
-        <img ngf-src="avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Profile picture">
+        <img ngf-src="avatar" ngf-thumbnail="userInput.avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Profile picture">
         <h4 >{{username}}</h4>
         <h5 >{{email}}</h5>
       </div>
       <button class="button button-block button-positive" ng-click="takePhoto()">Take picture</button>
-
       <form>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Change Username</span>
@@ -80,14 +96,12 @@
           <input class="input settings" ng-model="userInput.password" type="password" placeholder="password">
         </label>
       </form>
-
       <div>
         <button class="button button-block button-positive chat" ng-click="saveSettings()">Save changes</button>
       </div>
       <div>
         <button class="button button-block button-positive chat" ng-click="logout()">Logout</button>
       </div>
-
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>
