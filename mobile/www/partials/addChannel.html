@@ -2,56 +2,38 @@
   <img class="snakk_logo_add" src="img/snakk_logo.png">
   <h1 class="title">Add channel</h1>
 </div>
-
-
 <ion-list>
-<div class="lista">
-  <div class="tesst">
-  <li class="item item-toggle">
-     Public / Private
-     <label class="toggle toggle-calm" ng-click="publicOrPrivate()">
+  <div class="lista">
+    <div class="tesst">
+      <li class="item item-toggle">
+        Public / Private
+        <label class="toggle toggle-calm" ng-click="publicOrPrivate()">
        <input type="checkbox">
        <div class="track">
          <div class="handle"></div>
        </div>
      </label>
-  </li>
-  </div>
- <!--<label class="item item-input item-select">
-        <div class="input-label">
-           Add friends
-        </div>
-    <select>
-        <option selected>Friends</option>
-        <option ng-repeat="user in users" value="{{user.username}}">{{user.username}}</option>
-    </select>
-  </label>-->
-
-  <ion-item class="item item-input item-icon-right" >
-    <input type="text" placeholder="Channel name" ng-model="channelName.text" required ng-minlength="3" maxlength="25">
-    <i class="ion-close-circled" ng-click="resetChannelname()"></i>
-  </ion-item>
-  <ion-item class="item item-input item-icon-right">
-    <input type="text" placeholder="Purpose" ng-model="purpose.text">
-    <i class="ion-close-circled" ng-click="resetPurpose()"></i>
-  </ion-item>
-  </ion-list>
-
+      </li>
+    </div>
+    <ion-item class="item item-input item-icon-right">
+      <input type="text" placeholder="Channel name" ng-model="channelName.text" required ng-minlength="3" maxlength="25">
+      <i class="ion-close-circled" ng-click="resetChannelname()"></i>
+    </ion-item>
+    <ion-item class="item item-input item-icon-right">
+      <input type="text" placeholder="Purpose" ng-model="purpose.text">
+      <i class="ion-close-circled" ng-click="resetPurpose()"></i>
+    </ion-item>
+</ion-list>
 <div class="card">
-    <ion-list >
-        <ion-item class="item-checkbox checkbox-calm" style="background-color:white" ng-repeat="user in users" value="{{user.username}}" ng-click="addToChannel(user)">{{user.username}}
-            <label class="checkbox">
+  <ion-list>
+    <ion-item class="item-checkbox checkbox-calm" style="background-color:white" ng-repeat="user in users" value="{{user.username}}"
+      ng-click="addToChannel(user)">{{user.username}}
+      <label class="checkbox">
                 <input type="checkbox"/>
             </label>
-        </ion-item>
-    </ion-list>
+    </ion-item>
+  </ion-list>
 </div>
-
 <button class="button button-block button-positive channel" ng-click="createChannel2()">
   Create channel
 </button>
-
-
-
-
-
