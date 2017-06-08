@@ -6,8 +6,7 @@ app.controller("channelController", function ($scope, $state, userService, chann
     $scope.channelName = { text: "" };
     $scope.purpose = { text: "" };
     $scope.accessability = "public";
-    console.log($scope.users);
-    console.log($scope.splicedUsers);
+    
 
     $scope.publicOrPrivate = function () {
         $scope.accessability = "private";
