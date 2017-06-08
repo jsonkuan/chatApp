@@ -194,7 +194,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
 
     return (year + today + " - " + hour + ":" + minutes);
   }
-
+  
   $scope.password = userService.active.password;
   $scope.email = userService.active.email;
   $scope.username = userService.active.username;
