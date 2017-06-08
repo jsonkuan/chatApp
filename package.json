@@ -16,7 +16,6 @@
     "multer": "latest"
   },
   "devDependencies": {
-    "gulp-count": "^0.3.0",
     "gulp-directory-sync": "^1.2.3"
   },
   "scripts": {
