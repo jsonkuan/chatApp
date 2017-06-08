@@ -42,8 +42,8 @@
   <!-- Left menu -->
   <ion-side-menu id="channel-drawer" side="left">
     <ion-header-bar class="bar-light">
-      <img src="img/snakk_logo.png" alt="#SNAKK" class="title">
        <div class="activeUserName">
+        <img src="img/snakk_logo.png" alt="#SNAKK" class="title">
         <i class="ion-social-octocat slack-green"></i>
         <p class="usernamePad">{{username}}</p>
       </div>
@@ -52,7 +52,7 @@
       <!--Channels -->
     <div class="list">
         <h5 class="list-title">Channels<img id="add-channel-icon" src="img/ic_add_circle_outline_snakk_24px.svg" alt="+"/></h5>
-        <a class="item" ng-repeat="channel in channels | orderBy: 'name'" ng-click="openChat(channel)">
+        <a class="item channels" ng-repeat="channel in channels | orderBy: 'name'" ng-click="openChat(channel)">
         <h2 class="list-style">
             <span class="hashtag-icon" ng-if="channel.accessability == 'public'">#</span>
             <span ng-if="channel.accessability == 'private'"><img id="lock-icon" src="img/ic_lock_black_24px.svg" alt="!"/></span>
@@ -61,7 +61,6 @@
         </a>
     </div>
       <!--Direct Messages -->
-
         <h5 class="list-title">Direct Messages</h5>
         <a class="item list_side" ng-repeat="user in users | orderBy: 'username'" ng-click="startDirectChat(activeUser, user)">
           <div class="list chat userList">

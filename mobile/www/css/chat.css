@@ -46,46 +46,39 @@
 }
 
 img#add-channel-icon {
-   transform: translate(800%); 
+  float: right;
+  padding-right: 20px;
 }
-
 img#lock-icon {
   width: 12px; 
   height: 12px;
 }
-
 span.hashtag-icon {
     font-size: 15px;
     color: #7C6A7A;
 }
-
 .list a {
     background: transparent; 
     border: none;
 }
-
-.bottom-list {
-    margin-top: -50px;
-}
-
 .list-style {
     font-family: Roboto, "Helvetica Neue", sans-serif; 
     color: #AB9BA9;
 }
-
 .list-title {
     color: #7C6A7A;
+    margin-left: 10px;
 }
-
+.item.channels {
+    padding: 5px !important;
+    margin-left: 5px;
+}
 .username{
   font-weight: bold;
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
 }
-
-
-
 .date{
   color: #9e9e9e;
   font-style: italic;
@@ -183,7 +176,7 @@ span.hashtag-icon {
 }
 
 .activeUserName{
-  display: flex;
+  display: block;
 }
 
 .usernamePad{
