@@ -48,16 +48,20 @@ app.post('/messages', function(request, response) {
     response.send(request.body);
 });
 
-
-
-
 // fetches message from Db
 app.get('/messages', function(request, response) {
     database.collection('messages').find({'channel': request.query.channel}).toArray(function (err, result) {
         response.send(result);
-        //console.log("Messages from ", request.query.channel, ": ", result);
     });
 });
+app.get('/messages/new', function(request, response) {
+    database.collection('messages').find({$and: [
+        {'channel':request.query.channel},
+        {'timestamp': {$gt: request.query.timestamp}}]}).toArray(function(err,result){
+        response.send(result);
+    });
+});
+
 
 // gets all channels for user from DB
 app.get('/channels', function(request, response) {
@@ -104,8 +108,8 @@ app.post('/channel', function(request, response) {
 
 //updates channels timestamp
 app.put('/channel', function(request,response) {
-    var date = Date();
-    database.collection('channels').findOneAndUpdate({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": date}}, {new: true}, function(error, documents) {
+    var date = new Date();
+    database.collection('channels').findOneAndUpdate({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": date}}, {returnOriginal: false}, function(error, documents) {
         if(error) {
             console.log('update channel ERROR!');
             response.send(error);

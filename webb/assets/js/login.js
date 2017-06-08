@@ -30,15 +30,15 @@ app.controller('loginController', function($scope, $state, $filter, userService,
             $scope.user = response;
         });
         if ($scope.login($scope.email, $scope.password)) {
-            if(userService.active.status === "online"){
-                $scope.email = "You are already logged in";
-            }else {
+            //if(userService.active.status === "online"){
+            //    $scope.email = "You are already logged in";
+            //}else {
                 userService.active.status = "online";
                 userService.updateUser(userService.active);
                 //NOTE: Store user id as cookie on login.
                 localStorage['user'] = userService.active._id;
                 $state.transitionTo('chat');
-            }
+            //}
         } else {
             $scope.password = "";
         }
