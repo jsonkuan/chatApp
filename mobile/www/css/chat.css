@@ -204,3 +204,8 @@ span.hashtag-icon {
 .title{
   color: black !important;
 }
+
+.channel-highlight {
+    color: #f3efef !important;
+    font-weight: bold !important;
+}

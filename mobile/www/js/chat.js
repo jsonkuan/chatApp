@@ -1,14 +1,18 @@
 app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera) {
   $scope.activeUser = session;
   $scope.messageDb = [];
+  $scope.allUsers = userContacts;
   $scope.users = userContacts;
   $scope.currentChannel = currentChannel;
   $scope.chatInput= {text : "", attachment : "", attachmentPath: ""};
   $scope.userInput = userService.active;
+  $scope.localTimestamp = $scope.currentChannel.timestamp;
   $scope.channels = userChannels;
   $scope.tmpChannels = $scope.channels;
   $scope.tmpContacts = $scope.users;
+  $scope.channelStatus;
   $scope.pictureUrl = "";
+  $scope.warning = false;
 
   $scope.logout = function(){
     userService.active.status = "offline";
@@ -43,10 +47,6 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
     $scope.toggleRight = function() {
       $ionicSideMenuDelegate.toggleRight();
     };
-
-    userService.getUsers().then(function(result){
-    $scope.users = result;
-  });
 
   String.prototype.replaceAll = function(search, replacement) {
     var target = this;
@@ -110,8 +110,8 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
             }
         }
         $scope.channels = channels;
-        $scope.contacts = contacts;
-        $scope.users = $scope.tmpContacts;
+        $scope.users = contacts;
+        $scope.allUsers = $scope.tmpContacts;
     };
     $scope.updateChannelStatus = function() {
         // Retrieve cookie based on user
@@ -129,7 +129,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
             var channelId = channels[i]._id;
             if (!storage[channelId]) {
                 storage[channelId] = {
-                    timestamp: Date(),
+                    timestamp: channels[i].timestamp,
                     update: true
                 };
             } else {
@@ -140,7 +140,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
             }
         }
         // Always mark current channel as read
-        storage[channelService.current._id].timestamp = Date();
+        storage[channelService.current._id].timestamp = new Date().toISOString();
         storage[channelService.current._id].update = false;
         $scope.channelStatus = storage;
         localStorage[userService.active._id] = JSON.stringify(storage);
@@ -161,11 +161,14 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
             });
         });
     };
-        $scope.openChat = function(channel) {
+    $scope.openChat = function(channel) {
         channelService.current = channel;
         $scope.toggleLeft();
         $scope.currentChannel = channel;
-        $scope.getMessages();
+        $scope.messageDb = [];
+        $scope.localTimestamp = '';
+        $scope.checkTimeStamp();
+        $scope.newChannelChecker();
     }
 
     $scope.startDirectChat = function(userA, userB) {
@@ -195,7 +198,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
     $scope.sendMessage = function(input) {
     var message = {
       userId: userService.active._id,
-      date: formatDate(),
+      timestamp: "",
       text: $scope.snakkBot(input),
       channel: $scope.currentChannel._id,
       attachment: $scope.chatInput.attachmentPath
@@ -212,34 +215,39 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       }
       var botMessage = {
         userId: "133333333333333333333337",
-        date: formatDate(),
+        timestamp: "",
         text:  warningMessage,
         channel: $scope.currentChannel._id
       };
       userService.active.warnings += 1;
-      if(userService.active.warnings > 2){
-        userService.updateUser(userService.active).then(function(response) {
-          $cookies.remove('user');
-        });
-        userService.deleteUser(userService.active._id);
-        window.location = "https://www.google.se/#q=low+self+esteem";
-      }else {
-        userService.updateUser(userService.active);
-      }
-      $scope.warning = false;
-    }
 
+    }
     $scope.chatInput.text = "";
 
     channelService.updateTimeStamp($scope.currentChannel).then(function(response){
       $scope.currentChannel = response.data;
-    });
-    messageService.post(message).then(function(response){
-      $scope.checkTimeStamp();
-    });
+      message.timestamp = $scope.currentChannel.timestamp;
 
-    messageService.post(botMessage).then(function(response){
-      $scope.checkTimeStamp();
+      messageService.post(message).then(function(response) {
+        if(!$scope.warning) {
+          $scope.checkTimeStamp();
+        } else {
+          botMessage.timestamp = $scope.currentChannel.timestamp;
+          messageService.post(botMessage).then(function (response) {
+            $scope.checkTimeStamp();
+            $scope.warning = false;
+            if(userService.active.warnings > 2){
+              userService.updateUser(userService.active).then(function(response) {
+                $cookies.remove('user');
+              });
+              userService.deleteUser(userService.active._id);
+              window.location = "https://www.google.se/#q=low+self+esteem";
+            }else {
+              userService.updateUser(userService.active);
+            }
+          });
+        }
+      });
     });
 
     /*$scope.$watch('messageDb', function f() {
@@ -247,14 +255,22 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       chatContent.scrollTop = chatContent.scrollHeight;
     }, true); */
   };
-
   $scope.getMessages = function() {
-    $scope.chatInput.attachmentPath = "";
-    $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
+      $scope.messagesFromDb = messageService.getAllMessages($scope.currentChannel._id).then(function(response){
+      $scope.chatInput.attachmentPath = "";
       $scope.messageDb = response;
       $ionicScrollDelegate.scrollBottom();
-      $scope.addUserToMsg($scope.users, $scope.messageDb);
-    });
+      $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
+  });
+
+  $scope.getNewMessages = function() {
+      $scope.attachmentPath = "";
+      $scope.newMessages = messageService.getNewMessages($scope.currentChannel._id, $scope.localTimestamp).then(function(response){
+        $scope.messageDb = $scope.messageDb.concat(response);
+        $ionicScrollDelegate.scrollBottom();
+        $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
+      })
+    }
   };
   $scope.getMessages();
 
@@ -278,23 +294,14 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
   $scope.checkTimeStamp = function() {
     channelService.get('?id='+$scope.currentChannel._id).then(function(response) {
       $scope.currentChannel = response;
-      if($scope.timestampChecker !== $scope.currentChannel.timestamp) {
-        $scope.getMessages();
-        $scope.timestampChecker = $scope.currentChannel.timestamp;
+      if($scope.localTimestamp !== $scope.currentChannel.timestamp) {
+        $scope.getNewMessages();
+        //$scope.getMessages();
+        $scope.localTimestamp = $scope.currentChannel.timestamp;
       }
     });
   };
-  function formatDate() {
-    var d1 = new Date();
-    var day = ("0" + d1.getDate()).slice(-2);
-    var month = ("0" + (d1.getMonth() + 1)).slice(-2);
-    var year = d1.getFullYear();
-    var today = (month) + '' + (day);
-    var hour = ("0" + d1.getHours()).slice(-2);
-    var minutes = ("0" + d1.getMinutes()).slice(-2);
 
-    return (year + today + " - " + hour + ":" + minutes);
-  }
   $scope.password = userService.active.password;
   $scope.email = userService.active.email;
   $scope.username = userService.active.username;
@@ -350,10 +357,26 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       );
     }
   };
-  	$scope.removeAttachment = function () {
-  	  $scope.chatInput.attachmentPath = "";
-  	};
+
+  $scope.removeAttachment = function () {
+    $scope.chatInput.attachmentPath = "";
+  };
+  setInterval(function() {
+      $scope.checkTimeStamp();
+  }, 1500);
 	setInterval(function() {
    		$scope.newChannelChecker();
- 	},1000000000);
+ 	},4000);
 });
+
+function formatDate() {
+    var d1 = new Date();
+    var day = ("0" + d1.getDate()).slice(-2);
+    var month = ("0" + (d1.getMonth() + 1)).slice(-2);
+    var year = d1.getFullYear();
+    var today = (month) + '' + (day);
+    var hour = ("0" + d1.getHours()).slice(-2);
+    var minutes = ("0" + d1.getMinutes()).slice(-2);
+
+    return (year + today + " - " + hour + ":" + minutes);
+}
