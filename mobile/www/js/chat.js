@@ -12,6 +12,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
   $scope.tmpContacts = $scope.users;
   $scope.channelStatus;
   $scope.pictureUrl = "";
+  $scope.warning = false;
   
   $scope.logout = function(){
     userService.active.status = "offline";
@@ -228,7 +229,6 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       }else {
         userService.updateUser(userService.active);
       }
-      $scope.warning = false;
     }
     $scope.chatInput.text = "";
 
@@ -236,13 +236,14 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       $scope.currentChannel = response.data;
       message.timestamp = $scope.currentChannel.timestamp;
 
-      messageService.post(message).then(function(response){
-        $scope.checkTimeStamp();
-
-        if($scope.warning) {
+      messageService.post(message).then(function(response) {
+        if(!$scope.warning) {
+            $scope.checkTimeStamp();
+        } else {
           botMessage.timestamp = $scope.currentChannel.timestamp;
           messageService.post(botMessage).then(function (response) {
             $scope.checkTimeStamp();
+            $scope.warning = false;
           });
         }
       });
@@ -258,7 +259,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       $scope.chatInput.attachmentPath = "";
       $scope.messageDb = response;
       $ionicScrollDelegate.scrollBottom();
-      $scope.addUserToMsg($scope.users, $scope.messageDb);
+      $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
   });
 
   $scope.getNewMessages = function() {

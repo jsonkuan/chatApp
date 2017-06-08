@@ -204,7 +204,6 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
                 userService.updateUser(userService.active);
             }
 
-            $scope.warning = false;
         }
 
         $scope.chatInput = '';
@@ -216,12 +215,13 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
             message.timestamp = $scope.currentChannel.timestamp;
 
             messageService.post(message).then(function(response){
-                $scope.checkTimeStamp();
-
-                if($scope.warning) {
+                if(!$scope.warning) {
+                    $scope.checkTimeStamp();
+                } else {
                     botMessage.timestamp = $scope.currentChannel.timestamp;
                     messageService.post(botMessage).then(function (response) {
                         $scope.checkTimeStamp();
+                        $scope.warning = false;
                     });
                 }
             });
