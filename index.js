@@ -4,14 +4,14 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var database;
 var path = require('path');
+var mime = require('mime-types');
 var app = express();
 var multer  = require('multer');
 //const del = require('del');
 // del(['common/images/github.png']);
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'mobile/www/img');
-        cb(null, 'webb/assets/images');
+        cb(null, 'common/images');
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '.' + mime.extension(file.mimetype));

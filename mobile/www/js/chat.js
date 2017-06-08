@@ -220,6 +220,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   };
 
   $scope.addAttachment = function () {
+    console.log($scope.chatInput.attachment);
     if($scope.chatInput.attachment) {
       upload({
         url: 'http://localhost:3000/upload',
@@ -229,6 +230,9 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
         }
       }).then(
         function (response) {
+
+
+
           $scope.chatInput.attachmentPath = response.data.slice(10);
           if($scope.chatInput.attachmentPath[0] === "s"){
             $scope.chatInput.attachmentPath.slice(8);
