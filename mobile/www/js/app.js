@@ -87,7 +87,6 @@ app.run(function($ionicPlatform, $state, $rootScope, Resolvers) {
       var user = response;
       //Block access outside of login when not logged in
       if (!user && destination !== "login") {
-        console.log('nein!');
         event.preventDefault();
         $state.go('login');
         //Block access to login when not logged in

@@ -183,3 +183,8 @@ span.hashtag-icon {
   color: white;
   padding-left: 2%;
 }
+
+.channel-highlight {
+    color: #f3efef !important;
+    font-weight: bold !important;
+}

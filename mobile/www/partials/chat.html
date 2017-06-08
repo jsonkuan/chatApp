@@ -17,7 +17,7 @@
         <div class="chat-box" ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
           <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture">
           <p class="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
-          <p class="date">{{message.date}}</p>
+          <p class="date">{{message.timestamp}}</p>
           <p smilies="message.text" class="messagetext">{{message.text}}</p>
           <img class="attachment" ng-src="{{message.attachment}}">
         </div>
@@ -56,7 +56,8 @@
         <h2 class="list-style">
             <span class="hashtag-icon" ng-if="channel.accessability == 'public'">#</span>
             <span ng-if="channel.accessability == 'private'"><img id="lock-icon" src="img/ic_lock_black_24px.svg" alt="!"/></span>
-            {{channel.name}}
+            <span ng-if="channelStatus[channel._id].update" class="channel-highlight">{{channel.name}}</span>
+            <span ng-if="!channelStatus[channel._id].update">{{channel.name}}</span>
         </h2>
         </a>
     </div>
@@ -65,7 +66,8 @@
         <a class="item list_side" ng-repeat="user in users | orderBy: 'username'" ng-click="startDirectChat(activeUser, user)">
           <div class="list chat userList">
            <img id="sidemenu-thumbNail" ngf-thumbnail="user.avatar">
-            <p class="user">{{user.username}}</p>
+            <p ng-if="channelStatus[user.channelId].update" class="channel-highlight">{{user.username}}</p>
+            <p ng-if="!channelStatus[user.channelId].update">{{user.username}}</p>
             <i ng-if="user.status == 'online'" class="ion-ios-circle-filled slack-green"> online</i>
             <i ng-if="user.status == 'offline'" class="ion-ios-circle-outline slack-off"> offline</i>
           </div>
