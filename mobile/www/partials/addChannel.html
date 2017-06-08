@@ -9,7 +9,7 @@
   <div class="tesst">
   <li class="item item-toggle">
      Public / Private
-     <label class="toggle toggle-calm">
+     <label class="toggle toggle-calm" ng-click="publicOrPrivate()">
        <input type="checkbox">
        <div class="track">
          <div class="handle"></div>
@@ -39,7 +39,7 @@
 
 <div class="card">
     <ion-list >
-        <ion-item class="item-checkbox checkbox-calm" style="background-color:white" ng-repeat="user in users" value="{{user.username}}" ng-click="addToChannel()">{{user.username}}
+        <ion-item class="item-checkbox checkbox-calm" style="background-color:white" ng-repeat="user in users" value="{{user.username}}" ng-click="addToChannel(user)">{{user.username}}
             <label class="checkbox">
                 <input type="checkbox"/>
             </label>

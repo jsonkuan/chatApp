@@ -5,19 +5,29 @@ app.controller("channelController", function ($scope, $state, userService,  chan
     $scope.counter = $scope.users.length -1;
     $scope.channelName = {text: ""}; 
     $scope.purpose = {text: ""};
+    $scope.accessability = "public";
     
+    
+    $scope.publicOrPrivate = function() {
+        $scope.accessability = "private";
+        console.log($scope.accessability);
+    }
     //Just a test function to post channels to db
     $scope.createChannel2 = function() {
         
         var channels = {
             name: $scope.channelName.text,
             purpose: $scope.purpose.text,
-            users: $scope.invitedUserList
+            users: $scope.inviteUsersArray,
+            accessability: $scope.accessability,
+            timestamp: ""
         }
         channelService.post(channels).then(function(response) {
                 $state.go("chat");
             });
+            console.log(channels);
     }
+    // Check with jason if needed
     $scope.createChannel = function(newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
         if (access === 'public') {
@@ -52,18 +62,19 @@ app.controller("channelController", function ($scope, $state, userService,  chan
         $scope.users = response;
     });
 
-    $scope.publicOrPrivate = "public";
+    // Check with jason if needed
+    /*$scope.publicOrPrivate = "public";
     $scope.onChange = function(state) {
         $scope.privateText = "private";
         return state ? ($scope.publicOrPrivate = "private", $scope.privateText= "private") : ($scope.publicOrPrivate = "public", $scope.privateText= "");
-    };
+    };*/
 
     $scope.addToChannel = function(user) {
-        //$scope.inviteUsersArray.push(user._id);
-        $scope.invitedUserList.push($scope.users);
+        $scope.inviteUsersArray.push(user._id);
+        //$scope.invitedUserList.push($scope.users);
         $scope.counter--;
     };
-
+    // Check with jason if needed
     $scope.removeFromChannel = function(index) {
         $scope.invitedUserList.splice(index, 1);
         $scope.inviteUsersArray.splice(index, 1);
