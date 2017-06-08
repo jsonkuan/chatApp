@@ -14,7 +14,7 @@ var storage = multer.diskStorage({
         cb(null, 'webb/assets/images');
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + "-" + file.originalname);
+        cb(null, Date.now() + '.' + mime.extension(file.mimetype));
     }
 });
 var upload = multer({ storage: storage });
