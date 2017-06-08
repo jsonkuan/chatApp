@@ -323,21 +323,18 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
         }
       }).then(
         function (response) {
-          userService.active.avatar = response.data.slice(10);
-          if (userService.active.avatar[0] === "s") {
-            userService.active.avatar.slice(8);
-            userService.active.avatar = "img" + response.data.slice(18);
-            userService.updateUser(userService.active);
-            console.log(userService.active.avatar);
-
-          }
+          userService.active.avatar = "img" + response.data.slice(13);
+          userService.updateUser(userService.active);
         }
       );
     }
     userService.updateUser(userService.active);
+    $ionicSideMenuDelegate.toggleRight();
   };
 
   $scope.addAttachment = function () {
+    console.log($scope.chatInput.attachment);
+
     if($scope.chatInput.attachment) {
       upload({
         url: 'http://localhost:3000/upload',
@@ -347,15 +344,12 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
         }
       }).then(
         function (response) {
-          $scope.chatInput.attachmentPath = response.data.slice(10);
-          if($scope.chatInput.attachmentPath[0] === "s"){
-            $scope.chatInput.attachmentPath.slice(8);
-            $scope.chatInput.attachmentPath = "img" + response.data.slice(18);
-          }
-          console.log($scope.chatInput.attachmentPath)
+          $scope.chatInput.attachmentPath = "img" + response.data.slice(13);
         }
       );
+
     }
+
   };
 
   $scope.removeAttachment = function () {
