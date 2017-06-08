@@ -30,7 +30,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
                 username: "SnakkBot",
                 email: "bot@snakk.com",
                 password: "2017",
-                avatar: "img/snakk-bot.jpg",
+                avatar: "www/img/snakk-bot.jpg",
                 status: "offline"
             });
         }

@@ -1,4 +1,4 @@
-app.controller('chatController', function($scope, $ionicSideMenuDelegate, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera) {
+app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera) {
   $scope.activeUser = session;
   $scope.messageDb = [];
   $scope.users = userContacts;
@@ -9,7 +9,16 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
   $scope.tmpChannels = $scope.channels;
   $scope.tmpContacts = $scope.users;
   $scope.pictureUrl = "";
-
+  
+  $scope.logout = function(){
+    userService.active.status = "offline";
+    userService.updateUser(userService.active).then(function(response) {
+      localStorage.removeItem('user');
+      userService.active = null;
+      channelService.current = null;
+      $state.transitionTo('login');
+    })
+  };
   //TODO test if camera it works on device with camera
    $scope.takePhoto = function(){
      console.log("YESSS!");
@@ -195,9 +204,9 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
     if($scope.warning){
       var warningMessage = "";
       if(userService.active.warnings < 1){
-        warningMessage = $scope.activeUser.username + " has been warned! Keep it clean.";
+        warningMessage = userService.active.username + " has been warned! Keep it clean.";
       }else if(userService.active.warnings < 2){
-        warningMessage = "Last warning for " + $scope.activeUser.username + " before ban!";
+        warningMessage = "Last warning for " + userService.active.username + " before ban!";
       }else if (userService.active.warnings < 3){
         warningMessage = "Bye bye";
       }
@@ -207,12 +216,12 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
         text:  warningMessage,
         channel: $scope.currentChannel._id
       };
-      $scope.activeUser.warnings += 1;
-      if($scope.activeUser.warnings > 2){
+      userService.active.warnings += 1;
+      if(userService.active.warnings > 2){
         userService.updateUser(userService.active).then(function(response) {
           $cookies.remove('user');
         });
-        userService.deleteUser($scope.activeUser._id);
+        userService.deleteUser(userService.active._id);
         window.location = "https://www.google.se/#q=low+self+esteem";
       }else {
         userService.updateUser(userService.active);
@@ -286,7 +295,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
 
     return (year + today + " - " + hour + ":" + minutes);
   }
-
   $scope.password = userService.active.password;
   $scope.email = userService.active.email;
   $scope.username = userService.active.username;
@@ -297,7 +305,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
     userService.active.username = $scope.userInput.username;
     $scope.userInput.username = userService.active.username;
     $scope.userInput.password = userService.active.password;
-
 
     if($scope.userInput.avatar !== "") {
 
