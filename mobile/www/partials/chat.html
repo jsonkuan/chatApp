@@ -6,7 +6,7 @@
       <div class="buttons">
         <button class="button icon button-clear ion-pound" ng-click="toggleLeft()"></button>
       </div>
-      <h1 class="title">Channel Title</h1>
+      <h1 class="title">{{currentChannel.name}}</h1>
       <div class="buttons">
         <button class="button icon button-clear ion-navicon-round" ng-click="toggleRight()"></button>
       </div>
@@ -17,7 +17,7 @@
         <div class="chat-box" ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
           <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture">
           <p class="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
-          <p class="date">{{message.date}}</p>
+          <p class="date">{{message.timestamp}}</p>
           <p smilies="message.text" class="messagetext">{{message.text}}</p>
           <img class="attachment" ng-src="{{message.attachment}}">
         </div>
@@ -39,32 +39,39 @@
 
   </ion-side-menu-content>
   <!--Main content container end -->
-  <!-- Left menu    -->
-  <ion-side-menu side="left">
+  <!-- Left menu -->
+  <ion-side-menu id="channel-drawer" side="left">
     <ion-header-bar class="bar-light">
-      <h1 class="title">channels</h1>
+      <img src="img/snakk_logo.png" alt="#SNAKK" class="title logo">
     </ion-header-bar>
     <ion-content class="list-avatar-page has-header">
+      <!--Channels -->
       <div class="activeUserName">
-
-
-      <i class="ion-social-octocat slack-green"></i>
+        <i class="ion-social-octocat slack-green"></i>
         <p class="usernamePad">{{username}}</p>
       </div>
-    <div class="list chat">
-
-      <a class="item list_side" ng-repeat="user in users" ng-click="">
-
-        <img id="sidemenu-thumbNail" ngf-thumbnail="user.avatar">
-        <div class="userList">
-        <p class="user">{{user.username}}</p>
-        <i ng-if="user.status == 'online'" class="ion-ios-circle-filled slack-green"> online</i>
-        <i  ng-if="user.status == 'offline'" class="ion-ios-circle-outline slack-off"> offline</i>
-        </div>
-
-      </a>
-
+    <div class="list">
+        <h5 class="list-title">Channels<i class="ion-ios-plus-outline add-channel-icon"></i></h5>
+        <a class="item channels" ng-repeat="channel in channels | orderBy: 'name'" ng-click="openChat(channel)">
+        <h2 class="list-style">
+            <span class="hashtag-icon" ng-if="channel.accessability == 'public'">#</span>
+            <span ng-if="channel.accessability == 'private'"><img id="lock-icon" src="img/ic_lock_black_24px.svg" alt="!"/></span>
+            <span ng-if="channelStatus[channel._id].update" class="channel-highlight">{{channel.name}}</span>
+            <span ng-if="!channelStatus[channel._id].update">{{channel.name}}</span>
+        </h2>
+        </a>
     </div>
+      <!--Direct Messages -->
+        <h5 class="list-title">Direct Messages</h5>
+        <a class="item list_side" ng-repeat="user in users | orderBy: 'username'" ng-click="startDirectChat(activeUser, user)">
+          <div class="list chat userList">
+           <img id="sidemenu-thumbNail" ngf-thumbnail="user.avatar">
+            <p ng-if="channelStatus[user.channelId].update" class="channel-highlight">{{user.username}}</p>
+            <p ng-if="!channelStatus[user.channelId].update">{{user.username}}</p>
+            <i ng-if="user.status == 'online'" class="ion-ios-circle-filled slack-green"> online</i>
+            <i ng-if="user.status == 'offline'" class="ion-ios-circle-outline slack-off"> offline</i>
+          </div>
+        </a>
     </ion-content>
   </ion-side-menu>
 
@@ -92,6 +99,9 @@
       </form>
       <div>
         <button class="button button-block button-positive chat" ng-click="saveSettings()">Save changes</button>
+      </div>
+      <div>
+        <button class="button button-block button-positive chat" ng-click="logout()">Logout</button>
       </div>
     </ion-content>
   </ion-side-menu>
