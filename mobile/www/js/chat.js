@@ -234,4 +234,8 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.removeAttachment = function () {
     $scope.attachmentPath = "";
   };
+  setInterval(function() {
+      $scope.checkTimeStamp();
+  }, 1500);
+  
 });
