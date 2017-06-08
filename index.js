@@ -7,8 +7,7 @@ var path = require('path');
 var mime = require('mime-types');
 var app = express();
 var multer  = require('multer');
-//const del = require('del');
-// del(['common/images/github.png']);
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'common/images');
@@ -17,6 +16,7 @@ var storage = multer.diskStorage({
         cb(null, Date.now() + '.' + mime.extension(file.mimetype));
     }
 });
+
 var upload = multer({ storage: storage });
 
 //Taken from stackoverflow
