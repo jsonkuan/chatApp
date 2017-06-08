@@ -17,7 +17,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
         avatar: "img/snakk-bot.jpg",
         status: "offline"
 
-
+    });
     userService.get('133333333333333333333337').then(function(response) {
         if (!response) {
             userService.post({
