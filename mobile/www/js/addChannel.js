@@ -3,8 +3,21 @@ app.controller("channelController", function ($scope, $state, userService,  chan
     $scope.invitedUserList = [userService.active.username + " (you)"];
     $scope.users = allUsers;
     $scope.counter = $scope.users.length -1;
-    $scope.channelPurpose = "";
-    $scope.channelName = "";
+    $scope.channelName = {text: ""}; 
+    $scope.purpose = {text: ""};
+    
+    //Just a test function to post channels to db
+    $scope.createChannel2 = function() {
+        
+        var channels = {
+            name: $scope.channelName.text,
+            purpose: $scope.purpose.text,
+            users: $scope.invitedUserList
+        }
+        channelService.post(channels).then(function(response) {
+                $state.go("chat");
+            });
+    }
     $scope.createChannel = function(newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
         if (access === 'public') {
@@ -22,6 +35,17 @@ app.controller("channelController", function ($scope, $state, userService,  chan
                 $state.go("chat");
             });
         }
+
+    };
+
+    $scope.resetChannelname = function(name) {
+       $scope.channelName.text = "";
+       console.log("PÅKE");
+    };
+
+    $scope.resetPurpose = function() {
+        $scope.purpose.text = "";
+        console.log("PÅKE");
     };
 
     userService.getUsers().then(function(response) {
@@ -35,8 +59,8 @@ app.controller("channelController", function ($scope, $state, userService,  chan
     };
 
     $scope.addToChannel = function(user) {
-        $scope.inviteUsersArray.push(user._id);
-        $scope.invitedUserList.push(user.username);
+        //$scope.inviteUsersArray.push(user._id);
+        $scope.invitedUserList.push($scope.users);
         $scope.counter--;
     };
 

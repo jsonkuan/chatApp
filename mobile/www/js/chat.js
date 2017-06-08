@@ -3,8 +3,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
   $scope.messageDb = [];
   $scope.users = userContacts;
   $scope.currentChannel = currentChannel;
-  $scope.attachmentPath = "";
-  $scope.chatInput= {text : ""};
+  $scope.chatInput= {text : "", attachment : "", attachmentPath: ""};
   $scope.userInput = userService.active;
   $scope.channels = userChannels;
   $scope.tmpChannels = $scope.channels;
@@ -38,7 +37,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
 
     userService.getUsers().then(function(result){
     $scope.users = result;
-    console.log(result);
   });
 
   String.prototype.replaceAll = function(search, replacement) {
@@ -191,7 +189,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
       date: formatDate(),
       text: $scope.snakkBot(input),
       channel: $scope.currentChannel._id,
-      attachment: $scope.attachmentPath
+      attachment: $scope.chatInput.attachmentPath
     };
 
     if($scope.warning){
@@ -242,7 +240,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
   };
 
   $scope.getMessages = function() {
-    $scope.attachmentPath = "";
+    $scope.chatInput.attachmentPath = "";
     $scope.messagesFromDb = messageService.getAllMessages('?channel=' + $scope.currentChannel._id).then(function(response){
       $scope.messageDb = response;
       $ionicScrollDelegate.scrollBottom();
@@ -300,11 +298,9 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
     $scope.userInput.username = userService.active.username;
     $scope.userInput.password = userService.active.password;
 
-    console.log(userService.active.username);
-    console.log(userService.active.avatar);
-    console.log($scope.avatar);
 
     if($scope.userInput.avatar !== "") {
+
       upload({
         url: 'http://localhost:3000/upload',
         method: 'POST',
@@ -313,9 +309,14 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
         }
       }).then(
         function (response) {
-          userService.active.avatar = "img/" + response.data.slice(14);
-          $scope.userInput.avatar = userService.active.avatar;
-          userService.updateUser(userService.active);
+          userService.active.avatar = response.data.slice(10);
+          if (userService.active.avatar[0] === "s") {
+            userService.active.avatar.slice(8);
+            userService.active.avatar = "img" + response.data.slice(18);
+            userService.updateUser(userService.active);
+            console.log(userService.active.avatar);
+
+          }
         }
       );
     }
@@ -323,24 +324,27 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, sessio
   };
 
   $scope.addAttachment = function () {
-    console.log($scope.attachment);
-
-    if($scope.attachment) {
+    if($scope.chatInput.attachment) {
       upload({
         url: 'http://localhost:3000/upload',
         method: 'POST',
         data: {
-          avatar: $scope.attachment
+          avatar: $scope.chatInput.attachment
         }
       }).then(
         function (response) {
-          $scope.attachmentPath = "img/" + response.data.slice(14);
+          $scope.chatInput.attachmentPath = response.data.slice(10);
+          if($scope.chatInput.attachmentPath[0] === "s"){
+            $scope.chatInput.attachmentPath.slice(8);
+            $scope.chatInput.attachmentPath = "img" + response.data.slice(18);
+          }
+          console.log($scope.chatInput.attachmentPath)
         }
       );
     }
   };
   	$scope.removeAttachment = function () {
-  	  $scope.attachmentPath = "";
+  	  $scope.chatInput.attachmentPath = "";
   	};
 	setInterval(function() {
    		$scope.newChannelChecker();
