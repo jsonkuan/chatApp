@@ -51,7 +51,7 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
             var channelId = channels[i]._id;
             if (!storage[channelId]) {
                 storage[channelId] = {
-                    timestamp: Date(),
+                    timestamp: channels[i].timestamp,
                     update: true
                 };
             } else {
@@ -63,10 +63,11 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
         }
 
         // Always mark current channel as read
-        storage[channelService.current._id].timestamp = Date();
+        storage[channelService.current._id].timestamp = new Date().toISOString();
         storage[channelService.current._id].update = false;
 
         $scope.channelStatus = storage;
+        //console.log('updated storage', storage);
         localStorage[userService.active._id] = JSON.stringify(storage);
         //$cookies.put(userService.active._id, JSON.stringify(storage));
     };
@@ -151,7 +152,7 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
                 }
             }).then(
                 function (response) {
-                    $scope.attachmentPath = response.data.slice(7);
+                    $scope.attachmentPath = "images" + response.data.slice(14);
                 }
             );
         }
@@ -243,7 +244,7 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
                     messages[i].avatar = users[e].avatar;
                 }
                 else if(messages[i].avatar === undefined){
-                    messages[i].avatar = "common/images/defaultProfile.png";
+                    messages[i].avatar = "assets/images/defaultProfile.png";
                 }
             }
         }
