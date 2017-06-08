@@ -22,11 +22,20 @@ app.controller('loginController', function($scope, $state, $filter, userService)
     }
   });
 
-  userService.getUsers().then(function(response) {
-    $scope.user = response;
-  });
-
   $scope.loginButtonClicked = function() {
+    userService.get('133333333333333333333337').then(function(response) {
+        if (!response) {
+            userService.post({
+                _id: "133333333333333333333337",
+                username: "SnakkBot",
+                email: "bot@snakk.com",
+                password: "2017",
+                avatar: "img/snakk-bot.jpg",
+                status: "offline"
+            });
+        }
+    });
+
     userService.getUsers().then(function(response) {
       $scope.user = response;
     });
