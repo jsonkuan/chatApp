@@ -13,7 +13,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
   $scope.channelStatus;
   $scope.pictureUrl = "";
   $scope.warning = false;
-  
+
   $scope.logout = function(){
     userService.active.status = "offline";
     userService.updateUser(userService.active).then(function(response) {
@@ -220,15 +220,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
         channel: $scope.currentChannel._id
       };
       userService.active.warnings += 1;
-      if(userService.active.warnings > 2){
-        userService.updateUser(userService.active).then(function(response) {
-          $cookies.remove('user');
-        });
-        userService.deleteUser(userService.active._id);
-        window.location = "https://www.google.se/#q=low+self+esteem";
-      }else {
-        userService.updateUser(userService.active);
-      }
+
     }
     $scope.chatInput.text = "";
 
@@ -238,12 +230,21 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
 
       messageService.post(message).then(function(response) {
         if(!$scope.warning) {
-            $scope.checkTimeStamp();
+          $scope.checkTimeStamp();
         } else {
           botMessage.timestamp = $scope.currentChannel.timestamp;
           messageService.post(botMessage).then(function (response) {
             $scope.checkTimeStamp();
             $scope.warning = false;
+            if(userService.active.warnings > 2){
+              userService.updateUser(userService.active).then(function(response) {
+                $cookies.remove('user');
+              });
+              userService.deleteUser(userService.active._id);
+              window.location = "https://www.google.se/#q=low+self+esteem";
+            }else {
+              userService.updateUser(userService.active);
+            }
           });
         }
       });
@@ -366,7 +367,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
 	setInterval(function() {
    		$scope.newChannelChecker();
  	},4000);
-  
+
 });
 
 function formatDate() {
