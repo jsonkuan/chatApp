@@ -1,12 +1,13 @@
 app.controller("channelController", function ($scope, $state, userService, channelService, allUsers) {
     $scope.inviteUsersArray = [userService.active._id];
     $scope.invitedUserList = [userService.active.username + " (you)"];
-    $scope.users = allUsers;
-    $scope.counter = $scope.users.length - 1;
+    $scope.users = allUsers.slice(1);
+    $scope.splicedUsers = $scope.users;
     $scope.channelName = { text: "" };
     $scope.purpose = { text: "" };
     $scope.accessability = "public";
-
+    console.log($scope.users);
+    console.log($scope.splicedUsers);
 
     $scope.publicOrPrivate = function () {
         $scope.accessability = "private";

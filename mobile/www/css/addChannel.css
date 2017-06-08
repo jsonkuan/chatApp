@@ -13,7 +13,8 @@ h1 {
 }
 
 .card {
-    border: solid #4D394B 1px !important;
+    border: solid #4D394B 2px !important;
+    border-radius: 10px !important;
 }
 
 .item.item-input {
