@@ -264,7 +264,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
   });
 
   $scope.getNewMessages = function() {
-      $scope.attachmentPath = "";
+    $scope.chatInput.attachmentPath = "";
       $scope.newMessages = messageService.getNewMessages($scope.currentChannel._id, $scope.localTimestamp).then(function(response){
         $scope.messageDb = $scope.messageDb.concat(response);
         $ionicScrollDelegate.scrollBottom();
@@ -273,7 +273,6 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
     }
   };
   $scope.getMessages();
-
   $scope.addUserToMsg = function(users, messages) {
     for(var i = 0; i < messages.length; i++) {
       for(var e = 0; e < users.length; e++){
@@ -345,6 +344,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       }).then(
         function (response) {
           $scope.chatInput.attachmentPath = "img" + response.data.slice(13);
+          console.log($scope.chatInput.attachmentPath);
         }
       );
 
