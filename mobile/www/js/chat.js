@@ -9,7 +9,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
   $scope.tmpChannels = $scope.channels;
   $scope.tmpContacts = $scope.users;
   $scope.pictureUrl = "";
-  
+
   $scope.logout = function(){
     userService.active.status = "offline";
     userService.updateUser(userService.active).then(function(response) {
@@ -355,5 +355,5 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
   	};
 	setInterval(function() {
    		$scope.newChannelChecker();
- 	},1000);
+ 	},1000000000);
 });

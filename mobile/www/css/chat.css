@@ -4,6 +4,7 @@
   border-radius: 50%;
   float: left;
   border: solid 3px gray;
+  margin-right: 5px;
 }
 
 .item.list_side{
@@ -14,7 +15,6 @@
 .list.chat{
   padding-bottom: 0 !important;
   padding-top: 0 !important;
-  padding-left: 20px;
 }
 .chat-input-box {
   background-color: white;
@@ -42,15 +42,23 @@
 }
 
 #channel-drawer{
-    background: rgb(77, 57, 75, 1); 
+    background: rgba(77, 57, 75, 1);
 }
 
-img#add-channel-icon {
+.ion-ios-plus-outline.add-channel-icon {
   float: right;
+  font-size: 20px;
   padding-right: 20px;
+  display: inline-flex;
+  font-weight: bolder !important;
 }
+
+.ion-ios-plus-outline.add-channel-icon:active {
+  color: white !important;
+}
+
 img#lock-icon {
-  width: 12px; 
+  width: 12px;
   height: 12px;
 }
 span.hashtag-icon {
@@ -58,17 +66,20 @@ span.hashtag-icon {
     color: #7C6A7A;
 }
 .list a {
-    background: transparent; 
+    background: transparent;
     border: none;
 }
 .list-style {
-    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     color: #AB9BA9;
 }
 .list-title {
-    color: #7C6A7A;
-    margin-left: 10px;
+  margin-left: 10px;
+  color: #7C6A7A;
+  margin-top: 0;
+  margin-bottom: 0;
 }
+
 .item.channels {
     padding: 5px !important;
     margin-left: 5px;
@@ -151,11 +162,11 @@ span.hashtag-icon {
 .userList{
   margin-left: 2%;
   float: left;
-  color: white !important;
+  color: #AB9BA9;
 }
 
 .user{
-  color: white !important;
+  color: #AB9BA9 !important;
 }
 .slack-green{
   color: #38968C !important;
@@ -166,20 +177,30 @@ span.hashtag-icon {
   font-size: 90% !important;
 }
 
-.title{
-  color: black !important;
-}
-
 .ion-social-octocat{
-  padding-left: 14%;
+  padding-left: 10px;
   font-size: 15px !important;
 }
 
 .activeUserName{
-  display: block;
+  display: flex;
+
 }
 
 .usernamePad{
-  color: white;
+  height: 20px;
+  color: #AB9BA9;
   padding-left: 2%;
+}
+
+.title.logo{
+  left: 0 !important;
+}
+
+.item.list_side{
+  padding: 5px;
+}
+
+.title{
+  color: black !important;
 }
