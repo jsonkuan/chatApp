@@ -39,17 +39,31 @@
 
   </ion-side-menu-content>
   <!--Main content container end -->
-  <!-- Left menu -->
+  <!-- Left menu    -->
   <ion-side-menu side="left">
     <ion-header-bar class="bar-light">
       <h1 class="title">channels</h1>
     </ion-header-bar>
     <ion-content class="list-avatar-page has-header">
-    <div class="list">
-      <a class="item" ng-repeat="user in users" ng-click="">
-        <!--<img id="sidemenu-thumbNail" src={{user.avatar}}> -->
-        <h2>{{user.username}}</h2>
+      <div class="activeUserName">
+
+
+      <i class="ion-social-octocat slack-green"></i>
+        <p class="usernamePad">{{username}}</p>
+      </div>
+    <div class="list chat">
+
+      <a class="item list_side" ng-repeat="user in users" ng-click="">
+
+        <img id="sidemenu-thumbNail" ngf-thumbnail="user.avatar">
+        <div class="userList">
+        <p class="user">{{user.username}}</p>
+        <i ng-if="user.status == 'online'" class="ion-ios-circle-filled slack-green"> online</i>
+        <i  ng-if="user.status == 'offline'" class="ion-ios-circle-outline slack-off"> offline</i>
+        </div>
+
       </a>
+
     </div>
     </ion-content>
   </ion-side-menu>

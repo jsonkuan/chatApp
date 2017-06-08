@@ -26,7 +26,7 @@
         <option ng-repeat="user in users" value="{{user.username}}">{{user.username}}</option>
     </select>
   </label>-->
-  
+
   <ion-item class="item item-input item-icon-right" >
     <input type="text" placeholder="Channel name" ng-model="channelName.text" required ng-minlength="3" maxlength="25">
     <i class="ion-close-circled" ng-click="resetChannelname()"></i>
@@ -36,7 +36,7 @@
     <i class="ion-close-circled" ng-click="resetPurpose()"></i>
   </ion-item>
   </ion-list>
-  
+
 <div class="card">
     <ion-list >
         <ion-item class="item-checkbox checkbox-calm" style="background-color:white" ng-repeat="user in users" value="{{user.username}}" ng-click="addToChannel()">{{user.username}}
@@ -46,12 +46,12 @@
         </ion-item>
     </ion-list>
 </div>
-  
-<button class="button button-block button-positive" ng-click="createChannel2()">
+
+<button class="button button-block button-positive channel" ng-click="createChannel2()">
   Create channel
 </button>
 
 
 
 
-  
+

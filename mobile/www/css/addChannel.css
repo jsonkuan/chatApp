@@ -1,6 +1,6 @@
-.bar.bar-header.bar-stable {
+.bar.bar-header.bar-stable.channel {
     background: #4D394B;
-    
+
 }
 
 h1 {
@@ -23,10 +23,13 @@ h1 {
 }
 
 .item-checkbox {
-    border: 0px !important;
+  border: 0px !important;
+  border-color: #4D394B !important;
+  padding-left: 55px !important;
+  font-size: 20px !important;
 }
 
-.item {
+.item.item-input.item-icon-right {
     border-width: 1px !important;
     border-color: #4D394B !important;
     padding-left: 55px !important;
@@ -37,7 +40,7 @@ h1 {
     margin: -10px !important;
 }
 
-.button.button-block.button-positive {
+.button.button-block.button-positive.channel {
     background-color: #4D394B !important;
     width: 300px !important;
     height: 50px !important;
@@ -48,7 +51,7 @@ h1 {
     position: static;
     height: 90%;
     object-fit: contain;
-} 
+}
 
 .ion-close-circled {
     color: darkred !important;

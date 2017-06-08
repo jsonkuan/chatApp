@@ -7,7 +7,6 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
   $scope.userInput = userService.active;
   $scope.pictureUrl = "";
 
-
   //TODO test if camera it works on device with camera
    $scope.takePhoto = function(){
      console.log("YESSS!");
@@ -183,7 +182,7 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
 
     return (year + today + " - " + hour + ":" + minutes);
   }
-  
+
   $scope.password = userService.active.password;
   $scope.email = userService.active.email;
   $scope.username = userService.active.username;
@@ -211,6 +210,8 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
             userService.active.avatar.slice(8);
             userService.active.avatar = "img" + response.data.slice(18);
             userService.updateUser(userService.active);
+            console.log(userService.active.avatar);
+
           }
         }
       );
