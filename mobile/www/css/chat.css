@@ -41,6 +41,42 @@
   object-fit: contain;
 }
 
+#channel-drawer{
+    background: rgb(77, 57, 75, 1); 
+}
+
+img#add-channel-icon {
+   transform: translate(800%); 
+}
+
+img#lock-icon {
+  width: 12px; 
+  height: 12px;
+}
+
+span.hashtag-icon {
+    font-size: 15px;
+    color: #7C6A7A;
+}
+
+.list a {
+    background: transparent; 
+    border: none;
+}
+
+.bottom-list {
+    margin-top: -50px;
+}
+
+.list-style {
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    color: #AB9BA9;
+}
+
+.list-title {
+    color: #7C6A7A;
+}
+
 .username{
   font-weight: bold;
   display: inline-block;

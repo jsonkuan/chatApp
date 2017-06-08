@@ -1,10 +1,13 @@
-app.controller('chatController', function($scope, $ionicSideMenuDelegate, userService, currentChannel, messageService, channelService, upload, $ionicScrollDelegate, $cordovaCamera) {
-
+app.controller('chatController', function($scope, $ionicSideMenuDelegate, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera) {
+  $scope.activeUser = session;
   $scope.messageDb = [];
-  $scope.users = [];
+  $scope.users = userContacts;
   $scope.currentChannel = currentChannel;
   $scope.chatInput= {text : "", attachment : "", attachmentPath: ""};
   $scope.userInput = userService.active;
+  $scope.channels = userChannels;
+  $scope.tmpChannels = $scope.channels;
+  $scope.tmpContacts = $scope.users;
   $scope.pictureUrl = "";
 
   //TODO test if camera it works on device with camera
@@ -79,7 +82,108 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
     return newMessage;
   };
 
-  $scope.sendMessage = function(input) {
+	   // Filter channels for user
+    $scope.filterChannels = function() {
+        var contacts = $scope.tmpContacts.filter(function(user) {
+            return user._id != userService.active._id;
+        });
+        var channels = $scope.channels.filter(function(channel) {
+            return channel.accessability === 'public' || channel.accessability === 'private';
+        });
+        var direct = $scope.channels.filter(function(channel) {
+            return channel.accessability === 'direct';
+        });
+        for (var i = 0; i < direct.length; i ++) {
+            for (var j = 0; j < contacts.length; j ++) {
+                if (direct[i].users.includes(contacts[j]._id)) {
+                    contacts[j].channelId = direct[i]._id;
+                }
+            }
+        }
+        $scope.channels = channels;
+        $scope.contacts = contacts;
+        $scope.users = $scope.tmpContacts;
+    };
+    $scope.updateChannelStatus = function() {
+        // Retrieve cookie based on user
+        $scope.channels = $scope.tmpChannels;
+        //var cookie = $cookies.get(userService.active._id);
+        var storage = localStorage[userService.active._id];
+        if (!storage) {
+            storage = {};
+        } else {
+            storage = JSON.parse(storage);
+        }
+        // Compare timestamp between channels and storage data
+        var channels = $scope.channels;
+        for (var i = 0; i < channels.length; i ++) {
+            var channelId = channels[i]._id;
+            if (!storage[channelId]) {
+                storage[channelId] = {
+                    timestamp: Date(),
+                    update: true
+                };
+            } else {
+                if (channels[i].timestamp > storage[channelId].timestamp) {
+                    storage[channelId].timestamp = channels[i].timestamp;
+                    storage[channelId].update = true;
+                }
+            }
+        }
+        // Always mark current channel as read
+        storage[channelService.current._id].timestamp = Date();
+        storage[channelService.current._id].update = false;
+        $scope.channelStatus = storage;
+        localStorage[userService.active._id] = JSON.stringify(storage);
+        //$cookies.put(userService.active._id, JSON.stringify(storage));
+    };
+
+    $scope.updateChannelStatus();
+    $scope.filterChannels();
+
+	  //Watches for new channels
+    $scope.newChannelChecker = function() {
+        channelService.getChannelsForUser($scope.activeUser._id).then(function(channelResponse) {
+            $scope.tmpChannels = channelResponse;
+            userService.getUsers().then(function(userResponse) {
+                $scope.tmpContacts = userResponse;
+                $scope.updateChannelStatus();
+                $scope.filterChannels();
+            });
+        });
+    };
+        $scope.openChat = function(channel) {
+        channelService.current = channel;
+        $scope.toggleLeft();
+        $scope.currentChannel = channel;
+        $scope.getMessages();
+    }
+
+    $scope.startDirectChat = function(userA, userB) {
+        if(userA._id!==userB._id){
+            channelService.get('/direct?sender=' + userA._id + '&recipient=' + userB._id).then(function(response) {
+                if (!response) {
+                    $scope.createDirectChat(userA, userB);
+                } else {
+                    $scope.openChat(response);
+                }
+            });
+        }
+    };
+
+	$scope.createDirectChat = function(userA, userB) {
+        channelService.post({
+            name: userA.username +" & "+ userB.username,
+            purpose: '',
+            accessability: 'direct',
+            users: [userA._id, userB._id],
+            timestamp: ''
+        }).then(function(response) {
+            $scope.startDirectChat(userA, userB);
+        });
+    };
+
+    $scope.sendMessage = function(input) {
     var message = {
       userId: userService.active._id,
       date: formatDate(),
@@ -239,7 +343,10 @@ app.controller('chatController', function($scope, $ionicSideMenuDelegate, userSe
       );
     }
   };
-  $scope.removeAttachment = function () {
-    $scope.chatInput.attachmentPath = "";
-  };
+  	$scope.removeAttachment = function () {
+  	  $scope.chatInput.attachmentPath = "";
+  	};
+	setInterval(function() {
+   		$scope.newChannelChecker();
+ 	},1000);
 });
