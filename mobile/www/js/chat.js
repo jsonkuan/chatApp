@@ -367,7 +367,6 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
 	setInterval(function() {
    		$scope.newChannelChecker();
  	},4000);
-
 });
 
 function formatDate() {
