@@ -51,7 +51,7 @@
         <p class="usernamePad">{{username}}</p>
       </div>
     <div class="list">
-        <h5 class="list-title">Channels<i class="ion-ios-plus-outline add-channel-icon"></i></h5>
+        <h5 class="list-title">Channels<i class="ion-ios-plus-outline add-channel-icon" ng-click="gotToAddChannel()"></i></h5>
         <a class="item channels" ng-repeat="channel in channels | orderBy: 'name'" ng-click="openChat(channel)">
         <h2 class="list-style">
             <span class="hashtag-icon" ng-if="channel.accessability == 'public'">#</span>

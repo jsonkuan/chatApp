@@ -40,6 +40,10 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       })
    };
 
+   $scope.gotToAddChannel = function() {
+        $state.go('addChannel');
+    }
+
     $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
     };
