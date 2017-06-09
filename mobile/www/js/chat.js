@@ -170,7 +170,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
         $scope.localTimestamp = '';
         $scope.checkTimeStamp();
         $scope.newChannelChecker();
-    }
+    };
 
     $scope.startDirectChat = function(userA, userB) {
         if(userA._id!==userB._id){
@@ -332,8 +332,6 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
 
       $ionicSideMenuDelegate.toggleRight();
     });
-
-
   };
 
   $scope.addAttachment = function () {
