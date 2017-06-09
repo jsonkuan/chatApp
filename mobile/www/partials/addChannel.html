@@ -28,8 +28,8 @@
 <div class="card">
   <ion-list>
     <ion-scroll scrollY="true" scrollbar-y="false">
-      <ion-item class="item-checkbox checkbox-calm" style="background-color:white" ng-repeat="user in splicedUsers" value="{{user.username}}"
-        ng-click="addToChannel(user)">{{user.username}}
+      <ion-item class="item-checkbox checkbox-calm" style="background-color:white" ng-repeat="user in usersWithoutBot" value="{{user.username}}"
+        ng-click="addToChannel(user, $index)">{{user.username}}
         <label class="checkbox">
         <input type="checkbox"/>
       </label>

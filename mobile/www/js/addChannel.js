@@ -1,12 +1,12 @@
 app.controller("channelController", function ($scope, $state, userService, channelService, allUsers) {
-    $scope.inviteUsersArray = [userService.active._id];
-    $scope.invitedUserList = [userService.active.username + " (you)"];
+    $scope.tempArray = [];
+    $scope.invitedUsers = [userService.active._id];
     $scope.users = allUsers.slice(1);
-    $scope.splicedUsers = $scope.users;
+    $scope.usersWithoutBot = $scope.users;
     $scope.channelName = { text: "" };
     $scope.purpose = { text: "" };
     $scope.accessability = "public";
-    
+    console.log(userService.active.username);
 
     $scope.publicOrPrivate = function () {
         $scope.accessability = "private";
@@ -18,7 +18,7 @@ app.controller("channelController", function ($scope, $state, userService, chann
         var channels = {
             name: $scope.channelName.text,
             purpose: $scope.purpose.text,
-            users: $scope.inviteUsersArray,
+            users: $scope.invitedUsers,
             accessability: $scope.accessability,
             timestamp: ""
         }
@@ -28,7 +28,7 @@ app.controller("channelController", function ($scope, $state, userService, chann
         console.log(channels);
     }
     // Check with jason if needed
-    $scope.createChannel = function (newChannel) {
+    /*$scope.createChannel = function (newChannel) {
         var access = String($scope.publicOrPrivate).toLowerCase();
         if (access === 'public') {
             $scope.inviteUsersArray = [];
@@ -46,7 +46,7 @@ app.controller("channelController", function ($scope, $state, userService, chann
             });
         }
 
-    };
+    };*/
 
     $scope.resetChannelname = function (name) {
         $scope.channelName.text = "";
@@ -66,23 +66,14 @@ app.controller("channelController", function ($scope, $state, userService, chann
         $state.go('chat');
     }
 
-    // Check with jason if needed
-    /*$scope.publicOrPrivate = "public";
-    $scope.onChange = function(state) {
-        $scope.privateText = "private";
-        return state ? ($scope.publicOrPrivate = "private", $scope.privateText= "private") : ($scope.publicOrPrivate = "public", $scope.privateText= "");
-    };*/
-
     $scope.addToChannel = function (user) {
-        $scope.inviteUsersArray.push(user._id);
-        //$scope.invitedUserList.push($scope.users);
-        $scope.counter--;
+           $scope.invitedUsers.push(user._id);
+            console.log("Added: " + user.username + "\nid: " + user._id);
     };
-    // Check with jason if needed
-    $scope.removeFromChannel = function (index) {
-        $scope.invitedUserList.splice(index, 1);
-        $scope.inviteUsersArray.splice(index, 1);
-        $scope.counter++;
+
+     $scope.removeFromChannel = function(index) {
+        $scope.invitedUsers.splice(index, 1);
+        console.log("Removed");
     };
 
     $scope.filterInvitedUsers = function (user) {
