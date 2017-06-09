@@ -62,6 +62,10 @@ app.controller("channelController", function ($scope, $state, userService, chann
         $scope.users = response;
     });
 
+    $scope.backToChat = function() {
+        $state.go('chat');
+    }
+
     // Check with jason if needed
     /*$scope.publicOrPrivate = "public";
     $scope.onChange = function(state) {

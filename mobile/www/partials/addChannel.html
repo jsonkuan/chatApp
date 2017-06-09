@@ -24,16 +24,28 @@
       <i class="ion-close-circled" ng-click="resetPurpose()"></i>
     </ion-item>
 </ion-list>
+
 <div class="card">
   <ion-list>
-    <ion-item class="item-checkbox checkbox-calm" style="background-color:white" ng-repeat="user in splicedUsers" value="{{user.username}}"
-      ng-click="addToChannel(user)">{{user.username}}
-      <label class="checkbox">
-                <input type="checkbox"/>
-            </label>
-    </ion-item>
+    <ion-scroll scrollY="true" scrollbar-y="false">
+      <ion-item class="item-checkbox checkbox-calm" style="background-color:white" ng-repeat="user in splicedUsers" value="{{user.username}}"
+        ng-click="addToChannel(user)">{{user.username}}
+        <label class="checkbox">
+        <input type="checkbox"/>
+      </label>
+      </ion-item>
+    </ion-scroll>
   </ion-list>
 </div>
 <button class="button button-block button-positive channel" ng-click="createChannel2()">
   Create channel
 </button>
+
+
+
+
+<!--<ion-view title="Home" hide-nav-bar="true">
+      <ion-scroll zooming="true" direction="xy" style="width: 500px; height: 500px">
+        <div style="width: 5000px; height: 5000px; background: url('//upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>
+      </ion-scroll>
+    </ion-view>-->
