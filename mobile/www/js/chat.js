@@ -9,7 +9,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
   $scope.tmpChannels = $scope.channels;
   $scope.tmpContacts = $scope.users;
   $scope.pictureUrl = "";
-  
+
   $scope.logout = function(){
     userService.active.status = "offline";
     userService.updateUser(userService.active).then(function(response) {
@@ -289,11 +289,11 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
     var day = ("0" + d1.getDate()).slice(-2);
     var month = ("0" + (d1.getMonth() + 1)).slice(-2);
     var year = d1.getFullYear();
-    var today = (month) + '' + (day);
+    var today = (month) + '-' + (day);
     var hour = ("0" + d1.getHours()).slice(-2);
     var minutes = ("0" + d1.getMinutes()).slice(-2);
 
-    return (year + today + " - " + hour + ":" + minutes);
+    return (year +"-"+ today + " - " + hour + ":" + minutes);
   }
   $scope.password = userService.active.password;
   $scope.email = userService.active.email;
@@ -328,6 +328,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       );
     }
     userService.updateUser(userService.active);
+    $scope.toggleRight();
   };
 
   $scope.addAttachment = function () {

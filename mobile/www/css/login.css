@@ -15,9 +15,9 @@
     margin-bottom: 20px;
 }
 
-.button.button-block.button-positive {
+.snakk-round-button {
     background-color: #4D394B !important;
-    border-radius: 100px;
+    border-radius: 100px !important;
 }
 
 .formFrame {
