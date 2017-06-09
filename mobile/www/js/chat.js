@@ -13,6 +13,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
   $scope.channelStatus;
   $scope.pictureUrl = "";
   $scope.warning = false;
+  $scope.intervals = [];
 
   $scope.logout = function(){
     userService.active.status = "offline";
@@ -20,6 +21,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       localStorage.removeItem('user');
       userService.active = null;
       channelService.current = null;
+      $scope.clearIntervals();
       $state.transitionTo('login');
     })
   };
@@ -118,9 +120,8 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
         $scope.allUsers = $scope.tmpContacts;
     };
     $scope.updateChannelStatus = function() {
-        // Retrieve cookie based on user
+        // Retrieve storage based on user
         $scope.channels = $scope.tmpChannels;
-        //var cookie = $cookies.get(userService.active._id);
         var storage = localStorage[userService.active._id];
         if (!storage) {
             storage = {};
@@ -148,7 +149,6 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
         storage[channelService.current._id].update = false;
         $scope.channelStatus = storage;
         localStorage[userService.active._id] = JSON.stringify(storage);
-        //$cookies.put(userService.active._id, JSON.stringify(storage));
     };
 
     $scope.updateChannelStatus();
@@ -234,20 +234,21 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       message.timestamp = $scope.currentChannel.timestamp;
 
       messageService.post(message).then(function(response) {
-        if(!$scope.warning) {
+        if (!$scope.warning) {
           $scope.checkTimeStamp();
         } else {
           botMessage.timestamp = $scope.currentChannel.timestamp;
           messageService.post(botMessage).then(function (response) {
             $scope.checkTimeStamp();
             $scope.warning = false;
-            if(userService.active.warnings > 2){
+            if (userService.active.warnings > 2){
               userService.updateUser(userService.active).then(function(response) {
-                $cookies.remove('user');
+                $scope.clearIntervals();
+                localStorage.removeItem('user');
+                userService.deleteUser(userService.active._id);
+                window.location = "https://www.google.se/#q=low+self+esteem";
               });
-              userService.deleteUser(userService.active._id);
-              window.location = "https://www.google.se/#q=low+self+esteem";
-            }else {
+            } else {
               userService.updateUser(userService.active);
             }
           });
@@ -362,12 +363,24 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
   $scope.removeAttachment = function () {
     $scope.chatInput.attachmentPath = "";
   };
-  setInterval(function() {
-      $scope.checkTimeStamp();
-  }, 1500);
-	setInterval(function() {
+
+  $scope.clearIntervals = function() {
+      for (var i = 0; i < $scope.intervals.length; i ++) {
+          clearInterval($scope.intervals[i]);
+      }
+  }
+
+  $scope.setupIntervals = function() {
+    var messages = setInterval(function() {
+        $scope.checkTimeStamp();
+    }, 1500);
+    var channels = setInterval(function() {
    		$scope.newChannelChecker();
  	},4000);
+    $scope.intervals.push(messages);
+    $scope.intervals.push(channels);
+  }();
+
 });
 
 function formatDate() {
