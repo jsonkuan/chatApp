@@ -33,7 +33,7 @@
                 }
             }).then(
                 function (response) {
-                    userService.active.avatar = 'image' + response.data.slice(13);
+                    userService.active.avatar = "/assets/images" + response.data.slice(13);
                     $scope.avatar = userService.active.avatar;
                     userService.updateUser(userService.active);
                 }

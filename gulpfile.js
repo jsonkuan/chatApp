@@ -3,7 +3,6 @@
 var gulp = require('gulp');
 var live = require('gulp-live-server');
 var watch = require('gulp-watch');
-var gutil = require('gulp-util');
 var dirSync = require( 'gulp-directory-sync');
 
 
@@ -30,7 +29,6 @@ gulp.task( 'sync', function() {
     watch(['common/images/'], { ignoreInitial: false }, function() {
         return gulp.src('')
             .pipe(dirSync('common/images/', 'mobile/www/img', {printSummary: false}))
-            .on('error', gutil.log);
     })
 } );
 
@@ -38,7 +36,6 @@ gulp.task( 'sync2', function() {
     watch(['common/images/'], { ignoreInitial: false }, function() {
         return gulp.src('')
             .pipe(dirSync('common/images/', 'webb/assets/images', {printSummary: false}))
-            .on('error', gutil.log);
     })
 } );
 
