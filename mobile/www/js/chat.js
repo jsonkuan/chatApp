@@ -42,6 +42,10 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       })
    };
 
+   $scope.gotToAddChannel = function() {
+        $state.go('addChannel');
+    }
+
     $scope.toggleLeft = function() {
         $ionicSideMenuDelegate.toggleLeft();
     };
@@ -158,6 +162,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
                 $scope.tmpContacts = userResponse;
                 $scope.updateChannelStatus();
                 $scope.filterChannels();
+                $scope.addUserToMsg(userResponse, $scope.messageDb);
             });
         });
     };
@@ -169,7 +174,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
         $scope.localTimestamp = '';
         $scope.checkTimeStamp();
         $scope.newChannelChecker();
-    }
+    };
 
     $scope.startDirectChat = function(userA, userB) {
         if(userA._id!==userB._id){
@@ -327,8 +332,11 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
         }
       );
     }
-    userService.updateUser(userService.active);
-    $ionicSideMenuDelegate.toggleRight();
+    userService.updateUser(userService.active).then(function(response){
+      $scope.newChannelChecker();
+
+      $ionicSideMenuDelegate.toggleRight();
+    });
   };
 
   $scope.addAttachment = function () {
