@@ -158,6 +158,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
                 $scope.tmpContacts = userResponse;
                 $scope.updateChannelStatus();
                 $scope.filterChannels();
+                $scope.addUserToMsg(userResponse, $scope.messageDb);
             });
         });
     };
@@ -295,7 +296,6 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       $scope.currentChannel = response;
       if($scope.localTimestamp !== $scope.currentChannel.timestamp) {
         $scope.getNewMessages();
-        //$scope.getMessages();
         $scope.localTimestamp = $scope.currentChannel.timestamp;
       }
     });
@@ -327,8 +327,13 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
         }
       );
     }
-    userService.updateUser(userService.active);
-    $ionicSideMenuDelegate.toggleRight();
+    userService.updateUser(userService.active).then(function(response){
+      $scope.newChannelChecker();
+
+      $ionicSideMenuDelegate.toggleRight();
+    });
+
+
   };
 
   $scope.addAttachment = function () {
