@@ -239,15 +239,16 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
         } else {
           setTimeout(function() {
             botMessage.timestamp = $scope.currentChannel.timestamp;
-            messageService.post(botMessage).then(function (response) {
+            messageService.post(botMessage).then(function(response) {
                 $scope.checkTimeStamp();
                 $scope.warning = false;
                 if (userService.active.warnings > 2) {
-                    userService.updateUser(userService.active).then(function(response) {
+                    userService.deleteUser(userService.active._id).then(function() {
                         $scope.clearIntervals();
+                        userService.active = null;
+                        channelService.current = null;
                         localStorage.removeItem('user');
-                        userService.deleteUser(userService.active._id);
-                        window.location = "https://www.google.se/#q=low+self+esteem";
+                        $state.go('login');                        
                     });
                 } else {
                 userService.updateUser(userService.active);
