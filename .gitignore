@@ -21,8 +21,8 @@
 /mobile/node_modules
 /mobile/platforms
 /mobile/plugins
-/mobile/www/img
-/webb/assets/images
+/mobile/www/assets/img
+/webb/assets/img
 
 # IDEs and editors
 /.idea
