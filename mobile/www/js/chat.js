@@ -19,6 +19,9 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
       $state.transitionTo('login');
     })
   };
+
+  console.log("/////////"+$scope.userInput.avatar);
+
   //TODO test if camera it works on device with camera
    $scope.takePhoto = function(){
      console.log("YESSS!");
@@ -268,7 +271,7 @@ app.controller('chatController', function($scope, $state, $ionicSideMenuDelegate
         if(messages[i].userId === users[e]._id) {
           messages[i].avatar = users[e].avatar;
         }
-        else if(messages[i].avatar === undefined){
+        if(messages[i].avatar === "img/defaultProfileWhite.png"){
           messages[i].avatar = "img/defaultProfile.png";
         }
       }
