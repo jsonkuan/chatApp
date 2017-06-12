@@ -241,6 +241,26 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         if (!$scope.warning) {
           $scope.checkTimeStamp();
         } else {
+<<<<<<< HEAD
+          setTimeout(function() {
+            botMessage.timestamp = $scope.currentChannel.timestamp;
+            messageService.post(botMessage).then(function(response) {
+                $scope.checkTimeStamp();
+                $scope.warning = false;
+                if (userService.active.warnings > 2) {
+                    userService.deleteUser(userService.active._id).then(function() {
+                        $scope.clearIntervals();
+                        userService.active = null;
+                        channelService.current = null;
+                        localStorage.removeItem('user');
+                        $state.go('login');                        
+                    });
+                } else {
+                userService.updateUser(userService.active);
+                }
+            });
+          }, 10);
+=======
           botMessage.timestamp = $scope.currentChannel.timestamp;
           messageService.post(botMessage).then(function (response) {
             $scope.checkTimeStamp();
@@ -256,6 +276,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
               userService.updateUser(userService.active);
             }
           });
+>>>>>>> master
         }
       });
     });

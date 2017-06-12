@@ -203,26 +203,27 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
             $scope.currentChannel = response.data;
             message.timestamp = $scope.currentChannel.timestamp;
 
-            messageService.post(message).then(function (response) {
+            messageService.post(message).then(function(response) {
                 if (!$scope.warning) {
                     $scope.checkTimeStamp();
                 } else {
-                    botMessage.timestamp = $scope.currentChannel.timestamp;
-                    messageService.post(botMessage).then(function (response) {
-                        $scope.checkTimeStamp();
-                        $scope.warning = false;
-                        if ($scope.activeUser.warnings > 2) {
-                            userService.updateUser(userService.active).then(function (response) {
-                                //$cookies.remove('user');
-                                localStorage.removeItem('user');
-                            });
-                            userService.deleteUser($scope.activeUser._id);
-                            window.location = "https://www.google.se/#q=low+self+esteem";
-
-                        } else {
-                            userService.updateUser(userService.active);
-                        }
-                    });
+                    setTimeout(function () {
+                        botMessage.timestamp = $scope.currentChannel.timestamp;
+                        messageService.post(botMessage).then(function(response) {
+                            $scope.checkTimeStamp();
+                            $scope.warning = false;
+                            if ($scope.activeUser.warnings > 2) {
+                                userService.deleteUser($scope.activeUser._id).then(function() {
+                                    userService.active = null;
+                                    channelService.current = null;
+                                    localStorage.removeItem('user');
+                                    window.location = "https://www.google.se/#q=low+self+esteem";
+                                });
+                            } else {
+                                userService.updateUser(userService.active);
+                            }
+                        });
+                    }, 10);
                 }
             });
         });
