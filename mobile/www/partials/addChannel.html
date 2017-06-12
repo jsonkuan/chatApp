@@ -27,9 +27,9 @@
 
 <div class="card">
   <ion-list>
-    <ion-scroll scrollY="true" scrollbar-y="false">
+    <ion-scroll scrollY="true" scrollbar-y="false" overflow-scroll="true">
       <ion-item class="item-checkbox checkbox-calm" style="background-color:white" ng-repeat="user in usersWithoutBot" value="{{user.username}}"
-        ng-click="addToChannel(user, $index)">{{user.username}}
+         ng-click="addToChannel()">{{user.username}}
         <label class="checkbox">
         <input type="checkbox"/>
       </label>

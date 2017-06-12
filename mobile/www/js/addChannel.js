@@ -1,11 +1,12 @@
 app.controller("channelController", function ($scope, $state, userService, channelService, allUsers) {
     $scope.tempArray = [];
-    $scope.invitedUsers = [userService.active._id];
+    $scope.purpose = { text: "" };
+    $scope.channelName = { text: "" };
+    $scope.accessability = "public";
     $scope.users = allUsers.slice(1);
     $scope.usersWithoutBot = $scope.users;
-    $scope.channelName = { text: "" };
-    $scope.purpose = { text: "" };
-    $scope.accessability = "public";
+    $scope.invitedUsers = [userService.active._id];
+    
     console.log(userService.active.username);
 
     $scope.publicOrPrivate = function () {
@@ -67,8 +68,7 @@ app.controller("channelController", function ($scope, $state, userService, chann
     }
 
     $scope.addToChannel = function (user) {
-           $scope.invitedUsers.push(user._id);
-            console.log("Added: " + user.username + "\nid: " + user._id);
+        $scope.invitedUsers.push(user);
     };
 
      $scope.removeFromChannel = function(index) {
