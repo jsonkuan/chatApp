@@ -1,11 +1,11 @@
 app.controller("channelController", function ($scope, $state, userService, channelService, allUsers) {
-    $scope.accessability = "public";
-    $scope.channelName = { text: "" };
-    $scope.invitedUsers = [userService.active._id];
-    $scope.purpose = { text: "" };
     $scope.tempArray = [];
+    $scope.purpose = { text: "" };
+    $scope.accessability = "public";
     $scope.users = allUsers.slice(1);
+    $scope.channelName = { text: "" };
     $scope.usersWithoutBot = $scope.users;
+    $scope.invitedUsers = [userService.active._id];
 
     console.log(userService.active.username);
 
@@ -28,27 +28,6 @@ app.controller("channelController", function ($scope, $state, userService, chann
         });
         console.log(channels);
     }
-    // Check with jason if needed
-    /*$scope.createChannel = function (newChannel) {
-        var access = String($scope.publicOrPrivate).toLowerCase();
-        if (access === 'public') {
-            $scope.inviteUsersArray = [];
-        }
-        if ($scope.addChannelForm.$valid) {
-            var channels = {
-                name: $scope.channelName,
-                purpose: $scope.channelPurpose.charAt(0).toUpperCase() + $scope.channelPurpose.slice(1),
-                accessability: access,
-                users: $scope.inviteUsersArray,
-                timestamp: ""
-            };
-            channelService.post(channels).then(function (response) {
-                $state.go("chat");
-            });
-        }
-
-    };*/
-
     $scope.resetChannelname = function () {
         $scope.channelName.text = "";
         console.log("PÅKE");
@@ -68,7 +47,14 @@ app.controller("channelController", function ($scope, $state, userService, chann
     }
 
     $scope.addToChannel = function (user) {
-       
+        if(!$scope.invitedUsers.contains(user.username)) {
+            $scope.invitedUsers.push(user.username);
+            console.log("Added " + user.username);
+        } else {
+            var index = $scope.invitedUsers.indexOf(user.username);            
+            $scope.invitedUsers.splice(index, 1);
+            console.log("removed user from Index:" + index);
+        }
     };
 
     $scope.removeFromChannel = function (index) {
