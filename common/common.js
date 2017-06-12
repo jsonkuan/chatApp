@@ -65,8 +65,11 @@
             post: function(message) {
                 return REST.post(url, message);
             },
-            getAllMessages: function(query) {
-                return REST.get(url + query);
+            getAllMessages: function(channel) {
+                return REST.get(url + '?channel=' + channel);
+            },
+            getNewMessages: function(channel, timestamp) {
+                return REST.get('/messages/new' + '?channel=' + channel + '&timestamp=' + timestamp);
             }
         };
     }]);

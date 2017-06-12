@@ -17,7 +17,7 @@
         <div class="chat-box" ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
           <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture">
           <p class="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
-          <p class="date">{{message.date}}</p>
+          <p class="date">{{message.displayDate}}</p>
           <p smilies="message.text" class="messagetext">{{message.text}}</p>
           <img class="attachment" ng-src="{{message.attachment}}">
         </div>
@@ -50,27 +50,32 @@
     </ion-header-bar>
     <ion-content class="list-avatar-page has-header">
       <!--Channels -->
+      <div class="activeUserName">
+        <i class="ion-social-octocat slack-green"></i>
+        <p class="usernamePad">{{username}}</p>
+      </div>
     <div class="list">
-        <h5 class="list-title">Channels<img id="add-channel-icon" src="img/ic_add_circle_outline_snakk_24px.svg" alt="+"/></h5>
-        <a class="item" ng-repeat="channel in channels | orderBy: 'name'" ng-click="openChat(channel)">
+        <h5 class="list-title">Channels<i class="ion-ios-plus-outline add-channel-icon" ng-click="gotToAddChannel()"></i></h5>
+        <a class="item channels" ng-repeat="channel in channels | orderBy: 'name'" ng-click="openChat(channel)">
         <h2 class="list-style">
             <span class="hashtag-icon" ng-if="channel.accessability == 'public'">#</span>
             <span ng-if="channel.accessability == 'private'"><img id="lock-icon" src="img/ic_lock_black_24px.svg" alt="!"/></span>
-            {{channel.name}}
+            <span ng-if="channelStatus[channel._id].update" class="channel-highlight">{{channel.name}}</span>
+            <span ng-if="!channelStatus[channel._id].update">{{channel.name}}</span>
         </h2>
         </a>
     </div>
       <!--Direct Messages -->
-
         <h5 class="list-title">Direct Messages</h5>
-        <a class="item list_side" ng-repeat="user in users | orderBy: 'username'" ng-click="startDirectChat(activeUser, user)">
+        <a class="item list_side" ng-repeat="user in users | orderBy: 'username' track by $index" ng-click="startDirectChat(activeUser, user)">
           <div class="list chat userList">
            <img id="sidemenu-thumbNail" ngf-thumbnail="user.avatar">
-            <p class="user">{{user.username}}</p>
+            <p ng-if="channelStatus[user.channelId].update" class="channel-highlight">{{user.username}}</p>
+            <p ng-if="!channelStatus[user.channelId].update">{{user.username}}</p>
             <i ng-if="user.status == 'online'" class="ion-ios-circle-filled slack-green"> online</i>
             <i ng-if="user.status == 'offline'" class="ion-ios-circle-outline slack-off"> offline</i>
           </div>
-        </a>
+       </a>
     </ion-content>
   </ion-side-menu>
 

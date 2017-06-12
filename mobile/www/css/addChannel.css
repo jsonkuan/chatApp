@@ -9,11 +9,16 @@ h1 {
 
 .tesst {
     margin-top: 35px !important;
-    border: solid #4D394B 1px !important;
+    border: solid #4D394B 2px !important;
 }
 
+.ion-scroll { 
+    white-space: nowrap; 
+}
 .card {
-    border: solid #4D394B 1px !important;
+    border: solid #4D394B 2px !important;
+    border-radius: 10px !important;
+    max-height: 238px;
 }
 
 .item.item-input {
@@ -30,10 +35,10 @@ h1 {
 }
 
 .item.item-input.item-icon-right {
-    border-width: 1px !important;
+    border-width: 2px !important;
     border-color: #4D394B !important;
     padding-left: 55px !important;
-    font-size: 20px !important;
+    border-radius: 10px;
 }
 
 .toggle{
@@ -45,6 +50,7 @@ h1 {
     width: 300px !important;
     height: 50px !important;
     margin: 0 auto !important;
+    margin-top: 5px !important;
 }
 
 .snakk_logo_add {
@@ -55,6 +61,7 @@ h1 {
 
 .ion-close-circled {
     color: darkred !important;
+    margin: 10px !important;
 }
 
 

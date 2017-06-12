@@ -37,21 +37,21 @@ app.controller('loginController', function($scope, $state, $filter, userService)
     });
 
     userService.getUsers().then(function(response) {
-      $scope.user = response;
+        $scope.user = response;
+
+        if ($scope.login($scope.email, $scope.password)) {
+            /*if(userService.active.status === "online"){
+            $scope.placeHolder = "You are already logged in";
+            }else {*/
+            userService.active.status = "online";
+            userService.updateUser(userService.active);
+            localStorage['user'] = userService.active._id;
+            $state.transitionTo('chat');
+            //}
+        } else {
+            $scope.password = "";
+        }
     });
-    if ($scope.login($scope.email, $scope.password)) {
-      /*if(userService.active.status === "online"){
-       $scope.placeHolder = "You are already logged in";
-       }else {*/
-      userService.active.status = "online";
-      userService.updateUser(userService.active);
-      //NOTE: Store user id as cookie on login.
-      localStorage['user'] = userService.active._id;
-      $state.transitionTo('chat');
-      //}
-    } else {
-      $scope.password = "";
-    }
   };
 
   $scope.registerButtonClicked = function() {
@@ -91,7 +91,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
   };
 
   $scope.login = function(inputEmail, inputPassword) {
-    console.log($scope.user.length);
+    //console.log($scope.user.length);
     for (var i = 0; i < $scope.user.length; i++) {
       if (inputEmail === $scope.user[i].email && inputPassword === $scope.user[i].password) {
         $scope.isAuthenticated = true;
@@ -101,7 +101,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
     }
   };
   $scope.register = function(inputEmail, inputPassword, passwordConfirm) {
-    console.log(inputPassword, passwordConfirm);
+    //console.log(inputPassword, passwordConfirm);
     if (inputPassword === passwordConfirm) {
       for (var i = 0; i < $scope.user.length; i++){
         if(inputEmail === $scope.user[i].email)

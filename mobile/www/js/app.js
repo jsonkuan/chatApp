@@ -10,6 +10,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('login', {
       url: '/login',
+      cache: false,
       controller : 'loginController',
       templateUrl: 'partials/login.html',
       resolve: {
@@ -20,6 +21,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     })
     .state('chat', {
       url:'/chat',
+      cache: false,
       controller: 'chatController',
       templateUrl: 'partials/chat.html',
       resolve: {
@@ -37,18 +39,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('settings', {
-      url: '/settings',
-      controller: 'settingsController',
-      templateUrl: 'partials/settings.html',
-      resolve: {
-        session: function(Resolvers) {
-          return Resolvers.getUser();
-        }
-      }
-    })
     .state('addChannel', {
       url: '/addChannel',
+      cache: false,
       controller: 'channelController',
       templateUrl: 'partials/addChannel.html',
       resolve: {
@@ -87,7 +80,6 @@ app.run(function($ionicPlatform, $state, $rootScope, Resolvers) {
       var user = response;
       //Block access outside of login when not logged in
       if (!user && destination !== "login") {
-        console.log('nein!');
         event.preventDefault();
         $state.go('login');
         //Block access to login when not logged in
