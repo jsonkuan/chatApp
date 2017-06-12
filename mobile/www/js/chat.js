@@ -163,10 +163,10 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
 
           $scope.tmpChannels = channelResponse;
           $scope.tmpContacts = userResponse;
-          $scope.updateChannelStatus();
-          $scope.filterChannels();
           $scope.addUserToMsg(userResponse, $scope.messageDb);
         }
+        $scope.updateChannelStatus();
+        $scope.filterChannels();
       });
     });
   };
@@ -252,7 +252,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
                         userService.active = null;
                         channelService.current = null;
                         localStorage.removeItem('user');
-                        $state.go('login');                        
+                        $state.go('login');
                     });
                 } else {
                 userService.updateUser(userService.active);
