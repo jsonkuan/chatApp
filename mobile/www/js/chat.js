@@ -241,7 +241,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         if (!$scope.warning) {
           $scope.checkTimeStamp();
         } else {
-<<<<<<< HEAD
           setTimeout(function() {
             botMessage.timestamp = $scope.currentChannel.timestamp;
             messageService.post(botMessage).then(function(response) {
@@ -260,23 +259,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
                 }
             });
           }, 10);
-=======
-          botMessage.timestamp = $scope.currentChannel.timestamp;
-          messageService.post(botMessage).then(function (response) {
-            $scope.checkTimeStamp();
-            $scope.warning = false;
-            if (userService.active.warnings > 2) {
-              userService.updateUser(userService.active).then(function (response) {
-                $scope.clearIntervals();
-                localStorage.removeItem('user');
-                userService.deleteUser(userService.active._id);
-                window.location = "https://www.google.se/#q=low+self+esteem";
-              });
-            } else {
-              userService.updateUser(userService.active);
-            }
-          });
->>>>>>> master
         }
       });
     });
