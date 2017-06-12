@@ -1,12 +1,12 @@
 app.controller("channelController", function ($scope, $state, userService, channelService, allUsers) {
-    $scope.tempArray = [];
-    $scope.purpose = { text: "" };
-    $scope.channelName = { text: "" };
     $scope.accessability = "public";
+    $scope.channelName = { text: "" };
+    $scope.invitedUsers = [userService.active._id];
+    $scope.purpose = { text: "" };
+    $scope.tempArray = [];
     $scope.users = allUsers.slice(1);
     $scope.usersWithoutBot = $scope.users;
-    $scope.invitedUsers = [userService.active._id];
-    
+
     console.log(userService.active.username);
 
     $scope.publicOrPrivate = function () {
@@ -49,7 +49,7 @@ app.controller("channelController", function ($scope, $state, userService, chann
 
     };*/
 
-    $scope.resetChannelname = function (name) {
+    $scope.resetChannelname = function () {
         $scope.channelName.text = "";
         console.log("PÅKE");
     };
@@ -63,21 +63,21 @@ app.controller("channelController", function ($scope, $state, userService, chann
         $scope.users = response;
     });
 
-    $scope.backToChat = function() {
+    $scope.backToChat = function () {
         $state.go('chat');
     }
 
     $scope.addToChannel = function (user) {
-        $scope.invitedUsers.push(user);
+       
     };
 
-     $scope.removeFromChannel = function(index) {
+    $scope.removeFromChannel = function (index) {
         $scope.invitedUsers.splice(index, 1);
         console.log("Removed");
     };
 
     $scope.filterInvitedUsers = function (user) {
-        return ($scope.inviteUsersArray.contains(user._id)) ? "" : user._id;
+        return ($scope.invitedUsers.contains(user));
     }
 });
 
