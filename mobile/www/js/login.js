@@ -59,7 +59,7 @@ app.controller('loginController', function($scope, $state, $filter, userService)
     if($scope.username && $scope.email && $scope.password && $scope.confirm){
       if ($scope.register($scope.email, $scope.password, $scope.confirm)){
         var user = { email: $filter('lowercase')($scope.email), username: $scope.username,
-          password: $scope.password, avatar: "img/defaultProfile.png", status: "offline", warnings: 0};
+          password: $scope.password, avatar: "img/defaultProfileWhite.png", status: "offline", warnings: 0};
         shownElements();
         $scope.email = $scope.email.toLowerCase();
         userService.post(user).then(function(response) {
