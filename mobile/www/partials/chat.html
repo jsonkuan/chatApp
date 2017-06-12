@@ -79,29 +79,29 @@
     <ion-header-bar class="bar-light snakk-background">
       <h1 class="title">Account</h1>
     </ion-header-bar>
-    <ion-content class="has-header has-footer side-right">
+    <ion-content class="has-header has-footer side-right snakk-background">
       <div class="list">
 
-        <div class="item item-avatar item-thumbnail-left">
+        <div class="item item-avatar item-thumbnail-left snakk-background no-border">
           <img ngf-src="avatar" ngf-thumbnail="userInput.avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Profile picture">
-          <h2 >{{username}}</h2>
-          <div class="button button-icon icon ion-camera no-padding no-margin" ng-click="takePhoto()"></div>
+          <h2 class="snakk-font-header">{{username}}</h2>
+          <div class="button button-icon icon ion-camera no-padding no-margin icon-color" ng-click="takePhoto()"></div>
         </div>
         <label class="item right-menu-item item-stacked-label">
-          <span class="input-label">{{email}}</span>
+          <span class="input-label snakk-font-header">{{email}}</span>
         </label>
         <label class="item right-menu-item item-stacked-label">
-          <span class="input-label">Username</span>
-          <input class="input settings right-menu-input" ng-model="userInput.username" type="text" placeholder="username">
+          <span class="input-label snakk-font-header">Username</span>
+          <input class="input settings right-menu-input snakk-font-regular" ng-model="userInput.username" type="text" placeholder="username">
         </label>
         <label class="item right-menu-item item-stacked-label">
-          <span class="input-label">Password</span>
-          <input class="input settings right-menu-input" ng-model="userInput.password" type="password" placeholder="password">
+          <span class="input-label snakk-font-header">Password</span>
+          <input class="input settings right-menu-input snakk-font-regular" ng-model="userInput.password" type="password" placeholder="password">
         </label>
         <button class="button button-block button-positive right-menu-buttons chat" ng-click="saveSettings()">Save changes</button>
       </div>
     </ion-content>
-    <div class="bar bar-footer bar-light no-padding">
+    <div class="bar bar-footer bar-light no-padding snakk-background">
       <button class="button button-block button-positive right-menu-buttons chat no-padding" ng-click="logout()">Logout</button>
     </div>
   </ion-side-menu>

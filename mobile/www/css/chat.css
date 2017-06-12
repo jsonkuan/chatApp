@@ -28,6 +28,11 @@ snakk darker: #473445;
   border: solid 0 #4D394B !important;
 }
 
+.right-menu-buttons {
+  color: white !important;
+  background-color: #38968C !important;
+}
+
 h1.title {
   color: white !important;
 }
@@ -105,6 +110,16 @@ span.hashtag-icon {
     color: #7C6A7A;
 }
 
+
+
+.icon-color {
+  color: white !important;
+}
+
+.no-border{
+  border-width: 0 !important;
+}
+
 .list a {
     background: transparent;
     border: none;
@@ -119,8 +134,15 @@ span.hashtag-icon {
     color: #AB9BA9;
 }
 
-.list-title {
-    color: #7C6A7A;
+.snakk-font-regular {
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+  color: white !important;
+}
+
+.snakk-font-header {
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+  /*color: #7C6A7A !important;*/
+  color: #AB9BA9 !important;
 }
 
 .username{
