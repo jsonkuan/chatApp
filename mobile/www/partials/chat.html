@@ -32,8 +32,8 @@
           </label>
           <input ngf-select class="ng-hide" ng-model="chatInput.attachment" id="selectedAttach" ng-change="addAttachment()">
           <label ng-click="removeAttachment()" ng-show="chatInput.attachmentPath"><i class="ion-android-attach button-small button button-clear icon_red"></i></label>
-          <label for="selectedAttach" class="button button-clear icon ion-android-add-circle"></label>
-          <button class="button icon button-clear ion-arrow-right-b" ng-click=sendMessage(chatInput.text)></button>
+          <label for="selectedAttach" class="button icon-active button-clear icon ion-android-add-circle"></label>
+          <button class="button icon button-clear icon-active ion-arrow-right-b" ng-click=sendMessage(chatInput.text)></button>
         </div>
     </div>
 
@@ -98,11 +98,11 @@
           <span class="input-label snakk-font-header">Password</span>
           <input class="input settings right-menu-input snakk-font-regular" ng-model="userInput.password" type="password" placeholder="password">
         </label>
-        <button class="button button-block button-positive right-menu-buttons chat" ng-click="saveSettings()">Save changes</button>
+        <button class="button button-block button-positive snakk-buttons chat" ng-click="saveSettings()">Save changes</button>
       </div>
     </ion-content>
     <div class="bar bar-footer bar-light no-padding snakk-background">
-      <button class="button button-block button-positive right-menu-buttons chat no-padding" ng-click="logout()">Logout</button>
+      <button class="button button-block button-positive snakk-buttons chat no-padding" ng-click="logout()">Logout</button>
     </div>
   </ion-side-menu>
 </ion-side-menus>

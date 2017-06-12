@@ -28,9 +28,14 @@ snakk darker: #473445;
   border: solid 0 #4D394B !important;
 }
 
-.right-menu-buttons {
+.snakk-buttons {
   color: white !important;
   background-color: #38968C !important;
+}
+
+.snakk-buttons:active {
+  color: white !important;
+  background-color: #78968C !important;
 }
 
 h1.title {
@@ -110,10 +115,12 @@ span.hashtag-icon {
     color: #7C6A7A;
 }
 
-
-
 .icon-color {
   color: white !important;
+}
+
+.icon-active:active {
+  color: #38968C !important;
 }
 
 .no-border{
@@ -201,6 +208,7 @@ span.hashtag-icon {
 }
 
 .attachment{
+  margin: 0 0 0 10px;
   height: 20%;
   width: 20%;
   object-fit: contain;
