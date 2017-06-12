@@ -236,6 +236,9 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
 
     $scope.addUserToMsg = function(users, messages) {
         for(var i = 0; i < messages.length; i++) {
+
+            messages[i].displayDate = formatDate(messages[i].timestamp);
+
             for(var e = 0; e < users.length; e++){
 
                 if(messages[i].userId === users[e]._id) {
@@ -312,16 +315,32 @@ angular.module('app').controller('chatController', function($scope, upload, $sta
         });
     };
     //Watches for new channels
-    $scope.newChannelChecker = function() {
-        channelService.getChannelsForUser($scope.activeUser._id).then(function(channelResponse) {
-            $scope.tmpChannels = channelResponse;
-            userService.getUsers().then(function(userResponse) {
-                $scope.tmpContacts = userResponse;
-                $scope.updateChannelStatus();
-                $scope.filterChannels();
+    $scope.newChannelChecker = function () {
+        channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
+
+            userService.getUsers().then(function (userResponse) {
+                if ($scope.avatarChangeChecker(userResponse, $scope.tmpContacts) || $scope.tmpChannels.length < channelResponse.length) {
+
+                    $scope.tmpChannels = channelResponse;
+                    $scope.tmpContacts = userResponse;
+                    $scope.updateChannelStatus();
+                    $scope.filterChannels();
+                    $scope.addUserToMsg(userResponse, $scope.messageDb);
+                }
             });
         });
     };
+
+    $scope.avatarChangeChecker = function (responseArray, tmpArray) {
+
+        for (var i = 0; i < responseArray.length; i++) {
+            if (responseArray[i].avatar !== tmpArray[i].avatar) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     setInterval(function() {
         $scope.checkTimeStamp();
     }, 1500);
@@ -336,14 +355,14 @@ function rnd(number) {
     return Math.floor((Math.random() * number) + 1);
 }
 
-function formatDate() {
-    var d1 = new Date();
+function formatDate(isoDate) {
+    var d1 = new Date(isoDate);
     var day = ("0" + d1.getDate()).slice(-2);
     var month = ("0" + (d1.getMonth() + 1)).slice(-2);
     var year = d1.getFullYear();
-    var today = (month) + '' + (day);
+    var today = (month) + '/' + (day);
     var hour = ("0" + d1.getHours()).slice(-2);
     var minutes = ("0" + d1.getMinutes()).slice(-2);
 
-    return (year + today + " - " + hour + ":" + minutes);
+    return (year + "/" +  today + " - " + hour + ":" + minutes);
 }

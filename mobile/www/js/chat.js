@@ -252,7 +252,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
                         userService.active = null;
                         channelService.current = null;
                         localStorage.removeItem('user');
-                        $state.go('login');                        
+                        $state.go('login');
                     });
                 } else {
                 userService.updateUser(userService.active);
@@ -290,8 +290,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     for (var i = 0; i < messages.length; i++) {
 
       messages[i].displayDate = formatDate(messages[i].timestamp);
-
-      console.log(messages[i].displayDate);
 
       for (var e = 0; e < users.length; e++) {
 
