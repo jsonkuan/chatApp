@@ -291,8 +291,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
 
       messages[i].displayDate = formatDate(messages[i].timestamp);
 
-      console.log(messages[i].displayDate);
-
       for (var e = 0; e < users.length; e++) {
 
         if (messages[i].userId === users[e]._id) {
