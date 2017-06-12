@@ -7,7 +7,6 @@ app.controller('loginController', function ($scope, $state, $filter, $q, userSer
     $scope.showCancel = false;
     $scope.isAuthenticated = true;
     $scope.placeHolder = "Email";
-    $scope.user = {};
 
     userService.get('133333333333333333333337').then(function (response) {
         if (!response) {
@@ -38,7 +37,6 @@ app.controller('loginController', function ($scope, $state, $filter, $q, userSer
             }
         });
     };
-
 
     $scope.registerButtonClicked = function () {
         $scope.isAuthenticated = true;

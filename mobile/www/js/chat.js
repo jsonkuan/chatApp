@@ -12,6 +12,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.tmpContacts = $scope.users;
   $scope.channelStatus;
   $scope.pictureUrl = "";
+
   $scope.warning = false;
   $scope.intervals = [];
 
@@ -25,6 +26,9 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       $state.transitionTo('login');
     })
   };
+
+  console.log("/////////"+$scope.userInput.avatar);
+
   //TODO test if camera it works on device with camera
   $scope.takePhoto = function () {
     console.log("YESSS!");
@@ -163,10 +167,10 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
 
           $scope.tmpChannels = channelResponse;
           $scope.tmpContacts = userResponse;
-          $scope.updateChannelStatus();
-          $scope.filterChannels();
           $scope.addUserToMsg(userResponse, $scope.messageDb);
         }
+        $scope.updateChannelStatus();
+        $scope.filterChannels();
       });
     });
   };
@@ -252,7 +256,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
                         userService.active = null;
                         channelService.current = null;
                         localStorage.removeItem('user');
-                        $state.go('login');                        
+                        $state.go('login');
                     });
                 } else {
                 userService.updateUser(userService.active);
@@ -291,8 +295,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
 
       messages[i].displayDate = formatDate(messages[i].timestamp);
 
-      console.log(messages[i].displayDate);
-
       for (var e = 0; e < users.length; e++) {
 
         if (messages[i].userId === users[e]._id) {
@@ -301,7 +303,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         if (messages[i].userId === users[e]._id) {
           messages[i].avatar = users[e].avatar;
         }
-        else if (messages[i].avatar === undefined) {
+
+        if(messages[i].avatar === "img/defaultProfileWhite.png"){
           messages[i].avatar = "img/defaultProfile.png";
         }
       }
@@ -317,6 +320,18 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       }
     });
   };
+
+  function formatDate(isoDate) {
+    var d1 = new Date(isoDate);
+    var day = ("0" + d1.getDate()).slice(-2);
+    var month = ("0" + (d1.getMonth() + 1)).slice(-2);
+    var year = d1.getFullYear();
+    var today = (month) + '-' + (day);
+    var hour = ("0" + d1.getHours()).slice(-2);
+    var minutes = ("0" + d1.getMinutes()).slice(-2);
+
+    return (year +"-"+ today + " - " + hour + ":" + minutes);
+  }
 
   $scope.password = userService.active.password;
   $scope.email = userService.active.email;
@@ -344,9 +359,9 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       );
     }
+    
     userService.updateUser(userService.active).then(function (response) {
       $scope.newChannelChecker();
-
       $ionicSideMenuDelegate.toggleRight();
     });
   };
@@ -401,15 +416,3 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     return false;
   }
 });
-
-function formatDate(isoDate) {
-  var d1 = new Date(isoDate);
-  var day = ("0" + d1.getDate()).slice(-2);
-  var month = ("0" + (d1.getMonth() + 1)).slice(-2);
-  var year = d1.getFullYear();
-  var today = (month) + '/' + (day);
-  var hour = ("0" + d1.getHours()).slice(-2);
-  var minutes = ("0" + d1.getMinutes()).slice(-2);
-
-  return (year + "/" +  today + " - " + hour + ":" + minutes);
-}
