@@ -285,6 +285,11 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.getMessages();
   $scope.addUserToMsg = function (users, messages) {
     for (var i = 0; i < messages.length; i++) {
+
+      messages[i].displayDate = formatDate(messages[i].timestamp);
+
+      console.log(messages[i].displayDate);
+
       for (var e = 0; e < users.length; e++) {
 
         if (messages[i].userId === users[e]._id) {
@@ -394,14 +399,14 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   }
 });
 
-function formatDate() {
-  var d1 = new Date();
+function formatDate(isoDate) {
+  var d1 = new Date(isoDate);
   var day = ("0" + d1.getDate()).slice(-2);
   var month = ("0" + (d1.getMonth() + 1)).slice(-2);
   var year = d1.getFullYear();
-  var today = (month) + '' + (day);
+  var today = (month) + '/' + (day);
   var hour = ("0" + d1.getHours()).slice(-2);
   var minutes = ("0" + d1.getMinutes()).slice(-2);
 
-  return (year + today + " - " + hour + ":" + minutes);
+  return (year + "/" +  today + " - " + hour + ":" + minutes);
 }
