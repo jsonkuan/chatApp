@@ -63,7 +63,7 @@
     </div>
       <!--Direct Messages -->
         <h5 class="list-title">Direct Messages</h5>
-        <a class="item list_side" ng-repeat="user in users | orderBy: 'username'" ng-click="startDirectChat(activeUser, user)">
+        <a class="item list_side" ng-repeat="user in users | orderBy: 'username' track by $index"" ng-click="startDirectChat(activeUser, user)">
           <div class="list chat userList">
            <img id="sidemenu-thumbNail" ngf-thumbnail="user.avatar">
             <p ng-if="channelStatus[user.channelId].update" class="channel-highlight">{{user.username}}</p>
