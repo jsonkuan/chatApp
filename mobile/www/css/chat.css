@@ -102,7 +102,8 @@ h1.title {
 }
 
 img#add-channel-icon {
-   transform: translate(800%);
+  transform: translate(800%);
+}
 
 .ion-ios-plus-outline.add-channel-icon {
   float: right;
@@ -136,7 +137,7 @@ span.hashtag-icon {
 .no-border{
   border-width: 0 !important;
 }
-  
+
 .list a {
     background: transparent;
     border: none;
@@ -154,6 +155,7 @@ span.hashtag-icon {
 .snakk-font-header {
   font-family: Roboto, "Helvetica Neue", sans-serif !important;
   color: #AB9BA9 !important;
+}
 
 .list-title {
   margin-left: 10px;
