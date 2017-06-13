@@ -1,20 +1,19 @@
-
-
+<div class="list snakk-background">
+  <img class="snakk_logo" src="/assets/img/snakk_icon_white.png">
 <div class="list login">
   <div class="logo_frame">
     <img class="snakk_logo" src="/assets/img/snakk_logo.png">
   </div>
-
   <div class="formFrame">
   <form name="loginForm" ng-model="loginForm">
-  <label class="item item-input" ng-show="showUserName">
+  <label class="item item-input no-border" ng-show="showUserName">
     <input placeholder="Username" ng-model="username" type="text">
     <div ng-messages="loginForm.username.$error">
       <div ng-message="max"> max 20 characters</div>
     </div>
   </label>
 
-  <label class="item item-input">
+  <label class="item item-input no-border">
     <div class="input">
     <input placeholder="{{placeHolder}}" class="input" type="email" name="email" ng-model="email" required>
     </div>
@@ -23,22 +22,21 @@
     </div>
   </label>
 
-  <label class="item item-input">
+  <label class="item item-input no-border">
     <input placeholder="Password" type="password" name="password" ng-model="password" required maxlength="20">
     <div ng-messages="loginForm.password.$error"></div>
   </label>
 
-  <label class="item item-input" ng-show="showPasswordConfirm">
+  <label class="item item-input no-border" ng-show="showPasswordConfirm">
     <input placeholder="Confirm password" type="password" name="confirm" ng-pattern="{{password}}" ng-model="confirm" required maxlength="20">
     <div ng-messages="loginForm.confirm.$error">
       <div ng-message="pattern"> no match</div>
     </div>
   </label>
   </form>
-  </div>
 
-  <button type="submit" class="button button-block button-positive" ng-click="loginButtonClicked()" ng-show="showLoginButton">Login</button>
-  <button class="button button-block button-positive" ng-click="registerClicked()" style="text-align:center" ng-show="showReg">Register</button>
-  <button type="submit" class="button button-block button-positive" ng-click="registerButtonClicked()" ng-show="showRegButton">Register</button>
-  <button class="button button-block button-positive" ng-click="cancelClicked()" style="text-align:center" ng-show="showCancel">Cancel</button>
+  <button type="submit" class="button button-block button-positive snakk-buttons" ng-click="loginButtonClicked()" ng-show="showLoginButton">Login</button>
+  <button class="button button-block button-positive snakk-buttons" ng-click="registerClicked()" style="text-align:center" ng-show="showReg">Register</button>
+  <button type="submit" class="button button-block button-positive snakk-buttons" ng-click="registerButtonClicked()" ng-show="showRegButton">Register</button>
+  <button class="button button-block button-positive snakk-buttons" ng-click="cancelClicked()" style="text-align:center" ng-show="showCancel">Cancel</button>
 </div>

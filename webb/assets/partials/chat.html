@@ -71,7 +71,7 @@
                     <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
                         <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
                         <p id="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
-                        <p id="date">{{message.timestamp}}</p>
+                        <p id="date">{{message.displayDate}}</p>
                         <p smilies="message.text" id="messagetext">{{message.text}}"</p>
                         <img ng-src="{{message.attachment}}" flex="20">
                     </div>

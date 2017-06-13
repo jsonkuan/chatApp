@@ -28,20 +28,20 @@ app.controller('loginController', function($scope, $state, $filter, userService,
     $scope.loginButtonClicked = function() {
         userService.getUsers().then(function(response) {
             $scope.user = response;
+            if ($scope.login($scope.email, $scope.password)) {
+                //if(userService.active.status === "online"){
+                //    $scope.email = "You are already logged in";
+                //}else {
+                    userService.active.status = "online";
+                    userService.updateUser(userService.active);
+                    //NOTE: Store user id as cookie on login.
+                    localStorage['user'] = userService.active._id;
+                    $state.transitionTo('chat');
+                //}
+            } else {
+                $scope.password = "";
+            }
         });
-        if ($scope.login($scope.email, $scope.password)) {
-            //if(userService.active.status === "online"){
-            //    $scope.email = "You are already logged in";
-            //}else {
-                userService.active.status = "online";
-                userService.updateUser(userService.active);
-                //NOTE: Store user id as cookie on login.
-                localStorage['user'] = userService.active._id;
-                $state.transitionTo('chat');
-            //}
-        } else {
-            $scope.password = "";
-        }
     };
 
     $scope.registerButtonClicked = function() {
