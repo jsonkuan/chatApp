@@ -320,7 +320,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
 
             userService.getUsers().then(function (userResponse) {
-                if ($scope.avatarChangeChecker(userResponse, $scope.tmpContacts) || $scope.tmpChannels.length < channelResponse.length) {
+                if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.avatarChangeChecker(userResponse, $scope.tmpContacts)) {
 
                     $scope.tmpChannels = channelResponse;
                     $scope.tmpContacts = userResponse;

@@ -161,17 +161,16 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   //Watches for new channels
   $scope.newChannelChecker = function () {
     channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
+        userService.getUsers().then(function (userResponse) {
+            //if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.avatarChangeChecker(userResponse, $scope.tmpContacts)) {
 
-      userService.getUsers().then(function (userResponse) {
-        if ($scope.avatarChangeChecker(userResponse, $scope.tmpContacts) || $scope.tmpChannels.length < channelResponse.length) {
-
-          $scope.tmpChannels = channelResponse;
-          $scope.tmpContacts = userResponse;
-          $scope.addUserToMsg(userResponse, $scope.messageDb);
-        }
-        $scope.updateChannelStatus();
-        $scope.filterChannels();
-      });
+                $scope.tmpChannels = channelResponse;
+                $scope.tmpContacts = userResponse;
+                $scope.addUserToMsg(userResponse, $scope.messageDb);
+            //}
+            $scope.updateChannelStatus();
+            $scope.filterChannels();
+        });
     });
   };
   $scope.openChat = function (channel) {
@@ -357,8 +356,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     $scope.userInput.username = userService.active.username;
     $scope.userInput.password = userService.active.password;
 
-    if ($scope.userInput.avatar !== "") {
-
+    if ($scope.avatar != userService.active.avatar && $scope.userInput.avatar !== "") {
       upload({
         url: 'http://localhost:3000/upload',
         method: 'POST',
@@ -367,15 +365,18 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       }).then(
         function (response) {
-          console.log("avar" , response.data);
-          userService.active.avatar = "/assets" + response.data;
-          userService.updateUser(userService.active);
-          $scope.newChannelChecker();
-          $ionicSideMenuDelegate.toggleRight();
+          //console.log("avar" , response.data);
+          setTimeout(function() {
+            userService.active.avatar = "/assets" + response.data;
+            userService.updateUser(userService.active).then(function() {
+              $scope.newChannelChecker();
+              $ionicSideMenuDelegate.toggleRight();
+            });
+          }, 1000);
         }
       );
     } else {
-      userService.updateUser(userService.active).then(function (response) {
+      userService.updateUser(userService.active).then(function() {
         $scope.newChannelChecker();
         $ionicSideMenuDelegate.toggleRight();
       });
