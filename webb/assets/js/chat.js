@@ -12,6 +12,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     $scope.tmpChannels = $scope.userChannels;
     $scope.tmpContacts = $scope.contacts;
     $scope.warning = false;
+    $scope.channelName = "";
 
     // Filter channels for user
     $scope.filterChannels = function () {
@@ -77,6 +78,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
 
     $scope.openChat = function (channel) {
         channelService.current = channel;
+        $scope.channelName = $scope.getChannelName($scope.currentChannel);
         $state.reload();
     };
 
@@ -253,6 +255,20 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
             }
         }
     };
+
+    $scope.getChannelName = function (currentChannel) {
+
+        if (currentChannel.accessability === "direct") {
+
+            var channelUser = $scope.contacts.filter(function (user) {
+                return user._id != userService.active._id && currentChannel.users.includes(user._id);
+            });
+            return channelUser[0].username;
+        } else {
+            return currentChannel.name;
+        }
+    };
+    $scope.channelName = $scope.getChannelName($scope.currentChannel);
 
     $scope.getMessages = function () {
         $scope.attachmentPath = "";
