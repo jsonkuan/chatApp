@@ -176,7 +176,9 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   };
   $scope.openChat = function (channel) {
     channelService.current = channel;
-    $scope.toggleLeft();
+    if($ionicSideMenuDelegate.getOpenRatio()){
+      $scope.toggleLeft();
+    }
     $scope.currentChannel = channel;
     $scope.messageDb = [];
     $scope.localTimestamp = '';
@@ -290,6 +292,17 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     }
   };
   $scope.getMessages();
+
+  $scope.getUserFromMsg = function (userId) {
+    var user = {};
+    for (var y = 0; y < $scope.allUsers.length; y++) {
+      if ($scope.allUsers[y]._id === userId) {
+        user = $scope.allUsers[y];
+      }
+    }
+    return user;
+  };
+
   $scope.addUserToMsg = function (users, messages) {
     for (var i = 0; i < messages.length; i++) {
 
@@ -359,7 +372,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       );
     }
-    
+
     userService.updateUser(userService.active).then(function (response) {
       $scope.newChannelChecker();
       $ionicSideMenuDelegate.toggleRight();
