@@ -18,6 +18,7 @@
           <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture">
           <p class="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
           <p class="date">{{message.displayDate}}</p>
+          <p class="remove-message" ng-show="isAdmin()" ng-click="removeMessage(message)">remove</p>
           <p smilies="message.text" class="messagetext">{{message.text}}</p>
           <img class="attachment" ng-src="{{message.attachment}}">
         </div>

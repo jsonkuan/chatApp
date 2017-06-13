@@ -27,6 +27,14 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     })
   };
 
+  $scope.isAdmin = function () {
+    return userService.active._id === "133333333333333333333337";
+  };
+
+  $scope.removeMessage = function(message){
+    //TODO remove message
+  };
+
   console.log("/////////"+$scope.userInput.avatar);
 
   //TODO test if camera it works on device with camera
@@ -359,7 +367,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       );
     }
-    
+
     userService.updateUser(userService.active).then(function (response) {
       $scope.newChannelChecker();
       $ionicSideMenuDelegate.toggleRight();

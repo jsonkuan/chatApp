@@ -175,6 +175,14 @@ span.hashtag-icon {
   cursor: pointer;
 }
 
+.remove-message {
+  color:red;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .date{
   color: #9e9e9e;
   font-style: italic;

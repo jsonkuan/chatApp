@@ -54,6 +54,7 @@ app.get('/messages', function(request, response) {
         response.send(result);
     });
 });
+
 app.get('/messages/new', function(request, response) {
     database.collection('messages').find({$and: [
         {'channel':request.query.channel},
@@ -61,7 +62,11 @@ app.get('/messages/new', function(request, response) {
         response.send(result);
     });
 });
-
+// deletes message from db
+app.post('/messages', function(request, response) {
+    database.collection('messages').deleteOne({"_id": ObjectId(request.body._id)});
+    response.send({});
+});
 
 // gets all channels for user from DB
 app.get('/channels', function(request, response) {
