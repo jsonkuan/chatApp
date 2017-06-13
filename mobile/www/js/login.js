@@ -1,4 +1,4 @@
-app.controller('loginController', function($scope, $state, $filter, $q, userService) {
+app.controller('loginController', function ($scope, $state, $filter, $q, userService) {
   $scope.showReg = true;
   $scope.showUserName = false;
   $scope.showPasswordConfirm = false;
@@ -15,7 +15,7 @@ app.controller('loginController', function($scope, $state, $filter, $q, userServ
         username: "SnakkBot",
         email: "bot@snakk.com",
         password: "2017",
-        avatar: "/assets/img/snakk-bot.jpg",
+        avatar: "assets/img/snakk-bot.jpg",
         status: "offline"
       });
     }
@@ -45,7 +45,7 @@ app.controller('loginController', function($scope, $state, $filter, $q, userServ
         if (response === true) {
           var user = {
             email: $filter('lowercase')($scope.email), username: $scope.username,
-            password: $scope.password, avatar: "img/defaultProfile.png", status: "offline", warnings: 0
+            password: $scope.password, avatar: "assets/img/defaultProfile.png", status: "offline", warnings: 0
           };
           userService.post(user).then(function (response) {
             $scope.email = $scope.email.toLowerCase();
@@ -58,73 +58,60 @@ app.controller('loginController', function($scope, $state, $filter, $q, userServ
     }
   };
 
-
-  $scope.registerButtonClicked = function () {
-    $scope.isAuthenticated = true;
-    if ($scope.username && $scope.email && $scope.password && $scope.confirm) {
-      if ($scope.register($scope.email, $scope.password, $scope.confirm)) {
-        var user = {
-          email: $filter('lowercase')($scope.email), username: $scope.username,
-          password: $scope.password, avatar: "/assets/img/defaultProfile.png", status: "offline", warnings: 0
-        };
-      }
-    }
+  $scope.registerClicked = function () {
+    shownElements();
   };
 
-    $scope.registerClicked = function () {
-        shownElements();
-    };
+  $scope.cancelClicked = function () {
+    shownElements();
+  };
 
-    $scope.cancelClicked = function () {
-        shownElements();
-    };
+  var shownElements = function () {
+    $scope.showReg = !$scope.showReg;
+    $scope.showLoginButton = !$scope.showLoginButton;
+    $scope.showRegButton = !$scope.showRegButton;
+    $scope.showPasswordConfirm = !$scope.showPasswordConfirm;
+    $scope.showUserName = !$scope.showUserName;
+    $scope.showCancel = !$scope.showCancel;
+  };
 
-    var shownElements = function () {
-        $scope.showReg = !$scope.showReg;
-        $scope.showLoginButton = !$scope.showLoginButton;
-        $scope.showRegButton = !$scope.showRegButton;
-        $scope.showPasswordConfirm = !$scope.showPasswordConfirm;
-        $scope.showUserName = !$scope.showUserName;
-        $scope.showCancel = !$scope.showCancel;
-    };
+  $scope.login = function (inputEmail, inputPassword) {
+    return $q(function(resolve) {
+      userService.getUsers().then(function (response) {
+        var users = response;
+        for (var i = 0; i < users.length; i++) {
+          if (inputEmail === users[i].email && inputPassword === users[i].password) {
+            $scope.isAuthenticated = true;
+            userService.active = users[i];
+            resolve(true);
+            return;
+          }
+        }
+        resolve(false);
+      });
+    });
+  };
 
-    $scope.login = function (inputEmail, inputPassword) {
-        return $q(function(resolve) {
-            userService.getUsers().then(function (response) {
-                var users = response;
-                for (var i = 0; i < users.length; i++) {
-                    if (inputEmail === users[i].email && inputPassword === users[i].password) {
-                        $scope.isAuthenticated = true;
-                        userService.active = users[i];
-                        resolve(true);
-                        return;
-                    }
-                }
-                resolve(false);
-            });
-        });
-    };
-
-    $scope.register = function (inputEmail, inputPassword, passwordConfirm) {
-        return $q(function(resolve) {
-            if (inputPassword === passwordConfirm) {
-                userService.getUsers().then(function (response) {
-                    var users = response;
-                    for (var i = 0; i < users.length; i++) {
-                        if (inputEmail === users[i].email) {
-                            $scope.isAuthenticated = false;
-                            $scope.email = "";
-                            $scope.placeHolder = "User exists";
-                            resolve(false);
-                            return;
-                        }
-                    }
-                    resolve(true);
-                });
-            } else {
-                $scope.isAuthenticated = false;
-                resolve(false);
+  $scope.register = function (inputEmail, inputPassword, passwordConfirm) {
+    return $q(function(resolve) {
+      if (inputPassword === passwordConfirm) {
+        userService.getUsers().then(function (response) {
+          var users = response;
+          for (var i = 0; i < users.length; i++) {
+            if (inputEmail === users[i].email) {
+              $scope.isAuthenticated = false;
+              $scope.email = "";
+              $scope.placeHolder = "User exists";
+              resolve(false);
+              return;
             }
+          }
+          resolve(true);
         });
-    };
+      } else {
+        $scope.isAuthenticated = false;
+        resolve(false);
+      }
+    });
+  };
 });
