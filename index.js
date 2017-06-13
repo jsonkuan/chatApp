@@ -89,7 +89,7 @@ app.get('/channels', function(request, response) {
 
 // gets specific channel from Db
 app.get('/channel', function(request, response){
-    database.collection('channels').findOne({'_id' : ObjectId(request.query._id)}, function(err, result){
+    database.collection('channels').findOne({'_id' : ObjectId(request.query.id)}, function(err, result){
         response.send(result);
     });
 });

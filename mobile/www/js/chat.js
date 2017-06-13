@@ -379,7 +379,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       }).then(
         function (response) {
-          $scope.chatInput.attachmentPath = "/assets/img/" + response.data;
+          $scope.chatInput.attachmentPath = "/assets" + response.data;
           console.log($scope.chatInput.attachmentPath);
         }
       );
