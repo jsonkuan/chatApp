@@ -55,7 +55,7 @@
         <a class="item channels" ng-repeat="channel in channels | orderBy: 'name'" ng-click="openChat(channel)">
         <h2 class="list-style">
             <span class="hashtag-icon" ng-if="channel.accessability == 'public'">#</span>
-            <span ng-if="channel.accessability == 'private'"><img id="lock-icon" src="img/ic_lock_black_24px.svg" alt="!"/></span>
+            <span ng-if="channel.accessability == 'private'"><img id="lock-icon" src="/assets/img/ic_lock_black_24px.svg" alt="!"/></span>
             <span ng-if="channelStatus[channel._id].update" class="channel-highlight">{{channel.name}}</span>
             <span ng-if="!channelStatus[channel._id].update">{{channel.name}}</span>
         </h2>
