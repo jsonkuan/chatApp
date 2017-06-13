@@ -1,67 +1,112 @@
-.bar.bar-header.bar-stable.channel {
+.bar.bar-header.bar-stable {
     background: #4D394B;
 
 }
 
-h1 {
+.title {
     color: white !important;
 }
-
-.tesst {
-    margin-top: 35px !important;
-    border: solid #4D394B 2px !important;
+.list {
+    background-color: #4D394B;
+}
+.test.has-header {
+    margin: auto;
+    max-width: 94% !important;
+    max-height: 45px !important;
+    margin-top: 30px !important;
+    background-color: #4D394B !important;
+    height: 45px !important;
+    border: none !important;
 }
 
 .ion-scroll { 
     white-space: nowrap; 
 }
-.card {
-    border: solid #4D394B 2px !important;
-    border-radius: 10px !important;
-    max-height: 238px;
+.ruta {
+    /*max-height: 265px;*/
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    border: solid white 0.5px;
+    margin-top: 40px;
+    
+}
+.pane {
+    background-color: #4D394B !important;
+}
+
+.listPos {
+    margin-top: 20px;
 }
 
 .item.item-input {
-    border: solid #4D394B 1px;
+    
     margin-top: 5px;
     height: 45px;
+}
+.item.item-toggle {
+    color: lightgrey;
+    background-color: #4D394B;
+    margin-top: 5px;
+    height: 45px;
+    border: none;
 }
 
 .item-checkbox {
   border: 0px !important;
   border-color: #4D394B !important;
   padding-left: 55px !important;
-  font-size: 20px !important;
+  font-size: 15px !important;
+  align-items: center !important;
+  font-weight: bold !important;
 }
 
 .item.item-input.item-icon-right {
-    border-width: 2px !important;
-    border-color: #4D394B !important;
+    margin: auto;
+    margin-top: 10px !important;
+    max-width: 94% !important;
+    background-color: #4D394B !important;
     padding-left: 55px !important;
-    border-radius: 10px;
+    border: none !important;
+    text-align: left !important; 
+    margin-left: -30px !important;
+   
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: grey !important;
+  text-align: left !important;
+  
 }
 
 .toggle{
-    margin: -10px !important;
+    margin: -9px !important;
 }
 
-.button.button-block.button-positive.channel {
-    background-color: #4D394B !important;
-    width: 300px !important;
-    height: 50px !important;
-    margin: 0 auto !important;
-    margin-top: 5px !important;
+.item-checkbox.checkbox-balanced {
+    background-color: #6d4869 !important;
+    color: lightgrey !important;
+}
+
+.button.button-block.button-positive.addChannel{
+  background-color: rgba(86, 182, 139, 1) !important;
+  color: white;
+  margin-left: 3%;
+  width: 94%;
+  border-radius: 5px !important;
+  margin-top: 20px !important;
 }
 
 .snakk_logo_add {
     position: static;
     height: 90%;
     object-fit: contain;
+    float: right;
 }
 
 .ion-close-circled {
-    color: darkred !important;
+    color: white !important;
     margin: 10px !important;
+    font-size: 25px !important;
 }
 
 
