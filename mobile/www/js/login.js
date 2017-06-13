@@ -8,7 +8,7 @@ app.controller('loginController', function($scope, $state, $filter, $q, userServ
   $scope.isAuthenticated = true;
   $scope.placeHolder = "Email";
 
-  userService.get('133333333333333333333337').then(function(response) {
+  userService.get('133333333333333333333337').then(function (response) {
     if (!response) {
       userService.post({
         _id: "133333333333333333333337",
@@ -21,50 +21,55 @@ app.controller('loginController', function($scope, $state, $filter, $q, userServ
     }
   });
 
-    $scope.loginButtonClicked = function () {
-        $scope.login($scope.email, $scope.password).then(function (response) {
-            /*if(userService.active.status === "online"){
-            $scope.placeHolder = "You are already logged in";
-            }else {*/
-            if (response === true) {
-                userService.active.status = "online";
-                userService.updateUser(userService.active);
-                localStorage['user'] = userService.active._id;
-                $state.transitionTo('chat');
-                //}
-            } else {
-                $scope.password = "";
-            }
-        });
-    };
+  $scope.loginButtonClicked = function () {
+    $scope.login($scope.email, $scope.password).then(function (response) {
+      /*if(userService.active.status === "online"){
+       $scope.placeHolder = "You are already logged in";
+       }else {*/
+      if (response === true) {
+        userService.active.status = "online";
+        userService.updateUser(userService.active);
+        localStorage['user'] = userService.active._id;
+        $state.transitionTo('chat');
+        //}
+      } else {
+        $scope.password = "";
+      }
+    });
+  };
 
-    $scope.registerButtonClicked = function () {
-        $scope.isAuthenticated = true;
-        if ($scope.username && $scope.email && $scope.password && $scope.confirm) {
-            $scope.register($scope.email, $scope.password, $scope.confirm).then(function (response) {
-                if (response === true) {
-                    var user = {
-                        email: $filter('lowercase')($scope.email), username: $scope.username,
-                        password: $scope.password, avatar: "img/defaultProfile.png", status: "offline", warnings: 0
-                    };
-                    userService.post(user).then(function (response) {
-                        $scope.email = $scope.email.toLowerCase();
-                        shownElements();
-                    });
-                } else {
-                    console.log('Register fail');
-                }
-            });
-        }
-    };
-
-
-  $scope.registerButtonClicked = function() {
+  $scope.registerButtonClicked = function () {
     $scope.isAuthenticated = true;
-    if($scope.username && $scope.email && $scope.password && $scope.confirm){
-      if ($scope.register($scope.email, $scope.password, $scope.confirm)){
-        var user = { email: $filter('lowercase')($scope.email), username: $scope.username,
-          password: $scope.password, avatar: "/assets/img/defaultProfile.png", status: "offline", warnings: 0};
+    if ($scope.username && $scope.email && $scope.password && $scope.confirm) {
+      $scope.register($scope.email, $scope.password, $scope.confirm).then(function (response) {
+        if (response === true) {
+          var user = {
+            email: $filter('lowercase')($scope.email), username: $scope.username,
+            password: $scope.password, avatar: "img/defaultProfile.png", status: "offline", warnings: 0
+          };
+          userService.post(user).then(function (response) {
+            $scope.email = $scope.email.toLowerCase();
+            shownElements();
+          });
+        } else {
+          console.log('Register fail');
+        }
+      });
+    }
+  };
+
+
+  $scope.registerButtonClicked = function () {
+    $scope.isAuthenticated = true;
+    if ($scope.username && $scope.email && $scope.password && $scope.confirm) {
+      if ($scope.register($scope.email, $scope.password, $scope.confirm)) {
+        var user = {
+          email: $filter('lowercase')($scope.email), username: $scope.username,
+          password: $scope.password, avatar: "/assets/img/defaultProfile.png", status: "offline", warnings: 0
+        };
+      }
+    }
+  };
 
     $scope.registerClicked = function () {
         shownElements();
