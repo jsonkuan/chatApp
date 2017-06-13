@@ -370,14 +370,17 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
           console.log("avar" , response.data);
           userService.active.avatar = "/assets" + response.data;
           userService.updateUser(userService.active);
+          $scope.newChannelChecker();
+          $ionicSideMenuDelegate.toggleRight();
         }
       );
+    } else {
+      userService.updateUser(userService.active).then(function (response) {
+        $scope.newChannelChecker();
+        $ionicSideMenuDelegate.toggleRight();
+      });
     }
 
-    userService.updateUser(userService.active).then(function (response) {
-      $scope.newChannelChecker();
-      $ionicSideMenuDelegate.toggleRight();
-    });
   };
 
   $scope.addAttachment = function () {
