@@ -15,7 +15,7 @@ app.controller('loginController', function ($scope, $state, $filter, $q, userSer
         username: "SnakkBot",
         email: "bot@snakk.com",
         password: "2017",
-        avatar: "assets/img/snakk-bot.jpg",
+        avatar: "assets/defaultimages/snakk-bot.jpg",
         status: "offline"
       });
     }
@@ -45,7 +45,7 @@ app.controller('loginController', function ($scope, $state, $filter, $q, userSer
         if (response === true) {
           var user = {
             email: $filter('lowercase')($scope.email), username: $scope.username,
-            password: $scope.password, avatar: "assets/img/defaultProfile.png", status: "offline", warnings: 0
+            password: $scope.password, avatar: "assets/defaultimages/defaultProfile.png", status: "offline", warnings: 0
           };
           userService.post(user).then(function (response) {
             $scope.email = $scope.email.toLowerCase();

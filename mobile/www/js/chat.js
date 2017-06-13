@@ -304,8 +304,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
           messages[i].avatar = users[e].avatar;
         }
 
-        if(messages[i].avatar === "img/defaultProfileWhite.png"){
-          messages[i].avatar = "img/defaultProfile.png";
+        if(messages[i].avatar === "defaultimages/defaultProfileWhite.png"){
+          messages[i].avatar = "defaultimages/defaultProfile.png";
         }
       }
     }
@@ -354,12 +354,13 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       }).then(
         function (response) {
-          userService.active.avatar = "/assets/img/" + response.data.slice(13);
+          console.log("avar" , response.data);
+          userService.active.avatar = "/assets" + response.data;
           userService.updateUser(userService.active);
         }
       );
     }
-    
+
     userService.updateUser(userService.active).then(function (response) {
       $scope.newChannelChecker();
       $ionicSideMenuDelegate.toggleRight();
@@ -378,7 +379,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       }).then(
         function (response) {
-          $scope.chatInput.attachmentPath = "/assets/img/" + response.data.slice(13);
+          $scope.chatInput.attachmentPath = "/assets/img/" + response.data;
           console.log($scope.chatInput.attachmentPath);
         }
       );

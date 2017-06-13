@@ -31,8 +31,8 @@ gulp.task( 'sync', function() {
     });
     watch(['common/defaultimages/'], { ignoreInitial: false }, function() {
         return gulp.src('')
-            .pipe(dirSync('common/defaultimages/', 'webb/assets/img', {printSummary: false}))
-            .pipe(dirSync('common/defaultimages/', 'mobile/www/assets/img', {printSummary: false}))
+            .pipe(dirSync('common/defaultimages/', 'webb/assets/defaultimages', {printSummary: false}))
+            .pipe(dirSync('common/defaultimages/', 'mobile/www/assets/defaultimages', {printSummary: false}))
 
     })
 });
