@@ -28,14 +28,14 @@ gulp.task('watchCommon', function() {
 gulp.task( 'sync', function() {
     watch(['common/images/'], { ignoreInitial: false }, function() {
         return gulp.src('')
-            .pipe(dirSync('common/images/', 'mobile/www/img', {printSummary: false}))
+            .pipe(dirSync('common/img/', 'mobile/www/assets/img', {printSummary: false}))
     })
 } );
 
 gulp.task( 'sync2', function() {
     watch(['common/images/'], { ignoreInitial: false }, function() {
         return gulp.src('')
-            .pipe(dirSync('common/images/', 'webb/assets/images', {printSummary: false}))
+            .pipe(dirSync('common/img/', 'webb/assets/img', {printSummary: false}))
     })
 } );
 

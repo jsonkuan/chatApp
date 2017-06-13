@@ -4,6 +4,7 @@
 (function() {
     var app = angular.module('common', []);
     app.factory('REST', ['$http', '$q', function($http, $q) {
+        // for server use: http://83.249.240.91
         var host = 'http://localhost:3000';
         return {
             get: function get(url) {

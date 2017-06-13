@@ -354,7 +354,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       }).then(
         function (response) {
-          userService.active.avatar = "img" + response.data.slice(13);
+          userService.active.avatar = "/assets/img/" + response.data.slice(13);
           userService.updateUser(userService.active);
         }
       );
@@ -378,7 +378,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       }).then(
         function (response) {
-          $scope.chatInput.attachmentPath = "img" + response.data.slice(13);
+          $scope.chatInput.attachmentPath = "/assets/img/" + response.data.slice(13);
           console.log($scope.chatInput.attachmentPath);
         }
       );

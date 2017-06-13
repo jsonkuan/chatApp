@@ -22,7 +22,7 @@ var upload = multer({ storage: storage });
 //Taken from stackoverflow
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
 
     next();
@@ -90,7 +90,7 @@ app.get('/channels', function(request, response) {
 
 // gets specific channel from Db
 app.get('/channel', function(request, response){
-    database.collection('channels').findOne({'_id' : ObjectId(request.query.id)}, function(err, result){
+    database.collection('channels').findOne({'_id' : ObjectId(request.query._id)}, function(err, result){
         response.send(result);
     });
 });
