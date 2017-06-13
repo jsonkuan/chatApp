@@ -12,7 +12,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.tmpContacts = $scope.users;
   $scope.channelStatus;
   $scope.pictureUrl = "";
-
+  $scope.channelName = "";
   $scope.warning = false;
   $scope.intervals = [];
 
@@ -174,6 +174,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       });
     });
   };
+
   $scope.openChat = function (channel) {
     channelService.current = channel;
     $scope.toggleLeft();
@@ -182,6 +183,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     $scope.localTimestamp = '';
     $scope.checkTimeStamp();
     $scope.newChannelChecker();
+    $scope.channelName = $scope.getChannelName($scope.currentChannel);
   };
 
   $scope.startDirectChat = function (userA, userB) {
@@ -195,6 +197,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       });
     }
   };
+
 
   $scope.createDirectChat = function (userA, userB) {
     channelService.post({
@@ -272,6 +275,20 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
      chatContent.scrollTop = chatContent.scrollHeight;
      }, true); */
   };
+  $scope.getChannelName = function (currentChannel) {
+
+    if (currentChannel.accessability === "direct") {
+
+      var channelUser = $scope.allUsers.filter(function (user) {
+        return user._id != userService.active._id && currentChannel.users.includes(user._id);
+      });
+      return channelUser[0].username;
+    } else {
+      return currentChannel.name;
+    }
+  };
+  $scope.channelName = $scope.getChannelName($scope.currentChannel);
+
   $scope.getMessages = function () {
     $scope.messagesFromDb = messageService.getAllMessages($scope.currentChannel._id).then(function (response) {
       $scope.chatInput.attachmentPath = "";
@@ -359,7 +376,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       );
     }
-    
+
     userService.updateUser(userService.active).then(function (response) {
       $scope.newChannelChecker();
       $ionicSideMenuDelegate.toggleRight();
