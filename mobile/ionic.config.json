@@ -1,11 +1,5 @@
 {
   "name": "mobile",
   "app_id": "",
-  "type": "ionic1",
-  "proxies": [
-    {
-      "path": "/",
-      "proxyUrl": "https://83.249.240.91"
-    }
-  ]
+  "type": "ionic1"
 }
