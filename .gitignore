@@ -22,6 +22,7 @@
 /mobile/platforms
 /mobile/resources
 /mobile/plugins
+!/common/img/snakk_logo.png
 /common/img
 /mobile/www/assets/img
 /webb/assets/img
