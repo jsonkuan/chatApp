@@ -101,6 +101,10 @@
         </label>
         <button class="button button-block button-positive snakk-buttons chat" ng-click="saveSettings()">Save changes</button>
       </div>
+      <a ng-repeat="poster in topPosters" >
+        <p>{{poster._id}} - {{poster.posts}}</p>
+      </a>
+
     </ion-content>
     <div class="bar bar-footer bar-light no-padding snakk-background">
       <button class="button button-block button-positive snakk-buttons chat no-padding" ng-click="logout()">Logout</button>

@@ -12,6 +12,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.tmpContacts = $scope.users;
   $scope.channelStatus;
   $scope.pictureUrl = "";
+  $scope.topPosters = messageService.getTopPosters();
 
   $scope.warning = false;
   $scope.intervals = [];
@@ -26,6 +27,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       $state.transitionTo('login');
     })
   };
+
+
 
   console.log("/////////"+$scope.userInput.avatar);
 
