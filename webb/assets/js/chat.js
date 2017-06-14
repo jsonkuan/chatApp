@@ -69,7 +69,9 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         storage[channelService.current._id].update = false;
 
         $scope.channelStatus = storage;
+        //console.log('updated storage', storage);
         localStorage[userService.active._id] = JSON.stringify(storage);
+        //$cookies.put(userService.active._id, JSON.stringify(storage));
     };
 
     $scope.updateChannelStatus();
@@ -89,7 +91,6 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         } else {
             userService.active.status = "offline";
             userService.updateUser(userService.active).then(function (response) {
-                //$cookies.remove('user');
                 localStorage.removeItem('user');
                 userService.active = null;
                 channelService.current = null;
@@ -212,11 +213,13 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
             messageService.post(message).then(function (response) {
                 if (!$scope.warning) {
                     $scope.checkTimeStamp();
+                    $scope.newChannelChecker();
                 } else {
                     setTimeout(function () {
                         botMessage.timestamp = $scope.currentChannel.timestamp;
                         messageService.post(botMessage).then(function (response) {
                             $scope.checkTimeStamp();
+                            $scope.newChannelChecker();
                             $scope.warning = false;
                             if ($scope.activeUser.warnings > 2) {
                                 userService.deleteUser($scope.activeUser._id).then(function () {
@@ -338,22 +341,19 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     //Watches for new channels
     $scope.newChannelChecker = function () {
         channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
-
             userService.getUsers().then(function (userResponse) {
                 if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
-
-                    $scope.tmpChannels = channelResponse;
                     $scope.tmpContacts = userResponse;
-                    $scope.updateChannelStatus();
-                    $scope.filterChannels();
                     $scope.addUserToMsg(userResponse, $scope.messageDb);
                 }
+                $scope.tmpChannels = channelResponse;
+                $scope.updateChannelStatus();
+                $scope.filterChannels();
             });
         });
     };
 
     $scope.userChangeChecker = function (responseArray, tmpArray) {
-
         for (var i = 0; i < responseArray.length; i++) {
             if (responseArray[i].avatar !== tmpArray[i].avatar || responseArray[i].username !== tmpArray[i].username) {
                 return true;
@@ -370,31 +370,16 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
 
     $scope.setupIntervals = function () {
         var messages = setInterval(function () {
-        $scope.checkTimeStamp();
+            $scope.checkTimeStamp();
         }, 1500);
         var channels = setInterval(function () {
-        $scope.newChannelChecker();
+            $scope.newChannelChecker();
         }, 4000);
         $scope.intervals.push(messages);
         $scope.intervals.push(channels);
     }();
 
-/*
-    setInterval(function () {
-        $scope.checkTimeStamp();
-    }, 1500);
-
-    setInterval(function () {
-        $scope.newChannelChecker();
-    }, 4000);
-    */
-
 });
-
-// Temp randomizing function
-function rnd(number) {
-    return Math.floor((Math.random() * number) + 1);
-}
 
 function formatDate(isoDate) {
     var d1 = new Date(isoDate);
