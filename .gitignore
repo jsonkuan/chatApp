@@ -22,11 +22,9 @@
 /mobile/platforms
 /mobile/resources
 /mobile/plugins
-/common/img
 /mobile/www/assets/img
 /webb/assets/img
 
-!/common/img/README.md
 # IDEs and editors
 /.idea
 
