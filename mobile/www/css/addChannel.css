@@ -1,6 +1,23 @@
 .bar.bar-header.bar-stable {
     background: #4D394B;
+    font-size: 40px !important;
+    height: 75px;
+    position: relative;
+    margin: auto;
+}
 
+.logo {
+    width: 85%;
+    margin: 5px;
+}
+
+.line {
+    color: red;
+}
+
+.backButton {
+    color:white !important;
+    
 }
 
 .title {
@@ -8,6 +25,8 @@
 }
 .list {
     background-color: #4D394B;
+    max-width: 100% !important;
+    height: 250px;
 }
 .test.has-header {
     margin: auto;
@@ -19,17 +38,22 @@
     border: none !important;
 }
 
+.add-friends {
+    text-align: center;
+    font-size: 18px;
+    color: white;
+}
+
 .ion-scroll { 
     white-space: nowrap; 
 }
 .ruta {
-    /*max-height: 265px;*/
+    max-width: 93%;
     scroll-behavior: smooth;
     overflow-y: scroll;
-    border: solid white 0.5px;
-    margin-top: 40px;
-    
+    margin: auto;
 }
+
 .pane {
     background-color: #4D394B !important;
 }
@@ -39,13 +63,16 @@
 }
 
 .item.item-input {
-    
+    color: white !important;
     margin-top: 5px;
-    height: 45px;
+    height: 40px !important;
+    margin: auto !important;
+    max-width: 100% !important;
+    font-size: 30px;
 }
 .item.item-toggle {
     color: lightgrey;
-    background-color: #4D394B;
+    background-color: #4D394B !important;
     margin-top: 5px;
     height: 45px;
     border: none;
@@ -60,7 +87,7 @@
   font-weight: bold !important;
 }
 
-.item.item-input.item-icon-right {
+.item.item-input.item-stacked-label {
     margin: auto;
     margin-top: 10px !important;
     max-width: 94% !important;
@@ -68,13 +95,28 @@
     padding-left: 55px !important;
     border: none !important;
     text-align: left !important; 
+    margin-left: -24px !important;
+    height: 50px !important;
+}
+
+input.inputField {
+    background-color: #4D394B !important;
+    color: white !important;
+    max-width: 500px !important;
+    text-align: left !important;
     margin-left: -30px !important;
-   
+    margin-top: 5px !important;
+    width: 500px;
+}
+span {
+    color: white !important;
+    margin-left: -30px !important;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: grey !important;
+  color: lightgrey !important;
   text-align: left !important;
+  font-size: 15px !important;
   
 }
 
@@ -83,31 +125,28 @@
 }
 
 .item-checkbox.checkbox-balanced {
-    background-color: #6d4869 !important;
+    background-color: #654962 !important;
     color: lightgrey !important;
 }
 
 .button.button-block.button-positive.addChannel{
   background-color: rgba(86, 182, 139, 1) !important;
   color: white;
-  margin-left: 3%;
-  width: 94%;
-  border-radius: 5px !important;
+  margin: auto;
+  width: 80%;
+  border-radius: 50px !important;
   margin-top: 20px !important;
 }
 
-.snakk_logo_add {
-    position: static;
-    height: 90%;
-    object-fit: contain;
-    float: right;
+#scrollimg {
+    position: absolute;
+    margin-left: 170px;
+    margin-top: -30px;
+    color: #4D394B;
+    font-size: 35px;
 }
 
-.ion-close-circled {
-    color: white !important;
-    margin: 10px !important;
-    font-size: 25px !important;
+p.label {
+    font-size: 20px !important;
+    color:white !important;
 }
-
-
-
