@@ -1,4 +1,4 @@
-app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegate, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera) {
+app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegate, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera, topPostersList) {
   $scope.activeUser = session;
   $scope.messageDb = [];
   $scope.allUsers = userContacts;
@@ -12,7 +12,11 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.tmpContacts = $scope.users;
   $scope.channelStatus;
   $scope.pictureUrl = "";
-  $scope.topPosters = messageService.getTopPosters();
+  $scope.topPosters = topPostersList;
+
+
+  console.log($scope.topPosters);
+
 
   $scope.warning = false;
   $scope.intervals = [];
@@ -249,6 +253,9 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       messageService.post(message).then(function (response) {
         if (!$scope.warning) {
           $scope.checkTimeStamp();
+           messageService.getTopPosters().then(function (response){
+             $scope.topPosters = response;
+          });
         } else {
           setTimeout(function() {
             botMessage.timestamp = $scope.currentChannel.timestamp;

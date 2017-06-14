@@ -73,7 +73,7 @@
                 return REST.get('/messages/new' + '?channel=' + channel + '&timestamp=' + timestamp);
             },
             getTopPosters: function(){
-                return REST.get('/messages');
+                return REST.get('/messages/top');
             }
         };
     }]);

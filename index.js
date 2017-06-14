@@ -48,11 +48,11 @@ app.post('/messages', function(request, response) {
 });
 
 // Lists messages
-app.get('/messages', function(request, response) {
-    database.collection('messages').aggregate(
-        { $group: {_id: request.query.userId, posts: {$sum: 1}}},
+app.get('/messages/top', function(request, response) {
+    database.collection('messages').aggregate([
+        {$group: {_id : "$userId", posts : {$sum:1}}},
         { $sort: {posts: -1}}
-    ).toArray(function(error, result){
+        ]).toArray(function(error, result){
         if(error){
             response.send(error);
         }else{

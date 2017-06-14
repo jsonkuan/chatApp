@@ -36,6 +36,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
         },
         userContacts: function(session, userService){
           return userService.getUsers();
+        },
+        topPostersList: function(session, messageService){
+          return messageService.getTopPosters();
         }
       }
     })
