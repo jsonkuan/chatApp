@@ -7,8 +7,8 @@
 }
 
 .logo {
-    width: 85%;
-    margin: 5px;
+    width: 80%;
+    margin: 2px;
 }
 
 .line {
@@ -17,6 +17,7 @@
 
 .backButton {
     color:white !important;
+    margin-top: 10px !important;
     
 }
 
@@ -149,4 +150,8 @@ span {
 p.label {
     font-size: 20px !important;
     color:white !important;
+}
+
+.ion-arrow-left-c {
+    font-size: 40px !important;
 }
