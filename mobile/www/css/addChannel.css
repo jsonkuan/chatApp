@@ -49,7 +49,7 @@
     white-space: nowrap; 
 }
 .ruta {
-    max-width: 93%;
+    max-width: 78%;
     scroll-behavior: smooth;
     overflow-y: scroll;
     margin: auto;
