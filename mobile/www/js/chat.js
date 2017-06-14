@@ -42,7 +42,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         $scope.userInput.avatar = data;
 
       }, function (error) {
-
       })
   };
 
@@ -161,23 +160,24 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   //Watches for new channels
   $scope.newChannelChecker = function () {
     channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
+        userService.getUsers().then(function (userResponse) {
+            //if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.avatarChangeChecker(userResponse, $scope.tmpContacts)) {
 
-      userService.getUsers().then(function (userResponse) {
-        if ($scope.avatarChangeChecker(userResponse, $scope.tmpContacts) || $scope.tmpChannels.length < channelResponse.length) {
-
-          $scope.tmpChannels = channelResponse;
-          $scope.tmpContacts = userResponse;
-          $scope.addUserToMsg(userResponse, $scope.messageDb);
-        }
-        $scope.updateChannelStatus();
-        $scope.filterChannels();
-      });
+                $scope.tmpChannels = channelResponse;
+                $scope.tmpContacts = userResponse;
+                $scope.addUserToMsg(userResponse, $scope.messageDb);
+            //}
+            $scope.updateChannelStatus();
+            $scope.filterChannels();
+        });
     });
   };
 
   $scope.openChat = function (channel) {
     channelService.current = channel;
-    $scope.toggleLeft();
+    if($ionicSideMenuDelegate.getOpenRatio()){
+      $scope.toggleLeft();
+    }
     $scope.currentChannel = channel;
     $scope.messageDb = [];
     $scope.localTimestamp = '';
@@ -197,7 +197,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       });
     }
   };
-
 
   $scope.createDirectChat = function (userA, userB) {
     channelService.post({
@@ -236,7 +235,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         channel: $scope.currentChannel._id
       };
       userService.active.warnings += 1;
-
     }
     $scope.chatInput.text = "";
 
@@ -307,6 +305,17 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     }
   };
   $scope.getMessages();
+
+  $scope.getUserFromMsg = function (userId) {
+    var user = {};
+    for (var y = 0; y < $scope.allUsers.length; y++) {
+      if ($scope.allUsers[y]._id === userId) {
+        user = $scope.allUsers[y];
+      }
+    }
+    return user;
+  };
+
   $scope.addUserToMsg = function (users, messages) {
     for (var i = 0; i < messages.length; i++) {
 
@@ -321,8 +330,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
           messages[i].avatar = users[e].avatar;
         }
 
-        if(messages[i].avatar === "img/defaultProfileWhite.png"){
-          messages[i].avatar = "img/defaultProfile.png";
+        if(messages[i].avatar === "defaultimages/defaultProfileWhite.png"){
+          messages[i].avatar = "defaultimages/defaultProfile.png";
         }
       }
     }
@@ -361,8 +370,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     $scope.userInput.username = userService.active.username;
     $scope.userInput.password = userService.active.password;
 
-    if ($scope.userInput.avatar !== "") {
-
+    if ($scope.avatar != userService.active.avatar && $scope.userInput.avatar !== "") {
       upload({
         url: 'http://localhost:3000/upload',
         method: 'POST',
@@ -371,16 +379,22 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       }).then(
         function (response) {
-          userService.active.avatar = "img" + response.data.slice(13);
-          userService.updateUser(userService.active);
+          //console.log("avar" , response.data);
+          setTimeout(function() {
+            userService.active.avatar = "/assets" + response.data;
+            userService.updateUser(userService.active).then(function() {
+              $scope.newChannelChecker();
+              $ionicSideMenuDelegate.toggleRight();
+            });
+          }, 1000);
         }
       );
+    } else {
+      userService.updateUser(userService.active).then(function() {
+        $scope.newChannelChecker();
+        $ionicSideMenuDelegate.toggleRight();
+      });
     }
-
-    userService.updateUser(userService.active).then(function (response) {
-      $scope.newChannelChecker();
-      $ionicSideMenuDelegate.toggleRight();
-    });
   };
 
   $scope.addAttachment = function () {
@@ -395,7 +409,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       }).then(
         function (response) {
-          $scope.chatInput.attachmentPath = "img" + response.data.slice(13);
+          $scope.chatInput.attachmentPath = "/assets" + response.data;
           console.log($scope.chatInput.attachmentPath);
         }
       );

@@ -152,7 +152,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
                 }
             }).then(
                 function (response) {
-                    $scope.attachmentPath = "/assets/images" + response.data.slice(13);
+                    $scope.attachmentPath = "/assets" + response.data;
                     console.log(attachmentPath);
                 }
             );
@@ -247,8 +247,8 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
                 if (messages[i].userId === users[e]._id) {
                     messages[i].avatar = users[e].avatar;
                 }
-                else if (messages[i].avatar === undefined) {
-                    messages[i].avatar = "assets/images/defaultProfile.png";
+                else if(messages[i].avatar === undefined){
+                    messages[i].avatar = "assets/defaultimages/defaultProfile.png";
                 }
             }
         }
@@ -291,6 +291,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         }
         return user;
     };
+
     document.getElementById("chat-input-container").focus();
 
     $scope.createDirectChat = function (userA, userB) {
@@ -319,7 +320,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
 
             userService.getUsers().then(function (userResponse) {
-                if ($scope.avatarChangeChecker(userResponse, $scope.tmpContacts) || $scope.tmpChannels.length < channelResponse.length) {
+                if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.avatarChangeChecker(userResponse, $scope.tmpContacts)) {
 
                     $scope.tmpChannels = channelResponse;
                     $scope.tmpContacts = userResponse;

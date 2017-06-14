@@ -22,8 +22,10 @@
 /mobile/platforms
 /mobile/resources
 /mobile/plugins
-/mobile/www/img
-/webb/assets/images
+!/common/img/snakk_logo.png
+/common/img
+/mobile/www/assets/img
+/webb/assets/img
 
 # IDEs and editors
 /.idea

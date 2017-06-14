@@ -1,5 +1,3 @@
-'use strict';
-
 var gulp = require('gulp');
 var live = require('gulp-live-server');
 var watch = require('gulp-watch');
@@ -26,17 +24,11 @@ gulp.task('watchCommon', function() {
 });
 
 gulp.task( 'sync', function() {
-    watch(['common/images/'], { ignoreInitial: false }, function() {
+    watch(['common/img/'], { ignoreInitial: false }, function() {
         return gulp.src('')
-            .pipe(dirSync('common/images/', 'mobile/www/img', {printSummary: false}))
-    })
-} );
+            .pipe(dirSync('common/img/', 'mobile/www/assets/img', {printSummary: false}))
+            .pipe(dirSync('common/img/', 'webb/assets/img', {printSummary: false}))
+    });
+});
 
-gulp.task( 'sync2', function() {
-    watch(['common/images/'], { ignoreInitial: false }, function() {
-        return gulp.src('')
-            .pipe(dirSync('common/images/', 'webb/assets/images', {printSummary: false}))
-    })
-} );
-
-gulp.task('default', ['watchServer', 'watchCommon', 'sync','sync2']);
+gulp.task('default', ['watchServer', 'watchCommon', 'sync']);
