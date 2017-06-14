@@ -162,7 +162,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
         userService.getUsers().then(function (userResponse) {
             if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
-
                 $scope.tmpChannels = channelResponse;
                 $scope.tmpContacts = userResponse;
                 $scope.addUserToMsg(userResponse, $scope.messageDb);
