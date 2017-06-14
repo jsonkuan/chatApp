@@ -161,12 +161,12 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.newChannelChecker = function () {
     channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
         userService.getUsers().then(function (userResponse) {
-            //if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.avatarChangeChecker(userResponse, $scope.tmpContacts)) {
+            if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
 
                 $scope.tmpChannels = channelResponse;
                 $scope.tmpContacts = userResponse;
                 $scope.addUserToMsg(userResponse, $scope.messageDb);
-            //}
+            }
             $scope.updateChannelStatus();
             $scope.filterChannels();
         });
@@ -437,10 +437,10 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     $scope.intervals.push(channels);
   }();
 
-  $scope.avatarChangeChecker = function (responseArray, tmpArray) {
+  $scope.userChangeChecker = function (responseArray, tmpArray) {
 
     for (var i = 0; i < responseArray.length; i++) {
-      if (responseArray[i].avatar !== tmpArray[i].avatar) {
+      if (responseArray[i].avatar !== tmpArray[i].avatar || responseArray[i].username !== tmpArray[i].username) {
         return true;
       }
     }
