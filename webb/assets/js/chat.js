@@ -13,6 +13,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     $scope.tmpContacts = $scope.contacts;
     $scope.warning = false;
     $scope.channelName = "";
+    $scope.intervals = [];
 
     // Filter channels for user
     $scope.filterChannels = function () {
@@ -68,9 +69,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         storage[channelService.current._id].update = false;
 
         $scope.channelStatus = storage;
-        //console.log('updated storage', storage);
         localStorage[userService.active._id] = JSON.stringify(storage);
-        //$cookies.put(userService.active._id, JSON.stringify(storage));
     };
 
     $scope.updateChannelStatus();
@@ -78,12 +77,14 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
 
     $scope.openChat = function (channel) {
         channelService.current = channel;
+        $scope.clearIntervals()
         $scope.channelName = $scope.getChannelName($scope.currentChannel);
         $state.reload();
     };
 
     $scope.announceClick = function (index) {
         if (index === 0) {
+            $scope.clearIntervals()
             $state.transitionTo('settings');
         } else {
             userService.active.status = "offline";
@@ -92,12 +93,14 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
                 localStorage.removeItem('user');
                 userService.active = null;
                 channelService.current = null;
+                $scope.clearIntervals()
                 $state.transitionTo('login');
             });
         }
     };
 
     $scope.sendToCreateChannel = function () {
+        $scope.clearIntervals()
         $state.transitionTo('addChannel');
     };
 
@@ -203,6 +206,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
 
         channelService.updateTimeStamp($scope.currentChannel).then(function (response) {
             $scope.currentChannel = response.data;
+            channelService.current = response.data;
             message.timestamp = $scope.currentChannel.timestamp;
 
             messageService.post(message).then(function (response) {
@@ -358,6 +362,24 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         return false;
     };
 
+    $scope.clearIntervals = function () {
+        for (var i = 0; i < $scope.intervals.length; i++) {
+        clearInterval($scope.intervals[i]);
+        }
+    };
+
+    $scope.setupIntervals = function () {
+        var messages = setInterval(function () {
+        $scope.checkTimeStamp();
+        }, 1500);
+        var channels = setInterval(function () {
+        $scope.newChannelChecker();
+        }, 4000);
+        $scope.intervals.push(messages);
+        $scope.intervals.push(channels);
+    }();
+
+/*
     setInterval(function () {
         $scope.checkTimeStamp();
     }, 1500);
@@ -365,6 +387,8 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     setInterval(function () {
         $scope.newChannelChecker();
     }, 4000);
+    */
+
 });
 
 // Temp randomizing function
