@@ -77,7 +77,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
 
     $scope.openChat = function (channel) {
         channelService.current = channel;
-        $scope.clearIntervals()
+        $scope.clearIntervals();
         $scope.channelName = $scope.getChannelName($scope.currentChannel);
         $state.reload();
     };
@@ -100,7 +100,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     };
 
     $scope.sendToCreateChannel = function () {
-        $scope.clearIntervals()
+        $scope.clearIntervals();
         $state.transitionTo('addChannel');
     };
 
