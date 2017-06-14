@@ -162,10 +162,10 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
         userService.getUsers().then(function (userResponse) {
             if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
-                $scope.tmpChannels = channelResponse;
                 $scope.tmpContacts = userResponse;
                 $scope.addUserToMsg(userResponse, $scope.messageDb);
             }
+            $scope.tmpChannels = channelResponse;
             $scope.updateChannelStatus();
             $scope.filterChannels();
         });
@@ -368,6 +368,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     userService.active.username = $scope.userInput.username;
     $scope.userInput.username = userService.active.username;
     $scope.userInput.password = userService.active.password;
+    $scope.username = userService.active.username;
 
     if ($scope.avatar != userService.active.avatar && $scope.userInput.avatar !== "") {
       upload({

@@ -343,10 +343,10 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
             userService.getUsers().then(function (userResponse) {
                 if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
-                    $scope.tmpChannels = channelResponse;
                     $scope.tmpContacts = userResponse;
                     $scope.addUserToMsg(userResponse, $scope.messageDb);
                 }
+                $scope.tmpChannels = channelResponse;
                 $scope.updateChannelStatus();
                 $scope.filterChannels();
             });
@@ -380,11 +380,6 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     }();
 
 });
-
-// Temp randomizing function
-function rnd(number) {
-    return Math.floor((Math.random() * number) + 1);
-}
 
 function formatDate(isoDate) {
     var d1 = new Date(isoDate);
