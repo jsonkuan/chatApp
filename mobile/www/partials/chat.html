@@ -65,13 +65,30 @@
         <h5 class="list-title">Direct Messages</h5>
         <a class="item list_side" ng-repeat="user in users | orderBy: 'username' track by $index" ng-click="startDirectChat(activeUser, user)">
           <div class="list chat userList">
-           <img id="sidemenu-thumbNail" ngf-thumbnail="user.avatar">
+           <img class="sidemenu-thumbNail" ngf-thumbnail="user.avatar">
             <p ng-if="channelStatus[user.channelId].update" class="channel-highlight">{{user.username}}</p>
             <p ng-if="!channelStatus[user.channelId].update">{{user.username}}</p>
             <i ng-if="user.status == 'online'" class="ion-ios-circle-filled slack-green"> online</i>
             <i ng-if="user.status == 'offline'" class="ion-ios-circle-outline slack-off"> offline</i>
           </div>
        </a>
+
+      <h5 class="list-title right-top-list">Top Posters</h5>
+      <a class="item list_side" ng-repeat="poster in topList" ng-click="startDirectChat(activeUser, user)" ng-click="startDirectChat(activeUser, user)">
+        <div class="list">
+          <img class="sidemenu-thumbNail" ngf-thumbnail="poster.avatar">
+          <p class="left-menu-username">{{poster.username}}</p>
+          <p class="left-menu-posts">posts: {{poster.posts}}</p>
+        </div>
+      </a>
+
+      <!--Top Posters -->
+      <!--<div ng-repeat="poster in topList" >
+        <img class="avatar-thumb" ng-src="{{poster.avatar}}" name="avatar" alt="Profile picture">
+        <p class="username"> - {{poster.username}} -</p>
+        <p class="username"> {{poster.posts}}</p>
+      </div>-->
+
     </ion-content>
   </ion-side-menu>
 
@@ -101,10 +118,6 @@
         </label>
         <button class="button button-block button-positive snakk-buttons chat" ng-click="saveSettings()">Save changes</button>
       </div>
-      <a ng-repeat="poster in topList" >
-        <p>{{poster.username}} - {{poster.posts}}</p>
-      </a>
-
     </ion-content>
     <div class="bar bar-footer bar-light no-padding snakk-background">
       <button class="button button-block button-positive snakk-buttons chat no-padding" ng-click="logout()">Logout</button>

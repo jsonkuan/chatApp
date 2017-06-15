@@ -14,25 +14,15 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.pictureUrl = "";
   $scope.topPosters = topPostersList;
   $scope.topList = [];
-  console.log(topPostersList);
-
   $scope.warning = false;
   $scope.intervals = [];
 
-  //få lista top
-  //få lista users
-  //gå igenom och lägg till i nytt objekt
-  //lägg till objekt i ny array
-  //ny array lika med tom array
-
-
   $scope.addUsersToPosters = function(topList, users){
     var newTopList = [];
-
-    for (var i = 0; i < topList.length; i++) {
+    for (var i = 0; i < topList.length && i < 5 ; i++) {
       for (var j = 0; j < users.length; j++) {
         if (topList[i]._id === users[j]._id) {
-          var tempObject = {username: users[j].username, posts : topList[i].posts};
+          var tempObject = {username: users[j].username, posts : topList[i].posts, avatar: users[j].avatar};
           newTopList.push(tempObject);
         }
       }
@@ -42,11 +32,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
 
   $scope.topList = $scope.addUsersToPosters(topPostersList, userContacts);
   console.log($scope.topList);
-
-
-
-
-
 
   $scope.logout = function () {
     userService.active.status = "offline";

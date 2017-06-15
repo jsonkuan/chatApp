@@ -1,10 +1,17 @@
-#sidemenu-thumbNail {
+.sidemenu-thumbNail {
   height: 40px;
   width: 40px;
   border-radius: 50%;
   float: left;
   border: solid 3px gray;
   margin-right: 5px;
+}
+
+.right-top-list{
+  margin-top: 20px!important;
+}
+.left-menu-posts{
+  color: #AB9BA9 !important;
 }
 
 /* Used background colors
