@@ -372,7 +372,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
 
     if ($scope.avatar != userService.active.avatar && $scope.userInput.avatar !== "") {
       upload({
-        url: '/upload',
+        //use /upload for server
+        url: 'http://localhost:3000/upload',
         method: 'POST',
         data: {
           avatar: $scope.userInput.avatar
@@ -402,7 +403,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
 
     if ($scope.chatInput.attachment) {
       upload({
-        url: '/upload',
+        //use /upload for server
+        url: 'http://localhost:3000/upload',
         method: 'POST',
         data: {
           avatar: $scope.chatInput.attachment
