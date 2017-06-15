@@ -7,10 +7,11 @@ app.controller("channelController", function ($scope, $state, userService, chann
     $scope.invitedUsers = [userService.active._id];
     $scope.publicOrPrivate = "Public";
     
+    
     $scope.createChannel = function() {
         var access = String($scope.publicOrPrivate).toLowerCase();
         if($scope.channelName.text.length < 1){
-            document.getElementById("input").text = "dsdvsdv";
+            $scope.channelName.text = "Enter a name";
         } else {
         var channels = {    
                 name: $scope.channelName.text,
