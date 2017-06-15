@@ -13,13 +13,40 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.channelStatus;
   $scope.pictureUrl = "";
   $scope.topPosters = topPostersList;
-
-
-  console.log($scope.topPosters);
-
+  $scope.topList = [];
+  console.log(topPostersList);
 
   $scope.warning = false;
   $scope.intervals = [];
+
+  //få lista top
+  //få lista users
+  //gå igenom och lägg till i nytt objekt
+  //lägg till objekt i ny array
+  //ny array lika med tom array
+
+
+  $scope.addUsersToPosters = function(topList, users){
+    var newTopList = [];
+
+    for (var i = 0; i < topList.length; i++) {
+      for (var j = 0; j < users.length; j++) {
+        if (topList[i]._id === users[j]._id) {
+          var tempObject = {username: users[j].username, posts : topList[i].posts};
+          newTopList.push(tempObject);
+        }
+      }
+    }
+    return newTopList;
+  };
+
+  $scope.topList = $scope.addUsersToPosters(topPostersList, userContacts);
+  console.log($scope.topList);
+
+
+
+
+
 
   $scope.logout = function () {
     userService.active.status = "offline";
@@ -31,8 +58,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       $state.transitionTo('login');
     })
   };
-
-
 
   console.log("/////////"+$scope.userInput.avatar);
 
@@ -254,7 +279,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         if (!$scope.warning) {
           $scope.checkTimeStamp();
            messageService.getTopPosters().then(function (response){
-             $scope.topPosters = response;
+             $scope.topList = $scope.addUsersToPosters(response, userContacts);
           });
         } else {
           setTimeout(function() {

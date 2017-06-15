@@ -101,8 +101,8 @@
         </label>
         <button class="button button-block button-positive snakk-buttons chat" ng-click="saveSettings()">Save changes</button>
       </div>
-      <a ng-repeat="poster in topPosters" >
-        <p>{{poster._id}} - {{poster.posts}}</p>
+      <a ng-repeat="poster in topList" >
+        <p>{{poster.username}} - {{poster.posts}}</p>
       </a>
 
     </ion-content>
