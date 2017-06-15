@@ -14,7 +14,7 @@
         <input placeholder="{{placeHolder}}" class="input" type="email" name="email" ng-model="email" required>
       </div>
       <div ng-messages="loginForm.email.$error">
-        <div class="invalid-email" ng-message="email">invalid email</div>
+        <div class="login-invalid-email" ng-message="email">invalid email</div>
       </div>
     </label>
 
@@ -26,7 +26,7 @@
     <label class="item item-input no-border" ng-show="showPasswordConfirm">
       <input placeholder="Confirm password" type="password" name="confirm" ng-pattern="{{password}}" ng-model="confirm" required maxlength="20">
       <div ng-messages="loginForm.confirm.$error">
-        <div ng-message="pattern"> no match</div>
+        <div class="login-no-match" ng-message="pattern">no match</div>
       </div>
     </label>
   </form>
