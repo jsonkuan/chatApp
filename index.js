@@ -47,6 +47,21 @@ app.post('/messages', function(request, response) {
     response.send(request.body);
 });
 
+// Lists messages
+app.get('/messages/top', function(request, response) {
+    database.collection('messages').aggregate([
+        {$group: {_id : "$userId", posts : {$sum:1}}},
+        { $sort: {posts: -1}}
+        ]).toArray(function(error, result){
+        if(error){
+            response.send(error);
+        }else{
+            response.send(result);
+        }
+    });
+
+});
+
 // fetches message from Db
 app.get('/messages', function(request, response) {
     database.collection('messages').find({'channel': request.query.channel}).toArray(function (err, result) {
