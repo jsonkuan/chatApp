@@ -218,8 +218,6 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         channelService.updateTimeStamp($scope.currentChannel).then(function (response) {
             $scope.currentChannel = response.data;
             message.timestamp = $scope.currentChannel.timestamp;
-            ///////////
-
             messageService.post(message).then(function (response) {
                 if (!$scope.warning) {
                     $scope.checkTimeStamp();

@@ -31,7 +31,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   };
 
   $scope.topList = $scope.addUsersToPosters(topPostersList, userContacts);
-  console.log($scope.topList);
 
   $scope.logout = function () {
     userService.active.status = "offline";
@@ -285,12 +284,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       });
     });
-
-    /*$scope.$watch('messageDb', function f() {
-     var chatContent = document.getElementById('chat-text-box-container');
-     chatContent.scrollTop = chatContent.scrollHeight;
-     }, true); */
   };
+
   $scope.getMessages = function () {
     $scope.messagesFromDb = messageService.getAllMessages($scope.currentChannel._id).then(function (response) {
       $scope.chatInput.attachmentPath = "";

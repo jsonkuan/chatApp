@@ -100,8 +100,6 @@
                         </div>
                     </div>
                     <input id="chat-input-container" type="text" ng-model="chatInput" name="chatInput" placeholder="Message {{currentChannel.name}}" flex="100"/>
-
-
                     <input ngf-select class="ng-hide" ng-model="attachment" id="selectedAttach" ng-change="addAttachment()">
                     <label ng-click="removeAttachment()" ng-show="attachmentPath"><i class="material-icons attachment">attach_file</i></label>
                     <label for="selectedAttach" class="add-attachment"><p class="add-attachment-icon">+</p></label>

@@ -73,6 +73,7 @@
           </div>
        </a>
 
+      <!-- Top Posters -->
       <h5 class="list-title right-top-list">Top Posters</h5>
       <a class="item list_side" ng-repeat="poster in topList" ng-click="startDirectChat(activeUser, user)" ng-click="startDirectChat(activeUser, user)">
         <div class="list">
@@ -81,14 +82,6 @@
           <p class="left-menu-posts">posts: {{poster.posts}}</p>
         </div>
       </a>
-
-      <!--Top Posters -->
-      <!--<div ng-repeat="poster in topList" >
-        <img class="avatar-thumb" ng-src="{{poster.avatar}}" name="avatar" alt="Profile picture">
-        <p class="username"> - {{poster.username}} -</p>
-        <p class="username"> {{poster.posts}}</p>
-      </div>-->
-
     </ion-content>
   </ion-side-menu>
 
