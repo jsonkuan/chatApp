@@ -1,45 +1,39 @@
 <div class="bar bar-header bar-stable" >
-      <button class="backButton">
-          <i class="ion-arrow-left-c" ng-click="backToChat()"></i>
-      </button>
-      <img class="logo" src="assets/defaultimages/new_channel.svg">
-
+    <button class="backButton">
+        <i class="ion-arrow-left-c" ng-click="backToChat()"></i>
+    </button>
+    <img class="logo" src="assets/defaultimages/new_channel.svg">
 </div>
 <ion-list>
-  <div class="lista">
-    <div class="test has-header">
-      <ion-toggle ng-model="switch" toggle-class="toggle-balanced" ng-click="onChange(switch)">
-        <p class="label">{{publicOrPrivate}}</p> 
+    <div class="lista">
+        <div class="test has-header">
+        <ion-toggle ng-model="switch" toggle-class="toggle-balanced" ng-click="onChange(switch)">
+            <p class="label">{{publicOrPrivate}}</p> 
         </ion-toggle>
-        </div>
-     </label>
     </div>
-    <div class="list">
-      <label class="item item-input item-stacked-label">
-    <span class="input-label">Channel name</span>
-    <form name="addChannelForm" ng-minlength="3"> 
-    <input class="inputField" type="text" placeholder="# Name" ng-model="channelName.text"></form>
-  </label>
-      <label class="item item-input item-stacked-label">
-    <span class="input-label">Purpose</span>
-    <input class="inputField" type="text" placeholder="Short description of the channel" ng-model="purpose.text">
-  </label>
-</div>
+    <div class="list addChannel">
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Channel name</span>
+            <form name="addChannelForm" ng-minlength="3"> 
+            <input class="inputField" type="text" placeholder="# Name" ng-model="channelName.text"></form>
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Purpose</span>
+            <input class="inputField" type="text" placeholder="Short description of the channel" ng-model="purpose.text">
+        </label>
+    </div>
 </ion-list>
 <div class="add-friends" ng-show="switch">
-  <p>Invite friends</p>
+    <p>Invite friends</p>
 </div>
 <div class="ruta" style="max-height: 226px; overflow-y: scroll;" scrollbar-y="false" ng-show="switch">
-  <ion-scroll direction="y" scrollbar-y="false">
-    <ion-item class="item-checkbox checkbox-balanced" style="background-color:white" ng-repeat="user in usersWithoutBot" value="{{user.username}}"
-      ng-click="addToChannel(user)">{{user.username}}
-      <label class="checkbox">
-        <input type="checkbox"/>
-    </label>
-    </ion-item>
-  </ion-scroll>
+    <ion-scroll direction="y" scrollbar-y="false">
+        <ion-item class="item-checkbox checkbox-balanced" style="background-color:white" ng-repeat="user in usersWithoutBot" value="{{user.username}}" ng-click="addToChannel(user)">{{user.username}}
+            <label class="checkbox">
+                <input type="checkbox"/>
+            </label>
+        </ion-item>
+    </ion-scroll>
 </div>
 <i id="scrollimg" class="ion-chevron-down"></i>
-<button class="button button-block button-positive addChannel" ng-click="createChannel()">
-  Create 
-</button>
+<button class="button button-block button-positive addChannel" ng-disabled="channelName.text.length === 0" ng-click="createChannel()">Create</button>
