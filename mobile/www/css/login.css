@@ -36,18 +36,12 @@
   margin: auto;
 }
 .register-button {
-  width: 40% !important;
-  display:table-cell !important;
+  width: 45% !important;
 }
 .register-buttons{
   display: table;
   width: 80% !important;
   margin: auto !important;
-  align-items: center !important;
-}
-
-.bajs {
-  max-width: 100%;
 }
 
 .register-button:first-child{
@@ -55,4 +49,11 @@
 }
 .register-button:last-child{
   float: right !important;
+}
+.register-Link{
+  margin-top: 10px;
+  text-align: center;
+}
+.register-Here-Text {
+  text-decoration: underline;
 }

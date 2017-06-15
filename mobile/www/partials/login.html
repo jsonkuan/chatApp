@@ -32,11 +32,9 @@
   </form>
 
   <button type="submit" class="button button-block button-positive snakk-buttons" ng-click="loginButtonClicked()" ng-show="showLoginButton">Login</button>
-  <p class="register-Link" ng-click="registerClicked()" ng-show="showReg">No account? Register here!</p>
+  <p class="register-Link" ng-click="registerClicked()" ng-show="showReg">No account? <span class="register-Here-Text">Register here!</span></p>
   <div class="register-buttons">
-    <button type="submit" class="button button-block button-positive snakk-buttons register-button" ng-click="registerButtonClicked()" ng-show="showRegButton">Register</button>
-    <button class="button button-block button-positive snakk-buttons register-button" ng-click="cancelClicked()" style="text-align:center" ng-show="showCancel">Cancel</button>
-    </div
+    <button type="submit" class="button button-positive snakk-buttons register-button" ng-click="registerButtonClicked()" ng-show="showRegButton">Register</button>
+    <button class="button button-positive snakk-buttons register-button" ng-click="cancelClicked()" style="text-align:center" ng-show="showCancel">Cancel</button>
   </div>
-
 </div>
