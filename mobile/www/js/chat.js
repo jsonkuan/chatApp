@@ -263,9 +263,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       messageService.post(message).then(function (response) {
         if (!$scope.warning) {
           $scope.checkTimeStamp();
-           messageService.getTopPosters().then(function (response){
-             $scope.topList = $scope.addUsersToPosters(response, userContacts);
-          });
         } else {
           setTimeout(function() {
             botMessage.timestamp = $scope.currentChannel.timestamp;
@@ -308,7 +305,10 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         $scope.messageDb = $scope.messageDb.concat(response);
         $ionicScrollDelegate.scrollBottom();
         $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
-      })
+      });
+      messageService.getTopPosters().then(function (response){
+        $scope.topList = $scope.addUsersToPosters(response, userContacts);
+      });
     }
   };
   $scope.getMessages();

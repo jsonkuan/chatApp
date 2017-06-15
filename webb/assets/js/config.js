@@ -31,6 +31,9 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
                 },
                 userContacts: function(session, userService){
                     return userService.getUsers();
+                },
+                topPostersList: function(session, messageService){
+                    return messageService.getTopPosters();
                 }
             }
         })

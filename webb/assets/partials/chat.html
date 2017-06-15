@@ -35,6 +35,19 @@
                 <span ng-if="!channelStatus[contact.channelId].update">{{contact.username}}</span>
             </li>
         </div>
+
+        <div layout="row" layout-align="center">
+            <h3 class="channel-header" flex="100">Top Posters</h3>
+        </div>
+            <md-list-item class="channelMsgLists" ng-repeat="poster in topList" ng-click="startDirectChat(activeUser, user)" ng-click="startDirectChat(activeUser, user)"><span ng-if="channelStatus[contact.channelId].update" class="channel-highlight">{{contact.username}}</span>
+                <img class="avatar-thumb left-side-top-list" ng-src="{{poster.avatar}}" name="avatar" alt="Profile picture">
+               <md-list-item-text class="no-border no-margin">
+                   <p class="left-side-top-list">{{poster.username}}</p>
+                   <p class="left-side-top-list">posts: {{poster.posts}}]</p>
+               </md-list-item-text>
+            </md-list-item>
+
+
     </md-content>
     <main id="chat-main" flex="80">
         <header id="chat-header">
