@@ -1,26 +1,64 @@
 .list.login {
     padding: 20px !important;
 }
-
 .snakk_logo {
     width: 100%;
     height: 20%;
     object-fit: contain;
     margin: 0 0 30px 0;
 }
-
 .snakk-buttons {
   color: white !important;
   background-color: #38968C !important;
+  width: 80% !important;
+  margin: auto !important;
 }
-
 .snakk-buttons:active {
   color: white !important;
   background-color: #78968C !important;
 }
-
 .item.item-input {
-    height: 50px;
+    height: 40px;
     border: solid #4D394B 1px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 80%;
+    margin: auto;
+    border-radius: 3px;
+    opacity: 0.9 !important;
+}
+.login-form {
+  margin-bottom: 10px;
+}
+.register-Link {
+  padding-top: 5px;
+  color:white;
+  width: 80%;
+  margin: auto;
+}
+.register-button {
+  width: 45% !important;
+}
+.register-buttons{
+  display: table;
+  width: 80% !important;
+  margin: auto !important;
+}
+
+.register-button:first-child{
+  float: left !important;
+}
+.register-button:last-child{
+  float: right !important;
+}
+.register-Link{
+  margin-top: 10px;
+  text-align: center;
+}
+.register-Here-Text {
+  text-decoration: underline;
+}
+.invalid-email{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: italic;
+  margin-right: 5px;
 }
