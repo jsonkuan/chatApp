@@ -17,6 +17,7 @@ app.controller("channelController", function ($scope, $state, userService, chann
                 accessability: access,
                 timestamp: ""
             };
+            console.log(channels);
         channelService.post(channels).then(function (response) {
             $state.go("chat");
           });
