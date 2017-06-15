@@ -111,17 +111,18 @@ input.inputField {
     width: 500px !important;
     padding: 5px;
 }
-span {
+.addChannel span {
     color: white !important;
     margin-left: -30px !important;
 }
 
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+::-webkit-input-placeholder { 
   color: lightgrey !important;
   text-align: left !important;
   font-size: 15px !important;
   
-}
+} 
+
 
 .toggle{
     margin: -9px !important;
