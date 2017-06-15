@@ -1,7 +1,7 @@
 <div id="container" layout="row" >
     <md-content id="chat-channel-container" flex="20">
         <div id="app_logo">
-            <img src="assets/images/snakk_icon_white.png" alt="sNakk" />
+            <img src="assets/defaultimages/snakk_icon_white.png" alt="sNakk" />
         </div>
         <div class="username" layout="row">
             <i class="material-icons slack-green">radio_button_checked</i>
@@ -39,7 +39,7 @@
     <main id="chat-main" flex="80">
         <header id="chat-header">
             <div layout="row" layout-align="start end">
-                <p class="channel-title">{{currentChannel.name}}</p>
+                <p class="channel-title">{{channelName}}</p>
                 <span flex></span>
                 <md-menu>
                     <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
@@ -71,7 +71,7 @@
                     <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
                         <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
                         <p id="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
-                        <p id="date">{{message.date}}</p>
+                        <p id="date">{{message.displayDate}}</p>
                         <p smilies="message.text" id="messagetext">{{message.text}}"</p>
                         <img ng-src="{{message.attachment}}" flex="20">
                     </div>

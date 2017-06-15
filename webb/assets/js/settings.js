@@ -33,13 +33,21 @@
                 }
             }).then(
                 function (response) {
-                    userService.active.avatar = response.data.slice(7);
-                    $scope.avatar = userService.active.avatar;
-                    userService.updateUser(userService.active);
+                    setTimeout(function() {
+                        userService.active.avatar = "/assets" + response.data;
+                        console.log(response.data);
+                        console.log(userService.active.avatar);
+                        $scope.avatar = userService.active.avatar;
+                        userService.updateUser(userService.active).then(function() {
+                            $state.go("chat");
+                        });
+                    }, 1000);
                 }
             );
+        } else {
+            userService.updateUser(userService.active).then(function() {
+                $state.go("chat");
+            });
         }
-        userService.updateUser(userService.active);
-        $state.go("chat");
     };
 });

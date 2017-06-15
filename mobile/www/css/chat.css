@@ -4,6 +4,67 @@
   border-radius: 50%;
   float: left;
   border: solid 3px gray;
+  margin-right: 5px;
+}
+
+/* Used background colors
+snakk: #4D394B;
+snakk darker: #473445;
+*/
+
+.chat-input-wrapper {
+  background-color: white !important;
+}
+
+.chat-container {
+  border-width: 0 !important;
+}
+
+.snakk-background {
+  background-color: #4D394B !important;
+}
+
+.right-menu-input {
+  background-color: transparent !important;
+  border: solid 0 #4D394B !important;
+}
+
+.snakk-buttons {
+  color: white !important;
+  background-color: #38968C !important;
+}
+
+.snakk-buttons:active {
+  color: white !important;
+  background-color: #78968C !important;
+}
+
+h1.title {
+  color: white !important;
+}
+
+.icon-white {
+  color: white !important;
+}
+
+.bg-white {
+  background-color: white !important;
+}
+
+.no-padding {
+  padding: 0 0 0 0 !important;
+}
+
+.no-margin {
+  margin: 0 0 0 0 !important;
+}
+
+.right-menu-item{
+  border: solid 0 transparent !important;
+  background-color: transparent !important;
+  color: #444 !important;
+  padding: 8px !important;
+  font-size: 16px !important;
 }
 
 .item.list_side{
@@ -14,7 +75,6 @@
 .list.chat{
   padding-bottom: 0 !important;
   padding-top: 0 !important;
-  padding-left: 20px;
 }
 .chat-input-box {
   background-color: white;
@@ -41,14 +101,79 @@
   object-fit: contain;
 }
 
+img#add-channel-icon {
+  transform: translate(800%);
+}
+
+.ion-ios-plus-outline.add-channel-icon {
+  float: right;
+  font-size: 20px;
+  padding-right: 20px;
+  display: inline-flex;
+  font-weight: bolder !important;
+}
+
+.ion-ios-plus-outline.add-channel-icon:active {
+  color: white !important;
+}
+
+img#lock-icon {
+  width: 12px;
+  height: 12px;
+}
+span.hashtag-icon {
+    font-size: 15px;
+    color: #7C6A7A;
+}
+
+.icon-color {
+  color: white !important;
+}
+
+.icon-active:active {
+  color: #38968C !important;
+}
+
+.no-border{
+  border-width: 0 !important;
+}
+
+.list a {
+    background: transparent;
+    border: none;
+}
+.list-style {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    color: #AB9BA9;
+}
+
+.snakk-font-regular {
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+  color: white !important;
+}
+
+.snakk-font-header {
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+  color: #AB9BA9 !important;
+}
+
+.list-title {
+  margin-left: 10px;
+  color: #7C6A7A;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.item.channels {
+    padding: 5px !important;
+    margin-left: 5px;
+}
 .username{
   font-weight: bold;
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
 }
-
-
 
 .date{
   color: #9e9e9e;
@@ -57,12 +182,15 @@
   vertical-align: middle;
   display: inline-block;
 }
+
 .messagetext {
   margin-left: 10px;
 }
+
 .ion-pound{
   transform: scaleX(-1);
 }
+
 .item.item-input.item-stacked-label{
   border: solid 2px #4D394B;
   margin-bottom: 5px;
@@ -74,20 +202,6 @@
 
 .input.settings{
   background-color: #E3E4E5;
-}
-.item.item-input.item-stacked-label{
-  padding-left: 1% !important;
-  padding-top: 3% !important;
-}
-
-.side-right{
-  background-color: #E3E4E5 !important;
-}
-
-.avatarFrame{
-  background-color: #E3E4E5 !important;
-  padding-left: 22% !important;
-  padding-top: 7% !important;
 }
 
 .button.button-block.button-positive.chat{
@@ -110,6 +224,7 @@
 }
 
 .attachment{
+  margin: 0 0 0 10px;
   height: 20%;
   width: 20%;
   object-fit: contain;
@@ -122,11 +237,11 @@
 .userList{
   margin-left: 2%;
   float: left;
-  color: white !important;
+  color: #AB9BA9;
 }
 
 .user{
-  color: white !important;
+  color: #AB9BA9 !important;
 }
 .slack-green{
   color: #38968C !important;
@@ -137,20 +252,35 @@
   font-size: 90% !important;
 }
 
-.title{
-  color: black !important;
-}
-
 .ion-social-octocat{
-  padding-left: 14%;
+  padding-left: 10px;
   font-size: 15px !important;
 }
 
 .activeUserName{
   display: flex;
+
 }
 
 .usernamePad{
-  color: white;
+  height: 20px;
+  color: #AB9BA9;
   padding-left: 2%;
+}
+
+.title.logo{
+  left: 0 !important;
+}
+
+.item.list_side{
+  padding: 5px;
+}
+
+.title{
+  color: black !important;
+}
+
+.channel-highlight {
+    color: #f3efef !important;
+    font-weight: bold !important;
 }

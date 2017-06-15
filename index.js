@@ -4,32 +4,31 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var database;
 var path = require('path');
+var mime = require('mime-types');
 var app = express();
 var multer  = require('multer');
-//const del = require('del');
-// del(['common/images/github.png']);
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'mobile/www/img');
-        cb(null, 'webb/assets/images');
+        cb(null, 'common/img');
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + "-" + file.originalname);
+        cb(null, Date.now() + '.' + mime.extension(file.mimetype));
     }
 });
+
 var upload = multer({ storage: storage });
 
 //Taken from stackoverflow
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
 
     next();
 };
-
 app.use(allowCrossDomain);
-app.use(body.json());
+app.use(body.json({limit: '50mb'}));
 app.use(express.static(path.join(__dirname, 'webb')));
 
 MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
@@ -48,16 +47,20 @@ app.post('/messages', function(request, response) {
     response.send(request.body);
 });
 
-
-
-
 // fetches message from Db
 app.get('/messages', function(request, response) {
     database.collection('messages').find({'channel': request.query.channel}).toArray(function (err, result) {
         response.send(result);
-        //console.log("Messages from ", request.query.channel, ": ", result);
     });
 });
+app.get('/messages/new', function(request, response) {
+    database.collection('messages').find({$and: [
+        {'channel':request.query.channel},
+        {'timestamp': {$gt: request.query.timestamp}}]}).toArray(function(err,result){
+        response.send(result);
+    });
+});
+
 
 // gets all channels for user from DB
 app.get('/channels', function(request, response) {
@@ -104,8 +107,8 @@ app.post('/channel', function(request, response) {
 
 //updates channels timestamp
 app.put('/channel', function(request,response) {
-    var date = Date();
-    database.collection('channels').findOneAndUpdate({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": date}}, {new: true}, function(error, documents) {
+    var date = new Date();
+    database.collection('channels').findOneAndUpdate({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": date}}, {returnOriginal: false}, function(error, documents) {
         if(error) {
             console.log('update channel ERROR!');
             response.send(error);
@@ -173,8 +176,8 @@ app.put('/users', function(req, res) {
 });
 
 // adds avatar image to localhost
-app.post('/upload',upload.single('avatar'), function(req, res) {
-    res.send(req.file.path);
+app.post('/upload',upload.single('avatar'), function(req, res, rej) {
+    res.send(req.file.path.slice(6));
 });
 
 //delete function

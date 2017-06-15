@@ -4,6 +4,7 @@
 (function() {
     var app = angular.module('common', []);
     app.factory('REST', ['$http', '$q', function($http, $q) {
+        // for server use: http://83.249.240.91
         var host = 'http://localhost:3000';
         return {
             get: function get(url) {
@@ -65,8 +66,11 @@
             post: function(message) {
                 return REST.post(url, message);
             },
-            getAllMessages: function(query) {
-                return REST.get(url + query);
+            getAllMessages: function(channel) {
+                return REST.get(url + '?channel=' + channel);
+            },
+            getNewMessages: function(channel, timestamp) {
+                return REST.get('/messages/new' + '?channel=' + channel + '&timestamp=' + timestamp);
             }
         };
     }]);
@@ -180,8 +184,3 @@
     });
 
 })();
-
-
-
-
-
