@@ -57,3 +57,8 @@
 .register-Here-Text {
   text-decoration: underline;
 }
+.invalid-email{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: italic;
+  margin-right: 5px;
+}

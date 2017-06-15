@@ -14,7 +14,7 @@
         <input placeholder="{{placeHolder}}" class="input" type="email" name="email" ng-model="email" required>
       </div>
       <div ng-messages="loginForm.email.$error">
-        <div ng-message="email"> invalid email</div>
+        <div class="invalid-email" ng-message="email">invalid email</div>
       </div>
     </label>
 
