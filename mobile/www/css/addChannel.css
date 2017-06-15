@@ -18,7 +18,7 @@
 .backButton {
     color:white !important;
     margin-top: 10px !important;
-    
+
 }
 
 .title {
@@ -27,7 +27,7 @@
 .list {
     background-color: #4D394B;
     max-width: 100% !important;
-    
+
 }
 .test.has-header {
     margin: auto;
@@ -45,15 +45,15 @@
     color: white;
 }
 
-.ion-scroll { 
-    white-space: nowrap; 
+.ion-scroll {
+    white-space: nowrap;
 }
 .ruta {
     max-width: 78%;
     scroll-behavior: smooth;
     overflow-y: scroll;
     margin: auto;
-    
+
 }
 
 .pane {
@@ -64,7 +64,7 @@
     margin-top: 20px;
 }
 
-.item.item-input {
+.addChannel .item.item-input {
     color: white !important;
     margin-top: 5px;
     height: 40px !important;
@@ -97,7 +97,7 @@
     background-color: #4D394B !important;
     padding-left: 55px !important;
     border: none !important;
-    text-align: left !important; 
+    text-align: left !important;
     margin-left: 15px !important;
     height: 50px !important;
 }
@@ -111,17 +111,18 @@ input.inputField {
     width: 500px !important;
     padding: 5px;
 }
-span {
+.addChannel span {
     color: white !important;
     margin-left: -30px !important;
 }
 
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+::-webkit-input-placeholder {
   color: lightgrey !important;
   text-align: left !important;
   font-size: 15px !important;
-  
+
 }
+
 
 .toggle{
     margin: -9px !important;
@@ -152,7 +153,7 @@ span {
 p.label {
     font-size: 20px !important;
     color:white !important;
-    margin-left: 16px !important; 
+    margin-left: 16px !important;
 }
 
 .ion-arrow-left-c {
