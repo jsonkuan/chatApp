@@ -9,7 +9,9 @@ app.controller("channelController", function ($scope, $state, userService, chann
     
     $scope.createChannel = function() {
         var access = String($scope.publicOrPrivate).toLowerCase();
-        
+        if($scope.channelName.text.length < 1){
+            document.getElementById("input").text = "dsdvsdv";
+        } else {
         var channels = {    
                 name: $scope.channelName.text,
                 purpose: $scope.purpose.text,
@@ -21,7 +23,7 @@ app.controller("channelController", function ($scope, $state, userService, chann
         channelService.post(channels).then(function (response) {
             $state.go("chat");
           });
-        
+        }
     };
 
     $scope.onChange = function(state) {
