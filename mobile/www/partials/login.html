@@ -1,7 +1,7 @@
 <div class="list snakk-background">
   <img class="snakk_logo" src="assets/defaultimages/snakk_icon_white.png">
 
-  <form name="loginForm" ng-model="loginForm">
+  <form class="login-form" name="loginForm" ng-model="loginForm">
     <label class="item item-input no-border" ng-show="showUserName">
       <input placeholder="Username" ng-model="username" type="text">
       <div ng-messages="loginForm.username.$error">
@@ -32,7 +32,11 @@
   </form>
 
   <button type="submit" class="button button-block button-positive snakk-buttons" ng-click="loginButtonClicked()" ng-show="showLoginButton">Login</button>
-  <button class="button button-block button-positive snakk-buttons" ng-click="registerClicked()" style="text-align:center" ng-show="showReg">Register</button>
-  <button type="submit" class="button button-block button-positive snakk-buttons" ng-click="registerButtonClicked()" ng-show="showRegButton">Register</button>
-  <button class="button button-block button-positive snakk-buttons" ng-click="cancelClicked()" style="text-align:center" ng-show="showCancel">Cancel</button>
+  <p class="register-Link" ng-click="registerClicked()" ng-show="showReg">No account? Register here!</p>
+  <div class="register-buttons">
+    <button type="submit" class="button button-block button-positive snakk-buttons register-button" ng-click="registerButtonClicked()" ng-show="showRegButton">Register</button>
+    <button class="button button-block button-positive snakk-buttons register-button" ng-click="cancelClicked()" style="text-align:center" ng-show="showCancel">Cancel</button>
+    </div
+  </div>
+
 </div>
