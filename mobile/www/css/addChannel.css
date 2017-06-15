@@ -1,68 +1,162 @@
-.bar.bar-header.bar-stable.channel {
+.bar.bar-header.bar-stable {
     background: #4D394B;
+    font-size: 40px !important;
+    height: 75px;
+    position: relative;
+    margin: auto;
+}
+
+.logo {
+    width: 80%;
+    margin: 2px;
+}
+
+.line {
+    color: red;
+}
+
+.backButton {
+    color:white !important;
+    margin-top: 10px !important;
 
 }
 
-h1 {
+.title {
     color: white !important;
 }
+.list {
+    background-color: #4D394B;
+    max-width: 100% !important;
 
-.tesst {
-    margin-top: 35px !important;
-    border: solid #4D394B 2px !important;
+}
+.test.has-header {
+    margin: auto;
+    max-width: 94% !important;
+    max-height: 45px !important;
+    margin-top: 30px !important;
+    background-color: #4D394B !important;
+    height: 45px !important;
+    border: none !important;
 }
 
-.ion-scroll { 
-    white-space: nowrap; 
-}
-.card {
-    border: solid #4D394B 2px !important;
-    border-radius: 10px !important;
-    max-height: 238px;
+.add-friends {
+    text-align: center;
+    font-size: 18px;
+    color: white;
 }
 
-.item.item-input {
-    border: solid #4D394B 1px;
+.ion-scroll {
+    white-space: nowrap;
+}
+.ruta {
+    max-width: 78%;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    margin: auto;
+
+}
+
+.pane {
+    background-color: #4D394B !important;
+}
+
+.listPos {
+    margin-top: 20px;
+}
+
+.addChannel .item.item-input {
+    color: white !important;
+    margin-top: 5px;
+    height: 40px !important;
+    margin: auto !important;
+    max-width: 100% !important;
+    font-size: 30px;
+}
+.item.item-toggle {
+    color: lightgrey;
+    background-color: #4D394B !important;
     margin-top: 5px;
     height: 45px;
+    border: none;
+    margin-right: 18px !important;
 }
 
 .item-checkbox {
   border: 0px !important;
   border-color: #4D394B !important;
   padding-left: 55px !important;
-  font-size: 20px !important;
+  font-size: 15px !important;
+  align-items: center !important;
+  font-weight: bold !important;
 }
 
-.item.item-input.item-icon-right {
-    border-width: 2px !important;
-    border-color: #4D394B !important;
-    padding-left: 55px !important;
-    border-radius: 10px;
-}
-
-.toggle{
-    margin: -10px !important;
-}
-
-.button.button-block.button-positive.channel {
+.item.item-input.item-stacked-label {
+    margin: auto;
+    margin-top: 10px !important;
+    max-width: 94% !important;
     background-color: #4D394B !important;
-    width: 300px !important;
+    padding-left: 55px !important;
+    border: none !important;
+    text-align: left !important;
+    margin-left: 15px !important;
     height: 50px !important;
-    margin: 0 auto !important;
+}
+
+input.inputField {
+    background-color: #4D394B !important;
+    color: white !important;
+    text-align: left !important;
+    margin-left: -30px !important;
+    margin-top: 5px !important;
+    width: 500px !important;
+    padding: 5px;
+}
+.addChannel span {
+    color: white !important;
+    margin-left: -30px !important;
     margin-top: 5px !important;
 }
 
-.snakk_logo_add {
-    position: static;
-    height: 90%;
-    object-fit: contain;
-}
+::-webkit-input-placeholder {
+  color: lightgrey !important;
+  text-align: left !important;
+  font-size: 15px !important;
 
-.ion-close-circled {
-    color: darkred !important;
-    margin: 10px !important;
 }
 
 
+.toggle{
+    margin: -9px !important;
+}
 
+.item-checkbox.checkbox-balanced {
+    background-color: #654962 !important;
+    color: lightgrey !important;
+}
+
+.button.button-block.button-positive.addChannel{
+  background-color: rgba(86, 182, 139, 1) !important;
+  color: white;
+  margin: auto;
+  width: 80%;
+  border-radius: 50px !important;
+  margin-top: 8px !important;
+}
+
+#scrollimg {
+    position: absolute;
+    margin-left: 170px;
+    margin-top: -30px;
+    color: #4D394B;
+    font-size: 35px;
+}
+
+p.label {
+    font-size: 20px !important;
+    color:white !important;
+    margin-left: 16px !important;
+}
+
+.ion-arrow-left-c {
+    font-size: 40px !important;
+}

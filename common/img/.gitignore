@@ -1,0 +1,7 @@
+#Everything
+*
+
+
+#Except These...
+!README.md
+!.gitignore

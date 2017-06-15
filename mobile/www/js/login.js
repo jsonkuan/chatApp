@@ -22,11 +22,11 @@ app.controller('loginController', function ($scope, $state, $filter, $q, userSer
   });
 
   $scope.loginButtonClicked = function () {
-    $scope.login($scope.email, $scope.password).then(function (response) {
+    $scope.login($scope.email, $scope.password).then(function(validated) {
       /*if(userService.active.status === "online"){
        $scope.placeHolder = "You are already logged in";
        }else {*/
-      if (response === true) {
+      if (validated) {
         userService.active.status = "online";
         userService.updateUser(userService.active);
         localStorage['user'] = userService.active._id;
@@ -41,8 +41,8 @@ app.controller('loginController', function ($scope, $state, $filter, $q, userSer
   $scope.registerButtonClicked = function () {
     $scope.isAuthenticated = true;
     if ($scope.username && $scope.email && $scope.password && $scope.confirm) {
-      $scope.register($scope.email, $scope.password, $scope.confirm).then(function (response) {
-        if (response === true) {
+      $scope.register($scope.email, $scope.password, $scope.confirm).then(function(validated) {
+        if (validated) {
           var user = {
             email: $filter('lowercase')($scope.email), username: $scope.username,
             password: $scope.password, avatar: "assets/defaultimages/defaultProfile.png", status: "offline", warnings: 0
@@ -51,8 +51,6 @@ app.controller('loginController', function ($scope, $state, $filter, $q, userSer
             $scope.email = $scope.email.toLowerCase();
             shownElements();
           });
-        } else {
-          console.log('Register fail');
         }
       });
     }

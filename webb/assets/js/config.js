@@ -62,8 +62,6 @@ app.config(function($mdThemingProvider, $stateProvider, $qProvider, $urlRouterPr
         });
 });
 
-
-
 app.run(function($rootScope, $state, Resolvers) {
 
     //NOTE: Uncomment below and run app to clear user cookie.

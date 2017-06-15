@@ -13,6 +13,8 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     $scope.tmpChannels = $scope.userChannels;
     $scope.tmpContacts = $scope.contacts;
     $scope.warning = false;
+    $scope.channelName = "";
+    $scope.intervals = [];
 
     $scope.addUsersToPosters = function(topList, users){
         var newTopList = [];
@@ -93,25 +95,29 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
 
     $scope.openChat = function (channel) {
         channelService.current = channel;
+        $scope.clearIntervals();
+        $scope.channelName = $scope.getChannelName($scope.currentChannel);
         $state.reload();
     };
 
     $scope.announceClick = function (index) {
         if (index === 0) {
+            $scope.clearIntervals()
             $state.transitionTo('settings');
         } else {
             userService.active.status = "offline";
             userService.updateUser(userService.active).then(function (response) {
-                //$cookies.remove('user');
                 localStorage.removeItem('user');
                 userService.active = null;
                 channelService.current = null;
+                $scope.clearIntervals()
                 $state.transitionTo('login');
             });
         }
     };
 
     $scope.sendToCreateChannel = function () {
+        $scope.clearIntervals();
         $state.transitionTo('addChannel');
     };
 
@@ -217,15 +223,18 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
 
         channelService.updateTimeStamp($scope.currentChannel).then(function (response) {
             $scope.currentChannel = response.data;
+            channelService.current = response.data;
             message.timestamp = $scope.currentChannel.timestamp;
             messageService.post(message).then(function (response) {
                 if (!$scope.warning) {
                     $scope.checkTimeStamp();
+                    $scope.newChannelChecker();
                 } else {
                     setTimeout(function () {
                         botMessage.timestamp = $scope.currentChannel.timestamp;
                         messageService.post(botMessage).then(function (response) {
                             $scope.checkTimeStamp();
+                            $scope.newChannelChecker();
                             $scope.warning = false;
                             if ($scope.activeUser.warnings > 2) {
                                 userService.deleteUser($scope.activeUser._id).then(function () {
@@ -268,6 +277,20 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
             }
         }
     };
+
+    $scope.getChannelName = function (currentChannel) {
+
+        if (currentChannel.accessability === "direct") {
+
+            var channelUser = $scope.contacts.filter(function (user) {
+                return user._id != userService.active._id && currentChannel.users.includes(user._id);
+            });
+            return channelUser[0].username;
+        } else {
+            return currentChannel.name;
+        }
+    };
+    $scope.channelName = $scope.getChannelName($scope.currentChannel);
 
     $scope.getMessages = function () {
         $scope.attachmentPath = "";
@@ -339,43 +362,45 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     //Watches for new channels
     $scope.newChannelChecker = function () {
         channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
-
             userService.getUsers().then(function (userResponse) {
-                if ($scope.avatarChangeChecker(userResponse, $scope.tmpContacts) || $scope.tmpChannels.length < channelResponse.length) {
-
-                    $scope.tmpChannels = channelResponse;
+                if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
                     $scope.tmpContacts = userResponse;
-                    $scope.updateChannelStatus();
-                    $scope.filterChannels();
                     $scope.addUserToMsg(userResponse, $scope.messageDb);
                 }
+                $scope.tmpChannels = channelResponse;
+                $scope.updateChannelStatus();
+                $scope.filterChannels();
             });
         });
     };
 
-    $scope.avatarChangeChecker = function (responseArray, tmpArray) {
-
+    $scope.userChangeChecker = function (responseArray, tmpArray) {
         for (var i = 0; i < responseArray.length; i++) {
-            if (responseArray[i].avatar !== tmpArray[i].avatar) {
+            if (responseArray[i].avatar !== tmpArray[i].avatar || responseArray[i].username !== tmpArray[i].username) {
                 return true;
             }
         }
         return false;
     };
 
-    setInterval(function () {
-        $scope.checkTimeStamp();
-    }, 1500);
+    $scope.clearIntervals = function () {
+        for (var i = 0; i < $scope.intervals.length; i++) {
+        clearInterval($scope.intervals[i]);
+        }
+    };
 
-    setInterval(function () {
-        $scope.newChannelChecker();
-    }, 4000);
+    $scope.setupIntervals = function () {
+        var messages = setInterval(function () {
+            $scope.checkTimeStamp();
+        }, 1500);
+        var channels = setInterval(function () {
+            $scope.newChannelChecker();
+        }, 4000);
+        $scope.intervals.push(messages);
+        $scope.intervals.push(channels);
+    }();
+
 });
-
-// Temp randomizing function
-function rnd(number) {
-    return Math.floor((Math.random() * number) + 1);
-}
 
 function formatDate(isoDate) {
     var d1 = new Date(isoDate);

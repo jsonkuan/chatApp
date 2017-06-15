@@ -191,7 +191,7 @@ app.put('/users', function(req, res) {
 });
 
 // adds avatar image to localhost
-app.post('/upload',upload.single('avatar'), function(req, res, rej) {
+app.post('/upload',upload.single('avatar'), function(req, res) {
     res.send(req.file.path.slice(6));
 });
 
