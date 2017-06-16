@@ -1,28 +1,34 @@
 app.controller("channelController", function ($scope, $state, userService, channelService, allUsers) {
     $scope.tempArray = [];
     $scope.purpose = { text: "" };
-    $scope.accessability = "public";
     $scope.users = allUsers.slice(1);
     $scope.channelName = { text: "" };
     $scope.usersWithoutBot = $scope.users;
     $scope.invitedUsers = [userService.active._id];
-
-    $scope.publicOrPrivate = function() {
-        $scope.accessability = "private";
-    }
-
+    $scope.publicOrPrivate = "Public";
+    
     $scope.createChannel = function() {
-        var channels = {
-            name: $scope.channelName.text,
-            purpose: $scope.purpose.text,
-            users: $scope.invitedUsers,
-            accessability: $scope.accessability,
-            timestamp: ""
-        }
+        var access = String($scope.publicOrPrivate).toLowerCase();
+        if($scope.channelName.text.length < 1){
+            $scope.channelName.text = "Enter a name <---";
+        } else {
+        var channels = {    
+                name: $scope.channelName.text,
+                purpose: $scope.purpose.text,
+                users: $scope.invitedUsers,
+                accessability: access,
+                timestamp: ""
+            };
         channelService.post(channels).then(function (response) {
             $state.go("chat");
-        });
-    }
+          });
+        }
+    };
+
+    $scope.onChange = function(state) {
+        $scope.publicOrPrivate = "Private";
+        return state ? ($scope.publicOrPrivate = "Private", $scope.privateText= "private") : ($scope.publicOrPrivate = "Public", $scope.privateText= "");
+    };
 
     $scope.resetChannelname = function() {
         $scope.channelName.text = "";
@@ -51,7 +57,6 @@ app.controller("channelController", function ($scope, $state, userService, chann
 
     $scope.removeFromChannel = function(index) {
         $scope.invitedUsers.splice(index, 1);
-        console.log("Removed");
     };
 
     $scope.filterInvitedUsers = function(user) {

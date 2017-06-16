@@ -65,13 +65,23 @@
         <h5 class="list-title">Direct Messages</h5>
         <a class="item list_side" ng-repeat="user in users | orderBy: 'username' track by $index" ng-click="startDirectChat(activeUser, user)">
           <div class="list chat userList">
-           <img id="sidemenu-thumbNail" ngf-thumbnail="user.avatar">
+           <img class="sidemenu-thumbNail" ngf-thumbnail="user.avatar">
             <p ng-if="channelStatus[user.channelId].update" class="channel-highlight">{{user.username}}</p>
             <p ng-if="!channelStatus[user.channelId].update">{{user.username}}</p>
             <i ng-if="user.status == 'online'" class="ion-ios-circle-filled slack-green"> online</i>
             <i ng-if="user.status == 'offline'" class="ion-ios-circle-outline slack-off"> offline</i>
           </div>
        </a>
+
+      <!-- Top Posters -->
+      <h5 class="list-title right-top-list">Top Posters</h5>
+      <a class="item list_side" ng-repeat="poster in topList" ng-click="startDirectChat(activeUser, user)" ng-click="startDirectChat(activeUser, user)">
+        <div class="list">
+          <img class="sidemenu-thumbNail" ngf-thumbnail="poster.avatar">
+          <p class="left-menu-username">{{poster.username}}</p>
+          <p class="left-menu-posts">posts: {{poster.posts}}</p>
+        </div>
+      </a>
     </ion-content>
   </ion-side-menu>
 

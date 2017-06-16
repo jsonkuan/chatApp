@@ -46,6 +46,21 @@ app.post('/messages', function(request, response) {
     response.send(request.body);
 });
 
+// Lists messages
+app.get('/messages/top', function(request, response) {
+    database.collection('messages').aggregate([
+        {$group: {_id : "$userId", posts : {$sum:1}}},
+        { $sort: {posts: -1}}
+        ]).toArray(function(error, result){
+        if(error){
+            response.send(error);
+        }else{
+            response.send(result);
+        }
+    });
+
+});
+
 // Fetches message from db
 app.get('/messages', function(request, response) {
     database.collection('messages').find({'channel': request.query.channel}).toArray(function (err, result) {
@@ -174,7 +189,7 @@ app.put('/users', function(req, res) {
 });
 
 // Adds avatar image to localhost
-app.post('/upload',upload.single('avatar'), function(req, res, rej) {
+app.post('/upload',upload.single('avatar'), function(req, res) {
     res.send(req.file.path.slice(6));
 });
 

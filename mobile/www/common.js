@@ -74,6 +74,9 @@
             },
             getNewMessages: function(channel, timestamp) {
                 return REST.get('/messages/new' + '?channel=' + channel + '&timestamp=' + timestamp);
+            },
+            getTopPosters: function(){
+                return REST.get('/messages/top');
             }
         };
     }]);
@@ -185,5 +188,4 @@
             }
         };
     });
-
 })();

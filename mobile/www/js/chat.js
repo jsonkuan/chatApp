@@ -1,4 +1,4 @@
-app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegate, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera) {
+app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegate, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera, topPostersList) {
   $scope.activeUser = session;
   $scope.messageDb = [];
   $scope.allUsers = userContacts;
@@ -12,9 +12,26 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.tmpContacts = $scope.users;
   $scope.channelStatus;
   $scope.pictureUrl = "";
+  $scope.topPosters = topPostersList;
+  $scope.topList = [];
   $scope.channelName = "";
   $scope.warning = false;
   $scope.intervals = [];
+
+  $scope.addUsersToPosters = function(topList, users){
+    var newTopList = [];
+    for (var i = 0; i < topList.length && i < 5 ; i++) {
+      for (var j = 0; j < users.length; j++) {
+        if (topList[i]._id === users[j]._id) {
+          var tempObject = {username: users[j].username, posts : topList[i].posts, avatar: users[j].avatar};
+          newTopList.push(tempObject);
+        }
+      }
+    }
+    return newTopList;
+  };
+
+  $scope.topList = $scope.addUsersToPosters(topPostersList, userContacts);
 
   $scope.logout = function () {
     userService.active.status = "offline";
@@ -27,7 +44,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     })
   };
 
-  console.log("/////////"+$scope.userInput.avatar);
+  console.log($scope.userInput.avatar);
 
   //TODO test if camera it works on device with camera
   $scope.takePhoto = function () {
@@ -162,11 +179,10 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
         userService.getUsers().then(function (userResponse) {
             if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
-
-                $scope.tmpChannels = channelResponse;
                 $scope.tmpContacts = userResponse;
                 $scope.addUserToMsg(userResponse, $scope.messageDb);
             }
+            $scope.tmpChannels = channelResponse;
             $scope.updateChannelStatus();
             $scope.filterChannels();
         });
@@ -267,12 +283,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       });
     });
-
-    /*$scope.$watch('messageDb', function f() {
-     var chatContent = document.getElementById('chat-text-box-container');
-     chatContent.scrollTop = chatContent.scrollHeight;
-     }, true); */
   };
+
   $scope.getChannelName = function (currentChannel) {
 
     if (currentChannel.accessability === "direct") {
@@ -285,6 +297,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       return currentChannel.name;
     }
   };
+  
   $scope.channelName = $scope.getChannelName($scope.currentChannel);
 
   $scope.getMessages = function () {
@@ -301,7 +314,10 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         $scope.messageDb = $scope.messageDb.concat(response);
         $ionicScrollDelegate.scrollBottom();
         $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
-      })
+      });
+      messageService.getTopPosters().then(function (response){
+        $scope.topList = $scope.addUsersToPosters(response, userContacts);
+      });
     }
   };
   $scope.getMessages();
@@ -369,9 +385,12 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     userService.active.username = $scope.userInput.username;
     $scope.userInput.username = userService.active.username;
     $scope.userInput.password = userService.active.password;
+    $scope.username = userService.active.username;
+    console.log($scope.userInput.avatar);
 
     if ($scope.avatar != userService.active.avatar && $scope.userInput.avatar !== "") {
       upload({
+        //use http://83.249.240.91/upload' for server
         url: 'http://localhost:3000/upload',
         method: 'POST',
         data: {
@@ -381,7 +400,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         function (response) {
           //console.log("avar" , response.data);
           setTimeout(function() {
-            userService.active.avatar = "/assets" + response.data;
+            userService.active.avatar = "assets" + response.data;
             userService.updateUser(userService.active).then(function() {
               $scope.newChannelChecker();
               $ionicSideMenuDelegate.toggleRight();
@@ -402,6 +421,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
 
     if ($scope.chatInput.attachment) {
       upload({
+        //use http://83.249.240.91/upload' for server
         url: 'http://localhost:3000/upload',
         method: 'POST',
         data: {
@@ -409,7 +429,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       }).then(
         function (response) {
-          $scope.chatInput.attachmentPath = "/assets" + response.data;
+          $scope.chatInput.attachmentPath = "assets" + response.data;
           console.log($scope.chatInput.attachmentPath);
         }
       );
