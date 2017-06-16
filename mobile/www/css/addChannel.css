@@ -7,17 +7,13 @@
 }
 
 .logo {
-    width: 80%;
-    margin: 2px;
+    width: 100%;
+    margin-left: -45px;
+
 }
 
 .line {
     color: red;
-}
-
-.backButton {
-    color:white !important;
-    margin-top: 10px !important;
 }
 
 .title {
@@ -130,7 +126,7 @@ input.inputField {
 }
 
 .item-checkbox.checkbox-balanced {
-    background-color: #654962 !important;
+    background-color: #4d394b !important;
     color: lightgrey !important;
 }
 
@@ -159,4 +155,6 @@ p.label {
 
 .ion-arrow-left-c {
     font-size: 40px !important;
+    color: white !important;
+    margin-left: 10px !important;
 }
