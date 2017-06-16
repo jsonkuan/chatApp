@@ -386,7 +386,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     $scope.updateOnlineUsers = function() {
         console.log("Updated online users.");
         userService.getOnlineUsers().then(function(response) {
-            $scope.onlineUsers = response.count;
+            $scope.onlineUsers = response.count - 1;
         });
     }();
 

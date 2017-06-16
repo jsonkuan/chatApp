@@ -202,7 +202,6 @@ app.delete('/users:id', function(req, res) {
 // Get online users
 app.get('/onlineUsers', function(request, response) {
     database.collection('users').count({"status": "online"}, function(error, result) {
-        console.log(error, result);
         response.send({count: result});
     });
 });
