@@ -353,7 +353,6 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     };
 
     $scope.userChangeChecker = function (responseArray, tmpArray) {
-
         for (var i = 0; i < responseArray.length; i++) {
             if (responseArray[i].avatar !== tmpArray[i].avatar || responseArray[i].username !== tmpArray[i].username) {
                 return true;
@@ -361,6 +360,13 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         }
         return false;
     };
+
+    $scope.updateOnlineUsers = function() {
+        console.log("Updated online users.");
+        userService.getOnlineUsers().then(function(response) {
+            $scope.onlineUsers = response.count;
+        });
+    }();
 
     $scope.clearIntervals = function () {
         for (var i = 0; i < $scope.intervals.length; i++) {

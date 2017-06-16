@@ -27,6 +27,9 @@
         <div layout="row" layout-align="center">
              <h3 class="channel-header" flex="100">Direct Messages</h3>
         </div>
+        <div layout="row" layout-align="center">
+            <h6 id="num-online-users" class="channel-header" flex="100">Online: {{onlineUsers}}</h6>
+        </div>
         <div class="channels-list">
             <li class="channelMsgLists" ng-repeat="contact in contacts | orderBy: 'username'" ng-click="startDirectChat(activeUser, contact)">
                 <i class="material-icons slack-green" ng-if="contact.status == 'online'">radio_button_checked</i>

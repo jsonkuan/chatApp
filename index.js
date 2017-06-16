@@ -24,7 +24,6 @@ var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
-
     next();
 };
 app.use(allowCrossDomain);
@@ -41,13 +40,13 @@ MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, databas
     }
 });
 
-// Adds message to channel in DB
+// Adds message to channel in db
 app.post('/messages', function(request, response) {
     database.collection('messages').insert(request.body);
     response.send(request.body);
 });
 
-// fetches message from Db
+// Fetches message from db
 app.get('/messages', function(request, response) {
     database.collection('messages').find({'channel': request.query.channel}).toArray(function (err, result) {
         response.send(result);
@@ -61,8 +60,7 @@ app.get('/messages/new', function(request, response) {
     });
 });
 
-
-// gets all channels for user from DB
+// Gets all channels for user from db
 app.get('/channels', function(request, response) {
     if (request.query.user) {
         var user = request.query.user;
@@ -87,14 +85,14 @@ app.get('/channels', function(request, response) {
     }
 });
 
-// gets specific channel from Db
+// Gets specific channel from db
 app.get('/channel', function(request, response){
     database.collection('channels').findOne({'_id' : ObjectId(request.query.id)}, function(err, result){
         response.send(result);
     });
 });
 
-// Adds channels to DB
+// Adds channels to db
 app.post('/channel', function(request, response) {
     database.collection('channels').insert(request.body, function(error, documents) {
         if (error) {
@@ -105,7 +103,7 @@ app.post('/channel', function(request, response) {
     });
 });
 
-//updates channels timestamp
+// Updates channels timestamp
 app.put('/channel', function(request,response) {
     var date = new Date();
     database.collection('channels').findOneAndUpdate({"_id": ObjectId(request.body._id)}, {$set:{"timestamp": date}}, {returnOriginal: false}, function(error, documents) {
@@ -143,15 +141,15 @@ app.get('/user', function(request, response) {
     }
 });
 
-// Gets all users from DB
+// Gets all users from db
 app.get('/users', function (req, res) {
     database.collection('users').find().toArray(function (err, results) {
         res.send(results);
     });
 });
 
-// Adds users to DB
-//TODO need to add avatar and channels
+// Adds users to db
+    // TODO need to add avatar and channels
 app.post('/users', function(request, response) {
     var user = request.body;
     if(user._id === "133333333333333333333337"){
@@ -167,7 +165,7 @@ app.post('/users', function(request, response) {
     }
 });
 
-// Updates the users info in DB
+// Updates the users info in db
 app.put('/users', function(req, res) {
     var user = req.body;
     database.collection('users').update({"_id": ObjectId(user._id)}, {"username" : user.username, "email" : user.email,
@@ -175,18 +173,26 @@ app.put('/users', function(req, res) {
     res.send({});
 });
 
-// adds avatar image to localhost
+// Adds avatar image to localhost
 app.post('/upload',upload.single('avatar'), function(req, res, rej) {
     res.send(req.file.path.slice(6));
 });
 
-//delete function
+// Delete function
 app.delete('/users:id', function(req, res) {
     database.collection('users').remove({"_id": ObjectId(req.params.id)});
     res.send({});
 });
 
-// used port
+// Get online users
+app.get('/onlineUsers', function(request, response) {
+    database.collection('users').count({"status": "online"}, function(error, result) {
+        console.log(error, result);
+        response.send({count: result});
+    });
+});
+
+// Used port
 app.listen(3000, function() {
     console.log("Starting new server");
 });
