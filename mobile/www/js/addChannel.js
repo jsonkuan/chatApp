@@ -9,7 +9,9 @@ app.controller("channelController", function ($scope, $state, userService, chann
     
     $scope.createChannel = function() {
         var access = String($scope.publicOrPrivate).toLowerCase();
-        
+        if($scope.channelName.text.length < 1){
+            $scope.channelName.text = "Enter a name <---";
+        } else {
         var channels = {    
                 name: $scope.channelName.text,
                 purpose: $scope.purpose.text,
@@ -17,16 +19,13 @@ app.controller("channelController", function ($scope, $state, userService, chann
                 accessability: access,
                 timestamp: ""
             };
-            console.log(channels);
         channelService.post(channels).then(function (response) {
             $state.go("chat");
           });
-        
+        }
     };
 
     $scope.onChange = function(state) {
-        console.log($scope.publicOrPrivate);
-        console.log(state);
         $scope.publicOrPrivate = "Private";
         return state ? ($scope.publicOrPrivate = "Private", $scope.privateText= "private") : ($scope.publicOrPrivate = "Public", $scope.privateText= "");
     };
@@ -58,7 +57,6 @@ app.controller("channelController", function ($scope, $state, userService, chann
 
     $scope.removeFromChannel = function(index) {
         $scope.invitedUsers.splice(index, 1);
-        console.log("Removed");
     };
 
     $scope.filterInvitedUsers = function(user) {

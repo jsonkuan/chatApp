@@ -1,4 +1,4 @@
-app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegate, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera) {
+app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegate, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera, topPostersList) {
   $scope.activeUser = session;
   $scope.messageDb = [];
   $scope.allUsers = userContacts;
@@ -12,9 +12,26 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.tmpContacts = $scope.users;
   $scope.channelStatus;
   $scope.pictureUrl = "";
+  $scope.topPosters = topPostersList;
+  $scope.topList = [];
   $scope.channelName = "";
   $scope.warning = false;
   $scope.intervals = [];
+
+  $scope.addUsersToPosters = function(topList, users){
+    var newTopList = [];
+    for (var i = 0; i < topList.length && i < 5 ; i++) {
+      for (var j = 0; j < users.length; j++) {
+        if (topList[i]._id === users[j]._id) {
+          var tempObject = {username: users[j].username, posts : topList[i].posts, avatar: users[j].avatar};
+          newTopList.push(tempObject);
+        }
+      }
+    }
+    return newTopList;
+  };
+
+  $scope.topList = $scope.addUsersToPosters(topPostersList, userContacts);
 
   $scope.logout = function () {
     userService.active.status = "offline";
@@ -266,12 +283,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       });
     });
-
-    /*$scope.$watch('messageDb', function f() {
-     var chatContent = document.getElementById('chat-text-box-container');
-     chatContent.scrollTop = chatContent.scrollHeight;
-     }, true); */
   };
+
   $scope.getChannelName = function (currentChannel) {
 
     if (currentChannel.accessability === "direct") {
@@ -284,6 +297,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       return currentChannel.name;
     }
   };
+  
   $scope.channelName = $scope.getChannelName($scope.currentChannel);
 
   $scope.getMessages = function () {
@@ -300,7 +314,10 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         $scope.messageDb = $scope.messageDb.concat(response);
         $ionicScrollDelegate.scrollBottom();
         $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
-      })
+      });
+      messageService.getTopPosters().then(function (response){
+        $scope.topList = $scope.addUsersToPosters(response, userContacts);
+      });
     }
   };
   $scope.getMessages();

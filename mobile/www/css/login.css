@@ -17,8 +17,9 @@
   color: white !important;
   background-color: #78968C !important;
 }
-.item.item-input {
+.login-form .item.item-input {
     height: 40px;
+    margin-top: 5px !important;
     border: solid #4D394B 1px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width: 80%;
@@ -57,7 +58,7 @@
 .register-Here-Text {
   text-decoration: underline;
 }
-.invalid-email{
+.login-invalid-email, .login-no-match {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-style: italic;
   margin-right: 5px;

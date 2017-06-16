@@ -1,4 +1,4 @@
-angular.module('app').controller('chatController', function ($scope, upload, $state, messageService, channelService, userService, channels, currentChannel, userContacts, session) {
+angular.module('app').controller('chatController', function ($scope, upload, $state, messageService, channelService, userService, channels, currentChannel, userContacts, session, topPostersList) {
     $scope.activeUser = session;
     $scope.userChannels = channels;
     $scope.currentChannel = currentChannel;
@@ -9,12 +9,28 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     $scope.glued = true;
     $scope.chatInput = "";
     $scope.channelStatus;
+    $scope.topPosters = topPostersList;
     $scope.tmpChannels = $scope.userChannels;
     $scope.tmpContacts = $scope.contacts;
     $scope.warning = false;
     $scope.channelName = "";
     $scope.intervals = [];
 
+    $scope.addUsersToPosters = function(topList, users){
+        var newTopList = [];
+        for (var i = 0; i < topList.length && i < 5 ; i++) {
+            for (var j = 0; j < users.length; j++) {
+                if (topList[i]._id === users[j]._id) {
+                    var tempObject = {username: users[j].username, posts : topList[i].posts, avatar: users[j].avatar};
+                    newTopList.push(tempObject);
+                }
+            }
+        }
+        return newTopList;
+    };
+
+    $scope.topList = $scope.addUsersToPosters(topPostersList, userContacts);
+    console.log($scope.topList);
     // Filter channels for user
     $scope.filterChannels = function () {
         var contacts = $scope.tmpContacts.filter(function (user) {
@@ -209,7 +225,6 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
             $scope.currentChannel = response.data;
             channelService.current = response.data;
             message.timestamp = $scope.currentChannel.timestamp;
-
             messageService.post(message).then(function (response) {
                 if (!$scope.warning) {
                     $scope.checkTimeStamp();
@@ -283,12 +298,18 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
             $scope.messageDb = response;
             $scope.addUserToMsg($scope.users, $scope.messageDb);
         });
+        messageService.getTopPosters().then(function (response){
+            $scope.topList = $scope.addUsersToPosters(response, userContacts);
+        });
     };
     $scope.getNewMessages = function () {
         $scope.attachmentPath = "";
         $scope.newMessages = messageService.getNewMessages($scope.currentChannel._id, $scope.localTimestamp).then(function (response) {
             $scope.messageDb = $scope.messageDb.concat(response);
             $scope.addUserToMsg($scope.users, $scope.messageDb);
+        });
+        messageService.getTopPosters().then(function (response){
+            $scope.topList = $scope.addUsersToPosters(response, userContacts);
         });
     };
     $scope.getMessages();
