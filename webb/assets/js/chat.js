@@ -366,6 +366,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
                 if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
                     $scope.tmpContacts = userResponse;
                     $scope.addUserToMsg(userResponse, $scope.messageDb);
+                    $scope.updateOnlineUsers();
                 }
                 $scope.tmpChannels = channelResponse;
                 $scope.updateChannelStatus();
