@@ -63,6 +63,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   };
 
   $scope.gotToAddChannel = function () {
+    $scope.clearIntervals();
     $state.go('addChannel');
   };
 
@@ -297,7 +298,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       return currentChannel.name;
     }
   };
-  
+
   $scope.channelName = $scope.getChannelName($scope.currentChannel);
 
   $scope.getMessages = function () {
@@ -309,6 +310,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     });
 
     $scope.getNewMessages = function () {
+      console.log("getNewMessages");
       $scope.chatInput.attachmentPath = "";
       $scope.newMessages = messageService.getNewMessages($scope.currentChannel._id, $scope.localTimestamp).then(function (response) {
         $scope.messageDb = $scope.messageDb.concat(response);
