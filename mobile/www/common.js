@@ -56,6 +56,9 @@
             },
             get: function(id) {
                 return REST.get('/user?id=' + id);
+            },
+            getOnlineUsers: function() {
+                return REST.get('/onlineUsers');
             }
         };
     }]);
@@ -185,5 +188,4 @@
             }
         };
     });
-
 })();

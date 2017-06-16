@@ -366,6 +366,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
                 if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
                     $scope.tmpContacts = userResponse;
                     $scope.addUserToMsg(userResponse, $scope.messageDb);
+                    $scope.updateOnlineUsers();
                 }
                 $scope.tmpChannels = channelResponse;
                 $scope.updateChannelStatus();
@@ -382,6 +383,13 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         }
         return false;
     };
+
+    $scope.updateOnlineUsers = function() {
+        console.log("Updated online users.");
+        userService.getOnlineUsers().then(function(response) {
+            $scope.onlineUsers = response.count - 1;
+        });
+    }();
 
     $scope.clearIntervals = function () {
         for (var i = 0; i < $scope.intervals.length; i++) {
