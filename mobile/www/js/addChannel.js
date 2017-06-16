@@ -26,8 +26,6 @@ app.controller("channelController", function ($scope, $state, userService, chann
     };
 
     $scope.onChange = function(state) {
-        console.log($scope.publicOrPrivate);
-        console.log(state);
         $scope.publicOrPrivate = "Private";
         return state ? ($scope.publicOrPrivate = "Private", $scope.privateText= "private") : ($scope.publicOrPrivate = "Public", $scope.privateText= "");
     };
