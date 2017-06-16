@@ -30,7 +30,6 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     };
 
     $scope.topList = $scope.addUsersToPosters(topPostersList, userContacts);
-    console.log($scope.topList);
     // Filter channels for user
     $scope.filterChannels = function () {
         var contacts = $scope.tmpContacts.filter(function (user) {
@@ -85,7 +84,6 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
         storage[channelService.current._id].update = false;
 
         $scope.channelStatus = storage;
-        //console.log('updated storage', storage);
         localStorage[userService.active._id] = JSON.stringify(storage);
         //$cookies.put(userService.active._id, JSON.stringify(storage));
     };
@@ -363,7 +361,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     $scope.newChannelChecker = function () {
         channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
             userService.getUsers().then(function (userResponse) {
-                if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
+                if ($scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
                     $scope.tmpContacts = userResponse;
                     $scope.addUserToMsg(userResponse, $scope.messageDb);
                     $scope.updateOnlineUsers();
@@ -377,7 +375,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
 
     $scope.userChangeChecker = function (responseArray, tmpArray) {
         for (var i = 0; i < responseArray.length; i++) {
-            if (responseArray[i].avatar !== tmpArray[i].avatar || responseArray[i].username !== tmpArray[i].username) {
+            if (responseArray[i].status !== tmpArray[i].status || responseArray[i].avatar !== tmpArray[i].avatar || responseArray[i].username !== tmpArray[i].username) {
                 return true;
             }
         }
@@ -385,11 +383,11 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
     };
 
     $scope.updateOnlineUsers = function() {
-        console.log("Updated online users.");
         userService.getOnlineUsers().then(function(response) {
             $scope.onlineUsers = response.count - 1;
         });
-    }();
+    };
+    $scope.updateOnlineUsers();
 
     $scope.clearIntervals = function () {
         for (var i = 0; i < $scope.intervals.length; i++) {
