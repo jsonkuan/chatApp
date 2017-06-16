@@ -1,20 +1,18 @@
 <div class="bar bar-header bar-stable" >
-    <button class="backButton">
         <i class="ion-arrow-left-c" ng-click="backToChat()"></i>
-    </button>
     <img class="logo" src="assets/defaultimages/new_channel.svg">
 </div>
 <ion-list>
     <div class="lista">
         <div class="test has-header">
         <ion-toggle ng-model="switch" toggle-class="toggle-balanced" ng-click="onChange(switch)">
-            <p class="label">{{publicOrPrivate}}</p> 
+            <p class="label">{{publicOrPrivate}}</p>
         </ion-toggle>
     </div>
     <div class="list addChannel">
         <label class="item item-input item-stacked-label">
             <span class="input-label">Channel name</span>
-            <form name="addChannelForm" ng-minlength="3"> 
+            <form name="addChannelForm" ng-minlength="3">
             <input class="inputField" type="text" placeholder="# Name" ng-model="channelName.text"></form>
         </label>
         <label class="item item-input item-stacked-label">

@@ -27,7 +27,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     })
   };
 
-  console.log("/////////"+$scope.userInput.avatar);
+  console.log($scope.userInput.avatar);
 
   //TODO test if camera it works on device with camera
   $scope.takePhoto = function () {
@@ -369,10 +369,11 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     $scope.userInput.username = userService.active.username;
     $scope.userInput.password = userService.active.password;
     $scope.username = userService.active.username;
+    console.log($scope.userInput.avatar);
 
     if ($scope.avatar != userService.active.avatar && $scope.userInput.avatar !== "") {
       upload({
-        //use /upload for server
+        //use http://83.249.240.91/upload' for server
         url: 'http://localhost:3000/upload',
         method: 'POST',
         data: {
@@ -382,7 +383,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         function (response) {
           //console.log("avar" , response.data);
           setTimeout(function() {
-            userService.active.avatar = "/assets" + response.data;
+            userService.active.avatar = "assets" + response.data;
             userService.updateUser(userService.active).then(function() {
               $scope.newChannelChecker();
               $ionicSideMenuDelegate.toggleRight();
@@ -403,7 +404,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
 
     if ($scope.chatInput.attachment) {
       upload({
-        //use /upload for server
+        //use http://83.249.240.91/upload' for server
         url: 'http://localhost:3000/upload',
         method: 'POST',
         data: {
@@ -411,7 +412,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         }
       }).then(
         function (response) {
-          $scope.chatInput.attachmentPath = "/assets" + response.data;
+          $scope.chatInput.attachmentPath = "assets" + response.data;
           console.log($scope.chatInput.attachmentPath);
         }
       );
