@@ -63,6 +63,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   };
 
   $scope.gotToAddChannel = function () {
+    $scope.clearIntervals();
     $state.go('addChannel');
   };
 
