@@ -308,19 +308,23 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       $ionicScrollDelegate.scrollBottom();
       $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
     });
-
-    $scope.getNewMessages = function () {
-      $scope.chatInput.attachmentPath = "";
-      $scope.newMessages = messageService.getNewMessages($scope.currentChannel._id, $scope.localTimestamp).then(function (response) {
-        $scope.messageDb = $scope.messageDb.concat(response);
-        $ionicScrollDelegate.scrollBottom();
-        $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
-      });
-      messageService.getTopPosters().then(function (response){
-        $scope.topList = $scope.addUsersToPosters(response, userContacts);
-      });
-    }
+    messageService.getTopPosters().then(function (response){
+      $scope.topList = $scope.addUsersToPosters(response, userContacts);
+    });
   };
+
+  $scope.getNewMessages = function () {
+    $scope.chatInput.attachmentPath = "";
+    $scope.newMessages = messageService.getNewMessages($scope.currentChannel._id, $scope.localTimestamp).then(function (response) {
+      $scope.messageDb = $scope.messageDb.concat(response);
+      $ionicScrollDelegate.scrollBottom();
+      $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
+    });
+    messageService.getTopPosters().then(function (response){
+      $scope.topList = $scope.addUsersToPosters(response, userContacts);
+    });
+  };
+
   $scope.getMessages();
 
   $scope.getUserFromMsg = function (userId) {
