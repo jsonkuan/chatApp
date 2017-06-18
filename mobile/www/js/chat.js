@@ -10,7 +10,6 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.channels = userChannels;
   $scope.tmpChannels = $scope.channels;
   $scope.tmpContacts = $scope.users;
-  $scope.channelStatus;
   $scope.pictureUrl = "";
   $scope.topPosters = topPostersList;
   $scope.topList = [];
@@ -18,6 +17,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.warning = false;
   $scope.intervals = [];
   $scope.host = REST.host + '/';
+  //window.cordova.plugins.Keyboard.disableScroll(false);
 
   $scope.addUsersToPosters = function(topList, users){
     var newTopList = [];
