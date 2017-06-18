@@ -389,6 +389,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     $scope.userInput.password = userService.active.password;
     $scope.username = userService.active.username;
     console.log($scope.userInput.avatar);
+    console.log(userService.active.avatar);
+    console.log($scope.avatar);
 
     if ($scope.avatar != userService.active.avatar && $scope.userInput.avatar !== "") {
       upload({
