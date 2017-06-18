@@ -18,6 +18,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.warning = false;
   $scope.intervals = [];
   $scope.host = REST.host + '/';
+  window.cordova.plugins.Keyboard.disableScroll(false);
 
   $scope.addUsersToPosters = function(topList, users){
     var newTopList = [];
