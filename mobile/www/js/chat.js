@@ -393,6 +393,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     console.log($scope.avatar);
 
     if ($scope.avatar != userService.active.avatar && $scope.userInput.avatar !== "") {
+      console.log("passed if statement");
       upload({
         //use http://83.249.240.91/upload' for server
         url: $scope.host + 'upload',
