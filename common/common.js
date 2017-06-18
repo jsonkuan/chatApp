@@ -59,6 +59,9 @@
             },
             get: function(id) {
                 return REST.get('/user?id=' + id);
+            },
+            getOnlineUsers: function() {
+                return REST.get('/onlineUsers');
             }
         };
     }]);
@@ -109,7 +112,7 @@
         return {
             //Makes sure a current channel is set and returns it
             getChannel: function() {
-                return $q(function(resolve) { 
+                return $q(function(resolve) {
                     if (channelService.current) {
                         resolve(channelService.current);
                     } else {
@@ -184,9 +187,8 @@
                     users: [],
                     timestamp: ''
                 }];
-                return channelService.post(channels);            
+                return channelService.post(channels);
             }
         };
     });
-
 })();

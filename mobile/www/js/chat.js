@@ -299,7 +299,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       return currentChannel.name;
     }
   };
-  
+
   $scope.channelName = $scope.getChannelName($scope.currentChannel);
 
   $scope.getMessages = function () {

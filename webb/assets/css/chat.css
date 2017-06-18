@@ -41,6 +41,12 @@ h3.channel-header {
     margin-left: 10px;
 }
 
+h6#num-online-users {
+    margin-top: -20px;
+    margin-left: 10px;
+    color: #AB9BA9;
+}
+
 .logged-in-user {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
