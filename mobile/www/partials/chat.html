@@ -30,7 +30,7 @@
           <label class="item-input-wrapper chat-input-wrapper">
             <input type="text" placeholder="Message #{{currentChannel.name}}" ng-model="chatInput.text">
           </label>
-          <input ngf-select class="ng-hide" ng-model="chatInput.attachment" id="selectedAttach" ng-change="addAttachment()">
+          <input ngf-select ngf-multiple="false" ngf-capture="'camera'" class="ng-hide" ng-model="chatInput.attachment" id="selectedAttach" ng-change="addAttachment()">
           <label ng-click="removeAttachment()" ng-show="chatInput.attachmentPath"><i class="ion-android-attach button-small button button-clear icon_red"></i></label>
           <label for="selectedAttach" class="button icon-active button-clear icon ion-android-add-circle"></label>
           <button class="button icon button-clear icon-active ion-arrow-right-b" ng-click=sendMessage(chatInput.text)></button>
@@ -95,8 +95,8 @@
       <div class="list">
         <div class="item item-avatar item-thumbnail-left snakk-background no-border">
           <!--TODO: Fix image display-->
-          <img ng-if="avatar === userInput.avatar" ng-src="{{host + avatar}}" ngf-select ng-model="userInput.avatar" name="avatar" alt="Unselected">
-          <img ng-if="avatar !== userInput.avatar" ngf-src="userInput.avatar" ngf-thumbnail="userInput.avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Selected">
+          <img ng-if="avatar === userInput.avatar" ngf-multiple="false" ngf-capture="'camera'" ng-src="{{host + avatar}}" ngf-select ng-model="userInput.avatar" name="avatar" alt="Unselected">
+          <img ng-if="avatar !== userInput.avatar" ngf-multiple="false" ngf-capture="'camera'" ngf-src="userInput.avatar" ngf-thumbnail="userInput.avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Selected">
           <h2 class="snakk-font-header">{{username}}</h2>
           <div class="button button-icon icon ion-camera no-padding no-margin icon-color" ng-click="takePhoto()"></div>
         </div>
