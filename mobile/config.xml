@@ -5,7 +5,6 @@
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
     <access origin="*" />
-    <!-- <access origin="http://10.0.2.2*" subdomains="true" /> --> <!-- Android Emulator -->
     <access origin="http://83.249.240.91*" subdomains="true" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
