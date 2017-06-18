@@ -396,7 +396,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       console.log("passed if statement");
       upload({
         //use http://83.249.240.91/upload' for server
-        url: '/upload',
+        url: 'http://83.249.240.91/upload',
         method: 'POST',
         data: {
           avatar: $scope.userInput.avatar
@@ -429,7 +429,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     if ($scope.chatInput.attachment) {
       upload({
         //use http://83.249.240.91/upload' for server
-        url: '/upload',
+        url: 'http://83.249.240.91/upload',
         method: 'POST',
         data: {
           avatar: $scope.chatInput.attachment
