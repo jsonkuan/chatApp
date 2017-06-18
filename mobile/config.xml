@@ -7,6 +7,7 @@
     <access origin="*" />
     <access origin="http://83.249.240.91*" subdomains="true" />
     <allow-navigation href="http://ionic.local/*" />
+    <allow-navigation href="file://*/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
