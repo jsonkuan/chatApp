@@ -408,6 +408,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
             userService.updateUser(userService.active).then(function() {
               $scope.newChannelChecker();
               $ionicSideMenuDelegate.toggleRight();
+              console.log("success?" + userService.active.avatar);
+
             });
           }, 1000);
         }
