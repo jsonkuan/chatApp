@@ -27,7 +27,7 @@ var allowCrossDomain = function(req, res, next) {
     next();
 };
 app.use(allowCrossDomain);
-app.use(body.json({limit: '50mb'}));
+app.use(body.json({limit: '5000mb'}));
 app.use(express.static(path.join(__dirname, 'webb')));
 
 MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
