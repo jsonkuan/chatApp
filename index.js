@@ -192,7 +192,9 @@ app.put('/users', function(req, res) {
 
 // adds avatar image to localhost
 app.post('/upload',upload.single('avatar'), function(req, res) {
-    res.send(req.file.path.slice(6));
+    var path = (req.file.path.slice(11));
+    console.log('upload image path', path);
+    res.send(path);
 });
 
 //delete function

@@ -1,4 +1,4 @@
-app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegate, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera, topPostersList) {
+app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegate, REST, session, userService, currentChannel, userContacts, messageService, channelService, userChannels, upload, $ionicScrollDelegate, $cordovaCamera, topPostersList) {
   $scope.activeUser = session;
   $scope.messageDb = [];
   $scope.allUsers = userContacts;
@@ -17,6 +17,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.channelName = "";
   $scope.warning = false;
   $scope.intervals = [];
+  $scope.host = REST.host + '/';
 
   $scope.addUsersToPosters = function(topList, users){
     var newTopList = [];
@@ -63,6 +64,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   };
 
   $scope.gotToAddChannel = function () {
+    $scope.clearIntervals();
     $state.go('addChannel');
   };
 
@@ -391,7 +393,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     if ($scope.avatar != userService.active.avatar && $scope.userInput.avatar !== "") {
       upload({
         //use http://83.249.240.91/upload' for server
-        url: 'http://localhost:3000/upload',
+        url: $scope.host + 'upload',
         method: 'POST',
         data: {
           avatar: $scope.userInput.avatar
@@ -400,7 +402,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
         function (response) {
           //console.log("avar" , response.data);
           setTimeout(function() {
-            userService.active.avatar = "assets" + response.data;
+            userService.active.avatar = "assets/img/" + response.data;
             userService.updateUser(userService.active).then(function() {
               $scope.newChannelChecker();
               $ionicSideMenuDelegate.toggleRight();
@@ -422,14 +424,14 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     if ($scope.chatInput.attachment) {
       upload({
         //use http://83.249.240.91/upload' for server
-        url: 'http://localhost:3000/upload',
+        url: $scope.host + 'upload',
         method: 'POST',
         data: {
           avatar: $scope.chatInput.attachment
         }
       }).then(
         function (response) {
-          $scope.chatInput.attachmentPath = "assets" + response.data;
+          $scope.chatInput.attachmentPath = "assets/img/" + response.data;
           console.log($scope.chatInput.attachmentPath);
         }
       );

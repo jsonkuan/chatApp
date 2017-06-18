@@ -34,7 +34,7 @@
             }).then(
                 function (response) {
                     setTimeout(function() {
-                        userService.active.avatar = "/assets" + response.data;
+                        userService.active.avatar = "/assets/img/" + response.data;
                         console.log(response.data);
                         console.log(userService.active.avatar);
                         $scope.avatar = userService.active.avatar;
