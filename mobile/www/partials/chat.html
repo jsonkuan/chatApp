@@ -15,11 +15,11 @@
     <!--Start of chat page content here -->
     <ion-content class="has-header has-footer chat-input-box">
         <div class="chat-box" ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
-          <img class="avatar-thumb" ngf-fix-orientation="true" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture">
+          <img class="avatar-thumb" ngf-fix-orientation="false" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture">
           <p class="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
           <p class="date">{{message.displayDate}}</p>
           <p smilies="message.text" class="messagetext">{{message.text}}</p>
-          <img class="attachment" ngf-fix-orientation="true" ng-if="message.attachment" ng-src="{{message.attachment}}">
+          <img class="attachment" ngf-fix-orientation="false" ng-if="message.attachment" ng-src="{{message.attachment}}">
         </div>
     </ion-content>
     <!--End of chat page content here -->
@@ -65,7 +65,7 @@
         <h5 class="list-title">Direct Messages</h5>
         <a class="item list_side" ng-repeat="user in users | orderBy: 'username' track by $index" ng-click="startDirectChat(activeUser, user)">
           <div class="list chat userList">
-           <img ngf-fix-orientation="true" class="sidemenu-thumbNail" ng-src="{{user.avatar}}">
+           <img ngf-fix-orientation="false" class="sidemenu-thumbNail" ng-src="{{user.avatar}}">
             <p ng-if="channelStatus[user.channelId].update" class="channel-highlight">{{user.username}}</p>
             <p ng-if="!channelStatus[user.channelId].update">{{user.username}}</p>
             <i ng-if="user.status == 'online'" class="ion-ios-circle-filled slack-green"> online</i>
@@ -77,7 +77,7 @@
       <h5 class="list-title right-top-list">Top Posters</h5>
       <a class="item list_side" ng-repeat="poster in topList" ng-click="startDirectChat(activeUser, user)" ng-click="startDirectChat(activeUser, user)">
         <div class="list">
-          <img ngf-fix-orientation="true" class="sidemenu-thumbNail" ng-src="{{poster.avatar}}">
+          <img ngf-fix-orientation="false" class="sidemenu-thumbNail" ng-src="{{poster.avatar}}">
           <p class="left-menu-username">{{poster.username}}</p>
           <p class="left-menu-posts">posts: {{poster.posts}}</p>
         </div>
@@ -95,8 +95,8 @@
       <div class="list">
         <div class="item item-avatar item-thumbnail-left snakk-background no-border">
           <!--TODO: Fix image display-->
-          <img ngf-fix-orientation="true" ng-if="avatar === userInput.avatar" ngf-resize="{width: 500, quality: .8}" accept="image/*" ngf-capture="'camera'" ng-src="{{avatar}}" ngf-select ng-model="userInput.avatar" name="avatar" alt="Unselected">
-          <img ngf-fix-orientation="true" ng-if="avatar !== userInput.avatar" ngf-resize="{width: 500, quality: .8}" accept="image/*" ngf-capture="'camera'" ngf-src="userInput.avatar" ngf-thumbnail="userInput.avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Selected">
+          <img ngf-fix-orientation="false" ng-if="avatar === userInput.avatar" ngf-resize="{width: 500, quality: .8}" accept="image/*" ngf-capture="'camera'" ng-src="{{avatar}}" ngf-select ng-model="userInput.avatar" name="avatar" alt="Unselected">
+          <img ngf-fix-orientation="false" ng-if="avatar !== userInput.avatar" ngf-resize="{width: 500, quality: .8}" accept="image/*" ngf-capture="'camera'" ngf-src="userInput.avatar" ngf-thumbnail="userInput.avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Selected">
           <h2 class="snakk-font-header">{{username}}</h2>
           <div class="button button-icon icon ion-camera no-padding no-margin icon-color" ng-click="takePhoto()"></div>
         </div>
