@@ -19,6 +19,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.host = REST.host + '/';
   //window.cordova.plugins.Keyboard.disableScroll(false);
 
+  //returns top users and number of posts list.
   $scope.addUsersToPosters = function(topList, users){
     var newTopList = [];
     for (var i = 0; i < topList.length && i < 5 ; i++) {
@@ -63,6 +64,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     return target.replace(new RegExp(search, 'g'), replacement);
   };
 
+  //Checks message for bad and ban words and returns the censored message.
   $scope.snakkBot = function (message) {
     var regPattern = /[A-ZÅÄÖ]/;
     var badWords = ["dåligt", "dålig"];
@@ -104,7 +106,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   // Filter channels for user
   $scope.filterChannels = function () {
     var contacts = $scope.tmpContacts.filter(function (user) {
-      return user._id != userService.active._id;
+      return user._id !== userService.active._id;
     });
     var channels = $scope.channels.filter(function (channel) {
       return channel.accessability === 'public' || channel.accessability === 'private';
@@ -163,8 +165,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
         userService.getUsers().then(function (userResponse) {
             if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
-                $scope.tmpContacts = userResponse;
-                $scope.addUserToMsg(userResponse, $scope.messageDb);
+              $scope.tmpContacts = userResponse;
+              $scope.addUserToMsg(userResponse, $scope.messageDb);
             }
             $scope.tmpChannels = channelResponse;
             $scope.updateChannelStatus();
@@ -186,6 +188,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     $scope.channelName = $scope.getChannelName($scope.currentChannel);
   };
 
+  //Create or open a private chat between active user and user clicked
   $scope.startDirectChat = function (userA, userB) {
     if (userA._id !== userB._id) {
       channelService.get('/direct?sender=' + userA._id + '&recipient=' + userB._id).then(function (response) {
@@ -270,11 +273,9 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   };
 
   $scope.getChannelName = function (currentChannel) {
-
     if (currentChannel.accessability === "direct") {
-
       var channelUser = $scope.allUsers.filter(function (user) {
-        return user._id != userService.active._id && currentChannel.users.includes(user._id);
+        return user._id !== userService.active._id && currentChannel.users.includes(user._id);
       });
       return channelUser[0].username;
     } else {
@@ -284,26 +285,42 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
 
   $scope.channelName = $scope.getChannelName($scope.currentChannel);
 
+  //collects all messages from database for active channel.
   $scope.getMessages = function () {
     $scope.messagesFromDb = messageService.getAllMessages($scope.currentChannel._id).then(function (response) {
       $scope.chatInput.attachmentPath = "";
       $scope.messageDb = response;
       $ionicScrollDelegate.scrollBottom();
-      $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
-    });
-
-    $scope.getNewMessages = function () {
-      $scope.chatInput.attachmentPath = "";
-      $scope.newMessages = messageService.getNewMessages($scope.currentChannel._id, $scope.localTimestamp).then(function (response) {
-        $scope.messageDb = $scope.messageDb.concat(response);
-        $ionicScrollDelegate.scrollBottom();
+      /*userService.getUsers().then(function (response){
+        $scope.allUsers = response;
         $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
-      });
-      messageService.getTopPosters().then(function (response){
-        $scope.topList = $scope.addUsersToPosters(response, userContacts);
-      });
-    }
+        console.log("getMessages");
+        console.log($scope.allUsers);
+      });*/
+    });
+    messageService.getTopPosters().then(function (response){
+      $scope.topList = $scope.addUsersToPosters(response, userContacts);
+    });
   };
+
+  //collects all messages with a more recent timestamp then last message in active chat
+  $scope.getNewMessages = function () {
+    $scope.chatInput.attachmentPath = "";
+    $scope.newMessages = messageService.getNewMessages($scope.currentChannel._id, $scope.localTimestamp).then(function (response) {
+      $scope.messageDb = $scope.messageDb.concat(response);
+      $ionicScrollDelegate.scrollBottom();
+      /*userService.getUsers().then(function (response){
+        $scope.allUsers = response;
+        $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
+        console.log("getNewMessages");
+        console.log($scope.allUsers);
+      });*/
+    });
+    messageService.getTopPosters().then(function (response){
+      $scope.topList = $scope.addUsersToPosters(response, userContacts);
+    });
+  };
+
   $scope.getMessages();
 
   $scope.getUserFromMsg = function (userId) {
@@ -318,24 +335,21 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
 
   $scope.addUserToMsg = function (users, messages) {
     for (var i = 0; i < messages.length; i++) {
-
       messages[i].displayDate = formatDate(messages[i].timestamp);
-
       for (var e = 0; e < users.length; e++) {
-
         if (messages[i].userId === users[e]._id) {
           messages[i].username = users[e].username;
         }
         if (messages[i].userId === users[e]._id) {
           messages[i].avatar = users[e].avatar;
         }
-
         if(messages[i].avatar === "defaultimages/defaultProfileWhite.png"){
           messages[i].avatar = "defaultimages/defaultProfile.png";
         }
       }
     }
   };
+
   //Watches for new messages
   $scope.checkTimeStamp = function () {
     channelService.get('?id=' + $scope.currentChannel._id).then(function (response) {
@@ -374,8 +388,8 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     console.log(userService.active.avatar);
     console.log($scope.avatar);
 
-    if ($scope.avatar != userService.active.avatar && $scope.userInput.avatar !== "") {
-      console.log("passed if statement");
+
+    if ($scope.avatar !== userService.active.avatar && $scope.userInput.avatar !== "") {
       upload({
         //use http://83.249.240.91/upload' for server
         url: 'http://83.249.240.91/upload',
@@ -389,6 +403,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
           setTimeout(function() {
             userService.active.avatar = "assets/img/" + response.data;
             userService.updateUser(userService.active).then(function() {
+              $scope.getMessages();
               $scope.newChannelChecker();
               $ionicSideMenuDelegate.toggleRight();
               console.log("success?" + userService.active.avatar);
@@ -399,6 +414,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       );
     } else {
       userService.updateUser(userService.active).then(function() {
+        $scope.getMessages();
         $scope.newChannelChecker();
         $ionicSideMenuDelegate.toggleRight();
       });
