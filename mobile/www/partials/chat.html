@@ -30,7 +30,7 @@
           <label class="item-input-wrapper chat-input-wrapper">
             <input type="text" placeholder="Message #{{currentChannel.name}}" ng-model="chatInput.text">
           </label>
-          <input ngf-select ngf-resize="{width: 500, quality: .8}" accept="image/*" ngf-capture="'camera'" ngf-capture="'camera'" class="ng-hide" ng-model="chatInput.attachment" id="selectedAttach" ng-change="addAttachment()">
+          <input ngf-select ngf-resize="{width: 500, quality: .8}" accept="image/*" class="ng-hide" ng-model="chatInput.attachment" id="selectedAttach" ng-change="addAttachment()">
           <label ng-click="removeAttachment()" ng-show="chatInput.attachmentPath"><i class="ion-android-attach button-small button button-clear icon_red"></i></label>
           <label for="selectedAttach" class="button icon-active button-clear icon ion-android-add-circle"></label>
           <button class="button icon button-clear icon-active ion-arrow-right-b" ng-click=sendMessage(chatInput.text)></button>
@@ -95,10 +95,9 @@
       <div class="list">
         <div class="item item-avatar item-thumbnail-left snakk-background no-border">
           <!--TODO: Fix image display-->
-          <img ngf-fix-orientation="false" ng-if="avatar === userInput.avatar" ngf-resize="{width: 500, quality: .8}" accept="image/*" ngf-capture="'camera'" ng-src="{{avatar}}" ngf-select ng-model="userInput.avatar" name="avatar" alt="Unselected">
-          <img ngf-fix-orientation="false" ng-if="avatar !== userInput.avatar" ngf-resize="{width: 500, quality: .8}" accept="image/*" ngf-capture="'camera'" ngf-src="userInput.avatar" ngf-thumbnail="userInput.avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Selected">
+          <img ngf-fix-orientation="false" ng-if="avatar === userInput.avatar" ngf-resize="{width: 500, quality: .8}" accept="image/*" ng-src="{{avatar}}" ngf-select ng-model="userInput.avatar" name="avatar" alt="Unselected">
+          <img ngf-fix-orientation="false" ng-if="avatar !== userInput.avatar" ngf-resize="{width: 500, quality: .8}" accept="image/*" ngf-src="userInput.avatar" ngf-thumbnail="userInput.avatar" ngf-select ng-model="userInput.avatar" name="avatar" alt="Selected">
           <h2 class="snakk-font-header">{{username}}</h2>
-          <div class="button button-icon icon ion-camera no-padding no-margin icon-color" ng-click="takePhoto()"></div>
         </div>
         <label class="item right-menu-item item-stacked-label">
           <span class="input-label snakk-font-header">{{email}}</span>
