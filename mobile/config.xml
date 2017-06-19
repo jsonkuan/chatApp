@@ -3,7 +3,6 @@
     <name>Snakk</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://83.249.240.91" />
     <access origin="*" />
     <access origin="http://83.249.240.91*" subdomains="true" />
     <allow-navigation href="http://ionic.local/*" />
