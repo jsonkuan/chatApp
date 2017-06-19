@@ -3,7 +3,6 @@
   <name>Snakk</name>
   <description>An awesome Ionic/Cordova app.</description>
   <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-  <content original-src="index.html" src="http://83.249.240.91" />
   <access origin="*" />
   <access origin="http://83.249.240.91*" subdomains="true" />
   <allow-navigation href="http://ionic.local/*" />
@@ -28,6 +27,7 @@
     <allow-intent href="market:*" />
     <allow-navigation href="http://*/*" />
     <allow-navigation href="file://*/*" />
+
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
     <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
