@@ -17,7 +17,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
   $scope.warning = false;
   $scope.intervals = [];
   $scope.host = REST.host + '/';
-  window.cordova.plugins.Keyboard.disableScroll(false);
+  //window.cordova.plugins.Keyboard.disableScroll(false);
 
   $scope.addUsersToPosters = function(topList, users){
     var newTopList = [];
@@ -43,6 +43,24 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       $scope.clearIntervals();
       $state.transitionTo('login');
     })
+  };
+
+  console.log($scope.userInput.avatar);
+
+  //TODO test if camera it works on device with camera
+  $scope.takePhoto = function () {
+    console.log("YESSS!");
+    var options = {
+      encodingType: Camera.EncodingType.JPEG
+    };
+    console.log("YESSS2!");
+    $cordovaCamera.getPicture(options)
+      .then(function (data) {
+        //$scope.pictureUrl = 'data:image/jpeg;base64,'+data;
+        $scope.userInput.avatar = data;
+
+      }, function (error) {
+      })
   };
 
   $scope.gotToAddChannel = function () {
