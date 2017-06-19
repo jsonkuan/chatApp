@@ -163,12 +163,15 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     channelService.getChannelsForUser($scope.activeUser._id).then(function (channelResponse) {
       userService.getUsers().then(function (userResponse) {
         if ($scope.tmpChannels.length < channelResponse.length || $scope.tmpContacts.length < userResponse.length || $scope.userChangeChecker(userResponse, $scope.tmpContacts)) {
-          $scope.tmpContacts = userResponse;
-          $scope.addUserToMsg(userResponse, $scope.messageDb);
         }
+        $scope.tmpContacts = userResponse;
+        $scope.addUserToMsg(userResponse, $scope.messageDb);
         $scope.tmpChannels = channelResponse;
         $scope.updateChannelStatus();
         $scope.filterChannels();
+        messageService.getTopPosters().then(function (response){
+            $scope.topList = $scope.addUsersToPosters(response, $scope.allUsers);
+        });
       });
     });
   };
@@ -290,9 +293,9 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       $scope.messageDb = response;
       $ionicScrollDelegate.scrollBottom();
       $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
-    });
-    messageService.getTopPosters().then(function (response){
-      $scope.topList = $scope.addUsersToPosters(response, userContacts);
+      messageService.getTopPosters().then(function (response){
+        $scope.topList = $scope.addUsersToPosters(response, $scope.allUsers);
+      });
     });
   };
 
@@ -302,9 +305,9 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
       $scope.messageDb = $scope.messageDb.concat(response);
       $ionicScrollDelegate.scrollBottom();
       $scope.addUserToMsg($scope.allUsers, $scope.messageDb);
-    });
-    messageService.getTopPosters().then(function (response){
-      $scope.topList = $scope.addUsersToPosters(response, userContacts);
+      messageService.getTopPosters().then(function (response){
+        $scope.topList = $scope.addUsersToPosters(response, $scope.allUsers);
+      });
     });
   };
 
@@ -395,7 +398,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
             userService.updateUser(userService.active).then(function() {
               $scope.newChannelChecker();
               $ionicSideMenuDelegate.toggleRight();
-              console.log("success?" + userService.active.avatar);
+              //console.log("success?" + userService.active.avatar);
 
             });
           }, 1000);
