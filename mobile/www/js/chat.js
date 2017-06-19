@@ -24,7 +24,7 @@ app.controller('chatController', function ($scope, $state, $ionicSideMenuDelegat
     for (var i = 0; i < topList.length && i < 5 ; i++) {
       for (var j = 0; j < users.length; j++) {
         if (topList[i]._id === users[j]._id) {
-          var tempObject = {_id: users[j]._id , username: users[j].username, posts : topList[i].posts, avatar: users[j].avatar};
+          var tempObject = {username: users[j].username, posts : topList[i].posts, avatar: users[j].avatar};
           newTopList.push(tempObject);
         }
       }

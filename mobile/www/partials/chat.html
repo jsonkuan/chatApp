@@ -75,7 +75,7 @@
 
       <!-- Top Posters -->
       <h5 class="list-title right-top-list">Top Posters</h5>
-      <a class="item list_side" ng-repeat="poster in topList" ng-click="startDirectChat(activeUser, poster._id)" >
+      <a class="item list_side" ng-repeat="poster in topList" >
         <div class="list">
           <img ngf-fix-orientation="false" class="sidemenu-thumbNail" ng-src="{{poster.avatar}}">
           <p class="left-menu-username">{{poster.username}}</p>
