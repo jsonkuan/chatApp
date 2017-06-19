@@ -1,0 +1,9 @@
+@media only screen and (max-width: 900px) {
+     #chat-channel-container{
+        min-width: 190px!important;
+        background-color:black !important;
+    }
+    button#add-channel-button{
+        background-color:black !important;
+    } 
+}
