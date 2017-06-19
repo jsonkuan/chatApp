@@ -14,6 +14,10 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+  <preference name="StatusBarOverlaysWebView" value="false" />
+  <preference name="StatusBarBackgroundColor" value="#000000" />
+  <preference name="StatusBarStyle" value="lightcontent" />
+  <plugin spec="https://github.com/apache/cordova-plugin-statusbar.git" source="git" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
@@ -27,6 +31,9 @@
     <platform name="android">
         <allow-intent href="market:*" />
         <allow-navigation href="http://*/*" />
+        <preference name="StatusBarOverlaysWebView" value="false" />
+        <preference name="StatusBarBackgroundColor" value="#000000" />
+        <preference name="StatusBarStyle" value="lightcontent" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
         <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
@@ -51,6 +58,10 @@
         <allow-intent href="itms-apps:*" />
         <allow-navigation href="http://*/*" />
         <allow-navigation href="file://*/*" />
+      <preference name="StatusBarOverlaysWebView" value="false" />
+      <preference name="StatusBarBackgroundColor" value="#000000" />
+      <preference name="StatusBarStyle" value="lightcontent" />
+      <plugin spec="https://github.com/apache/cordova-plugin-statusbar.git" source="git" />
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
         <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />
         <icon height="40" src="resources/ios/icon/icon-40.png" width="40" />
