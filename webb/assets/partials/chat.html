@@ -27,6 +27,9 @@
         <div layout="row" layout-align="center">
              <h3 class="channel-header" flex="100">Direct Messages</h3>
         </div>
+        <div layout="row" layout-align="center">
+            <h6 id="num-online-users" class="channel-header" flex="100">Online: {{onlineUsers}}</h6>
+        </div>
         <div class="channels-list">
             <li class="channelMsgLists" ng-repeat="contact in contacts | orderBy: 'username'" ng-click="startDirectChat(activeUser, contact)">
                 <i class="material-icons slack-green" ng-if="contact.status == 'online'">radio_button_checked</i>
@@ -82,11 +85,11 @@
                 </div>
                 <md-content layout="column">
                     <div id="chat-box"  ng-repeat="message in messageDb  | orderBy: 'date' track by $index" >
-                        <img class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
+                        <img ngf-fix-orientation="false" class="avatar-thumb" ng-src="{{message.avatar}}" name="avatar" alt="Profile picture" flex="5">
                         <p id="username" ng-click="startDirectChat(activeUser, getUserFromMsg(message.userId))">{{message.username}}</p>
                         <p id="date">{{message.displayDate}}</p>
                         <p smilies="message.text" id="messagetext">{{message.text}}"</p>
-                        <img ng-src="{{message.attachment}}" flex="20">
+                        <img ngf-fix-orientation="false" ng-src="{{message.attachment}}" flex="20">
                     </div>
                 </md-content>
             </div>

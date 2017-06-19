@@ -4,9 +4,12 @@
 (function() {
     var app = angular.module('common', []);
     app.factory('REST', ['$http', '$q', function($http, $q) {
-        // for server use: http://83.249.240.91
-        var host = 'http://localhost:3000';
+        //for server: var host = 'http://83.249.240.91';
+        //for android emulator localhost: var host = 'http://10.0.2.2:3000';
+        //for regular localhost: host = 'http://localhost:3000';
+        var host = 'http://83.249.240.91';
         return {
+            host: host,
             get: function get(url) {
                 return $q(function(resolve) {
                     $http.get(host + url).then(function(response) {
@@ -56,6 +59,9 @@
             },
             get: function(id) {
                 return REST.get('/user?id=' + id);
+            },
+            getOnlineUsers: function() {
+                return REST.get('/onlineUsers');
             }
         };
     }]);
@@ -106,7 +112,7 @@
         return {
             //Makes sure a current channel is set and returns it
             getChannel: function() {
-                return $q(function(resolve) { 
+                return $q(function(resolve) {
                     if (channelService.current) {
                         resolve(channelService.current);
                     } else {
@@ -181,9 +187,8 @@
                     users: [],
                     timestamp: ''
                 }];
-                return channelService.post(channels);            
+                return channelService.post(channels);
             }
         };
     });
-
 })();
