@@ -7,8 +7,8 @@
 }
 
 .logo {
-    width: 100%;
-    margin-left: -45px;
+    width: 85%;
+    margin-left: 10px;
 
 }
 
@@ -157,4 +157,5 @@ p.label {
     font-size: 40px !important;
     color: white !important;
     margin-left: 10px !important;
+    margin-top: 12px;
 }

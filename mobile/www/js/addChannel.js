@@ -30,19 +30,12 @@ app.controller("channelController", function ($scope, $state, userService, chann
         return state ? ($scope.publicOrPrivate = "Private", $scope.privateText= "private") : ($scope.publicOrPrivate = "Public", $scope.privateText= "");
     };
 
-    $scope.resetChannelname = function() {
-        $scope.channelName.text = "";
-    };
-
-    $scope.resetPurpose = function() {
-        $scope.purpose.text = "";
-    };
-
     userService.getUsers().then(function (response) {
         $scope.users = response;
     });
 
     $scope.backToChat = function() {
+        console.log("funkar dunkar")
         $state.go('chat');
     }
 
