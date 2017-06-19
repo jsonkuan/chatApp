@@ -26,13 +26,13 @@
     <p>Invite friends</p>
 </div>
 <div class="ruta" style="max-height: 226px; overflow-y: scroll;" scrollbar-y="false" ng-show="switch">
-    <ion-scroll direction="y" scrollbar-y="false" overflow-scroll="true">
+    <div >
         <ion-item class="item-checkbox checkbox-balanced" style="background-color:white" ng-repeat="user in usersWithoutBot" value="{{user.username}}" ng-click="addToChannel(user)">{{user.username}}
             <label class="checkbox">
                 <input type="checkbox"/>
             </label>
         </ion-item>
-    </ion-scroll>
+    </sc>
 </div>
 <i id="scrollimg" class="ion-chevron-down"></i>
 <button class="button button-block button-positive addChannel" ng-disabled="channelName.text.length === 0" ng-click="createChannel()">Create</button>
