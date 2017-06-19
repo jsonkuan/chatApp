@@ -27,7 +27,7 @@ var allowCrossDomain = function(req, res, next) {
     next();
 };
 app.use(allowCrossDomain);
-app.use(body.json({limit: '50mb'}));
+app.use(body.json({limit: '5000mb'}));
 app.use(express.static(path.join(__dirname, 'webb')));
 
 MongoClient.connect('mongodb://localhost:27017/chatapp', function(error, database_){
@@ -190,7 +190,9 @@ app.put('/users', function(req, res) {
 
 // Adds avatar image to localhost
 app.post('/upload',upload.single('avatar'), function(req, res) {
-    res.send(req.file.path.slice(6));
+    var path = (req.file.path.slice(11));
+    console.log('upload image path', path);
+    res.send(path);
 });
 
 // Delete function

@@ -172,7 +172,7 @@ angular.module('app').controller('chatController', function ($scope, upload, $st
                 }
             }).then(
                 function (response) {
-                    $scope.attachmentPath = "/assets" + response.data;
+                    $scope.attachmentPath = "/assets/img/" + response.data;
                     console.log(attachmentPath);
                 }
             );
