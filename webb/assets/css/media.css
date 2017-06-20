@@ -6,7 +6,11 @@
     }
     #chat-text-box-container {
         margin: 10px -2px 60px -2px;
-        width: 76%;
-        min-height: 500px;
+        max-height: 65%;
+    }
+}
+@media only screen and (max-height: 456px) {
+    #chat-text-box-container {
+        max-height: 50%;
     }
 }
