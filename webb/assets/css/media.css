@@ -1,0 +1,16 @@
+@media only screen and (max-height: 645px) {
+    #chat-input-area {
+    position: fixed;
+    bottom: 0;
+    width: 80%;
+    }
+    #chat-text-box-container {
+        margin: 10px -2px 60px -2px;
+        max-height: 65%;
+    }
+}
+@media only screen and (max-height: 456px) {
+    #chat-text-box-container {
+        max-height: 50%;
+    }
+}
